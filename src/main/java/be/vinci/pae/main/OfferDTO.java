@@ -9,6 +9,9 @@ public class OfferDTO {
   private int idItem;
   private int idRecipientMember;
 
+  /**
+   * Constructor
+   */
   public OfferDTO(int idOffer, LocalDateTime dateOffer, int idItem, int idRecipientMember) {
     this.idOffer = idOffer;
     this.dateOffer = dateOffer;

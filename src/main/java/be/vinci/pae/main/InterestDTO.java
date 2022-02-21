@@ -6,6 +6,9 @@ public class InterestDTO {
   private int idItem;
   private int idMember;
 
+  /**
+   * Constructor
+   */
   public InterestDTO(int idInterest, int idItem, int idMember) {
     this.idInterest = idInterest;
     this.idItem = idItem;

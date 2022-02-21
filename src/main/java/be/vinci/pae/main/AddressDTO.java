@@ -10,6 +10,9 @@ public class AddressDTO {
   private String city;
   private String unitNumber;
 
+  /**
+   * Constructor
+   */
   public AddressDTO(int idAddress, String street, String buildingNumber, int postcode,
       String commune, String city, String unitNumber) {
     this.idAddress = idAddress;

@@ -11,6 +11,9 @@ public class ItemDTO {
   private int rating;
   private int idOfferingMember;
 
+  /**
+   * Constructor
+   */
   public ItemDTO(int idItem, int idType, String photo, String description,
       String availabilities, String itemCondition, int rating, int idOfferingMember) {
     this.idItem = idItem;

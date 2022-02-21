@@ -5,6 +5,9 @@ public class TypeDTO {
   private int idType;
   private String type;
 
+  /**
+   * Constructor
+   */
   public TypeDTO(int idType, String type) {
     this.idType = idType;
     this.type = type;
