@@ -7,7 +7,7 @@ public class InterestDTO {
   private int idMember;
 
   /**
-   * Constructor
+   * Class constructor.
    */
   public InterestDTO(int idInterest, int idItem, int idMember) {
     this.idInterest = idInterest;

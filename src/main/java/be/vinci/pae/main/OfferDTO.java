@@ -10,7 +10,7 @@ public class OfferDTO {
   private int idRecipientMember;
 
   /**
-   * Constructor
+   * Class constructor.
    */
   public OfferDTO(int idOffer, LocalDateTime dateOffer, int idItem, int idRecipientMember) {
     this.idOffer = idOffer;

@@ -11,7 +11,7 @@ public class AddressDTO {
   private String unitNumber;
 
   /**
-   * Constructor
+   * Class constructor.
    */
   public AddressDTO(int idAddress, String street, String buildingNumber, int postcode,
       String commune, String city, String unitNumber) {

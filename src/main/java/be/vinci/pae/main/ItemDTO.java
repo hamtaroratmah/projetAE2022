@@ -12,7 +12,7 @@ public class ItemDTO {
   private int idOfferingMember;
 
   /**
-   * Constructor
+   * Class constructor.
    */
   public ItemDTO(int idItem, int idType, String photo, String description,
       String availabilities, String itemCondition, int rating, int idOfferingMember) {
