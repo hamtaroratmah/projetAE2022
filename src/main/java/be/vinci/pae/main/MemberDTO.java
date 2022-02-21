@@ -3,18 +3,26 @@ package be.vinci.pae.main;
 public class MemberDTO {
 
   private int idMember;
-  private String password, username, lastName, firstName, callNumber, reasonForConnRefusal, state;
+  private String password;
+  private String username;
+  private String lastName;
+  private String firstName;
+  private String callNumber;
+  private String reasonForConnRefusal;
+  private String state;
   private boolean isAdmin;
-  private int countObjectNotCollected, countObjectGiven, countObjectGot = 0;
+  private int countObjectNotCollected;
+  private int countObjectGiven;
+  private int countObjectGot = 0;
 
 
   public MemberDTO() {
 
   }
 
-
-  public MemberDTO(int idMember, String password, String username, String last_name,
-      String first_name, String callNumber, String reasonForConnRefusal, String state,
+  //member constructor
+  public MemberDTO(int idMember, String password, String username, String lastName,
+      String firstName, String callNumber, String reasonForConnRefusal, String state,
       boolean isAdmin) {
 
     this.idMember = idMember;
@@ -33,12 +41,12 @@ public class MemberDTO {
 
   }
 
-  public int getId_member() {
+  public int getIdMember() {
     return idMember;
   }
 
-  public void setIdMember(int id_member) {
-    this.idMember = id_member;
+  public void setIdMember(int idMember) {
+    this.idMember = idMember;
   }
 
   public String getPassword() {
@@ -57,7 +65,7 @@ public class MemberDTO {
     this.username = username;
   }
 
-  public String getLast_name() {
+  public String getLastName() {
     return lastName;
   }
 
@@ -65,27 +73,27 @@ public class MemberDTO {
     this.lastName = lastName;
   }
 
-  public String getFirst_name() {
+  public String getFirstName() {
     return firstName;
   }
 
-  public void setFirst_name(String first_name) {
-    this.firstName = first_name;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public String getCall_number() {
+  public String getCallNumber() {
     return callNumber;
   }
 
-  public void setCall_number(String call_number) {
-    this.callNumber = call_number;
+  public void setCallNumber(String callNumber) {
+    this.callNumber = callNumber;
   }
 
-  public String getReason_for_conn_refusal() {
+  public String getReasonForConnRefusal() {
     return reasonForConnRefusal;
   }
 
-  public void setReason_for_conn_refusal(String reason_for_conn_refusal) {
+  public void setReasonForConnRefusal(String reasonForConnRefusal) {
     this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
@@ -132,11 +140,11 @@ public class MemberDTO {
   @Override
   public String toString() {
     return "Member{" +
-        "id_member=" + idMember +
-        ", username='" + username + '\'' +
-        ", last_name='" + lastName + '\'' +
-        ", first_name='" + firstName + '\'' +
-        '}';
+        "idMember=" + idMember
+        + ", username='" + username + '\''
+        + ", lastName='" + lastName + '\''
+        + ", firstName='" + firstName + '\''
+        + '}';
   }
 
   @Override
