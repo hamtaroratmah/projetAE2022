@@ -5,17 +5,17 @@ public class MemberDTO {
   private int id_member;
   private String password, username, last_name, first_name, call_number, reason_for_conn_refusal, state;
   private boolean isAdmin;
-  private int count_object_not_collected, count_object_given, count_object_got;
+  private int count_object_not_collected, count_object_given, count_object_got = 0;
 
 
   public MemberDTO() {
 
   }
 
+
   public MemberDTO(int id_member, String password, String username, String last_name,
       String first_name, String call_number, String reason_for_conn_refusal, String state,
-      boolean isAdmin, int count_object_not_collected, int count_object_given,
-      int count_object_got) {
+      boolean isAdmin) {
     this.id_member = id_member;
     this.password = password;
     this.username = username;
@@ -25,9 +25,7 @@ public class MemberDTO {
     this.reason_for_conn_refusal = reason_for_conn_refusal;
     this.state = state;
     this.isAdmin = isAdmin;
-    this.count_object_not_collected = count_object_not_collected;
-    this.count_object_given = count_object_given;
-    this.count_object_got = count_object_got;
+
   }
 
   public int getId_member() {
@@ -145,4 +143,6 @@ public class MemberDTO {
   public boolean equals(Object obj) {
     return super.equals(obj);
   }
+
+ 
 }
