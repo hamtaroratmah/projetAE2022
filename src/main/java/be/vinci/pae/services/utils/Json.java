@@ -19,7 +19,7 @@ import java.util.List;
 public class Json<T> {
 
   private static final String DB_FILE_PATH = Config.getProperty("DatabaseFilePath");
-  private final static ObjectMapper jsonMapper = new ObjectMapper();
+  private static final ObjectMapper jsonMapper = new ObjectMapper();
   private static Path pathToDb = Paths.get(DB_FILE_PATH);
   private Class<T> type;
 
@@ -29,7 +29,10 @@ public class Json<T> {
     this.type = type;
   }
 
-
+  /**
+   * @param items          to serialize
+   * @param collectionName name of the collection
+   */
   public void serialize(List<T> items, String collectionName) {
     try {
       // if no DB file, write a new collection to a new db file
@@ -47,7 +50,8 @@ public class Json<T> {
       if (allCollections.has(collectionName)) {
         ((ObjectNode) allCollections).remove(collectionName); //e.g. it leaves { users:[...]}
       }
-      // Prepare a JSON array from the list of POJOs for the collection to be updated, e.g. [{"film1",...}, ...]
+      // Prepare a JSON array from the list of POJOs for the collection to be updated,
+      // e.g. [{"film1",...}, ...]
       ArrayNode updatedCollection = jsonMapper.valueToTree(items);
       // Add the JSON array in allCollections, e.g. : { users:[...], items:[...]}
       ((ObjectNode) allCollections).putArray(collectionName).addAll(updatedCollection);
@@ -58,6 +62,9 @@ public class Json<T> {
     }
   }
 
+  /**
+   * @param collectionName name of the collection
+   */
   public List<T> parse(String collectionName) {
     try {
       // get allCollections
@@ -65,8 +72,7 @@ public class Json<T> {
       // accessing value of the specified field of an object node,
       // e.g. the JSON array within "items" field of { users:[...], items:[...]}
       JsonNode collection = node.get(collectionName);
-      if (collection == null) // Send an empty list if there is not the requested collection
-      {
+      if (collection == null) { // Send an empty list if there is not the requested collection
         return (List<T>) new ArrayList<T>();
       }
       // convert the JsonNode to a List of POJOs & return it
@@ -79,6 +85,9 @@ public class Json<T> {
     }
   }
 
+  /**
+   * @param list list
+   */
   public <T> List<T> filterPublicJsonViewAsList(List<T> list) {
     try {
       JavaType type = jsonMapper.getTypeFactory().constructCollectionType(List.class, this.type);
@@ -97,6 +106,9 @@ public class Json<T> {
 
   }
 
+  /**
+   * @param item item
+   */
   public <T> T filterPublicJsonView(T item) {
     try {
       // serialize using JSON Views : public view (all fields not required in the
@@ -115,6 +127,11 @@ public class Json<T> {
   }
 
   // To be used if you want to filter attributes when serializing in a JSON file
+
+  /**
+   * @param items          to serialize
+   * @param collectionName name of the collection
+   */
   public void serializePublicInfoOnly(List<T> items, String collectionName) {
     try {
       String currentCollectionAsString = jsonMapper.writerWithView(Views.Public.class)
@@ -137,7 +154,8 @@ public class Json<T> {
         ((ObjectNode) allCollections).remove(collectionName); //e.g. it leaves { users:[...]}
       }
 
-      // Prepare a JSON array from the list of POJOs for the collection to be updated, e.g. [{"film1",...}, ...]
+      // Prepare a JSON array from the list of POJOs for the collection to be updated,
+      // e.g. [{"film1",...}, ...]
       //ArrayNode updatedCollection = jsonMapper.valueToTree(items);
 
       // Add the JSON array in allCollections, e.g. : { users:[...], items:[...]}

@@ -21,26 +21,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext requestContext) /*throws IOException*/ {
-//        String token = requestContext.getHeaderString("Authorization");
-//        if (token == null) {
-//            requestContext.abortWith(Response.status(Status.UNAUTHORIZED)
-//                    .entity("A token is needed to access this resource").build());
-//        } else {
-//            DecodedJWT decodedToken = null;
-//            try {
-//                decodedToken = this.jwtVerifier.verify(token);
-//            } catch (Exception e) {
-//                throw new TokenDecodingException(e);
-//            }
-//            User authenticatedUser = myUserDataService.getOne(decodedToken.getClaim("user").asInt());
-//            if (authenticatedUser == null) {
-//                requestContext.abortWith(Response.status(Status.FORBIDDEN)
-//                        .entity("You are forbidden to access this resource").build());
-//            }
-//
-//            requestContext.setProperty("user",
-//                    myUserDataService.getOne(decodedToken.getClaim("user").asInt()));
-//        }
+
   }
 
 }
