@@ -23,6 +23,9 @@ public class MemberDTO {
     this.first_name = first_name;
     this.call_number = call_number;
     this.reason_for_conn_refusal = reason_for_conn_refusal;
+    if (!state.equals("pending") || !state.equals("valid") || !state.equals("denied"))
+      throw new IllegalArgumentException();
+
     this.state = state;
     this.isAdmin = isAdmin;
 
@@ -144,5 +147,5 @@ public class MemberDTO {
     return super.equals(obj);
   }
 
- 
+
 }
