@@ -2,10 +2,10 @@ package be.vinci.pae.main;
 
 public class MemberDTO {
 
-  private int id_member;
-  private String password, username, last_name, first_name, call_number, reason_for_conn_refusal, state;
+  private int idMember;
+  private String password, username, lastName, firstName, callNumber, reasonForConnRefusal, state;
   private boolean isAdmin;
-  private int count_object_not_collected, count_object_given, count_object_got = 0;
+  private int countObjectNotCollected, countObjectGiven, countObjectGot = 0;
 
 
   public MemberDTO() {
@@ -13,18 +13,20 @@ public class MemberDTO {
   }
 
 
-  public MemberDTO(int id_member, String password, String username, String last_name,
-      String first_name, String call_number, String reason_for_conn_refusal, String state,
+  public MemberDTO(int idMember, String password, String username, String last_name,
+      String first_name, String callNumber, String reasonForConnRefusal, String state,
       boolean isAdmin) {
-    this.id_member = id_member;
+
+    this.idMember = idMember;
     this.password = password;
     this.username = username;
-    this.last_name = last_name;
-    this.first_name = first_name;
-    this.call_number = call_number;
-    this.reason_for_conn_refusal = reason_for_conn_refusal;
-    if (!state.equals("pending") || !state.equals("valid") || !state.equals("denied"))
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.callNumber = callNumber;
+    this.reasonForConnRefusal = reasonForConnRefusal;
+    if (!state.equals("pending") || !state.equals("valid") || !state.equals("denied")) {
       throw new IllegalArgumentException();
+    }
 
     this.state = state;
     this.isAdmin = isAdmin;
@@ -32,11 +34,11 @@ public class MemberDTO {
   }
 
   public int getId_member() {
-    return id_member;
+    return idMember;
   }
 
-  public void setId_member(int id_member) {
-    this.id_member = id_member;
+  public void setIdMember(int id_member) {
+    this.idMember = id_member;
   }
 
   public String getPassword() {
@@ -56,35 +58,35 @@ public class MemberDTO {
   }
 
   public String getLast_name() {
-    return last_name;
+    return lastName;
   }
 
-  public void setLast_name(String last_name) {
-    this.last_name = last_name;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
   public String getFirst_name() {
-    return first_name;
+    return firstName;
   }
 
   public void setFirst_name(String first_name) {
-    this.first_name = first_name;
+    this.firstName = first_name;
   }
 
   public String getCall_number() {
-    return call_number;
+    return callNumber;
   }
 
   public void setCall_number(String call_number) {
-    this.call_number = call_number;
+    this.callNumber = call_number;
   }
 
   public String getReason_for_conn_refusal() {
-    return reason_for_conn_refusal;
+    return reasonForConnRefusal;
   }
 
   public void setReason_for_conn_refusal(String reason_for_conn_refusal) {
-    this.reason_for_conn_refusal = reason_for_conn_refusal;
+    this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
   public String getState() {
@@ -103,37 +105,37 @@ public class MemberDTO {
     isAdmin = admin;
   }
 
-  public int getCount_object_not_collected() {
-    return count_object_not_collected;
+  public int getCountObjectNotCollected() {
+    return countObjectNotCollected;
   }
 
-  public void setCount_object_not_collected(int count_object_not_collected) {
-    this.count_object_not_collected = count_object_not_collected;
+  public void setCountObjectNotCollected(int countObjectNotCollected) {
+    this.countObjectNotCollected = countObjectNotCollected;
   }
 
-  public int getCount_object_given() {
-    return count_object_given;
+  public int getCountObjectgiven() {
+    return countObjectGiven;
   }
 
-  public void setCount_object_given(int count_object_given) {
-    this.count_object_given = count_object_given;
+  public void setCountObjectGiven(int countObjectGiven) {
+    this.countObjectGiven = countObjectGiven;
   }
 
-  public int getCount_object_got() {
-    return count_object_got;
+  public int getCountObjectGot() {
+    return countObjectGot;
   }
 
-  public void setCount_object_got(int count_object_got) {
-    this.count_object_got = count_object_got;
+  public void setCountObjectGot(int countObjectGot) {
+    this.countObjectGot = countObjectGot;
   }
 
   @Override
   public String toString() {
     return "Member{" +
-        "id_member=" + id_member +
+        "id_member=" + idMember +
         ", username='" + username + '\'' +
-        ", last_name='" + last_name + '\'' +
-        ", first_name='" + first_name + '\'' +
+        ", last_name='" + lastName + '\'' +
+        ", first_name='" + firstName + '\'' +
         '}';
   }
 

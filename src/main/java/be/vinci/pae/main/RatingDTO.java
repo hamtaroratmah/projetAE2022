@@ -1,17 +1,17 @@
 package be.vinci.pae.main;
 
-public class RatingsDTO {
+public class RatingDTO {
 
-  private int id_rating;
+  private int idRating;
   private int rating;
 
-  public RatingsDTO(int id_rating, int rating) {
-    this.id_rating = id_rating;
+  public RatingDTO(int idRating, int rating) {
+    this.idRating = idRating;
     this.rating = rating;
   }
 
-  public int getId_rating() {
-    return id_rating;
+  public int getIdRating() {
+    return idRating;
   }
 
 
@@ -22,4 +22,6 @@ public class RatingsDTO {
   public void setRating(int rating) {
     this.rating = rating;
   }
+
+
 }
