@@ -1,7 +1,7 @@
 package be.vinci.pae.services.utils;
 
-import be.vinci.utils.Config;
-import be.vinci.views.Views;
+import be.vinci.pae.utils.Config;
+import be.vinci.pae.views.Views;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -65,10 +65,10 @@ public class Json<T> {
       // accessing value of the specified field of an object node,
       // e.g. the JSON array within "items" field of { users:[...], items:[...]}
       JsonNode collection = node.get(collectionName);
-        if (collection == null) // Send an empty list if there is not the requested collection
-        {
-            return (List<T>) new ArrayList<T>();
-        }
+      if (collection == null) // Send an empty list if there is not the requested collection
+      {
+        return (List<T>) new ArrayList<T>();
+      }
       // convert the JsonNode to a List of POJOs & return it
       return jsonMapper.readerForListOf(type).readValue(collection);
     } catch (FileNotFoundException e) {
