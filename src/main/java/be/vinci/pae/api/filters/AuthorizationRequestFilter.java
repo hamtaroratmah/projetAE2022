@@ -14,7 +14,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
 //  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
-//      .build();
+//  .build();
 
 
   @Override

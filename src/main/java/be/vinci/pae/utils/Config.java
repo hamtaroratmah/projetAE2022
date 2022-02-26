@@ -10,6 +10,7 @@ public class Config {
   private static Properties props;
 
   /**
+   * Load Properties File
    * @param file to load
    */
   public static void load(String file) {
