@@ -104,5 +104,5 @@ target/
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,java-web
 
 # node modules
-src/main/java/be/vinci/pae/webapp/node_modules
-src/main/java/be/vinci/pae/webapp/package-lock.json
+webapp/node_modules
+webapp/package-lock.json
