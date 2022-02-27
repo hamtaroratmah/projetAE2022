@@ -23,16 +23,16 @@ public class Config {
     }
   }
 
-  public static String getProperty(String key) {
-    return props.getProperty(key);
-  }
-
   public static Integer getIntProperty(String key) {
     return Integer.parseInt(props.getProperty(key));
   }
 
   public static boolean getBoolProperty(String key) {
     return Boolean.parseBoolean(props.getProperty(key));
+  }
+
+  public static String getProperty(String key) {
+    return props.getProperty(key);
   }
 
 }
