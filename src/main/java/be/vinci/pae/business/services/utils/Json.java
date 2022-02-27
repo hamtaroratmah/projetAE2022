@@ -1,7 +1,7 @@
-package be.vinci.pae.services.utils;
+package be.vinci.pae.business.services.utils;
 
-import be.vinci.pae.utils.Config;
-import be.vinci.pae.views.Views;
+import be.vinci.pae.business.utils.Config;
+import be.vinci.pae.business.views.Views;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,6 +31,7 @@ public class Json<T> {
 
   /**
    * Serialize collection to JSON
+   *
    * @param items          to serialize
    * @param collectionName name of the collection
    */
@@ -65,6 +66,7 @@ public class Json<T> {
 
   /**
    * Parse parameter from JSON
+   *
    * @param collectionName name of the collection
    */
   public List<T> parse(String collectionName) {
@@ -89,6 +91,7 @@ public class Json<T> {
 
   /**
    * Filter JsonView as List
+   *
    * @param list list
    */
   public <T> List<T> filterPublicJsonViewAsList(List<T> list) {
@@ -111,6 +114,7 @@ public class Json<T> {
 
   /**
    * Filter JsonView
+   *
    * @param item item
    */
   public <T> T filterPublicJsonView(T item) {
@@ -131,9 +135,9 @@ public class Json<T> {
   }
 
 
-
   /**
    * To be used if you want to filter attributes when serializing in a JSON file
+   *
    * @param items          to serialize
    * @param collectionName name of the collection
    */

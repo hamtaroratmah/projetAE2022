@@ -1,4 +1,4 @@
-package be.vinci.pae.views;
+package be.vinci.pae.business.views;
 
 public class Views {
 

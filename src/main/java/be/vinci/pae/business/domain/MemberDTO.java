@@ -1,4 +1,4 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.business.domain;
 
 public class MemberDTO {
 
@@ -15,16 +15,16 @@ public class MemberDTO {
   private int countObjectGiven;
   private int countObjectGot = 0;
 
-/**
- * Empty constructor
- */
+  /**
+   * Empty constructor
+   */
   public MemberDTO() {
 
   }
 
 
-  public MemberDTO(int idMember , String password , String username , String lastName ,
-      String firstName , String callNumber , String reasonForConnRefusal , String state ,
+  public MemberDTO(int idMember, String password, String username, String lastName,
+      String firstName, String callNumber, String reasonForConnRefusal, String state,
       boolean isAdmin) {
     this.idMember = idMember;
     this.password = password;
@@ -137,27 +137,18 @@ public class MemberDTO {
   @Override
   public String toString() {
     return "Member{"
-            + "id_member="
-            + idMember
-            +", username='"
-            + username
-            + '\''
-            +", last_name='"
-            + lastName
-            + '\''
-            +", first_name='"
-            + firstName
-            + '\''
-            +'}';
+        + "id_member="
+        + idMember
+        + ", username='"
+        + username
+        + '\''
+        + ", last_name='"
+        + lastName
+        + '\''
+        + ", first_name='"
+        + firstName
+        + '\''
+        + '}';
   }
 
-  public int hashCode() {
-    return super.hashCode();
-  }
-
-  public boolean equals(Object obj) {
-    return super.equals(obj);
-  }
-
- 
 }

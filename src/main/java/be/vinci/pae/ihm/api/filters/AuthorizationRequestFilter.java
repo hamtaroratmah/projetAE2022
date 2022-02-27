@@ -1,6 +1,6 @@
-package be.vinci.pae.api.filters;
+package be.vinci.pae.ihm.api.filters;
 
-import be.vinci.pae.utils.Config;
+import be.vinci.pae.business.utils.Config;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.container.ContainerRequestContext;

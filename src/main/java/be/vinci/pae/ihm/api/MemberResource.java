@@ -1,4 +1,4 @@
-package be.vinci.pae.api;
+package be.vinci.pae.ihm.api;
 
 public class MemberResource {
 

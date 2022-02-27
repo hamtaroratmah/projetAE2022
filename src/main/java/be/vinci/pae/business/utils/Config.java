@@ -1,4 +1,4 @@
-package be.vinci.pae.utils;
+package be.vinci.pae.business.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +11,7 @@ public class Config {
 
   /**
    * Load Properties File
+   *
    * @param file to load
    */
   public static void load(String file) {

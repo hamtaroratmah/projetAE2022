@@ -1,4 +1,4 @@
-package be.vinci.pae.utils;
+package be.vinci.pae.business.utils;
 
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
