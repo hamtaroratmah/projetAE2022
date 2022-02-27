@@ -7,7 +7,7 @@ const Login =  () => {
       <div id="loginContainer">
         <form action="" id="loginForm">
           <input type="text" name="username" id="" class="field">
-</form>
+        </form>
       </div>
     </div>`;
 };
