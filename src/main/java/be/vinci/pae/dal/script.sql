@@ -16,6 +16,7 @@ CREATE TABLE pae.members
 (
     id_member                  SERIAL PRIMARY KEY,
     password                   VARCHAR(25),
+    username                   VARCHAR(25),
     last_name                  VARCHAR(25),
     first_name                 VARCHAR(25),
     address                    INTEGER REFERENCES pae.addresses (id_address),
