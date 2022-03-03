@@ -6,8 +6,8 @@ public class DalFactory {
 
   }
 
-  public Db getDb() {
-    return new DbImpl();
+  public DalServices getDalServices() {
+    return new DalServices();
   }
 
 }

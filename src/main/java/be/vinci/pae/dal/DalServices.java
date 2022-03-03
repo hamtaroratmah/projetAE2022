@@ -4,14 +4,15 @@ import be.vinci.pae.business.utils.Config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DbImpl implements Db {
+public class DalServices {
 
+  Connection conn = null;
   private PreparedStatement psGetHashedPassword;
 
-  public DbImpl() {
+
+  public DalServices() {
     Config config = new Config();
     String dbUsername = Config.getProperty("dbUsername");
     String dbPassword = Config.getProperty("dbPassword");
@@ -22,37 +23,25 @@ public class DbImpl implements Db {
       System.out.println("Driver PostgreSQL manquant !");
       System.exit(1);
     }
-
-    Connection conn = null;
     try {
       conn = DriverManager.getConnection(url, dbUsername, dbPassword);
     } catch (SQLException e) {
       System.out.println("Impossible de joindre le server !");
       System.exit(1);
     }
-    try {
-      psGetHashedPassword = conn.prepareStatement("SELECT me.password"
-          + " FROM pae.members me "
-          + "WHERE me.username = ?");
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
   }
 
-  @Override
-  public String getHashedPassword(String username) {
+  public PreparedStatement getPsGetHashedPassword() {
     try {
-      psGetHashedPassword.setString(1, username);
-      ResultSet password = psGetHashedPassword.executeQuery();
-      if (password == null) {
-        return "Username not found";
-      }
-      return password.getString(1);
-    } catch (SQLException e) {
+      psGetHashedPassword = conn.prepareStatement("SELECT id_member, password, username,"
+          + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+          + " state, count_object_not_collected, count_object_given, count_object_got"
+          + " FROM pae.members "
+          + "WHERE username = ?");
+    } catch (
+        SQLException e) {
       e.printStackTrace();
     }
-    return "";
+    return psGetHashedPassword;
   }
-
 }

@@ -1,6 +1,6 @@
 package be.vinci.pae.business.services;
 
-import be.vinci.pae.business.domain.Member;
+import be.vinci.pae.business.domain.interfaces.Member;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 

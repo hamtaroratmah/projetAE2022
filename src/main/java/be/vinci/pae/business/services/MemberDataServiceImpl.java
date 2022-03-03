@@ -1,8 +1,8 @@
 package be.vinci.pae.business.services;
 
 
-import be.vinci.pae.business.domain.DomainFactory;
-import be.vinci.pae.business.domain.Member;
+import be.vinci.pae.business.domain.interfaces.DomainFactory;
+import be.vinci.pae.business.domain.interfaces.Member;
 import be.vinci.pae.business.services.utils.Json;
 import be.vinci.pae.business.utils.Config;
 import com.auth0.jwt.JWT;

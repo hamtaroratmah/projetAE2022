@@ -1,6 +1,8 @@
-package be.vinci.pae.main;
+package be.vinci.pae.business.domain;
 
-public class InterestDTO {
+import be.vinci.pae.business.domain.interfaces.InterestDTO;
+
+public class InterestDTOImpl implements InterestDTO {
 
   private int idInterest;
   private int idItem;
@@ -9,32 +11,38 @@ public class InterestDTO {
   /**
    * Class constructor.
    */
-  public InterestDTO(int idInterest, int idItem, int idMember) {
+  public InterestDTOImpl(int idInterest, int idItem, int idMember) {
     this.idInterest = idInterest;
     this.idItem = idItem;
     this.idMember = idMember;
   }
 
+  @Override
   public int getIdInterest() {
     return idInterest;
   }
 
+  @Override
   public void setIdInterest(int idInterest) {
     this.idInterest = idInterest;
   }
 
+  @Override
   public int getIdItem() {
     return idItem;
   }
 
+  @Override
   public void setIdItem(int idItem) {
     this.idItem = idItem;
   }
 
+  @Override
   public int getIdMember() {
     return idMember;
   }
 
+  @Override
   public void setIdMember(int idMember) {
     this.idMember = idMember;
   }

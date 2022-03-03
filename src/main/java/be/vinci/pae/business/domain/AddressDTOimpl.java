@@ -1,6 +1,8 @@
-package be.vinci.pae.main;
+package be.vinci.pae.business.domain;
 
-public class AddressDTO {
+import be.vinci.pae.business.domain.interfaces.AddressDTO;
+
+public class AddressDTOimpl implements AddressDTO {
 
   private int idAddress;
   private String street;
@@ -13,7 +15,7 @@ public class AddressDTO {
   /**
    * Class constructor.
    */
-  public AddressDTO(int idAddress, String street, String buildingNumber, int postcode,
+  public AddressDTOimpl(int idAddress, String street, String buildingNumber, int postcode,
       String commune, String city, String unitNumber) {
     this.idAddress = idAddress;
     this.street = street;
@@ -24,58 +26,72 @@ public class AddressDTO {
     this.unitNumber = unitNumber;
   }
 
+  @Override
   public int getIdAddress() {
     return idAddress;
   }
 
+  @Override
   public void setIdAddress(int idAddress) {
     this.idAddress = idAddress;
   }
 
+  @Override
   public String getStreet() {
     return street;
   }
 
+  @Override
   public void setStreet(String street) {
     this.street = street;
   }
 
+  @Override
   public String getBuildingNumber() {
     return buildingNumber;
   }
 
+  @Override
   public void setBuildingNumber(String buildingNumber) {
     this.buildingNumber = buildingNumber;
   }
 
+  @Override
   public int getPostcode() {
     return postcode;
   }
 
+  @Override
   public void setPostcode(int postcode) {
     this.postcode = postcode;
   }
 
+  @Override
   public String getCommune() {
     return commune;
   }
 
+  @Override
   public void setCommune(String commune) {
     this.commune = commune;
   }
 
+  @Override
   public String getCity() {
     return city;
   }
 
+  @Override
   public void setCity(String city) {
     this.city = city;
   }
 
+  @Override
   public String getUnitNumber() {
     return unitNumber;
   }
 
+  @Override
   public void setUnitNumber(String unitNumber) {
     this.unitNumber = unitNumber;
   }

@@ -1,6 +1,8 @@
-package be.vinci.pae.main;
+package be.vinci.pae.business.domain;
 
-public class MemberDTO {
+import be.vinci.pae.business.domain.interfaces.MemberDTO;
+
+public class MemberDTOImpl implements MemberDTO {
 
   private int idMember;
   private String password;
@@ -15,16 +17,17 @@ public class MemberDTO {
   private int countObjectGiven;
   private int countObjectGot = 0;
 
-
-  public MemberDTO() {
+  /**
+   * Empty constructor
+   */
+  public MemberDTOImpl() {
 
   }
 
-  //member constructor
-  public MemberDTO(int idMember, String password, String username, String lastName,
+
+  public MemberDTOImpl(int idMember, String password, String username, String lastName,
       String firstName, String callNumber, String reasonForConnRefusal, String state,
       boolean isAdmin) {
-
     this.idMember = idMember;
     this.password = password;
     this.username = username;
@@ -32,130 +35,146 @@ public class MemberDTO {
     this.firstName = firstName;
     this.callNumber = callNumber;
     this.reasonForConnRefusal = reasonForConnRefusal;
-    if (!state.equals("pending") || !state.equals("valid") || !state.equals("denied")) {
-      throw new IllegalArgumentException();
-    }
-
     this.state = state;
     this.isAdmin = isAdmin;
 
   }
 
+  @Override
   public int getIdMember() {
     return idMember;
   }
 
+  @Override
   public void setIdMember(int idMember) {
     this.idMember = idMember;
   }
 
+  @Override
   public String getPassword() {
     return password;
   }
 
+  @Override
   public void setPassword(String password) {
     this.password = password;
   }
 
+  @Override
   public String getUsername() {
     return username;
   }
 
+  @Override
   public void setUsername(String username) {
     this.username = username;
   }
 
+  @Override
   public String getLastName() {
     return lastName;
   }
 
+  @Override
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
+  @Override
   public String getFirstName() {
     return firstName;
   }
 
+  @Override
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
+  @Override
   public String getCallNumber() {
     return callNumber;
   }
 
+  @Override
   public void setCallNumber(String callNumber) {
     this.callNumber = callNumber;
   }
 
+  @Override
   public String getReasonForConnRefusal() {
     return reasonForConnRefusal;
   }
 
+  @Override
   public void setReasonForConnRefusal(String reasonForConnRefusal) {
     this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
+  @Override
   public String getState() {
     return state;
   }
 
+  @Override
   public void setState(String state) {
     this.state = state;
   }
 
+  @Override
   public boolean isAdmin() {
     return isAdmin;
   }
 
+  @Override
   public void setAdmin(boolean admin) {
     isAdmin = admin;
   }
 
+  @Override
   public int getCountObjectNotCollected() {
     return countObjectNotCollected;
   }
 
+  @Override
   public void setCountObjectNotCollected(int countObjectNotCollected) {
     this.countObjectNotCollected = countObjectNotCollected;
   }
 
-  public int getCountObjectgiven() {
+  @Override
+  public int getCountObjectGiven() {
     return countObjectGiven;
   }
 
+  @Override
   public void setCountObjectGiven(int countObjectGiven) {
     this.countObjectGiven = countObjectGiven;
   }
 
+  @Override
   public int getCountObjectGot() {
     return countObjectGot;
   }
 
+  @Override
   public void setCountObjectGot(int countObjectGot) {
     this.countObjectGot = countObjectGot;
   }
 
   @Override
   public String toString() {
-    return "Member{" +
-        "idMember=" + idMember
-        + ", username='" + username + '\''
-        + ", lastName='" + lastName + '\''
-        + ", firstName='" + firstName + '\''
+    return "Member{"
+        + "id_member="
+        + idMember
+        + ", username='"
+        + username
+        + '\''
+        + ", last_name='"
+        + lastName
+        + '\''
+        + ", first_name='"
+        + firstName
+        + '\''
         + '}';
   }
-
-  @Override
-  public int hashCode() {
-    return super.hashCode();
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    return super.equals(obj);
-  }
-
 
 }
