@@ -13,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 /**
  * be.vinci.pae.main.Main class.
  */
+
 public class Main {
 
   // Base URI the Grizzly HTTP server will listen on
@@ -54,3 +55,7 @@ public class Main {
     server.stop();
   }
 }
+
+
+
+
