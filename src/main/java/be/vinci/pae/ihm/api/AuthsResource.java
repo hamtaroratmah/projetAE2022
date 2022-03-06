@@ -1,5 +1,6 @@
 package be.vinci.pae.ihm.api;
 
+import be.vinci.pae.business.services.MemberDataService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.ws.rs.Consumes;
@@ -24,8 +25,12 @@ public class AuthsResource {
     }
     String login = json.get("login").asText();
     String password = json.get("password").asText();
-    // Try to login
-    ObjectNode publicUser = myUserDataService.login(login, password);
+
+    System.out.println("before memberDataService");
+    //TODO use factory as soon as it's made
+    MemberDataService memberDataService = new MemberDataService();
+    System.out.println("after memberDataService");
+    ObjectNode publicUser = memberDataService.login(login, password);
     if (publicUser == null) {
       throw new WebApplicationException("Login or password incorrect",
           Response.Status.UNAUTHORIZED);

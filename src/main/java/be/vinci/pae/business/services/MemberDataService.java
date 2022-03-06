@@ -1,22 +1,49 @@
 package be.vinci.pae.business.services;
 
-import be.vinci.pae.business.domain.interfaces.Member;
+
+import be.vinci.pae.business.domain.businessDomain.Member;
+import be.vinci.pae.business.domain.interfaces.DomainFactory;
+import be.vinci.pae.business.domain.interfaces.MemberDTO;
+import be.vinci.pae.business.utils.Config;
+import be.vinci.pae.dal.MemberDao;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.List;
+import jakarta.inject.Inject;
 
-public interface MemberDataService {
+public class MemberDataService {
 
-  List<Member> getAll();
+  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
+  private final ObjectMapper jsonMapper = new ObjectMapper();
+  @Inject
+  private DomainFactory domainFactory;
+  @Inject
+  private MemberDao memberDao = new MemberDao();
 
-  Member getOne(int id);
+  public MemberDTO getOne(String login) {
+    return memberDao.getMember(login);
+  }
 
-  Member getOne(String login);
+  public ObjectNode login(String username, String password) {
+    Member member = new Member(getOne(username));
+    System.out.println("password = " + password);
+    if (!member.checkPassword(password)) {
+      return null;
+    }
+    String token;
+    try {
+      token = JWT.create().withIssuer("auth0")
+          .withClaim("member", member.getMember().getIdMember()).sign(this.jwtAlgorithm);
+      return jsonMapper.createObjectNode()
+          .put("token", token)
+          .put("id", member.getMember().getIdMember())
+          .put("username", member.getMember().getUsername());
 
-  Member createOne(Member item);
+    } catch (Exception e) {
+      System.out.println("Unable to create token");
+      return null;
+    }
+  }
 
-  int nextItemId();
-
-  ObjectNode login(String login, String password);
-
-  ObjectNode register(Member member);
 }

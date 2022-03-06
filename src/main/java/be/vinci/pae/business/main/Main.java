@@ -15,13 +15,13 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 
 public class Main {
-
-  // Base URI the Grizzly HTTP server will listen on
-  public static final String BASE_URI = Config.getProperty("BaseUri");
-
+  
   static {
     Config.load("dev.properties");
   }
+
+  // Base URI the Grizzly HTTP server will listen on
+  public static final String BASE_URI = Config.getProperty("BaseUri");
 
   /**
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
@@ -31,7 +31,7 @@ public class Main {
   public static HttpServer startServer() {
     // create a resource config that scans for JAX-RS resources and providers
     // in vinci.be package
-    final ResourceConfig rc = new ResourceConfig().packages("be.vinci.api")
+    final ResourceConfig rc = new ResourceConfig().packages("be.vinci.pae")
         .register(JacksonFeature.class)
         .register(ApplicationBinder.class)
         .register(WebExceptionMapper.class);

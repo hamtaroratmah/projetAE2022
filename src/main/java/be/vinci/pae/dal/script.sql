@@ -15,7 +15,7 @@ CREATE TABLE pae.addresses
 CREATE TABLE pae.members
 (
     id_member                  SERIAL PRIMARY KEY,
-    password                   VARCHAR(25),
+    password                   VARCHAR(60),
     username                   VARCHAR(25),
     last_name                  VARCHAR(25),
     first_name                 VARCHAR(25),
@@ -86,5 +86,11 @@ INSERT INTO pae.members
  state, count_object_not_collected, count_object_given, count_object_got)
 VALUES ('stal', 'bouillon', 'guillaume', 1, '0496847357', DEFAULT, NULL, 'pending', DEFAULT,
         DEFAULT, DEFAULT);
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid')
 
 

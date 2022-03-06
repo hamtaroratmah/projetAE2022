@@ -1,4 +1,4 @@
-package be.vinci.pae.business.domain;
+package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfaces.RatingDTO;
 

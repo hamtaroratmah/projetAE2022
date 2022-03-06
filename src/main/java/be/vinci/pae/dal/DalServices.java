@@ -9,8 +9,6 @@ import java.sql.SQLException;
 public class DalServices {
 
   Connection conn = null;
-  private PreparedStatement psGetHashedPassword;
-
 
   public DalServices() {
     Config config = new Config();
@@ -31,9 +29,10 @@ public class DalServices {
     }
   }
 
-  public PreparedStatement getPsGetHashedPassword() {
+  public PreparedStatement getUser(String user) {
+    PreparedStatement statement = null;
     try {
-      psGetHashedPassword = conn.prepareStatement("SELECT id_member, password, username,"
+      statement = conn.prepareStatement("SELECT id_member, password, username,"
           + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
           + " state, count_object_not_collected, count_object_given, count_object_got"
           + " FROM pae.members "
@@ -42,6 +41,7 @@ public class DalServices {
         SQLException e) {
       e.printStackTrace();
     }
-    return psGetHashedPassword;
+    return statement;
   }
+
 }

@@ -1,6 +1,6 @@
 package be.vinci.pae.business.domain;
 
-import be.vinci.pae.dal.UserDAO;
+import be.vinci.pae.dal.MemberDao;
 
 public class BizFactory {
 
@@ -8,8 +8,8 @@ public class BizFactory {
 
   }
 
-  public UserDAO getUserDAO() {
-    return new UserDAO();
+  public MemberDao getUserDAO() {
+    return new MemberDao();
   }
 
 }
