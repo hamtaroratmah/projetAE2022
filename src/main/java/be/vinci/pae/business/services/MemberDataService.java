@@ -39,9 +39,7 @@ public class MemberDataService {
       token = JWT.create().withIssuer("auth0")
           .withClaim("member", member.getMember().getIdMember()).sign(this.jwtAlgorithm);
       return jsonMapper.createObjectNode()
-          .put("token", token)
-          .put("id", member.getMember().getIdMember())
-          .put("username", member.getMember().getUsername());
+          .put("token", token);
 
     } catch (Exception e) {
       System.out.println("Unable to create token");

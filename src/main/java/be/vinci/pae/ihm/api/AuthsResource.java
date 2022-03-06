@@ -24,9 +24,6 @@ public class AuthsResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjectNode login(JsonNode json) {
-
-    System.out.println(json.hasNonNull("username"));
-    System.out.println(json.hasNonNull("password"));
     // Get and check credentials
     if (!json.hasNonNull("username") || !json.hasNonNull("password")) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
