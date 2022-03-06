@@ -23,16 +23,13 @@ public class AuthsResource {
     if (!json.hasNonNull("login") || !json.hasNonNull("password")) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
-    String login = json.get("login").asText();
+    String login = json.get("login").asText().toLowerCase();
     String password = json.get("password").asText();
-
-    System.out.println("before memberDataService");
     //TODO use factory as soon as it's made
     MemberDataService memberDataService = new MemberDataService();
-    System.out.println("after memberDataService");
     ObjectNode publicUser = memberDataService.login(login, password);
     if (publicUser == null) {
-      throw new WebApplicationException("Login or password incorrect",
+      throw new WebApplicationException("Password incorrect",
           Response.Status.UNAUTHORIZED);
     }
     return publicUser;

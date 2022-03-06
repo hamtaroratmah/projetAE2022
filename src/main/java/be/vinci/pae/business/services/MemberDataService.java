@@ -27,7 +27,6 @@ public class MemberDataService {
 
   public ObjectNode login(String username, String password) {
     Member member = new Member(getOne(username));
-    System.out.println("password = " + password);
     if (!member.checkPassword(password)) {
       return null;
     }

@@ -72,25 +72,34 @@ CREATE TABLE pae.interests
     id_member   INTEGER REFERENCES pae.members (id_member)
 );
 
+-- INSERT FAKE MEMBERS
 
 INSERT INTO pae.addresses
 (street, building_number, postcode, commune, city, unit_number)
-VALUES ('laBas', 4, 4781, 'BXl', 'BXL NORD', 2);
-INSERT INTO pae.members
-(password, last_name, first_name, address, call_number, isadmin, reason_for_conn_refusal,
- state, count_object_not_collected, count_object_given, count_object_got)
-VALUES ('123', 'gharroudi', 'souli', 1, '0496873357', DEFAULT, NULL, 'valid', DEFAULT, DEFAULT,
-        DEFAULT);
-INSERT INTO pae.members
-(password, last_name, first_name, address, call_number, isadmin, reason_for_conn_refusal,
- state, count_object_not_collected, count_object_given, count_object_got)
-VALUES ('stal', 'bouillon', 'guillaume', 1, '0496847357', DEFAULT, NULL, 'pending', DEFAULT,
-        DEFAULT, DEFAULT);
+VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 'Bruxelles', 15);
 
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
  reason_for_conn_refusal, state)
 VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
-        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid')
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'quentin',
+        'Garwig', 'Quentin', 1, '0489789546', true, default, 'valid');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'stal',
+        'Bouillon', 'Guillaume', 1, '0489789546', true, default, 'valid');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
+        'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
 
 
