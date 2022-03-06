@@ -38,9 +38,6 @@ async function login(e) {
   const errorLogin = document.getElementById("errorLogin");
   errorLogin.innerHTML = "";
 
-  console.log("username = " + username);
-  console.log("password = " + password);
-
   //Verify the user entered all informations to log in and show an error message if not
   try {
     if (!username) {
