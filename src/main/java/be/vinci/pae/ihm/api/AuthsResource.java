@@ -14,6 +14,11 @@ import jakarta.ws.rs.core.Response;
 @Path("/login")
 public class AuthsResource {
 
+  /**
+   * API login.
+   *
+   * @param json jsonNode created by the request and contains information given by the client
+   */
   @POST
   @Path("login")
   @Consumes(MediaType.APPLICATION_JSON)

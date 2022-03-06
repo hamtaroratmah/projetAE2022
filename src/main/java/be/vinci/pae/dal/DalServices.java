@@ -11,7 +11,7 @@ public class DalServices {
   Connection conn = null;
 
   /**
-   * TODO
+   * Constructor : open the database's connexion.
    */
   public DalServices() {
     String dbUsername = Config.getProperty("dbUsername");
@@ -32,9 +32,10 @@ public class DalServices {
   }
 
   /**
-   * TODO
+   * Return a preparedStatement that can be executed after setting the username if the query is
+   * executed, it'll give a member he's username match with your parameter
    */
-  public PreparedStatement getUser(String user) {
+  public PreparedStatement getUser() {
     PreparedStatement statement = null;
     try {
       statement = conn.prepareStatement("SELECT id_member, password, username,"

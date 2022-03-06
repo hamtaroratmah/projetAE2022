@@ -21,10 +21,16 @@ public class MemberDao {
 
   }
 
+  /**
+   * Get a member according to the username given in parameter and execute a query given by
+   * DalServices class.
+   *
+   * @param username username of the member that you want get
+   */
   public MemberDTO getMember(String username) {
     MemberDTO member = domainFactory.getMemberDto();
     try {
-      PreparedStatement query = services.getUser(username);
+      PreparedStatement query = services.getUser();
       query.setString(1, username);
       ResultSet resultSetMember = query.executeQuery();
       if (!resultSetMember.next()) {
