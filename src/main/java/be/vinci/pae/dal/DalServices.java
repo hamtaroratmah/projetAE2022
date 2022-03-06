@@ -11,7 +11,6 @@ public class DalServices {
   Connection conn = null;
 
   public DalServices() {
-    Config config = new Config();
     String dbUsername = Config.getProperty("dbUsername");
     String dbPassword = Config.getProperty("dbPassword");
     String url = Config.getProperty("dbUrl");

@@ -1,7 +1,5 @@
 package be.vinci.pae.ihm.api.filters;
 
-import be.vinci.pae.business.utils.Config;
-import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -12,7 +10,7 @@ import jakarta.ws.rs.ext.Provider;
 @Authorize
 public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
-  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
+//  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
 //  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
 //  .build();
 

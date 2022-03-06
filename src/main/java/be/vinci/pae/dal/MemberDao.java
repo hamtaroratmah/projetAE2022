@@ -27,10 +27,9 @@ public class MemberDao {
       PreparedStatement query = services.getUser(username);
       query.setString(1, username);
       ResultSet resultSetMember = query.executeQuery();
-      if (!resultSetMember.isBeforeFirst()) {
+      if (!resultSetMember.next()) {
         throw new WebApplicationException("Username not found");
       }
-      resultSetMember.next();
       member.setIdMember(resultSetMember.getInt(1));
       member.setPassword(resultSetMember.getString(2));
       member.setUsername(resultSetMember.getString(3));

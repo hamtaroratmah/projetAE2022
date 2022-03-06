@@ -2,7 +2,6 @@ package be.vinci.pae.business.services;
 
 
 import be.vinci.pae.business.domain.businessDomain.Member;
-import be.vinci.pae.business.domain.interfaces.DomainFactory;
 import be.vinci.pae.business.domain.interfaces.MemberDTO;
 import be.vinci.pae.business.utils.Config;
 import be.vinci.pae.dal.MemberDao;
@@ -16,8 +15,6 @@ public class MemberDataService {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
-  @Inject
-  private DomainFactory domainFactory;
   @Inject
   private MemberDao memberDao = new MemberDao();
 

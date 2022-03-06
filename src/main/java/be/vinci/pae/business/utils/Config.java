@@ -10,7 +10,7 @@ public class Config {
   private static Properties props;
 
   /**
-   * Load Properties File
+   * Load Properties File.
    *
    * @param file to load
    */
