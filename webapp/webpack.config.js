@@ -20,7 +20,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://localhost:3000",
-        pathRewrite: {'^/api' : ''}
+        pathRewrite: {'^/api': ''}
       },
     },
   },
@@ -30,13 +30,13 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
-      
+
       // emits a separate file and exports the URLs => works for import in JS and url in CSS
       // default condition: a file with size less than 8kb will be treated as a inline module type and resource module type otherwise
       {
-        test: /\.(png|jpg|gif|svg|mp3|mpe?g)$/,        
-        type : 'asset/resource',
-      },  
+        test: /\.(png|jpg|gif|svg|mp3|mpe?g)$/,
+        type: 'asset/resource',
+      },
 
       /*
       // automatically chooses between exporting a data URI and emitting a separate file.
@@ -44,13 +44,13 @@ module.exports = {
         test: /\.(png|jpg|gif|svg|mp3|mpe?g)$/,        
         type : 'asset',
       },  */
-      
+
       // in html file, emits files in output directory
       // and replace the src with the final path (to deal with svg, img...)
       {
         test: /\.html$/i,
         loader: 'html-loader',
-      },  
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,

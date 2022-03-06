@@ -74,4 +74,4 @@ const Redirect = (uri) => {
   }
 };
 
-export { Router, Redirect };
+export {Router, Redirect};

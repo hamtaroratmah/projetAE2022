@@ -33,7 +33,7 @@ public class DalServices {
 
   /**
    * Return a preparedStatement that can be executed after setting the username if the query is
-   * executed, it'll give a member he's username match with your parameter
+   * executed, it'll give a member he's username match with your parameter.
    */
   public PreparedStatement getUser() {
     PreparedStatement statement = null;
