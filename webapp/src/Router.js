@@ -1,10 +1,12 @@
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/Login";
+import Logout from "./Pages/Logout";
 
 // Configure your routes here
 const routes = {
   "/": HomePage,
   "/login": LoginPage,
+  "/logout": Logout,
 };
 
 /**
@@ -41,10 +43,11 @@ const Router = () => {
   /* Route the right component when the page is loaded / refreshed */
   window.addEventListener("load", (e) => {
     const componentToRender = routes[window.location.pathname];
-    if (!componentToRender)
+    if (!componentToRender) {
       throw Error(
           "The " + window.location.pathname + " ressource does not exist."
       );
+    }
 
     componentToRender();
   });

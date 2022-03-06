@@ -12,6 +12,7 @@ const Navbar = () => {
        <p id="navbarTitle">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
        <button id="profileNavbarButton" data-uri="/login">
+       <button id="logoutButton" data-uri="/logout">deconnexion</button>
     </nav>
   `;
 
