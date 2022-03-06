@@ -10,6 +10,9 @@ public class DalServices {
 
   Connection conn = null;
 
+  /**
+   * TODO
+   */
   public DalServices() {
     String dbUsername = Config.getProperty("dbUsername");
     String dbPassword = Config.getProperty("dbPassword");
@@ -28,6 +31,9 @@ public class DalServices {
     }
   }
 
+  /**
+   * TODO
+   */
   public PreparedStatement getUser(String user) {
     PreparedStatement statement = null;
     try {
@@ -36,8 +42,7 @@ public class DalServices {
           + " state, count_object_not_collected, count_object_given, count_object_got"
           + " FROM pae.members "
           + "WHERE username = ?");
-    } catch (
-        SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
     return statement;

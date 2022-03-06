@@ -1,7 +1,8 @@
-package be.vinci.pae.business.domain.businessDomain;
+package be.vinci.pae.business.domain.businessdomain;
+
+import static org.mindrot.jbcrypt.BCrypt.checkpw;
 
 import be.vinci.pae.business.domain.interfaces.MemberDTO;
-import be.vinci.pae.business.utils.BCrypt;
 
 public class Member {
 
@@ -12,7 +13,7 @@ public class Member {
   }
 
   public boolean checkPassword(String password) {
-    return BCrypt.checkpw(password, member.getPassword());
+    return checkpw(password, member.getPassword());
   }
 
   public MemberDTO getMember() {

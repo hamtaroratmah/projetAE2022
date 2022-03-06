@@ -1,7 +1,7 @@
 package be.vinci.pae.business.services;
 
 
-import be.vinci.pae.business.domain.businessDomain.Member;
+import be.vinci.pae.business.domain.businessdomain.Member;
 import be.vinci.pae.business.domain.interfaces.MemberDTO;
 import be.vinci.pae.business.utils.Config;
 import be.vinci.pae.dal.MemberDao;
@@ -22,6 +22,13 @@ public class MemberDataService {
     return memberDao.getMember(login);
   }
 
+
+  /**
+   * Permit to a disconnected user to log in.
+   *
+   * @param username username of the member
+   * @param password non hashed password
+   */
   public ObjectNode login(String username, String password) {
     Member member = new Member(getOne(username));
     if (!member.checkPassword(password)) {

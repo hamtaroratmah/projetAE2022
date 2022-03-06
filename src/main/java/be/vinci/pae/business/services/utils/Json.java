@@ -30,7 +30,7 @@ public class Json<T> {
   }
 
   /**
-   * Serialize collection to JSON
+   * Serialize collection to JSON.
    *
    * @param items          to serialize
    * @param collectionName name of the collection
@@ -65,7 +65,7 @@ public class Json<T> {
   }
 
   /**
-   * Parse parameter from JSON
+   * Parse parameter from JSON.
    *
    * @param collectionName name of the collection
    */
@@ -90,7 +90,7 @@ public class Json<T> {
   }
 
   /**
-   * Filter JsonView as List
+   * Filter JsonView as List.
    *
    * @param list list
    */
@@ -113,7 +113,7 @@ public class Json<T> {
   }
 
   /**
-   * Filter JsonView
+   * Filter JsonView.
    *
    * @param item item
    */
@@ -136,7 +136,7 @@ public class Json<T> {
 
 
   /**
-   * To be used if you want to filter attributes when serializing in a JSON file
+   * To be used if you want to filter attributes when serializing in a JSON file.
    *
    * @param items          to serialize
    * @param collectionName name of the collection

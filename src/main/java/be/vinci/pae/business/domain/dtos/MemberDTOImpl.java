@@ -18,13 +18,25 @@ public class MemberDTOImpl implements MemberDTO {
   private int countObjectGot = 0;
 
   /**
-   * Empty constructor
+   * Empty constructor.
    */
   public MemberDTOImpl() {
 
   }
 
-
+  /**
+   * create new MemberDTOImpl.
+   *
+   * @param idMember             id's member
+   * @param password             hashed password
+   * @param username             unique username
+   * @param lastName             last name
+   * @param firstName            first name
+   * @param callNumber           call number
+   * @param reasonForConnRefusal reason why this member cannot connect to the website
+   * @param state                state where the member lives
+   * @param isAdmin              is the member admin or not
+   */
   public MemberDTOImpl(int idMember, String password, String username, String lastName,
       String firstName, String callNumber, String reasonForConnRefusal, String state,
       boolean isAdmin) {
