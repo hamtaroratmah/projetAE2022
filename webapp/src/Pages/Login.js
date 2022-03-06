@@ -10,7 +10,6 @@ const loginDiv = `
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
                     <input class="inputForm submitButton" type="submit" value="Se connecter">
-                    <a class="loginText" id="goToRegister" type="button">Je n'ai pas encore de compte</a>
                 </form>
             </div>
         </div>
@@ -25,10 +24,6 @@ function LoginPage() {
   pageDiv.innerHTML = loginDiv;
   const form = document.getElementById("loginForm");
   form.addEventListener("submit", login);
-  // goToRegister.addEventListener("click", e => {
-  //   e.preventDefault();
-  //   Redirect("/register");
-  // });
 }
 
 async function login(e) {

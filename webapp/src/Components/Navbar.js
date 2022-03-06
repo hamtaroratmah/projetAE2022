@@ -11,18 +11,22 @@ const Navbar = () => {
     <nav id="navbar">
        <p id="navbarTitle">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
-       <button id="profileNavbarButton"></button>
+       <button id="profileNavbarButton" data-uri="/login">
     </nav>
   `;
 
   navbarWrapper.innerHTML = navbar;
 
+  let isConnected = window.localStorage.length !== 0;
+
   const profileButton = document.querySelector("#profileNavbarButton");
-  if (window.localStorage.length === 0) {
+  if (!isConnected) {
     profileButton.innerText = "Connexion"
   } else {
     profileButton.innerText = "Connecté"
+    profileButton.setAttribute("data-uri", "/");
   }
+
 };
 
 export default Navbar;
