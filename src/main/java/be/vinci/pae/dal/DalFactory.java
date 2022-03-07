@@ -7,7 +7,7 @@ public class DalFactory {
   }
 
   public DalServices getDalServices() {
-    return new DalServices();
+    return new DalServicesImpl();
   }
 
 }

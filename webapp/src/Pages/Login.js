@@ -20,6 +20,9 @@ const loginDiv = `
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
 function LoginPage() {
+  if (window.localStorage.getItem("user").length !== 0) {
+    Redirect("/");
+  }
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = loginDiv;
   const form = document.getElementById("loginForm");

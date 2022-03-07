@@ -3,13 +3,14 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MemberDao {
+public class MemberDaoImpl implements MemberDao {
 
   @Inject
   private final DalFactory dalfactory = new DalFactory();
@@ -17,7 +18,7 @@ public class MemberDao {
   private final DomainFactory domainFactory = new DomainFactoryImpl();
   private final DalServices services = dalfactory.getDalServices();
 
-  public MemberDao() {
+  public MemberDaoImpl() {
 
   }
 
@@ -27,6 +28,7 @@ public class MemberDao {
    *
    * @param username username of the member that you want get
    */
+  @Override
   public MemberDTO getMember(String username) {
     MemberDTO member = domainFactory.getMember();
     try {
