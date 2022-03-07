@@ -1,8 +1,8 @@
 package be.vinci.pae.main;
 
-import be.vinci.pae.business.utils.ApplicationBinder;
-import be.vinci.pae.business.utils.Config;
-import be.vinci.pae.business.utils.WebExceptionMapper;
+import be.vinci.pae.utils.ApplicationBinder;
+import be.vinci.pae.utils.Config;
+import be.vinci.pae.utils.WebExceptionMapper;
 import java.io.IOException;
 import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
