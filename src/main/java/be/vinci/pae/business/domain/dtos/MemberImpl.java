@@ -1,8 +1,11 @@
 package be.vinci.pae.business.domain.dtos;
 
-import be.vinci.pae.business.domain.interfaces.MemberDTO;
+import static org.mindrot.jbcrypt.BCrypt.checkpw;
 
-public class MemberDTOImpl implements MemberDTO {
+import be.vinci.pae.business.domain.interfacesBusiness.Member;
+import be.vinci.pae.business.domain.interfacesDTO.MemberDTO;
+
+public class MemberImpl implements MemberDTO, Member {
 
   private int idMember;
   private String password;
@@ -20,36 +23,13 @@ public class MemberDTOImpl implements MemberDTO {
   /**
    * Empty constructor.
    */
-  public MemberDTOImpl() {
+  public MemberImpl() {
 
   }
 
-  /**
-   * create new MemberDTOImpl.
-   *
-   * @param idMember             id's member
-   * @param password             hashed password
-   * @param username             unique username
-   * @param lastName             last name
-   * @param firstName            first name
-   * @param callNumber           call number
-   * @param reasonForConnRefusal reason why this member cannot connect to the website
-   * @param state                state where the member lives
-   * @param isAdmin              is the member admin or not
-   */
-  public MemberDTOImpl(int idMember, String password, String username, String lastName,
-      String firstName, String callNumber, String reasonForConnRefusal, String state,
-      boolean isAdmin) {
-    this.idMember = idMember;
-    this.password = password;
-    this.username = username;
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.callNumber = callNumber;
-    this.reasonForConnRefusal = reasonForConnRefusal;
-    this.state = state;
-    this.isAdmin = isAdmin;
-
+  @Override
+  public boolean checkPassword(String password) {
+    return checkpw(password, this.password);
   }
 
   @Override

@@ -1,4 +1,4 @@
-package be.vinci.pae.business.services.utils;
+package be.vinci.pae.business.ucc.utils;
 
 import be.vinci.pae.business.utils.Config;
 import be.vinci.pae.business.views.Views;

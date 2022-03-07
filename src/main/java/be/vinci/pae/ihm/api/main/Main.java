@@ -1,4 +1,4 @@
-package be.vinci.pae.business.main;
+package be.vinci.pae.ihm.api.main;
 
 import be.vinci.pae.business.utils.ApplicationBinder;
 import be.vinci.pae.business.utils.Config;

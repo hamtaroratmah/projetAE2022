@@ -35,14 +35,10 @@ public class DalServices {
    * Return a preparedStatement that can be executed after setting the username if the query is
    * executed, it'll give a member he's username match with your parameter.
    */
-  public PreparedStatement getUser() {
+  public PreparedStatement getPreparedStatement(String query) {
     PreparedStatement statement = null;
     try {
-      statement = conn.prepareStatement("SELECT id_member, password, username,"
-          + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-          + " state, count_object_not_collected, count_object_given, count_object_got"
-          + " FROM pae.members "
-          + "WHERE username = ?");
+      statement = conn.prepareStatement(query);
     } catch (SQLException e) {
       e.printStackTrace();
     }

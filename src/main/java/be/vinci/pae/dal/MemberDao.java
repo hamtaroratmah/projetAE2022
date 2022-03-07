@@ -1,8 +1,8 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domain.DomainFactoryImpl;
-import be.vinci.pae.business.domain.interfaces.DomainFactory;
-import be.vinci.pae.business.domain.interfaces.MemberDTO;
+import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
+import be.vinci.pae.business.domain.interfacesDTO.DomainFactory;
+import be.vinci.pae.business.domain.interfacesDTO.MemberDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
@@ -28,11 +28,17 @@ public class MemberDao {
    * @param username username of the member that you want get
    */
   public MemberDTO getMember(String username) {
-    MemberDTO member = domainFactory.getMemberDto();
+    MemberDTO member = domainFactory.getMember();
     try {
-      PreparedStatement query = services.getUser();
+      PreparedStatement query = services.getPreparedStatement(
+          "SELECT id_member, password, username,"
+              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+              + " state, count_object_not_collected, count_object_given, count_object_got"
+              + " FROM pae.members "
+              + "WHERE username = ?");
       query.setString(1, username);
       ResultSet resultSetMember = query.executeQuery();
+      query.close();
       if (!resultSetMember.next()) {
         throw new WebApplicationException("Username not found");
       }
@@ -48,8 +54,7 @@ public class MemberDao {
       member.setCountObjectNotCollected(resultSetMember.getInt(10));
       member.setCountObjectGiven(resultSetMember.getInt(11));
       member.setCountObjectGot(resultSetMember.getInt(12));
-
-
+      resultSetMember.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }

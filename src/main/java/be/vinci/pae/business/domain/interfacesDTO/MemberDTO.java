@@ -1,4 +1,4 @@
-package be.vinci.pae.business.domain.interfaces;
+package be.vinci.pae.business.domain.interfacesDTO;
 
 public interface MemberDTO {
 
