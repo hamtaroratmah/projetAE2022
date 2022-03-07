@@ -5,13 +5,13 @@ import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.dal.MemberDao;
+import be.vinci.pae.dal.MemberDaoImpl;
 import jakarta.inject.Inject;
 
 public class MemberUCCImpl implements MemberUCC {
 
   @Inject
-  private MemberDao memberDao = new MemberDao();
+  private MemberDaoImpl memberDao = new MemberDaoImpl();
   @Inject
   private DomainFactory domainFactory = new DomainFactoryImpl();
 
