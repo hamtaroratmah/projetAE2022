@@ -2,8 +2,10 @@ package be.vinci.pae.business.utils;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
-import be.vinci.pae.business.domain.interfacesBusiness.Member;
-import be.vinci.pae.business.domain.interfacesDTO.DomainFactory;
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.ucc.MemberUCC;
+import be.vinci.pae.business.ucc.MemberUCCImpl;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -15,5 +17,6 @@ public class ApplicationBinder extends AbstractBinder {
   protected void configure() {
     bind(MemberImpl.class).to(Member.class).in(Singleton.class);
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
+    bind(MemberUCCImpl.class).to(MemberUCC.class).in(Singleton.class);
   }
 }

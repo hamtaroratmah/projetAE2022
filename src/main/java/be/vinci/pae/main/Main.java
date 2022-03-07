@@ -1,4 +1,4 @@
-package be.vinci.pae.ihm.api.main;
+package be.vinci.pae.main;
 
 import be.vinci.pae.business.utils.ApplicationBinder;
 import be.vinci.pae.business.utils.Config;
@@ -15,7 +15,7 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 
 public class Main {
-  
+
   static {
     Config.load("dev.properties");
   }

@@ -2,8 +2,8 @@ package be.vinci.pae.business.domain.dtos;
 
 import static org.mindrot.jbcrypt.BCrypt.checkpw;
 
-import be.vinci.pae.business.domain.interfacesBusiness.Member;
-import be.vinci.pae.business.domain.interfacesDTO.MemberDTO;
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 
 public class MemberImpl implements MemberDTO, Member {
 

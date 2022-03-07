@@ -1,7 +1,8 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.interfacesDTO.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
+import be.vinci.pae.business.ucc.MemberUCCImpl;
 import be.vinci.pae.business.utils.Config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,6 +17,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Path("/login")
 public class AuthsResource {
@@ -23,7 +26,7 @@ public class AuthsResource {
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
   @Inject
-  private MemberUCC memberUCC = new MemberUCC();
+  private MemberUCC memberUCC = new MemberUCCImpl();
 
   /**
    * API login.
@@ -43,6 +46,8 @@ public class AuthsResource {
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
 
+    ObjectNode token = createToken(publicUser.getIdMember());
+
     if (publicUser == null) {
       throw new WebApplicationException("Password incorrect",
           Response.Status.UNAUTHORIZED);
@@ -53,15 +58,17 @@ public class AuthsResource {
   private ObjectNode createToken(int id) { //TODO
 
     String token;
+    Date expirationDate = new Date(LocalDate.now().getDayOfYear() + 30);
     try {
-      token = JWT.create().withIssuer("auth0")
+      token = JWT.create().withExpiresAt(expirationDate).withIssuer("auth0")
           .withClaim("member", id).sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;
     }
     return jsonMapper.createObjectNode()
-        .put("token", token);
+        .put("token", token)
+        .put("id", id);
   }
 }
 

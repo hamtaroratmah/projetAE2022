@@ -1,8 +1,8 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
-import be.vinci.pae.business.domain.interfacesDTO.DomainFactory;
-import be.vinci.pae.business.domain.interfacesDTO.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
