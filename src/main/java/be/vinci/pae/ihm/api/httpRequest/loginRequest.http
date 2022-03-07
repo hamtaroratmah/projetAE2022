@@ -1,0 +1,36 @@
+
+###
+POST {{baseUrl}}/login/login
+Content-Type: application/json
+
+{
+  "login": "souli",
+  "password": "password"
+}
+
+###
+POST {{baseUrl}}/login/login
+Content-Type: application/json
+
+{
+  "login": "SOULI",
+  "password": "password"
+}
+
+###
+POST {{baseUrl}}/login/login
+Content-Type: application/json
+
+{
+  "login": "STal",
+  "password": "password"
+}
+
+###
+POST {{baseUrl}}/login/login
+Content-Type: application/json
+
+{
+  "login": "gregreg",
+  "password": "passwordd"
+}
