@@ -12,7 +12,7 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
   public Response toResponse(Throwable exception) {
     exception.printStackTrace();
     if (exception instanceof WebApplicationException) {
-      return ((WebApplicationException) exception).getResponse(); // the response is already prepared
+      return ((WebApplicationException) exception).getResponse(); //the response is already prepared
     }
     return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
         .entity(exception.getMessage())

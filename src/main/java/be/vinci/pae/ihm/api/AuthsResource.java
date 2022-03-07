@@ -47,8 +47,8 @@ public class AuthsResource {
     MemberDTO publicUser = memberUCC.login(login, password);
 
     ObjectNode token = createToken(publicUser.getIdMember());
-
-    if (publicUser == null) {
+    //TODO
+    if (token == null) {
       throw new WebApplicationException("Password incorrect",
           Response.Status.UNAUTHORIZED);
     }
