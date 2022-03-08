@@ -1,8 +1,6 @@
 package be.vinci.pae.business.ucc;
 
-
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
@@ -13,8 +11,8 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
-  @Inject
-  private DomainFactory domainFactory;
+  //  @Inject
+  //  private DomainFactory domainFactory;
 
   @Override
   public MemberDTO getOne(String login) {
@@ -31,13 +29,9 @@ public class MemberUCCImpl implements MemberUCC {
   @Override
   public Member login(String username, String password) {
     Member member = (Member) memberDao.getMember(username);
-    if (member == null) {
-      throw new WebApplicationException("Username not found", Status.UNAUTHORIZED);
-    }
     if (!member.checkPassword(password)) {
       throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
     }
     return member;
   }
-
 }

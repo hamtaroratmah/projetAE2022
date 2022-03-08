@@ -1,4 +1,4 @@
-package be.vinci.pae.business.utils;
+package be.vinci.pae.utils;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;

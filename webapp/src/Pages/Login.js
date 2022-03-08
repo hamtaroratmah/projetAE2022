@@ -73,8 +73,8 @@ async function login(e) {
       errorLogin.innerHTML = "";
     }
 
-    const user = await response.json();
-    window.localStorage.setItem("user", JSON.stringify(user));
+    const token = await response.json();
+    window.localStorage.setItem("user", JSON.stringify(token));
     Navbar();
     Redirect("/");
   } catch (e) {
