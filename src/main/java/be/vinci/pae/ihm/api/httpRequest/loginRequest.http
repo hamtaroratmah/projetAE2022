@@ -4,7 +4,7 @@ POST {{baseUrl}}/login/login
 Content-Type: application/json
 
 {
-  "login": "souli",
+  "username": "souli",
   "password": "password"
 }
 
@@ -13,7 +13,7 @@ POST {{baseUrl}}/login/login
 Content-Type: application/json
 
 {
-  "login": "SOULI",
+  "username": "SOULI",
   "password": "password"
 }
 
@@ -22,7 +22,7 @@ POST {{baseUrl}}/login/login
 Content-Type: application/json
 
 {
-  "login": "STal",
+  "username": "STal",
   "password": "password"
 }
 
@@ -31,6 +31,6 @@ POST {{baseUrl}}/login/login
 Content-Type: application/json
 
 {
-  "login": "gregreg",
+  "username": "gregreg",
   "password": "passwordd"
 }

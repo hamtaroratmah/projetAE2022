@@ -10,12 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MemberDaoImpl implements MemberDao {
-
-  @Inject
-  private DalFactory dalfactory;
+  
   @Inject
   private DomainFactory domainFactory;
-  private final DalServices services = dalfactory.getDalServices();
+  @Inject
+  private DalServices services;
 
   public MemberDaoImpl() {
 
