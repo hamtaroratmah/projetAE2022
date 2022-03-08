@@ -2,6 +2,7 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
@@ -10,11 +11,11 @@ import java.sql.SQLException;
 
 public class MemberDaoImpl implements MemberDao {
 
+  @Inject
+  private DalFactory dalfactory;
+  @Inject
+  private DomainFactory domainFactory;
   private final DalServices services = dalfactory.getDalServices();
-  @Inject
-  private final DalFactory dalfactory;
-  @Inject
-  private final DomainFactory domainFactory;
 
   public MemberDaoImpl() {
 
