@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MemberDaoImpl implements MemberDao {
-  
+
   @Inject
   private DomainFactory domainFactory;
   @Inject
@@ -24,7 +24,7 @@ public class MemberDaoImpl implements MemberDao {
    * Get a member according to the username given in parameter and execute a query given by
    * DalServices class.
    *
-   * @param username username of the member that you want get
+   * @param username member's username that you want get
    */
   public MemberDTO getMember(String username) {
     MemberDTO member = domainFactory.getMember();
@@ -61,6 +61,59 @@ public class MemberDaoImpl implements MemberDao {
     } finally {
       try {
         query.close();
+        resultSetMember.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
+    }
+    return member;
+  }
+
+  /**
+   * Get a member according to the username given in parameter and execute a query given by
+   * DalServices class.
+   *
+   * @param id member's id that you want get
+   */
+  @Override
+  public MemberDTO getMember(int id) {
+    MemberDTO member = domainFactory.getMember();
+    PreparedStatement query = null;
+    ResultSet resultSetMember = null;
+    try {
+      query = services.getPreparedStatement(
+          "SELECT id_member, password, username,"
+              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+              + " state, count_object_not_collected, count_object_given, count_object_got"
+              + " FROM pae.members "
+              + "WHERE id_member = ?");
+      query.setInt(1, id);
+      resultSetMember = query.executeQuery();
+
+      if (!resultSetMember.next()) {
+        throw new WebApplicationException("Username not found");
+      }
+      member.setIdMember(resultSetMember.getInt(1));
+      member.setPassword(resultSetMember.getString(2));
+      member.setUsername(resultSetMember.getString(3));
+      member.setLastName(resultSetMember.getString(4));
+      member.setFirstName(resultSetMember.getString(5));
+      member.setCallNumber(resultSetMember.getString(6));
+      member.setAdmin(resultSetMember.getBoolean(7));
+      member.setReasonForConnRefusal(resultSetMember.getString(8));
+      member.setState(resultSetMember.getString(9));
+      member.setCountObjectNotCollected(resultSetMember.getInt(10));
+      member.setCountObjectGiven(resultSetMember.getInt(11));
+      member.setCountObjectGot(resultSetMember.getInt(12));
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        assert query != null;
+        query.close();
+        assert resultSetMember != null;
         resultSetMember.close();
       } catch (SQLException e) {
         e.printStackTrace();

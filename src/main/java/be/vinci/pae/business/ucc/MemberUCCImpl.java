@@ -20,6 +20,11 @@ public class MemberUCCImpl implements MemberUCC {
     return memberDao.getMember(login);
   }
 
+  @Override
+  public MemberDTO getOne(int id) {
+    return memberDao.getMember(id);
+  }
+
 
   /**
    * Permit to a disconnected user to log in.

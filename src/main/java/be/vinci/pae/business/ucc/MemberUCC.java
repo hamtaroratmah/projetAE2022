@@ -7,6 +7,8 @@ public interface MemberUCC {
 
   MemberDTO getOne(String login);
 
+  MemberDTO getOne(int id);
+
   /**
    * Permit to a disconnected user to log in.
    *

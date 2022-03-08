@@ -11,4 +11,6 @@ public interface MemberDao {
    * @param username username of the member that you want get
    */
   MemberDTO getMember(String username);
+
+  MemberDTO getMember(int id);
 }

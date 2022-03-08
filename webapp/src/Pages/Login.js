@@ -61,7 +61,7 @@ async function login(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/login/login", request);
+    const response = await fetch("/api/auths/login", request);
     if (!response.ok) {
       if (response.status === 403) {
         errorLogin.innerHTML = "Wrong password";
@@ -76,17 +76,14 @@ async function login(e) {
       errorLogin.innerHTML = "";
     }
 
-<<<<<<< HEAD
     const token = await response.json();
-    window.localStorage.setItem("user", JSON.stringify(token));
-=======
-    const user = await response.json();
+
     if (rememberBox.checked) {
-      window.localStorage.setItem("user", JSON.stringify(user));
+      window.localStorage.setItem("user", JSON.stringify(token));
     } else {
-      window.sessionStorage.setItem("user", JSON.stringify(user));
+      window.sessionStorage.setItem("user", JSON.stringify(token));
     }
->>>>>>> rememberMe
+
     Navbar();
     Redirect("/");
   } catch (e) {
