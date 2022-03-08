@@ -8,7 +8,7 @@ public class DalFactoryImpl implements DalFactory {
 
   @Override
   public DalServices getDalServices() {
-    return new DalServices();
+    return new DalServicesImpl();
   }
 
 }
