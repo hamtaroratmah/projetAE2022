@@ -1,13 +1,6 @@
 package be.vinci.pae.dal;
 
-public class DalFactory {
+public interface DalFactory {
 
-  public DalFactory() {
-
-  }
-
-  public DalServices getDalServices() {
-    return new DalServicesImpl();
-  }
-
+  DalServices getDalServices();
 }

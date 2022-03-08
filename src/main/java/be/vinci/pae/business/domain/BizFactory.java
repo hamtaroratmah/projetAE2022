@@ -1,7 +1,7 @@
 package be.vinci.pae.business.domain;
 
+import be.vinci.pae.dal.MemberDao;
 import be.vinci.pae.dal.MemberDaoImpl;
-import be.vinci.pae.dal.interfaces.MemberDao;
 
 public class BizFactory {
 

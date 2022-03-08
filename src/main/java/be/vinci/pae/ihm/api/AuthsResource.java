@@ -2,8 +2,7 @@ package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
-import be.vinci.pae.business.ucc.MemberUCCImpl;
-import be.vinci.pae.business.utils.Config;
+import be.vinci.pae.utils.Config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,7 +25,7 @@ public class AuthsResource {
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
   @Inject
-  private MemberUCC memberUCC = new MemberUCCImpl();
+  private MemberUCC memberUCC;
 
   /**
    * API login.
