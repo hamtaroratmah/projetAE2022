@@ -7,6 +7,8 @@ public interface MemberUCC {
 
   MemberDTO getOne(String login);
 
+  String getState(String login);
+
   /**
    * Permit to a disconnected user to log in.
    *
@@ -14,4 +16,6 @@ public interface MemberUCC {
    * @param password non hashed password
    */
   Member login(String username, String password);
+  boolean confirmInscription(String username);
+
 }

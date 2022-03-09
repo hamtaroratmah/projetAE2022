@@ -16,10 +16,13 @@ public class MemberUCCImpl implements MemberUCC {
   private DomainFactory domainFactory = new DomainFactoryImpl();
 
   @Override
-  public MemberDTO getOne(String login) {
+  public MemberDTO  getOne(String login) {
     return memberDao.getMember(login);
   }
-
+  @Override
+  public String getState(String login){
+    return memberDao.getState(login);
+  }
 
   /**
    * Permit to a disconnected user to log in.
@@ -35,5 +38,11 @@ public class MemberUCCImpl implements MemberUCC {
     }
     return null; //todo
   }
+
+  @Override
+  public boolean confirmInscription(String username) {
+    return memberDao.confirmInscription(username);
+  }
+
 
 }

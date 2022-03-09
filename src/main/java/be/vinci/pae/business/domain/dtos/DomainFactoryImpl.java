@@ -13,4 +13,6 @@ public class DomainFactoryImpl implements DomainFactory {
     return new MemberImpl();
   }
 
+  public MemberDTO getState() { return new MemberImpl(); }
+
 }

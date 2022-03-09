@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import jakarta.inject.Inject;
@@ -59,6 +60,34 @@ public class MemberDao {
       e.printStackTrace();
     }
     return member;
+  }
+
+  public String getState(String username){
+    MemberDTO memberDTO = domainFactory.getMember();
+    try {
+      PreparedStatement query = services.getPreparedStatement(
+              "SELECT state FROM pae.members WHERE username=?");
+      query.setString(1, username);
+      ResultSet resultSetState = query.executeQuery();
+      query.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return memberDTO.getState();
+
+  }
+  public boolean confirmInscription(String username){
+    MemberDTO memberDTO = domainFactory.getMember();
+    try {
+      PreparedStatement query = services.getPreparedStatement(
+              "UPDATE pae.members SET state='confirmed'");
+      query.setString(1, username);
+      ResultSet resultSetState = query.executeQuery();
+      query.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return true;
   }
 
 }
