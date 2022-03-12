@@ -27,9 +27,8 @@ public class MemberDaoImpl implements MemberDao {
    * @param username member's username that you want get
    */
   public MemberDTO getMember(String username) {
-    MemberDTO member = domainFactory.getMember();
+    MemberDTO member = null;
     PreparedStatement query = null;
-    ResultSet resultSetMember = null;
     try {
       query = services.getPreparedStatement(
           "SELECT id_member, password, username,"
@@ -38,30 +37,14 @@ public class MemberDaoImpl implements MemberDao {
               + " FROM pae.members "
               + "WHERE username = ?");
       query.setString(1, username);
-      resultSetMember = query.executeQuery();
-
-      if (!resultSetMember.next()) {
-        throw new WebApplicationException("Username not found");
-      }
-      member.setIdMember(resultSetMember.getInt(1));
-      member.setPassword(resultSetMember.getString(2));
-      member.setUsername(resultSetMember.getString(3));
-      member.setLastName(resultSetMember.getString(4));
-      member.setFirstName(resultSetMember.getString(5));
-      member.setCallNumber(resultSetMember.getString(6));
-      member.setAdmin(resultSetMember.getBoolean(7));
-      member.setReasonForConnRefusal(resultSetMember.getString(8));
-      member.setState(resultSetMember.getString(9));
-      member.setCountObjectNotCollected(resultSetMember.getInt(10));
-      member.setCountObjectGiven(resultSetMember.getInt(11));
-      member.setCountObjectGot(resultSetMember.getInt(12));
+      member = getMemberFromDataBase(query);
 
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       try {
+        assert query != null;
         query.close();
-        resultSetMember.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
@@ -78,9 +61,8 @@ public class MemberDaoImpl implements MemberDao {
    */
   @Override
   public MemberDTO getMember(int id) {
-    MemberDTO member = domainFactory.getMember();
+    MemberDTO member = null;
     PreparedStatement query = null;
-    ResultSet resultSetMember = null;
     try {
       query = services.getPreparedStatement(
           "SELECT id_member, password, username,"
@@ -89,23 +71,7 @@ public class MemberDaoImpl implements MemberDao {
               + " FROM pae.members "
               + "WHERE id_member = ?");
       query.setInt(1, id);
-      resultSetMember = query.executeQuery();
-
-      if (!resultSetMember.next()) {
-        throw new WebApplicationException("Username not found");
-      }
-      member.setIdMember(resultSetMember.getInt(1));
-      member.setPassword(resultSetMember.getString(2));
-      member.setUsername(resultSetMember.getString(3));
-      member.setLastName(resultSetMember.getString(4));
-      member.setFirstName(resultSetMember.getString(5));
-      member.setCallNumber(resultSetMember.getString(6));
-      member.setAdmin(resultSetMember.getBoolean(7));
-      member.setReasonForConnRefusal(resultSetMember.getString(8));
-      member.setState(resultSetMember.getString(9));
-      member.setCountObjectNotCollected(resultSetMember.getInt(10));
-      member.setCountObjectGiven(resultSetMember.getInt(11));
-      member.setCountObjectGot(resultSetMember.getInt(12));
+      member = getMemberFromDataBase(query);
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -113,13 +79,40 @@ public class MemberDaoImpl implements MemberDao {
       try {
         assert query != null;
         query.close();
-        assert resultSetMember != null;
-        resultSetMember.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
 
     }
+    return member;
+  }
+
+  /**
+   * Avoid duplicate code if we want to get a user from the dataBase.
+   *
+   * @param query query to execute
+   * @return return the member got in the database
+   */
+  private MemberDTO getMemberFromDataBase(PreparedStatement query) throws SQLException {
+    MemberDTO member = domainFactory.getMember();
+    ResultSet resultSetMember = query.executeQuery();
+
+    if (!resultSetMember.next()) {
+      throw new WebApplicationException("Username not found");
+    }
+    member.setIdMember(resultSetMember.getInt(1));
+    member.setPassword(resultSetMember.getString(2));
+    member.setUsername(resultSetMember.getString(3));
+    member.setLastName(resultSetMember.getString(4));
+    member.setFirstName(resultSetMember.getString(5));
+    member.setCallNumber(resultSetMember.getString(6));
+    member.setAdmin(resultSetMember.getBoolean(7));
+    member.setReasonForConnRefusal(resultSetMember.getString(8));
+    member.setState(resultSetMember.getString(9));
+    member.setCountObjectNotCollected(resultSetMember.getInt(10));
+    member.setCountObjectGiven(resultSetMember.getInt(11));
+    member.setCountObjectGot(resultSetMember.getInt(12));
+    resultSetMember.close();
     return member;
   }
 

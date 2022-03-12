@@ -36,7 +36,6 @@ async function login(e) {
   const username = document.getElementById("usernameLogin").value;
   const password = document.getElementById("passwordLogin").value;
   const errorLogin = document.getElementById("errorLogin");
-  const rememberBox = document.getElementById("rememberCheckBox");
   errorLogin.innerHTML = "";
 
   //Verify the user entered all informations to log in and show an error message if not
@@ -78,6 +77,7 @@ async function login(e) {
 
     const token = await response.json();
 
+    const rememberBox = document.getElementById("rememberCheckBox");
     if (rememberBox.checked) {
       window.localStorage.setItem("user", JSON.stringify(token));
     } else {

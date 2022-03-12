@@ -40,7 +40,6 @@ public class MemberResource {
     }
     String token = jsonNode.get("token").asText();
     String[] tokenSplit = token.split("\"");
-//    System.out.println(token);
     DecodedJWT decodedToken = this.jwtVerifier.verify(tokenSplit[3]);
     return memberUCC.getOne(JWT.decode(decodedToken.getToken()).getClaim("id_member").asInt())
         .getUsername();

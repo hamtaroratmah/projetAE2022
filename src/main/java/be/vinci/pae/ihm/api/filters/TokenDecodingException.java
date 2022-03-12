@@ -10,6 +10,12 @@ public class TokenDecodingException extends WebApplicationException {
         .build());
   }
 
+
+  /**
+   * Filling javadoc to avoid jenkins error.
+   *
+   * @param message message
+   */
   public TokenDecodingException(String message) {
     super(Response.status(Response.Status.UNAUTHORIZED)
         .entity(message)
@@ -17,6 +23,11 @@ public class TokenDecodingException extends WebApplicationException {
         .build());
   }
 
+  /**
+   * Filling javadoc to avoid jenkins error.
+   *
+   * @param cause cause
+   */
   public TokenDecodingException(Throwable cause) {
     super(Response.status(Response.Status.UNAUTHORIZED)
         .entity(cause.getMessage())

@@ -49,7 +49,6 @@ public class AuthsResource {
   private String createToken(int id) { //TODO
 
     String token;
-//    Date expirationDate = new Date(LocalDate.now().getDayOfYear() + 30);
     try {
       token = JWT.create().withIssuer("auth0")
           .withClaim("id_member", id).sign(this.jwtAlgorithm);
