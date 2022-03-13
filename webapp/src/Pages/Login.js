@@ -9,6 +9,7 @@ const loginDiv = `
                     <div id="errorLogin"></div>
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
+                    <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="Se connecter">
                 </form>
             </div>
@@ -20,6 +21,10 @@ const loginDiv = `
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
 function LoginPage() {
+  if (window.localStorage.length !== 0 && window.localStorage.getItem(
+      "user").length !== 0) {
+    Redirect("/");
+  }
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = loginDiv;
   const form = document.getElementById("loginForm");
@@ -55,7 +60,7 @@ async function login(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/login/login", request);
+    const response = await fetch("/api/auths/login", request);
     if (!response.ok) {
       if (response.status === 403) {
         errorLogin.innerHTML = "Wrong password";
@@ -70,8 +75,15 @@ async function login(e) {
       errorLogin.innerHTML = "";
     }
 
-    const user = await response.json();
-    window.localStorage.setItem("user", JSON.stringify(user));
+    const token = await response.json();
+
+    const rememberBox = document.getElementById("rememberCheckBox");
+    if (rememberBox.checked) {
+      window.localStorage.setItem("user", JSON.stringify(token));
+    } else {
+      window.sessionStorage.setItem("user", JSON.stringify(token));
+    }
+
     Navbar();
     Redirect("/");
   } catch (e) {
