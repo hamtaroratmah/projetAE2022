@@ -1,4 +1,4 @@
-package be.vinci.pae.business.utils;
+package be.vinci.pae.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;

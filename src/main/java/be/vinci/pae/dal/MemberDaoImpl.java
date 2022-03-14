@@ -1,24 +1,24 @@
 package be.vinci.pae.dal;
-
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
+
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MemberDao {
-
+public class MemberDaoImpl implements MemberDao {
+  
   @Inject
-  private final DalFactory dalfactory = new DalFactory();
+  private DomainFactory domainFactory;
   @Inject
-  private final DomainFactory domainFactory = new DomainFactoryImpl();
-  private final DalServices services = dalfactory.getDalServices();
+  private DalServices services;
 
-  public MemberDao() {
+  public MemberDaoImpl() {
 
   }
 
@@ -30,16 +30,18 @@ public class MemberDao {
    */
   public MemberDTO getMember(String username) {
     MemberDTO member = domainFactory.getMember();
+    PreparedStatement query = null;
+    ResultSet resultSetMember = null;
     try {
-      PreparedStatement query = services.getPreparedStatement(
+      query = services.getPreparedStatement(
           "SELECT id_member, password, username,"
               + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
               + " state, count_object_not_collected, count_object_given, count_object_got"
               + " FROM pae.members "
               + "WHERE username = ?");
       query.setString(1, username);
-      ResultSet resultSetMember = query.executeQuery();
-      query.close();
+      resultSetMember = query.executeQuery();
+
       if (!resultSetMember.next()) {
         throw new WebApplicationException("Username not found");
       }
@@ -55,9 +57,17 @@ public class MemberDao {
       member.setCountObjectNotCollected(resultSetMember.getInt(10));
       member.setCountObjectGiven(resultSetMember.getInt(11));
       member.setCountObjectGot(resultSetMember.getInt(12));
-      resultSetMember.close();
+
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        query.close();
+        resultSetMember.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
     }
     return member;
   }

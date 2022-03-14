@@ -9,6 +9,7 @@ const loginDiv = `
                     <div id="errorLogin"></div>
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
+                    <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="Se connecter">
                 </form>
             </div>
@@ -20,6 +21,10 @@ const loginDiv = `
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
 function LoginPage() {
+  if (window.localStorage.length !== 0 && window.localStorage.getItem(
+      "user").length !== 0) {
+    Redirect("/");
+  }
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = loginDiv;
   const form = document.getElementById("loginForm");
@@ -31,6 +36,7 @@ async function login(e) {
   const username = document.getElementById("usernameLogin").value;
   const password = document.getElementById("passwordLogin").value;
   const errorLogin = document.getElementById("errorLogin");
+  const rememberBox = document.getElementById("rememberCheckBox");
   errorLogin.innerHTML = "";
 
   //Verify the user entered all informations to log in and show an error message if not
@@ -70,8 +76,17 @@ async function login(e) {
       errorLogin.innerHTML = "";
     }
 
+<<<<<<< HEAD
+    const token = await response.json();
+    window.localStorage.setItem("user", JSON.stringify(token));
+=======
     const user = await response.json();
-    window.localStorage.setItem("user", JSON.stringify(user));
+    if (rememberBox.checked) {
+      window.localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      window.sessionStorage.setItem("user", JSON.stringify(user));
+    }
+>>>>>>> rememberMe
     Navbar();
     Redirect("/");
   } catch (e) {
