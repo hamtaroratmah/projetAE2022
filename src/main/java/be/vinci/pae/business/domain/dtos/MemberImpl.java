@@ -153,6 +153,11 @@ public class MemberImpl implements MemberDTO, Member {
   }
 
   @Override
+  public MemberDTO confirmInscription(String username) {
+    return this;
+  }
+
+  @Override
   public String toString() {
     return "Member{"
         + "id_member="

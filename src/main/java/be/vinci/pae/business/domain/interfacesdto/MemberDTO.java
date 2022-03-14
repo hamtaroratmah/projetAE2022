@@ -49,4 +49,6 @@ public interface MemberDTO {
   int getCountObjectGot();
 
   void setCountObjectGot(int countObjectGot);
+
+  MemberDTO confirmInscription(String username);
 }

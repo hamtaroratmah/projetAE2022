@@ -12,7 +12,9 @@ public interface MemberDao {
    */
   MemberDTO getMember(String username);
 
-    String getState(String login);
+//    MemberDTO getState(String login);
 
-  boolean confirmInscription(String username);
+  MemberDTO confirmInscription(String username);
+
+  MemberDTO getMember(int id);
 }

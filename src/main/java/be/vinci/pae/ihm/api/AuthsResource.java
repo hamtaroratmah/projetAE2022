@@ -15,10 +15,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.util.Date;
 
-@Path("/login")
+@Path("/auths")
 public class AuthsResource {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
@@ -51,10 +49,9 @@ public class AuthsResource {
   private String createToken(int id) { //TODO
 
     String token;
-    Date expirationDate = new Date(LocalDate.now().getDayOfYear() + 30);
     try {
-      token = JWT.create().withExpiresAt(expirationDate).withIssuer("auth0")
-          .withClaim("member", id).sign(this.jwtAlgorithm);
+      token = JWT.create().withIssuer("auth0")
+          .withClaim("id_member", id).sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;

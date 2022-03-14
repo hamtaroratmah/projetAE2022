@@ -1,7 +1,6 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
@@ -12,17 +11,19 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
-  @Inject
-  private DomainFactory domainFactory;
+  //  @Inject
+  //  private DomainFactory domainFactory;
 
   @Override
-  public MemberDTO  getOne(String login) {
+  public MemberDTO getOne(String login) {
     return memberDao.getMember(login);
   }
+
   @Override
-  public String getState(String login){
-    return memberDao.getState(login);
+  public MemberDTO getOne(int id) {
+    return memberDao.getMember(id);
   }
+
 
   /**
    * Permit to a disconnected user to log in.
@@ -39,10 +40,15 @@ public class MemberUCCImpl implements MemberUCC {
     return member;
   }
 
+
   @Override
-  public boolean confirmInscription(String username) {
-    return memberDao.confirmInscription(username);
+  public String getState(String username) {
+    return memberDao.getMember(username).getState();
   }
 
+  @Override
+  public MemberDTO confirmInscription(String username) {
+    return memberDao.confirmInscription(username);
+  }
 
 }

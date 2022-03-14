@@ -23,7 +23,7 @@ CREATE TABLE pae.members
     call_number                VARCHAR(10),
     isAdmin                    bool    DEFAULT FALSE,
     reason_for_conn_refusal    VARCHAR(300),
-    state                      VARCHAR(7),
+    state                      VARCHAR(10),
     count_object_not_collected INTEGER DEFAULT (0),
     count_object_given         INTEGER DEFAULT (0),
     count_object_got           INTEGER DEFAULT (0)
@@ -82,7 +82,7 @@ INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
  reason_for_conn_refusal, state)
 VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
-        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid');
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
 
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
