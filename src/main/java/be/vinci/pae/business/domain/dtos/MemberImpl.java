@@ -39,6 +39,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setIdMember(int idMember) {
+    if (idMember <= 0) {
+      throw new IllegalArgumentException();
+    }
     this.idMember = idMember;
   }
 
@@ -49,6 +52,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setPassword(String password) {
+    if (password == null) {
+      throw new IllegalArgumentException();
+    }
     this.password = password;
   }
 
@@ -59,6 +65,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setUsername(String username) {
+    if (username == null) {
+      throw new IllegalArgumentException();
+    }
     this.username = username;
   }
 
@@ -69,6 +78,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setLastName(String lastName) {
+    if (lastName == null) {
+      throw new IllegalArgumentException();
+    }
     this.lastName = lastName;
   }
 
@@ -79,6 +91,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setFirstName(String firstName) {
+    if (firstName == null) {
+      throw new IllegalArgumentException();
+    }
     this.firstName = firstName;
   }
 
@@ -99,6 +114,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setReasonForConnRefusal(String reasonForConnRefusal) {
+    if (reasonForConnRefusal == null) {
+      throw new IllegalArgumentException();
+    }
     this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
@@ -109,6 +127,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setState(String state) {
+    if (state == null) {
+      throw new IllegalArgumentException();
+    }
     this.state = state;
   }
 
