@@ -5,12 +5,12 @@ const loginDiv = `
         <div id="loginPage">
             <div id="loginContainer">
                 <form id="loginForm" class="loginRegisterContainer">
-                    <h1 class="loginText">Donnamis</h1>
+                    <h1 id="loginText">Connexion</h1>
                     <div id="errorLogin"></div>
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
-                    <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
-                    <input class="inputForm submitButton" type="submit" value="Se connecter">
+                    <label id="labelRememberCheckBox"><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
+                    <input class="inputForm submitButton" type="submit" id="loginSubmitButton" value="Se connecter">
                 </form>
             </div>
         </div>
@@ -47,7 +47,6 @@ async function login(e) {
       errorLogin.innerHTML = "Enter a password";
       throw new Error("No password");
     }
-
     const request = {
       method: "POST",
       body: JSON.stringify(
@@ -84,7 +83,7 @@ async function login(e) {
       window.sessionStorage.setItem("user", JSON.stringify(token));
     }
 
-    Navbar();
+    await Navbar();
     Redirect("/");
   } catch (e) {
     console.error("LoginPage::error ", e);
