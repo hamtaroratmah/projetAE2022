@@ -113,6 +113,7 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
     resultSetMember.close();
+    System.out.println(member);
     return member;
   }
 
