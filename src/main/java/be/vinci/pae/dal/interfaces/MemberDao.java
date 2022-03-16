@@ -15,6 +15,8 @@ public interface MemberDao {
 
 //    MemberDTO getState(String login);
 
+  ArrayList<MemberDTO> listDeniedUsers();
+
   MemberDTO confirmInscription(String username, boolean isAdmin);
 
   MemberDTO getMember(int id);

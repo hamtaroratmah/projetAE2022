@@ -80,5 +80,14 @@ public class MemberResource {
     return memberUCC.listPendingUsers();
   }
 
+  @GET
+  @Path("denied")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> listDeniedUsers() {
+    System.out.println("lister les utilisateur donc l inscription est refusee");
+    return memberUCC.listPendingUsers();
+  }
+
 
 }

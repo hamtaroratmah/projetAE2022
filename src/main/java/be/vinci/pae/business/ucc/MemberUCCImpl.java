@@ -58,4 +58,10 @@ public class MemberUCCImpl implements MemberUCC {
 
   }
 
+  @Override
+  public ArrayList<MemberDTO> listDeniedUsers() {
+    return memberDao.listDeniedUsers();
+
+  }
+
 }

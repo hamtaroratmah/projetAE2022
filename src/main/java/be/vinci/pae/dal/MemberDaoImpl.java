@@ -108,6 +108,25 @@ public class MemberDaoImpl implements MemberDao {
 
   }
 
+  @Override
+  public ArrayList<MemberDTO> listDeniedUsers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    PreparedStatement query;
+    try {
+      query = services.getPreparedStatement(
+          "SELECT id_member FROM pae.members WHERE state='denied'");
+
+      ResultSet resultSet = query.executeQuery();
+      while (resultSet.next()) {
+        list.add(createMemberInstance(resultSet));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return list;
+
+  }
+
 
   public MemberDTO confirmInscription(String username, boolean isAdmin) {
     MemberDTO member = null;

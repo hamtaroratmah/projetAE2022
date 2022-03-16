@@ -21,4 +21,5 @@ public class DomainFactoryImpl implements DomainFactory {
     return new MemberImpl();
   }
 
+
 }

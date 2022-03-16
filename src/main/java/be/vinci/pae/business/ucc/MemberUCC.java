@@ -24,4 +24,6 @@ public interface MemberUCC {
 
 
   ArrayList<MemberDTO> listPendingUsers();
+
+  ArrayList<MemberDTO> listDeniedUsers();
 }
