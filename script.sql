@@ -102,4 +102,4 @@ INSERT INTO pae.members
 VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
         'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
 
-
+SELECT id_member FROM pae.members WHERE state='valid'

@@ -8,6 +8,7 @@ import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MemberDaoImpl implements MemberDao {
 
@@ -88,21 +89,63 @@ public class MemberDaoImpl implements MemberDao {
   }
 
 
-  public MemberDTO confirmInscription(String username) {
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    PreparedStatement query;
+    try {
+      query = services.getPreparedStatement(
+          "SELECT id_member FROM pae.members WHERE state='valid'");
+
+      ResultSet resultSet = query.executeQuery();
+      while (resultSet.next()) {
+        list.add(createMemberInstance(resultSet));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return list;
+
+  }
+
+
+  public MemberDTO confirmInscription(String username, boolean isAdmin) {
     MemberDTO member = null;
 
     try (
+
         PreparedStatement query = services.getPreparedStatement(
-            "UPDATE pae.members SET state='confirmed' WHERE username=?");
+            "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=?")
 
     ) {
+      query.setBoolean(1, isAdmin);
 
-      query.setString(1, username);
+      query.setString(2, username);
       member = getMemberFromDataBase(query);
 
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return member;
+  }
+
+  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
+
+    MemberDTO member = domainFactory.getMember();
+
+    member.setIdMember(resultSetMember.getInt(1));
+    member.setPassword(resultSetMember.getString(2));
+    member.setUsername(resultSetMember.getString(3));
+    member.setLastName(resultSetMember.getString(4));
+    member.setFirstName(resultSetMember.getString(5));
+    member.setCallNumber(resultSetMember.getString(6));
+    member.setAdmin(resultSetMember.getBoolean(7));
+    member.setReasonForConnRefusal(resultSetMember.getString(8));
+    member.setState(resultSetMember.getString(9));
+    member.setCountObjectNotCollected(resultSetMember.getInt(10));
+    member.setCountObjectGiven(resultSetMember.getInt(11));
+    member.setCountObjectGot(resultSetMember.getInt(12));
+    resultSetMember.close();
     return member;
   }
 

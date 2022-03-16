@@ -1,6 +1,7 @@
 package be.vinci.pae.dal.interfaces;
 
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import java.util.ArrayList;
 
 public interface MemberDao {
 
@@ -14,7 +15,9 @@ public interface MemberDao {
 
 //    MemberDTO getState(String login);
 
-  MemberDTO confirmInscription(String username);
+  MemberDTO confirmInscription(String username, boolean isAdmin);
 
   MemberDTO getMember(int id);
+
+  ArrayList<MemberDTO> listPendingUsers();
 }

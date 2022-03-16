@@ -6,6 +6,7 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
+import java.util.ArrayList;
 
 public class MemberUCCImpl implements MemberUCC {
 
@@ -47,8 +48,14 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public MemberDTO confirmInscription(String username) {
-    return memberDao.confirmInscription(username);
+  public MemberDTO confirmInscription(String username, boolean isAdmin) {
+    return memberDao.confirmInscription(username, isAdmin);
+  }
+
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    return memberDao.listPendingUsers();
+
   }
 
 }

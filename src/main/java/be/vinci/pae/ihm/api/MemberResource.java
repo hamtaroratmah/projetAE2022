@@ -10,12 +10,14 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
 
 @Path("/member")
 public class MemberResource {
@@ -63,9 +65,19 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmInscription(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    boolean isAdmin = json.get("isAdmin").asBoolean();
     System.out.println(username);
     System.out.println("test de confirm");
-    return memberUCC.confirmInscription(username);
+    return memberUCC.confirmInscription(username, isAdmin);
+  }
+
+  @GET
+  @Path("pending")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> listPendingUsers() {
+    System.out.println("lister les utilisateur donc l inscription est en attente");
+    return memberUCC.listPendingUsers();
   }
 
 

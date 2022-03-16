@@ -153,9 +153,10 @@ public class MemberImpl implements MemberDTO, Member {
   }
 
   @Override
-  public MemberDTO confirmInscription(String username) {
+  public MemberDTO confirmInscription(String username, boolean isAdmin) {
     return this;
   }
+
 
   @Override
   public String toString() {
