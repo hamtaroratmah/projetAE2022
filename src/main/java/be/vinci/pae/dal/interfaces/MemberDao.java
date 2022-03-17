@@ -15,11 +15,14 @@ public interface MemberDao {
 
 //    MemberDTO getState(String login);
 
-  ArrayList<MemberDTO> listDeniedUsers();
 
   MemberDTO confirmInscription(String username, boolean isAdmin);
 
   MemberDTO getMember(int id);
 
-  ArrayList<MemberDTO> listPendingUsers();
+  ArrayList<MemberDTO> listUsersByState(String state);
+
+  MemberDTO denyRegistration(String username);
+
+
 }

@@ -50,6 +50,5 @@ public interface MemberDTO {
 
   void setCountObjectGot(int countObjectGot);
 
-  MemberDTO confirmInscription(String username, boolean isAdmin);
 
 }

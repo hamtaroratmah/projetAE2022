@@ -149,12 +149,7 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setCountObjectGot(int countObjectGot) {
-    this.countObjectGot = countObjectGot;
-  }
 
-  @Override
-  public MemberDTO confirmInscription(String username, boolean isAdmin) {
-    return this;
   }
 
 

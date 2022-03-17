@@ -71,6 +71,17 @@ public class MemberResource {
     return memberUCC.confirmInscription(username, isAdmin);
   }
 
+  @POST
+  @Path("deny")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public MemberDTO denyRegistration(JsonNode json) {
+    String username = json.get("username").asText().toLowerCase();
+    System.out.println(username);
+    System.out.println("test de deny");
+    return memberUCC.denyRegistration(username);
+  }
+
   @GET
   @Path("pending")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -86,7 +97,7 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
     System.out.println("lister les utilisateur donc l inscription est refusee");
-    return memberUCC.listPendingUsers();
+    return memberUCC.listDeniedUsers();
   }
 
 

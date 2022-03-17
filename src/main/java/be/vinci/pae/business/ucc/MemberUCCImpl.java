@@ -53,14 +53,19 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
+  public MemberDTO denyRegistration(String username) {
+    return memberDao.denyRegistration(username);
+  }
+
+  @Override
   public ArrayList<MemberDTO> listPendingUsers() {
-    return memberDao.listPendingUsers();
+    return memberDao.listUsersByState("pending");
 
   }
 
   @Override
   public ArrayList<MemberDTO> listDeniedUsers() {
-    return memberDao.listDeniedUsers();
+    return memberDao.listUsersByState("denied");
 
   }
 

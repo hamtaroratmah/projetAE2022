@@ -54,6 +54,7 @@ public class MemberDaoImpl implements MemberDao {
     return member;
   }
 
+
   /**
    * Get a member according to the username given in parameter and execute a query given by
    * DalServices class.
@@ -90,36 +91,18 @@ public class MemberDaoImpl implements MemberDao {
 
 
   @Override
-  public ArrayList<MemberDTO> listPendingUsers() {
+  public ArrayList<MemberDTO> listUsersByState(String state) {
     ArrayList<MemberDTO> list = new ArrayList<>();
-    PreparedStatement query;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member FROM pae.members WHERE state='valid'");
-
-      ResultSet resultSet = query.executeQuery();
-      while (resultSet.next()) {
-        list.add(createMemberInstance(resultSet));
+    String query = "SELECT * FROM pae.members WHERE state=?";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, state);
+      try (ResultSet resultSet = ps.executeQuery()) {
+        while (resultSet.next()) {
+          list.add(createMemberInstance(resultSet));
+        }
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return list;
 
-  }
 
-  @Override
-  public ArrayList<MemberDTO> listDeniedUsers() {
-    ArrayList<MemberDTO> list = new ArrayList<>();
-    PreparedStatement query;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member FROM pae.members WHERE state='denied'");
-
-      ResultSet resultSet = query.executeQuery();
-      while (resultSet.next()) {
-        list.add(createMemberInstance(resultSet));
-      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -129,23 +112,44 @@ public class MemberDaoImpl implements MemberDao {
 
 
   public MemberDTO confirmInscription(String username, boolean isAdmin) {
-    MemberDTO member = null;
+    MemberDTO member;
+    String query = "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setBoolean(1, isAdmin);
+      ps.setString(2, username);
+      try (ResultSet rs = ps.executeQuery()) {
 
-    try (
+        if (rs.next()) {
+          member = createMemberInstance(rs);
+          return member;
+        }
 
-        PreparedStatement query = services.getPreparedStatement(
-            "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=?")
 
-    ) {
-      query.setBoolean(1, isAdmin);
-
-      query.setString(2, username);
-      member = getMemberFromDataBase(query);
-
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return member;
+    return null;
+  }
+
+  public MemberDTO denyRegistration(String username) {
+    MemberDTO member;
+    String query = "UPDATE pae.members SET state='denied' WHERE username=? RETURNING *";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, username);
+      try (ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+          member = createMemberInstance(rs);
+          return member;
+        }
+
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
@@ -157,14 +161,13 @@ public class MemberDaoImpl implements MemberDao {
     member.setUsername(resultSetMember.getString(3));
     member.setLastName(resultSetMember.getString(4));
     member.setFirstName(resultSetMember.getString(5));
-    member.setCallNumber(resultSetMember.getString(6));
-    member.setAdmin(resultSetMember.getBoolean(7));
-    member.setReasonForConnRefusal(resultSetMember.getString(8));
-    member.setState(resultSetMember.getString(9));
-    member.setCountObjectNotCollected(resultSetMember.getInt(10));
-    member.setCountObjectGiven(resultSetMember.getInt(11));
-    member.setCountObjectGot(resultSetMember.getInt(12));
-    resultSetMember.close();
+    member.setCallNumber(resultSetMember.getString(7));
+    member.setAdmin(resultSetMember.getBoolean(8));
+    member.setReasonForConnRefusal(resultSetMember.getString(9));
+    member.setState(resultSetMember.getString(10));
+    member.setCountObjectNotCollected(resultSetMember.getInt(11));
+    member.setCountObjectGiven(resultSetMember.getInt(12));
+    member.setCountObjectGot(resultSetMember.getInt(13));
     return member;
   }
 
@@ -194,8 +197,8 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectNotCollected(resultSetMember.getInt(10));
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
-    resultSetMember.close();
     return member;
   }
+
 
 }
