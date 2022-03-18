@@ -81,7 +81,7 @@ INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
  reason_for_conn_refusal, state)
 VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
-        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid');
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
 
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
