@@ -18,4 +18,8 @@ public class DomainFactoryImpl implements DomainFactory {
     return new ItemImpl();
   }
 
+  public TypeDTO getType() {
+    return new TypeImpl();
+  }
+
 }

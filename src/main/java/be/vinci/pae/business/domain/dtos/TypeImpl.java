@@ -37,5 +37,9 @@ public class TypeImpl implements TypeDTO {
     this.type = type;
   }
 
+  public String toString() {
+    return this.getType();
+  }
+
 
 }

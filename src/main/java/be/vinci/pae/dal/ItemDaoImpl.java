@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.domain.dtos.TypeDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -29,9 +30,11 @@ public class ItemDaoImpl implements ItemDao {
   public List<ItemDTO> getLastOfferedItems() {
     List<ItemDTO> items = null;
     try (PreparedStatement query = services.getPreparedStatement(
-        "SELECT id_item, type, description, availabilities,"
-            + " item_condition, photo, rating, id_offering_member "
-            + "INTO pae.items")) {
+        "SELECT it.id_item,it.type,it.description,it.availabilities,"
+            + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
+            + "FROM pae.items it,pae.types ty,pae.offers of "
+            + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
+            + "ORDER BY date_offer DESC")) {
       items = getItemFromDataBase(query);
 
     } catch (SQLException e) {
@@ -41,30 +44,30 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
-    ItemDTO item = domainFactory.getItem();
-    List<ItemDTO> items = new ArrayList<>();
-    ResultSet resultSetMember = query.executeQuery();
 
-    while (resultSetMember.next()) {
-      item.setIdItem(resultSetMember.getInt(1));
-      item.setType(getTypeFromDataBase(resultSetMember.getInt(2)));
-      item.setDescription(resultSetMember.getString(3));
-      item.setAvailabilities(resultSetMember.getString(4));
-      item.setItemCondition(resultSetMember.getString(5));
-      item.setPhoto(resultSetMember.getString(6));
-      item.setRating(resultSetMember.getInt(7));
-      item.setOfferingMember(memberDao.getMember(resultSetMember.getInt(8)));
+    List<ItemDTO> items = new ArrayList<>();
+    ResultSet resultSet = query.executeQuery();
+
+    while (resultSet.next()) {
+      ItemDTO item = domainFactory.getItem();
+      TypeDTO type = domainFactory.getType();
+      type.setIdType(resultSet.getInt(2));
+      type.setType(resultSet.getString(9));
+      item.setIdItem(resultSet.getInt(1));
+      item.setType(type);
+      item.setDescription(resultSet.getString(3));
+      item.setAvailabilities(resultSet.getString(4));
+      item.setItemCondition(resultSet.getString(5));
+      item.setPhoto(resultSet.getString(6));
+      item.setRating(resultSet.getInt(7));
+      MemberDTO member = memberDao.getMember(resultSet.getInt(8));
+      member.setPassword(null);
+      item.setOfferingMember(member);
       items.add(item);
     }
 
-    resultSetMember.close();
+    resultSet.close();
     return items;
-  }
-
-  private TypeDTO getTypeFromDataBase(int idType) {
-    //TODO Implement method
-    //select the type according to the idType
-    return null;
   }
 
 }

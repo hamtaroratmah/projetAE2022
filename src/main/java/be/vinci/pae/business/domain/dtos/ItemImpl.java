@@ -50,7 +50,7 @@ public class ItemImpl implements ItemDTO {
 
   @Override
   public void setPhoto(String photo) {
-    if (photo.isBlank()) {
+    if (photo != null && photo.isBlank()) {
       throw new IllegalArgumentException();
     }
     this.photo = photo;
@@ -102,9 +102,9 @@ public class ItemImpl implements ItemDTO {
 
   @Override
   public void setRating(int rating) {
-    if (rating <= 0) {
-      throw new IllegalArgumentException();
-    }
+//    if (rating <= 0) {
+//      throw new IllegalArgumentException();
+//    }
     this.rating = rating;
   }
 
@@ -115,9 +115,9 @@ public class ItemImpl implements ItemDTO {
 
   @Override
   public void setOfferingMember(MemberDTO offeringMember) {
-    if (offeringMember == null) {
-      throw new IllegalArgumentException();
-    }
+//    if (offeringMember == null) {
+//      throw new IllegalArgumentException();
+//    }
     this.offeringMember = offeringMember;
   }
 
