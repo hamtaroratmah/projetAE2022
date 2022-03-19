@@ -36,8 +36,6 @@ public class ItemDaoImpl implements ItemDao {
         + "ORDER BY date_offer DESC, "
         + "it.type " + typeOrder;
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
-//      String order = query.enquoteIdentifier(typeOrder, false);
-//      query.setString(1, order);
       System.out.println(query);
       items = getItemFromDataBase(query);
 
