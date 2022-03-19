@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface ItemUCC {
 
-  List<ItemDTO> getLastOfferedItems();
+  List<ItemDTO> getLastOfferedItems(String typeOrder);
 }

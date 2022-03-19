@@ -2,9 +2,10 @@ package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -17,16 +18,22 @@ public class ItemResource {
   ItemUCC itemUcc;
 
   /**
-   * Get last offered items from databased.
+   * Get offered items from databased sorted by date_offer or type.
    *
    * @return
    */
-  @GET
+  @POST
   @Path("")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ItemDTO> getLastOfferedItems() {
-    return itemUcc.getLastOfferedItems();
+  public List<ItemDTO> getLastOfferedItems(JsonNode json) {
+    String typeOrder;
+    if (json == null || json.get("typeOrder") == null) {
+      typeOrder = "ASC";
+    } else {
+      typeOrder = json.get("typeOrder").asText();
+    }
+    return itemUcc.getLastOfferedItems(typeOrder);
   }
 
 }
