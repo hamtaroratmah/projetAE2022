@@ -6,14 +6,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DalServicesImpl implements DalServices {
+public class DalBackendServicesImpl implements DalBackendServices {
 
   Connection conn = null;
 
   /**
    * Constructor : open the database's connexion.
    */
-  public DalServicesImpl() {
+  public DalBackendServicesImpl() {
     String dbUsername = Config.getProperty("dbUsername");
     String dbPassword = Config.getProperty("dbPassword");
     String url = Config.getProperty("dbUrl");
