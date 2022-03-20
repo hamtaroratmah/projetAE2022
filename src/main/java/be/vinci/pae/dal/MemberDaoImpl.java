@@ -14,7 +14,7 @@ public class MemberDaoImpl implements MemberDao {
   @Inject
   private DomainFactory domainFactory;
   @Inject
-  private DalServices services;
+  private DalBackendServices services;
 
   public MemberDaoImpl() {
 
