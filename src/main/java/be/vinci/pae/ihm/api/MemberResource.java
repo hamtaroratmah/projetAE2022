@@ -59,18 +59,20 @@ public class MemberResource {
     return memberUCC.getState(username);
   }
 
+  // confirm a registration
   @POST
   @Path("confirm")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public MemberDTO confirmInscription(JsonNode json) {
+  public MemberDTO confirmRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
     boolean isAdmin = json.get("isAdmin").asBoolean();
     System.out.println(username);
     System.out.println("test de confirm");
-    return memberUCC.confirmInscription(username, isAdmin);
+    return memberUCC.confirmRegistration(username, isAdmin);
   }
 
+  //deny a registration
   @POST
   @Path("deny")
   @Consumes(MediaType.APPLICATION_JSON)

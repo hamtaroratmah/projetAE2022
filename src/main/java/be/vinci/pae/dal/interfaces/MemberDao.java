@@ -10,13 +10,11 @@ public interface MemberDao {
    * DalServices class.
    *
    * @param username username of the member that you want get
+   * @return returns a member
    */
   MemberDTO getMember(String username);
 
-//    MemberDTO getState(String login);
-
-
-  MemberDTO confirmInscription(String username, boolean isAdmin);
+  MemberDTO confirmRegistration(String username, boolean isAdmin);
 
   MemberDTO getMember(int id);
 

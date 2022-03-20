@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public interface MemberUCC {
 
-  MemberDTO getOne(String login);
 
   String getState(String username);
 
@@ -20,7 +19,7 @@ public interface MemberUCC {
    */
   Member login(String username, String password);
 
-  MemberDTO confirmInscription(String username, boolean isAdmin);
+  MemberDTO confirmRegistration(String username, boolean isAdmin);
 
 
   ArrayList<MemberDTO> listPendingUsers();

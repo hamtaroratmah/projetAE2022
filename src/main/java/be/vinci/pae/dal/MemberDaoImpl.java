@@ -89,7 +89,12 @@ public class MemberDaoImpl implements MemberDao {
     return member;
   }
 
-
+  /**
+   * lists users by a state.
+   *
+   * @param state state to list
+   * @return return an arrayList of members
+   */
   @Override
   public ArrayList<MemberDTO> listUsersByState(String state) {
     ArrayList<MemberDTO> list = new ArrayList<>();
@@ -110,10 +115,11 @@ public class MemberDaoImpl implements MemberDao {
 
   }
 
-
-  public MemberDTO confirmInscription(String username, boolean isAdmin) {
+  //confirm a registration by its username
+  public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
-    String query = "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+    String query =
+        "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
@@ -132,6 +138,7 @@ public class MemberDaoImpl implements MemberDao {
     return null;
   }
 
+  //deny a registration by its username
   public MemberDTO denyRegistration(String username) {
     MemberDTO member;
     String query = "UPDATE pae.members SET state='denied' WHERE username=? RETURNING *";
@@ -152,6 +159,7 @@ public class MemberDaoImpl implements MemberDao {
     return null;
   }
 
+  //create a member instance
   public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
 
     MemberDTO member = domainFactory.getMember();

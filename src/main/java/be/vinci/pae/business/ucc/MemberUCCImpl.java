@@ -15,10 +15,6 @@ public class MemberUCCImpl implements MemberUCC {
   //  @Inject
   //  private DomainFactory domainFactory;
 
-  @Override
-  public MemberDTO getOne(String login) {
-    return memberDao.getMember(login);
-  }
 
   @Override
   public MemberDTO getOne(int id) {
@@ -48,8 +44,8 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public MemberDTO confirmInscription(String username, boolean isAdmin) {
-    return memberDao.confirmInscription(username, isAdmin);
+  public MemberDTO confirmRegistration(String username, boolean isAdmin) {
+    return memberDao.confirmRegistration(username, isAdmin);
   }
 
   @Override
