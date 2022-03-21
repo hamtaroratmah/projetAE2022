@@ -36,7 +36,6 @@ const Navbar = async () => {
       token = window.sessionStorage.getItem("user");
     }
     let name = await getName(token);
-    console.log(name);
 
     username.innerText = `Bonjour ${name}`
   }

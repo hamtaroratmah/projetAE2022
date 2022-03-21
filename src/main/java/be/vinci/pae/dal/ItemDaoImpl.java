@@ -27,18 +27,15 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public List<ItemDTO> getLastOfferedItems(String typeOrder) {
+  public List<ItemDTO> getLastOfferedItems() {
     List<ItemDTO> items = null;
-    String tempQuery = "SELECT it.id_item,it.type,it.description,it.availabilities,"
+    String tempQuery = "SELECT it.id_item,it.type,it.description,it.availabilities, "
         + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
         + "FROM pae.items it,pae.types ty,pae.offers of "
         + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
-        + "ORDER BY date_offer DESC, "
-        + "it.type " + typeOrder;
+        + "ORDER BY date_offer DESC";
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
-      System.out.println(query);
       items = getItemFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -74,7 +71,6 @@ public class ItemDaoImpl implements ItemDao {
         + "AND it.item_condition = 'given' "
         + "ORDER BY date_offer DESC ";
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
-      System.out.println(query);
       items = getItemFromDataBase(query);
 
     } catch (SQLException e) {

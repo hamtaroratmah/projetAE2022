@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ItemDao {
 
-  List<ItemDTO> getLastOfferedItems(String typeOrder);
+  List<ItemDTO> getLastOfferedItems();
 
   List<ItemDTO> getGivenItems();
 

@@ -6,7 +6,6 @@ const loginDiv = `
             <div id="loginContainer">
                 <form id="loginForm" class="loginRegisterContainer">
                     <h1 class="loginText">Donnamis</h1>
-                    <div id="errorLogin"></div>
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
                     <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
@@ -35,17 +34,15 @@ async function login(e) {
   e.preventDefault();
   const username = document.getElementById("usernameLogin").value;
   const password = document.getElementById("passwordLogin").value;
-  const errorLogin = document.getElementById("errorLogin");
+  const errorLogin = document.getElementById("errorText");
   errorLogin.innerHTML = "";
 
   //Verify the user entered all informations to log in and show an error message if not
   try {
     if (!username) {
       errorLogin.innerHTML = "Enter a username";
-      throw new Error("No username");
     } else if (!password) {
       errorLogin.innerHTML = "Enter a password";
-      throw new Error("No password");
     }
 
     const request = {
@@ -69,8 +66,6 @@ async function login(e) {
       } else {
         errorLogin.innerHTML = "Connection issue";
       }
-      throw new Error(
-          "fetch error : " + response.status + " : " + response.statusText);
     } else {
       errorLogin.innerHTML = "";
     }

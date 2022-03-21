@@ -29,7 +29,7 @@ const Router = () => {
       window.history.pushState({}, uri, window.location.origin + uri);
       /* render the requested component
       NB : for the components that include JS, we want to assure that the JS included
-      is not runned when the JS file is charged by the browser
+      is not ran when the JS file is charged by the browser
       therefore, those components have to be either a function or a class*/
       const componentToRender = routes[uri];
       if (routes[uri]) {
@@ -41,7 +41,7 @@ const Router = () => {
   });
 
   /* Route the right component when the page is loaded / refreshed */
-  window.addEventListener("load", (e) => {
+  window.addEventListener("load", (/*e*/) => {
     const componentToRender = routes[window.location.pathname];
     if (!componentToRender) {
       throw Error(
