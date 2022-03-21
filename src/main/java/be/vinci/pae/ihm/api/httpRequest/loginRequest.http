@@ -1,6 +1,6 @@
 
 ###
-POST {{baseUrl}}/login/login
+POST {{baseUrl}}/auths/login
 Content-Type: application/json
 
 {

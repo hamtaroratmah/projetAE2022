@@ -21,6 +21,7 @@ body {
   border-radius: 10px;
   border: none;
 }
+
 .fields:focus {
   outline: none;
 }
@@ -45,3 +46,11 @@ body {
 }
 
 /*# sourceMappingURL=main.css.map */
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.receptionItems {
+  border: 1px solid black;
+}

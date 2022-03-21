@@ -42,8 +42,7 @@ public class AuthsResource {
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
 
-    String token = createToken(publicUser.getIdMember());
-    return token;
+    return createToken(publicUser.getIdMember());
   }
 
   private String createToken(int id) { //TODO

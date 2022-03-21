@@ -2,9 +2,9 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,27 +28,15 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO getMember(String username) {
     MemberDTO member = null;
-    PreparedStatement query = null;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member, password, username,"
-              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-              + " state, count_object_not_collected, count_object_given, count_object_got"
-              + " FROM pae.members "
-              + "WHERE username = ?");
+    try (PreparedStatement query = services.getPreparedStatement(
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        assert query != null;
-        query.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-
     }
     return member;
   }
@@ -62,27 +50,15 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public MemberDTO getMember(int id) {
     MemberDTO member = null;
-    PreparedStatement query = null;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member, password, username,"
-              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-              + " state, count_object_not_collected, count_object_given, count_object_got"
-              + " FROM pae.members "
-              + "WHERE id_member = ?");
+    try (PreparedStatement query = services.getPreparedStatement(
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE id_member = ?")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        assert query != null;
-        query.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-
     }
     return member;
   }
@@ -93,12 +69,12 @@ public class MemberDaoImpl implements MemberDao {
    * @param query query to execute
    * @return return the member got in the database
    */
-  private MemberDTO getMemberFromDataBase(PreparedStatement query) throws SQLException {
+  public MemberDTO getMemberFromDataBase(PreparedStatement query) throws SQLException {
     MemberDTO member = domainFactory.getMember();
     ResultSet resultSetMember = query.executeQuery();
 
     if (!resultSetMember.next()) {
-      throw new WebApplicationException("Username not found");
+      throw new IllegalArgumentException("Username not found");
     }
     member.setIdMember(resultSetMember.getInt(1));
     member.setPassword(resultSetMember.getString(2));
@@ -115,5 +91,4 @@ public class MemberDaoImpl implements MemberDao {
     resultSetMember.close();
     return member;
   }
-
 }
