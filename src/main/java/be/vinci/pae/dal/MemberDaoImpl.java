@@ -15,7 +15,7 @@ public class MemberDaoImpl implements MemberDao {
   @Inject
   private DomainFactory domainFactory;
   @Inject
-  private DalServices services;
+  private DalBackendServices services;
 
   public MemberDaoImpl() {
 
@@ -29,15 +29,27 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO getMember(String username) {
     MemberDTO member = null;
-    try (PreparedStatement query = services.getPreparedStatement(
-      "SELECT id_member, password, username,"
-        + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-        + " state, count_object_not_collected, count_object_given, count_object_got"
-        + " FROM pae.members " + "WHERE username = ?")) {
+    PreparedStatement query = null;
+    try {
+      query = services.getPreparedStatement(
+          "SELECT id_member, password, username,"
+              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+              + " state, count_object_not_collected, count_object_given, count_object_got"
+              + " FROM pae.members "
+              + "WHERE username = ?");
       query.setString(1, username);
       member = getMemberFromDataBase(query);
+
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        assert query != null;
+        query.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
     }
     return member;
   }
@@ -140,6 +152,8 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
     resultSetMember.close();
+    System.out.println(member);
     return member;
   }
+
 }

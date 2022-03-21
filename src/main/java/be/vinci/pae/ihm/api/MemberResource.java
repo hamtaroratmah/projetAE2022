@@ -19,11 +19,11 @@ import jakarta.ws.rs.core.Response;
 @Path("/member")
 public class MemberResource {
 
-  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
-  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
-    .build();
   @Inject
   private MemberUCC memberUCC;
+  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
+  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
+      .build();
 
   /**
    * Get a member according to his token by his id.
@@ -42,7 +42,7 @@ public class MemberResource {
     String[] tokenSplit = token.split("\"");
     DecodedJWT decodedToken = this.jwtVerifier.verify(tokenSplit[3]);
     return memberUCC.getOne(JWT.decode(decodedToken.getToken()).getClaim("id_member").asInt())
-      .getUsername();
+        .getUsername();
   }
 
 

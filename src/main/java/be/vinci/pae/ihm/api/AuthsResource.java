@@ -12,7 +12,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -95,14 +99,14 @@ public class AuthsResource {
     String token;
     try {
       token = JWT.create().withIssuer("auth0")
-              .withClaim("id_member", id).sign(this.jwtAlgorithm);
+          .withClaim("id_member", id).sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;
     }
     return jsonMapper.createObjectNode()
-            .put("token", token)
-            .put("id", id).toPrettyString();
+        .put("token", token)
+        .put("id", id).toPrettyString();
   }
 }
 

@@ -6,17 +6,22 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DalServicesImpl implements DalServices {
+public class DalServicesImpl implements DalBackendServices, DalServices {
 
   Connection conn = null;
+  private ThreadLocal<Connection> threadLocalValue;
+  private String dbUsername;
+  private String dbPassword;
+  private String url;
 
   /**
    * Constructor : open the database's connexion.
    */
   public DalServicesImpl() {
-    String dbUsername = Config.getProperty("dbUsername");
-    String dbPassword = Config.getProperty("dbPassword");
-    String url = Config.getProperty("dbUrl");
+    threadLocalValue = new ThreadLocal<>();
+    dbUsername = Config.getProperty("dbUsername");
+    dbPassword = Config.getProperty("dbPassword");
+    url = Config.getProperty("dbUrl");
     try {
       Class.forName("org.postgresql.Driver");
     } catch (ClassNotFoundException e) {
@@ -44,6 +49,50 @@ public class DalServicesImpl implements DalServices {
       e.printStackTrace();
     }
     return statement;
+  }
+
+  @Override
+  public void openConnection() {
+    try {
+      conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+      threadLocalValue.set(conn);
+    } catch (SQLException e) {
+      System.out.println("Impossible de joindre le server !");
+      System.exit(1);
+    }
+  }
+
+  @Override
+  public void startTransaction() {
+    try {
+      openConnection();
+      conn = threadLocalValue.get();
+      conn.setAutoCommit(false);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void commitTransaction() {
+    try {
+      conn = threadLocalValue.get();
+      conn.commit();
+      conn.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void rollbackTransaction() {
+    try {
+      conn = threadLocalValue.get();
+      conn.rollback();
+      conn.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
 }
