@@ -1,7 +1,6 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
@@ -12,8 +11,6 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
-  @Inject
-  private DomainFactory domainFactory;
 
   @Override
   public MemberDTO getOne(String login) {
@@ -41,6 +38,11 @@ public class MemberUCCImpl implements MemberUCC {
     return member;
   }
 
+  /**
+   * Able a member to register.
+   *
+   * @param member all informations of members
+   */
   public MemberDTO register(Member member) {
     String hashPass = member.hashPassword(member.getPassword());
     member.setPassword(hashPass);
