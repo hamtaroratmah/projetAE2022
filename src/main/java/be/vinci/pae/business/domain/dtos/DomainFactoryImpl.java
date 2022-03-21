@@ -9,11 +9,12 @@ public class DomainFactoryImpl implements DomainFactory {
   public DomainFactoryImpl() {
 
   }
+
   public MemberDTO getMember() {
     return new MemberImpl();
   }
 
-  public AddressDTO getAddress(){
+  public AddressDTO getAddress() {
     return new AddressImpl();
   }
 }
