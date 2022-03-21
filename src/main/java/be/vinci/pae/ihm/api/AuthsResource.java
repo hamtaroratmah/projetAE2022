@@ -1,7 +1,6 @@
 package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.dtos.AddressImpl;
-import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
@@ -68,8 +67,8 @@ public class AuthsResource {
     AddressDTO address = domainFactory.getAddress();
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
-    address.setBuilding_number(json.get("building_number").asInt());
-    address.setUnit_number(json.get("unit_number").asInt());
+    address.setBuildingNumber(json.get("building_number").asInt());
+    address.setUnitNumber(json.get("unit_number").asInt());
     address.setPostcode(json.get("postcode").asInt());
     address.setCommune(json.get("commune").asText());
     AddressImpl addressImpl = (AddressImpl) address;

@@ -9,10 +9,11 @@ public class DomainFactoryImpl implements DomainFactory {
   public DomainFactoryImpl() {
 
   }
-
   public MemberDTO getMember() {
     return new MemberImpl();
   }
-  @Override
-  public AddressDTO getAddress() {return new AddressImpl();}
+
+  public AddressDTO getAddress(){
+    return new AddressImpl();
+  }
 }

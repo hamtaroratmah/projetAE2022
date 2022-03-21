@@ -4,13 +4,13 @@ import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 
 public class AddressImpl implements AddressDTO {
 
-    private int id_address;
+    private int idAddress;
     private String street;
-    private int building_number;
+    private int buildingNumber;
     private int postcode;
     private String commune;
     private String city;
-    private int unit_number;
+    private int unitNumber;
 
     public AddressImpl() {
 
@@ -21,13 +21,13 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
-    public int getId_address() {
-        return id_address;
+    public int getIdAddress() {
+        return idAddress;
     }
 
     @Override
-    public int getBuilding_number() {
-        return building_number;
+    public int getBuildingNumber() {
+        return buildingNumber;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
-    public int getUnit_number() {
-        return unit_number;
+    public int getUnitNumber() {
+        return unitNumber;
     }
 
     @Override
-    public void setBuilding_number(int building_number) {
-        this.building_number = building_number;
+    public void setBuildingNumber(int buildingNumber) {
+        this.buildingNumber = buildingNumber;
     }
 
     @Override
@@ -71,12 +71,12 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
-    public void setUnit_number(int unit_number) {
-        this.unit_number = unit_number;
+    public void setUnitNumber(int unitNumber) {
+        this.unitNumber = unitNumber;
     }
 
     @Override
-    public void setId_address(int id_address) {
+    public void setIdAddress(int idAddress) {
 
     }
 
@@ -86,13 +86,23 @@ public class AddressImpl implements AddressDTO {
 
     @Override
     public String toString() {
-        return "AddressesImpl{" +
-                "id_address='" + id_address + '\'' +
-                ", building_number='" + building_number + '\'' +
-                ", postcode=" + postcode +
-                ", commune='" + commune + '\'' +
-                ", city='" + city + '\'' +
-                ", unit_number=" + unit_number +
-                '}';
+        return "AddressesImpl{"
+                + "id_address='"
+                + idAddress
+                + '\''
+                + ", building_number='"
+                + buildingNumber
+                + '\''
+                + ", postcode="
+                + postcode
+                + ", commune='"
+                + commune
+                + '\''
+                + ", city='"
+                + city
+                + '\''
+                + ", unit_number="
+                + unitNumber
+                + '}';
     }
 }

@@ -1,11 +1,11 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
 public interface AddressDTO {
-    int getId_address();
+    int getIdAddress();
 
     String getStreet();
 
-    int getBuilding_number();
+    int getBuildingNumber();
 
     int getPostcode();
 
@@ -13,9 +13,9 @@ public interface AddressDTO {
 
     String getCity();
 
-    int getUnit_number();
+    int getUnitNumber();
 
-    void setBuilding_number(int building_number);
+    void setBuildingNumber(int buildingNumber);
 
     void setPostcode(int postcode);
 
@@ -23,9 +23,9 @@ public interface AddressDTO {
 
     void setCity(String city);
 
-    void setUnit_number(int unit_number);
+    void setUnitNumber(int unitNumber);
 
     void setStreet(String street);
 
-    void setId_address(int id_address);
+    void setIdAddress(int idAddress);
 }

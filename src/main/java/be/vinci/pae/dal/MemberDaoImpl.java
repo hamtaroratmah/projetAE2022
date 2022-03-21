@@ -98,11 +98,11 @@ public class MemberDaoImpl implements MemberDao {
                       " VALUES (?,?,?,?,?,?);"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
-      queryAddress.setInt(2,member.getAddress().getBuilding_number());
+      queryAddress.setInt(2,member.getAddress().getBuildingNumber());
       queryAddress.setInt(3,member.getAddress().getPostcode());
       queryAddress.setString(4,member.getAddress().getCommune());
       queryAddress.setString(5,member.getAddress().getCity());
-      queryAddress.setInt(6,member.getAddress().getUnit_number());
+      queryAddress.setInt(6,member.getAddress().getUnitNumber());
 
       queryAddress.executeQuery();
     }catch(SQLException e){
@@ -111,8 +111,8 @@ public class MemberDaoImpl implements MemberDao {
     try {
       queryMember = services.getPreparedStatement(
               "INSERT INTO pae.members" +
-                      "(password, username, last_name, first_name, address, call_number, isadmin,\n" +
-                      " reason_for_conn_refusal, state)\n" +
+                      "(password, username, lastName, firstName, address, callNumber, isadmin,\n" +
+                      " reasonForConnRefusal, state)\n" +
                       "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
