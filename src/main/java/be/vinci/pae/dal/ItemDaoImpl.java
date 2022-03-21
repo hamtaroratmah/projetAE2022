@@ -45,6 +45,25 @@ public class ItemDaoImpl implements ItemDao {
     return items;
   }
 
+  @Override
+  public ItemDTO getItem(int idItem) {
+    List<ItemDTO> item = new ArrayList<>();
+    try (PreparedStatement query = services.getPreparedStatement(
+        "SELECT it.id_item,it.type,it.description,it.availabilities,"
+            + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
+            + "FROM pae.items it,pae.types ty,pae.offers of "
+            + "WHERE it.type = ty.id_type AND of.id_item = it.id_item AND it.id_item = ? ")) {
+      query.setInt(1, idItem);
+      item = getItemFromDataBase(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    if (item.size() > 0) {
+      return item.get(0);
+    }
+    return null;
+  }
+
   /*
   tri selon le type */
 

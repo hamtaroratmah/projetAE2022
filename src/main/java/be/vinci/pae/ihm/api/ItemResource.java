@@ -7,7 +7,9 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -19,8 +21,6 @@ public class ItemResource {
 
   /**
    * Get offered items from databased sorted by date_offer or type.
-   *
-   * @return
    */
   @POST
   @Path("")
@@ -34,6 +34,21 @@ public class ItemResource {
       typeOrder = json.get("typeOrder").asText();
     }
     return itemUcc.getLastOfferedItems(typeOrder);
+  }
+
+  @POST
+  @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ItemDTO getItem(@PathParam("id") int idItem) {
+    if (idItem < 1) {
+      throw new WebApplicationException("l'id de l'objet ne peux être négatif");
+    }
+    ItemDTO item = itemUcc.getItem(idItem);
+    if (item == null) {
+      throw new WebApplicationException("L'objet désiré n'existe pas");
+    }
+    return item;
   }
 
 }

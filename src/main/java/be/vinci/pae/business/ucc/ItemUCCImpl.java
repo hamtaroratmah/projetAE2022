@@ -22,4 +22,9 @@ public class ItemUCCImpl implements ItemUCC {
   public List<ItemDTO> getLastOfferedItems(String typeOrder) {
     return itemDao.getLastOfferedItems(typeOrder);
   }
+
+  @Override
+  public ItemDTO getItem(int idItem) {
+    return itemDao.getItem(idItem);
+  }
 }
