@@ -52,6 +52,11 @@ public class AuthsResource {
     return token;
   }
 
+  /**
+   * API register.
+   *
+   * @param json jsonNode created by the request and contains information given by the client
+   */
   @POST
   @Path("register")
   @Consumes(MediaType.APPLICATION_JSON)
