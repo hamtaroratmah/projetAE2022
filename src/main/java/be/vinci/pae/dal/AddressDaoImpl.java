@@ -24,12 +24,11 @@ public class AddressDaoImpl implements AddressDao {
   @Override
   public AddressDTO getAddress(int id) {
     AddressDTO address = null;
-    try (
-      PreparedStatement query = services.getPreparedStatement(
-        "SELECT id_address, street, building_number,"
-          + " postcode, commune, city, unit_number"
-          + " FROM pae.addresses "
-          + "WHERE id_address = ?");
+    try (PreparedStatement query = services.getPreparedStatement(
+      "SELECT id_address, street, building_number,"
+        + " postcode, commune, city, unit_number"
+        + " FROM pae.addresses "
+        + "WHERE id_address = ?");
     ) {
       address = getAdressFromDatabase(query);
     } catch (SQLException e) {
