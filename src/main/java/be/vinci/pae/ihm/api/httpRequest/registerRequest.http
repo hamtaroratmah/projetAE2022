@@ -1,0 +1,16 @@
+###
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+  "username":"Stal",
+  "password":"password",
+  "firstname": "guillaume",
+  "lastname": "bouillon",
+  "street": "Rue de la trouille",
+  "building_number": 8,
+  "unit_number": 12,
+  "postcode":1235,
+  "commune": "inshallah",
+  "city": "mashala Land"
+}
