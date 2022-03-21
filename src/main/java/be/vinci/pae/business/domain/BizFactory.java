@@ -12,6 +12,9 @@ public class BizFactory {
   public MemberDaoImpl getUserDAO() {
     return new MemberDaoImpl();
   }
-  public AddressDaoImpl getAddressDao(){ return new AddressDaoImpl();}
+
+  public AddressDaoImpl getAddressDao() {
+    return new AddressDaoImpl();
+  }
 
 }

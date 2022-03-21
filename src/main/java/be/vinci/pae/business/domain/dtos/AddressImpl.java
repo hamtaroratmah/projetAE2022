@@ -4,105 +4,105 @@ import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 
 public class AddressImpl implements AddressDTO {
 
-    private int idAddress;
-    private String street;
-    private int buildingNumber;
-    private int postcode;
-    private String commune;
-    private String city;
-    private int unitNumber;
+  private int idAddress;
+  private String street;
+  private int buildingNumber;
+  private int postcode;
+  private String commune;
+  private String city;
+  private int unitNumber;
 
-    public AddressImpl() {
+  public AddressImpl() {
 
-    }
+  }
 
-    public String getStreet() {
-        return street;
-    }
+  public String getStreet() {
+    return street;
+  }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
+  public void setStreet(String street) {
+    this.street = street;
+  }
 
-    @Override
-    public int getIdAddress() {
-        return idAddress;
-    }
+  @Override
+  public int getIdAddress() {
+    return idAddress;
+  }
 
-    @Override
-    public void setIdAddress(int idAddress) {
+  @Override
+  public void setIdAddress(int idAddress) {
 
-    }
+  }
 
-    @Override
-    public int getBuildingNumber() {
-        return buildingNumber;
-    }
+  @Override
+  public int getBuildingNumber() {
+    return buildingNumber;
+  }
 
-    @Override
-    public void setBuildingNumber(int buildingNumber) {
-        this.buildingNumber = buildingNumber;
-    }
+  @Override
+  public void setBuildingNumber(int buildingNumber) {
+    this.buildingNumber = buildingNumber;
+  }
 
-    @Override
-    public int getPostcode() {
-        return postcode;
-    }
+  @Override
+  public int getPostcode() {
+    return postcode;
+  }
 
-    @Override
-    public void setPostcode(int postcode) {
-        this.postcode = postcode;
-    }
+  @Override
+  public void setPostcode(int postcode) {
+    this.postcode = postcode;
+  }
 
-    @Override
-    public String getCommune() {
-        return commune;
-    }
+  @Override
+  public String getCommune() {
+    return commune;
+  }
 
-    @Override
-    public void setCommune(String commune) {
-        this.commune = commune;
-    }
+  @Override
+  public void setCommune(String commune) {
+    this.commune = commune;
+  }
 
-    @Override
-    public String getCity() {
-        return city;
-    }
+  @Override
+  public String getCity() {
+    return city;
+  }
 
-    @Override
-    public void setCity(String city) {
-        this.city = city;
-    }
+  @Override
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    @Override
-    public int getUnitNumber() {
-        return unitNumber;
-    }
+  @Override
+  public int getUnitNumber() {
+    return unitNumber;
+  }
 
-    @Override
-    public void setUnitNumber(int unitNumber) {
-        this.unitNumber = unitNumber;
-    }
+  @Override
+  public void setUnitNumber(int unitNumber) {
+    this.unitNumber = unitNumber;
+  }
 
-    @Override
-    public String toString() {
-        return "AddressesImpl{"
-            + "id_address='"
-            + idAddress
-            + '\''
-            + ", building_number='"
-            + buildingNumber
-            + '\''
-            + ", postcode="
-            + postcode
-            + ", commune='"
-            + commune
-            + '\''
-            + ", city='"
-            + city
-            + '\''
-            + ", unit_number="
-            + unitNumber
-            + '}';
-    }
+  @Override
+  public String toString() {
+    return "AddressesImpl{"
+      + "id_address='"
+      + idAddress
+      + '\''
+      + ", building_number='"
+      + buildingNumber
+      + '\''
+      + ", postcode="
+      + postcode
+      + ", commune='"
+      + commune
+      + '\''
+      + ", city='"
+      + city
+      + '\''
+      + ", unit_number="
+      + unitNumber
+      + '}';
+  }
 }
