@@ -20,9 +20,18 @@ public class AddressImpl implements AddressDTO {
         return street;
     }
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
     @Override
     public int getIdAddress() {
         return idAddress;
+    }
+
+    @Override
+    public void setIdAddress(int idAddress) {
+
     }
 
     @Override
@@ -31,28 +40,13 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
-    public int getPostcode() {
-        return postcode;
-    }
-
-    @Override
-    public String getCommune() {
-        return commune;
-    }
-
-    @Override
-    public String getCity() {
-        return city;
-    }
-
-    @Override
-    public int getUnitNumber() {
-        return unitNumber;
-    }
-
-    @Override
     public void setBuildingNumber(int buildingNumber) {
         this.buildingNumber = buildingNumber;
+    }
+
+    @Override
+    public int getPostcode() {
+        return postcode;
     }
 
     @Override
@@ -61,8 +55,18 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
+    public String getCommune() {
+        return commune;
+    }
+
+    @Override
     public void setCommune(String commune) {
         this.commune = commune;
+    }
+
+    @Override
+    public String getCity() {
+        return city;
     }
 
     @Override
@@ -71,38 +75,34 @@ public class AddressImpl implements AddressDTO {
     }
 
     @Override
+    public int getUnitNumber() {
+        return unitNumber;
+    }
+
+    @Override
     public void setUnitNumber(int unitNumber) {
         this.unitNumber = unitNumber;
     }
 
     @Override
-    public void setIdAddress(int idAddress) {
-
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    @Override
     public String toString() {
         return "AddressesImpl{"
-                + "id_address='"
-                + idAddress
-                + '\''
-                + ", building_number='"
-                + buildingNumber
-                + '\''
-                + ", postcode="
-                + postcode
-                + ", commune='"
-                + commune
-                + '\''
-                + ", city='"
-                + city
-                + '\''
-                + ", unit_number="
-                + unitNumber
-                + '}';
+            + "id_address='"
+            + idAddress
+            + '\''
+            + ", building_number='"
+            + buildingNumber
+            + '\''
+            + ", postcode="
+            + postcode
+            + ", commune='"
+            + commune
+            + '\''
+            + ", city='"
+            + city
+            + '\''
+            + ", unit_number="
+            + unitNumber
+            + '}';
     }
 }
