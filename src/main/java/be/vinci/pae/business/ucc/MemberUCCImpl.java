@@ -18,9 +18,7 @@ public class MemberUCCImpl implements MemberUCC {
   private DomainFactory domainFactory;
 
   @Override
-  public MemberDTO getOne(String login) {
-    return memberDao.getMember(login);
-  }
+  public MemberDTO getOne(String login) {return memberDao.getMember(login);}
 
   @Override
   public MemberDTO getOne(int id) {
