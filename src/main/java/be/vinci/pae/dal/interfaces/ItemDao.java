@@ -7,5 +7,7 @@ public interface ItemDao {
 
   List<ItemDTO> getLastOfferedItems(String typeOrder);
 
+  List<ItemDTO> getGivenItems();
+
   ItemDTO getItem(int idItem);
 }

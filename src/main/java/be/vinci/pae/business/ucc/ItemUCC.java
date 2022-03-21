@@ -7,5 +7,8 @@ public interface ItemUCC {
 
   List<ItemDTO> getLastOfferedItems(String typeOrder);
 
+  List<ItemDTO> getGivenItems();
+
   ItemDTO getItem(int idItem);
+
 }

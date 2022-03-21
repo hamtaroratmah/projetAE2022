@@ -15,8 +15,6 @@ public class ItemUCCImpl implements ItemUCC {
 
   /**
    * Get items from databased, sorted by the offer's date DESC.
-   *
-   * @return
    */
   @Override
   public List<ItemDTO> getLastOfferedItems(String typeOrder) {
@@ -27,4 +25,11 @@ public class ItemUCCImpl implements ItemUCC {
   public ItemDTO getItem(int idItem) {
     return itemDao.getItem(idItem);
   }
+
+  @Override
+  public List<ItemDTO> getGivenItems() {
+    return itemDao.getGivenItems();
+  }
+
+
 }

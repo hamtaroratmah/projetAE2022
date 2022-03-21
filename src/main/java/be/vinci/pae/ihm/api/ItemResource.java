@@ -5,6 +5,7 @@ import be.vinci.pae.business.ucc.ItemUCC;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -21,6 +22,9 @@ public class ItemResource {
 
   /**
    * Get offered items from databased sorted by date_offer or type.
+   *
+   * @param json contains the value of typeOrder. If it doesn't contains the value typeOrder' values
+   *             will be ASC by default
    */
   @POST
   @Path("")
@@ -36,6 +40,11 @@ public class ItemResource {
     return itemUcc.getLastOfferedItems(typeOrder);
   }
 
+  /**
+   * Get a specified item according to its id.
+   *
+   * @param idItem item's id that we want more details
+   */
   @POST
   @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -49,6 +58,21 @@ public class ItemResource {
       throw new WebApplicationException("L'objet désiré n'existe pas");
     }
     return item;
+  }
+
+  /**
+   * Get list of given items.
+   */
+  @GET
+  @Path("/getGivenItems")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ItemDTO> getListOfGivenItems() {
+    List<ItemDTO> items = itemUcc.getGivenItems();
+    if (items.isEmpty()) {
+      throw new WebApplicationException("Il n'y a aucun objet déjà offert");
+    }
+    return items;
   }
 
 }
