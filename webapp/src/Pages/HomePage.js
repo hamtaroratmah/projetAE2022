@@ -10,8 +10,6 @@ const HomePage = async () => {
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   pageDiv.innerHTML = receptionDiv;
-  const receptionPage = document.querySelector("#receptionPage")
-  let orderType = "ASC";
 
   let items = [];
   try {
@@ -29,8 +27,6 @@ const HomePage = async () => {
       for (let i = 0; i < commits.length; i++) {
         items.push(commits[i]);
       }
-
-      // items = commits
     })
     .catch(() =>
         error.innerHTML = "Une erreur est survenue"
@@ -52,23 +48,73 @@ const HomePage = async () => {
 };
 
 function displayItems(items) {
+  let itemDiv, item, offer;
+  const receptionPage = document.querySelector("#receptionPage")
   receptionPage.innerHTML = ""
   for (let i = 0; i < items.length; i++) {
+    offer = {
+      idOffer: items[i]["offer"].idOffer,
+      dateOffer: reformateDate(items[i]["offer"]["dateOffer"]),
+      idItem: items[i]["offer"].idItem
+    }
+    item = {
+      idItem: items[i].idItem,
+      description: items[i].description,
+      itemCondition: items[i].itemCondition,
+      offeringMember: items[i]["offeringMember"],
+      photo: items[i].photo,
+      rating: items[i].rating,
+      type: items[i].type,
+      availabilities: items[i].availabilities,
+      offer: offer
+    }
+    console.log(item)
     receptionPage.innerHTML += `
         <div id="receptionItem${i}" class="receptionItems">
           <img src="" alt="" class="receptionImage" id="receptionImage${i}">
-          <p class="receptionDescription">${items[i].description}</p>
-          <p class="receptionOfferingMember">${items[i]["offeringMember"].username}</p>
-          <p class="receptionType">${items[i]["type"].type}</p>
+          <p class="receptionDescription">${item.description}</p>
+          <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
+          <p class="receptionType">${item["type"].type}</p>
         </div>
       `;
-    const photoSrc = document.querySelector("#receptionImage" + i);
-    if (items[i]["photo"] === null) {
+
+    itemDiv = document.querySelector("#receptionItem" + i);
+    itemDiv.addEventListener("click", () => {
+    });
+  }
+  for (let j = 0; j < items.length; j++) {
+    itemDiv = document.querySelector("#receptionItem" + j);
+    itemDiv.addEventListener("click", () => {
+      openItemModal(items[j], j);
+    });
+    const photoSrc = document.querySelector("#receptionImage" + j);
+    if (items[j]["photo"] === null) {
       photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
     } else {
-      photoSrc.src = items[i]["photo"];
+      photoSrc.src = items[j]["photo"];
     }
   }
+
+  function openItemModal(item, j) {
+    const modal = document.querySelector("modal");
+    modal.innerHTML = `
+      <div>
+        <img src="" alt="" class="receptionImage" id="receptionImage${j}">
+          <p class="receptionDescription">${item.description}</p>
+          <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
+          <p class="receptionType">${item["type"].type}</p>
+          <p class="modalItemInfo"></p>
+      </div>
+    `
+  }
+
+  function reformateDate(date) {
+    let year = date[0];
+    date[0] = date[2];
+    date[2] = year
+    return date[0] + "/" + date[1] + "/" + date[2];
+  }
+
 }
 
 export default HomePage;

@@ -45,7 +45,7 @@ public class AuthsResource {
     return createToken(publicUser.getIdMember());
   }
 
-  private String createToken(int id) { //TODO
+  private String createToken(int id) {
 
     String token;
     try {

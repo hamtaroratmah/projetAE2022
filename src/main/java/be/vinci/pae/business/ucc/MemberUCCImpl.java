@@ -11,8 +11,6 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
-  //  @Inject
-  //  private DomainFactory domainFactory;
 
   @Override
   public MemberDTO getOne(String login) {

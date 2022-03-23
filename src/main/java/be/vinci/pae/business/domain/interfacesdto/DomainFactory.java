@@ -1,7 +1,5 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
-import be.vinci.pae.business.domain.dtos.TypeDTO;
-
 public interface DomainFactory {
 
   MemberDTO getMember();
@@ -9,4 +7,6 @@ public interface DomainFactory {
   ItemDTO getItem();
 
   TypeDTO getType();
+
+  OfferDTO getOffer();
 }

@@ -1,7 +1,5 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
-import be.vinci.pae.business.domain.dtos.TypeDTO;
-
 public interface ItemDTO {
 
   int getIdItem();
@@ -35,4 +33,6 @@ public interface ItemDTO {
   MemberDTO getOfferingMember();
 
   void setOfferingMember(MemberDTO offeringMember);
+
+  void setOffer(OfferDTO offer);
 }

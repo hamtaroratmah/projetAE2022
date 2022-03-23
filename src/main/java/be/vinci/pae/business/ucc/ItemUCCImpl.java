@@ -23,12 +23,23 @@ public class ItemUCCImpl implements ItemUCC {
 
   @Override
   public ItemDTO getItem(int idItem) {
-    return itemDao.getItem(idItem);
+    if (idItem < 1) {
+      throw new IllegalArgumentException("L'id de l'objet doit être supérieur à 0.");
+    }
+    ItemDTO item = itemDao.getItem(idItem);
+    if (item == null) {
+      throw new IllegalArgumentException("L'objet désiré n'existe pas.");
+    }
+    return item;
   }
 
   @Override
   public List<ItemDTO> getGivenItems() {
-    return itemDao.getGivenItems();
+    List<ItemDTO> items = itemDao.getGivenItems();
+    if (items.isEmpty()) {
+      throw new IllegalArgumentException("Il n'y a aucun objet déjà offert.");
+    }
+    return items;
   }
 
 

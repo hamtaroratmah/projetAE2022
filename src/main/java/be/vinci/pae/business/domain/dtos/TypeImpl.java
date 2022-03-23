@@ -1,5 +1,7 @@
 package be.vinci.pae.business.domain.dtos;
 
+import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
+
 public class TypeImpl implements TypeDTO {
 
   private int idType;

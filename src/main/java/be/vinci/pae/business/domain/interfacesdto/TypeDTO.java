@@ -1,4 +1,4 @@
-package be.vinci.pae.business.domain.dtos;
+package be.vinci.pae.business.domain.interfacesdto;
 
 public interface TypeDTO {
 

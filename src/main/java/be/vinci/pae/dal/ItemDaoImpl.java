@@ -1,9 +1,10 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domain.dtos.TypeDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
+import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -22,6 +23,8 @@ public class ItemDaoImpl implements ItemDao {
   DalServices services;
   @Inject
   MemberDao memberDao;
+  @Inject
+  OfferDao offerDao;
 
   public ItemDaoImpl() {
   }
@@ -29,12 +32,12 @@ public class ItemDaoImpl implements ItemDao {
   @Override
   public List<ItemDTO> getLastOfferedItems() {
     List<ItemDTO> items = null;
-    String tempQuery = "SELECT it.id_item,it.type,it.description,it.availabilities, "
-        + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
-        + "FROM pae.items it,pae.types ty,pae.offers of "
-        + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
-        + "ORDER BY date_offer DESC";
-    try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
+    try (PreparedStatement query = services.getPreparedStatement(
+        "SELECT it.id_item,it.type,it.description,it.availabilities,"
+            + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
+            + "FROM pae.items it,pae.types ty,pae.offers of "
+            + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
+            + "ORDER BY date_offer DESC")) {
       items = getItemFromDataBase(query);
     } catch (SQLException e) {
       e.printStackTrace();
@@ -68,11 +71,9 @@ public class ItemDaoImpl implements ItemDao {
         + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
         + "FROM pae.items it,pae.types ty,pae.offers of "
         + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
-        + "AND it.item_condition = 'given' "
-        + "ORDER BY date_offer DESC ";
+        + "AND it.item_condition = 'given' " + "ORDER BY date_offer DESC ";
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
       items = getItemFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -97,11 +98,12 @@ public class ItemDaoImpl implements ItemDao {
       item.setPhoto(resultSet.getString(6));
       item.setRating(resultSet.getInt(7));
       MemberDTO member = memberDao.getMember(resultSet.getInt(8));
+      OfferDTO offer = offerDao.getOffer(resultSet.getInt(10));
       member.setPassword(null);
       item.setOfferingMember(member);
+      item.setOffer(offer);
       items.add(item);
     }
-
     resultSet.close();
     return items;
   }

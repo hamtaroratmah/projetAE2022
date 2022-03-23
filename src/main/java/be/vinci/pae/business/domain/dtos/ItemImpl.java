@@ -2,6 +2,8 @@ package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
+import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 
 public class ItemImpl implements ItemDTO {
 
@@ -13,6 +15,7 @@ public class ItemImpl implements ItemDTO {
   private String itemCondition;
   private int rating;
   private MemberDTO offeringMember;
+  private OfferDTO offer;
 
   /**
    * Class constructor.
@@ -123,5 +126,13 @@ public class ItemImpl implements ItemDTO {
 
   public void tempMethod() {
 
+  }
+
+  public OfferDTO getOffer() {
+    return offer;
+  }
+
+  public void setOffer(OfferDTO offer) {
+    this.offer = offer;
   }
 }
