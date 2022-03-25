@@ -60,6 +60,8 @@ public class AuthsResource {
         .put("token", token)
         .put("id", id).toPrettyString();
   }
+
+
 }
 
 
