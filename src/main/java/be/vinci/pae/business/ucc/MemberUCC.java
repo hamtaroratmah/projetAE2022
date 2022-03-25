@@ -9,6 +9,8 @@ public interface MemberUCC {
 
   String getState(String username);
 
+  MemberDTO getOne(String login);
+
   MemberDTO getOne(int id);
 
   /**
