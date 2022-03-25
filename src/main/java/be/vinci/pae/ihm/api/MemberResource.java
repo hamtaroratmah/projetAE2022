@@ -72,7 +72,7 @@ public class MemberResource {
     return memberUCC.confirmRegistration(username, isAdmin);
   }
 
-  //deny a registration
+  //deny a registrationn
   @POST
   @Path("deny")
   @Consumes(MediaType.APPLICATION_JSON)
