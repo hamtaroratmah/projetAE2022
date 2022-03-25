@@ -66,4 +66,14 @@ public class MemberUCCImpl implements MemberUCC {
       dalServices.commitTransaction();
     }
   }
+
+  @Override
+  public MemberDTO register(Member member) {
+    String hashPass = member.hashPassword(member.getPassword());
+    member.setPassword(hashPass);
+    memberDao.insertMember(member);
+    MemberDTO newMember = (MemberDTO) member;
+    return newMember;
+  }
+
 }

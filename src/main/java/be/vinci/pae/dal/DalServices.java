@@ -1,5 +1,7 @@
 package be.vinci.pae.dal;
 
+import java.sql.PreparedStatement;
+
 public interface DalServices {
 
   void openConnection();
@@ -9,4 +11,7 @@ public interface DalServices {
   void commitTransaction();
 
   void rollbackTransaction();
+
+  PreparedStatement getPreparedStatement(String query);
+
 }
