@@ -28,6 +28,12 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       System.out.println("Driver PostgreSQL manquant !");
       System.exit(1);
     }
+    try {
+      conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+    } catch (SQLException e) {
+      System.out.println("Impossible de joindre le server !");
+      System.exit(1);
+    }
   }
 
   /**

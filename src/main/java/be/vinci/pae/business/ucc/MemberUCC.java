@@ -16,4 +16,6 @@ public interface MemberUCC {
    * @param password non hashed password
    */
   Member login(String username, String password);
+
+  MemberDTO register(Member member);
 }

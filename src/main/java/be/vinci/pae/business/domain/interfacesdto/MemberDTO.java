@@ -1,5 +1,7 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.AddressImpl;
+
 public interface MemberDTO {
 
   int getIdMember();
@@ -49,4 +51,8 @@ public interface MemberDTO {
   int getCountObjectGot();
 
   void setCountObjectGot(int countObjectGot);
+
+  void setAddress(AddressImpl address);
+
+  AddressImpl getAddress();
 }

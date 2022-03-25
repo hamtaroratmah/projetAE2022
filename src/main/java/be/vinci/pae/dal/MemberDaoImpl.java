@@ -1,5 +1,6 @@
 package be.vinci.pae.dal;
 
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -53,6 +54,7 @@ public class MemberDaoImpl implements MemberDao {
     return member;
   }
 
+
   /**
    * Get a member according to the username given in parameter and execute a query given by
    * DalServices class.
@@ -62,29 +64,66 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public MemberDTO getMember(int id) {
     MemberDTO member = null;
-    PreparedStatement query = null;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member, password, username,"
-              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-              + " state, count_object_not_collected, count_object_given, count_object_got"
-              + " FROM pae.members "
-              + "WHERE id_member = ?");
+    try (PreparedStatement query = services.getPreparedStatement(
+      "SELECT id_member, password, username,"
+        + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+        + " state, count_object_not_collected, count_object_given, count_object_got"
+        + " FROM pae.members " + "WHERE id_member = ?")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        assert query != null;
-        query.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-
     }
     return member;
+  }
+
+
+  /**
+   * Insert a member in the dataBase from the informations given in the parameter and execute
+   * queries
+   */
+  public void insertMember(Member member) {
+    PreparedStatement queryMember = null;
+    PreparedStatement queryAddress = null;
+    try {
+      queryAddress = services.getPreparedStatement(
+        "INSERT INTO pae.addresses"
+          + "( street, building_number, postcode, commune, city,unit_number)"
+          + " VALUES (?,?,?,?,?,?);"
+      );
+      queryAddress.setString(1, member.getAddress().getStreet());
+      queryAddress.setInt(2, member.getAddress().getBuildingNumber());
+      queryAddress.setInt(3, member.getAddress().getPostcode());
+      queryAddress.setString(4, member.getAddress().getCommune());
+      queryAddress.setString(5, member.getAddress().getCity());
+      queryAddress.setInt(6, member.getAddress().getUnitNumber());
+
+      queryAddress.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    try {
+      queryMember = services.getPreparedStatement(
+        "INSERT INTO pae.members"
+          + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
+          + " reasonForConnRefusal, state)\n"
+          + "VALUES (?,?,?,?,?,?,?,?,?);"
+
+      );
+      queryMember.setString(1, member.getPassword());
+      queryMember.setString(2, member.getUsername());
+      queryMember.setString(3, member.getLastName());
+      queryMember.setString(4, member.getFirstName());
+      queryMember.setObject(5, member.getAddress());
+      queryMember.setString(6, member.getCallNumber());
+      queryMember.setBoolean(7, member.isAdmin());
+      queryMember.setString(8, member.getReasonForConnRefusal());
+      queryMember.setString(9, member.getState());
+
+      queryMember.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
