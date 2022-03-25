@@ -2,6 +2,7 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.dal.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
@@ -14,11 +15,33 @@ public class MemberUCCImpl implements MemberUCC {
   private MemberDao memberDao;
   //  @Inject
   //  private DomainFactory domainFactory;
+  @Inject
+  private DalServices dalServices;
 
+  @Override
+  public MemberDTO getOne(String login) {
+    try {
+      dalServices.startTransaction();
+      return memberDao.getMember(login);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    } finally {
+      dalServices.commitTransaction();
+    }
+  }
 
   @Override
   public MemberDTO getOne(int id) {
-    return memberDao.getMember(id);
+    try {
+      dalServices.startTransaction();
+      return memberDao.getMember(id);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    } finally {
+      dalServices.commitTransaction();
+    }
   }
 
 
@@ -30,11 +53,19 @@ public class MemberUCCImpl implements MemberUCC {
    */
   @Override
   public Member login(String username, String password) {
-    Member member = (Member) memberDao.getMember(username);
-    if (!member.checkPassword(password)) {
-      throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
+    try {
+      dalServices.startTransaction();
+      Member member = (Member) memberDao.getMember(username);
+      if (!member.checkPassword(password)) {
+        throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
+      }
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    } finally {
+      dalServices.commitTransaction();
     }
-    return member;
   }
 
 

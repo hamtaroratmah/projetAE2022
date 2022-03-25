@@ -15,7 +15,7 @@ public class MemberDaoImpl implements MemberDao {
   @Inject
   private DomainFactory domainFactory;
   @Inject
-  private DalServices services;
+  private DalBackendServices services;
 
   public MemberDaoImpl() {
 
@@ -205,6 +205,8 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectNotCollected(resultSetMember.getInt(10));
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
+    resultSetMember.close();
+    System.out.println(member);
     return member;
   }
 
