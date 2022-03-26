@@ -31,6 +31,7 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  //test
   @Override
   public MemberDTO getOne(int id) {
     try {
