@@ -30,4 +30,5 @@ public interface MemberUCC {
   ArrayList<MemberDTO> listDeniedUsers();
 
   MemberDTO denyRegistration(String username);
+  MemberDTO register(Member member);
 }

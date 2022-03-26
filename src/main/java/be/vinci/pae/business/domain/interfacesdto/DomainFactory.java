@@ -8,7 +8,6 @@ public interface DomainFactory {
 
   MemberDTO confirmInscription();
 
-  //je dois le mettre ici ou pas ?
-  //ArrayList<MemberDTO> listPendingUsers();
-
+ 
+  AddressDTO getAddress();
 }

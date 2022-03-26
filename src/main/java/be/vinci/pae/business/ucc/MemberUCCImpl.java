@@ -95,6 +95,13 @@ public class MemberUCCImpl implements MemberUCC {
   public ArrayList<MemberDTO> listDeniedUsers() {
     return memberDao.listUsersByState("denied");
 
+  @Override
+  public MemberDTO register(Member member) {
+    String hashPass = member.hashPassword(member.getPassword());
+    member.setPassword(hashPass);
+    memberDao.insertMember(member);
+    MemberDTO newMember = (MemberDTO) member;
+    return newMember;
   }
 
 }
