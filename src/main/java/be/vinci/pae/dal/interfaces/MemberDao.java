@@ -14,7 +14,7 @@ public interface MemberDao {
    * @param username username of the member that you want get
    * @return returns a member
    */
-  MemberDTO getMember(String username);
+  MemberDTO getMemberByUsername(String username);
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 

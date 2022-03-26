@@ -44,7 +44,7 @@ public class MemberUCCImpl implements MemberUCC {
   public Member login(String username, String password) {
     try {
       dalServices.startTransaction();
-      Member member = (Member) memberDao.getMember(username);
+      Member member = (Member) memberDao.getMemberByUsername(username);
       if (!member.checkPassword(password)) {
         throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
       }
@@ -60,7 +60,7 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Override
   public String getState(String username) {
-    return memberDao.getMember(username).getState();
+    return memberDao.getMemberByUsername(username).getState();
   }
 
   @Override

@@ -49,7 +49,11 @@ public class MemberResource {
         .getUsername();
   }
 
-
+  /**
+   * Get the state of the member
+   *
+   * @param json jsonNode created by the request and contains information given by the client
+   */
   @POST
   @Path("state")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -59,7 +63,11 @@ public class MemberResource {
     return memberUCC.getState(username);
   }
 
-  // confirm a registration
+  /**
+   * confirma a member
+   *
+   * @param json jsonNode created by the request and contains information given by the client
+   */
   @POST
   @Path("confirm")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -72,7 +80,11 @@ public class MemberResource {
     return memberUCC.confirmRegistration(username, isAdmin);
   }
 
-  //deny a registrationn
+  /**
+   * deny a member
+   *
+   * @param json jsonNode created by the request and contains information given by the client
+   */
   @POST
   @Path("deny")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -84,7 +96,9 @@ public class MemberResource {
     return memberUCC.denyRegistration(username);
   }
 
-  //list of users whos state is pending
+  /**
+   * list members who are pending
+   */
   @GET
   @Path("pending")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -94,7 +108,9 @@ public class MemberResource {
     return memberUCC.listPendingUsers();
   }
 
-  //list of users whos state is denied
+  /**
+   * list members who are denied
+   */
   @GET
   @Path("denied")
   @Consumes(MediaType.APPLICATION_JSON)

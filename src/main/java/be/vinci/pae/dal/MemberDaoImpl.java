@@ -27,7 +27,7 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param username member's username that you want get
    */
-  public MemberDTO getMember(String username) {
+  public MemberDTO getMemberByUsername(String username) {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT id_member, password, username,"
@@ -64,11 +64,13 @@ public class MemberDaoImpl implements MemberDao {
     }
     return member;
   }
-  
+
 
   /**
    * Insert a member in the dataBase from the informations given in the parameter and execute
-   * queries
+   *
+   * @param member to insert
+   * @return returns nothing
    */
   public void insertMember(Member member) {
     PreparedStatement queryMember = null;
@@ -140,7 +142,12 @@ public class MemberDaoImpl implements MemberDao {
 
   }
 
-  //confirm a registration by its username
+  /**
+   * confirm a registration.
+   *
+   * @param username user ton confirm
+   * @return returns the member DTO
+   */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
     String query =
@@ -163,7 +170,12 @@ public class MemberDaoImpl implements MemberDao {
     return null;
   }
 
-  //deny a registration by its username
+  /**
+   * deny a registration.
+   *
+   * @param username user ton deny
+   * @return returns the member DTO
+   */
   public MemberDTO denyRegistration(String username) {
     MemberDTO member;
     String query = "UPDATE pae.members SET state='denied' WHERE username=? RETURNING *";
@@ -184,7 +196,12 @@ public class MemberDaoImpl implements MemberDao {
     return null;
   }
 
-  //create a member instance
+  /**
+   * create a member instance used in methods confirm and deny.
+   *
+   * @param resultSetMember to execute this query
+   * @return returns the member DTO
+   */
   public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
 
     MemberDTO member = domainFactory.getMember();
