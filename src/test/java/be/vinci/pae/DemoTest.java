@@ -149,42 +149,4 @@ public class DemoTest {
     );
   }
 
-  @Test
-  public void getOneId() {
-    assertAll(
-        () -> assertEquals(member, memberUCC.getOne(member.getIdMember())),
-        () -> Mockito.verify(dalServices).startTransaction(),
-        () -> Mockito.verify(dalServices).commitTransaction(),
-        () -> Mockito.verify(dalServices, Mockito.times(0)).rollbackTransaction()
-    );
-  }
-
-  @Test
-  public void login1() {
-    assertAll(
-        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-        () -> Mockito.verify(memberDao).getMember(member.getUsername()),
-        () -> Mockito.verify(member, Mockito.times(2)).checkPassword(member.getPassword())
-    );
-  }
-
-  @Test
-  public void login2() {
-    Mockito.when(member.getState()).thenReturn("pending");
-    assertAll(
-        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-        () -> Mockito.verify(memberDao).getMember(member.getUsername()),
-        () -> Mockito.verify(member, Mockito.times(2)).checkPassword(member.getPassword())
-    );
-  }
-
-  @Test
-  public void login3() {
-    Mockito.when(member.getState()).thenReturn("denied");
-    assertAll(
-        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-        () -> Mockito.verify(memberDao).getMember(member.getUsername()),
-        () -> Mockito.verify(member, Mockito.times(2)).checkPassword(member.getPassword())
-    );
-  }
 }
