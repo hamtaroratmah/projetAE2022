@@ -31,6 +31,10 @@ function LoginPage() {
   form.addEventListener("submit", login);
 }
 
+
+
+
+
 async function login(e) {
   e.preventDefault();
   const username = document.getElementById("usernameLogin").value;

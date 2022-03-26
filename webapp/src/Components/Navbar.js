@@ -13,6 +13,9 @@ const Navbar = async () => {
        <button id="OfferNavbarButton">Offrir un objet</button>
        <button id="profileNavbarButton" data-uri="/login">
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
+       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
+
+       
        <p id="userIdentifier"></p>
     </nav>
   `;
