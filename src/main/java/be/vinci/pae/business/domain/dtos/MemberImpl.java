@@ -27,7 +27,7 @@ public class MemberImpl implements MemberDTO, Member {
   private String callNumber;
   @JsonView(Views.Public.class)
   private String reasonForConnRefusal;
-  @JsonView(Views.Internal.class)
+  @JsonView(Views.Public.class)
   private String state;
   @JsonView(Views.Public.class)
   private boolean isAdmin;

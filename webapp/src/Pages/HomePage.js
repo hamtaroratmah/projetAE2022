@@ -1,10 +1,11 @@
 const receptionDiv = `
-  <button id="typeSortedButton" class="sortedButton">Type</button>
+  <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>
+  <button id="typeSortedButtonDESC" class="sortedButton">Type DESC</button>
   <div id="receptionPage">
     
   </div>
 `
-
+//todo trier par type, par date et par état d'un objet
 const HomePage = async () => {
 
   const pageDiv = document.querySelector("#page");
@@ -38,12 +39,22 @@ const HomePage = async () => {
   } catch (e) {
     console.error("Home page error", e);
   }
+  const typeButtonASC = document.querySelector("#typeSortedButtonASC")
+  typeButtonASC.addEventListener("click", () => {
+    items.sort((a, b) => {
+      return b["type"].idType - a["type"].idType;
 
-  const typeButton = document.querySelector("#typeSortedButton")
-  typeButton.addEventListener("click", () => {
-    items.reverse();
+    });
     displayItems(items);
-  })
+  });
+  const typeButtonDESC = document.querySelector("#typeSortedButtonDESC")
+  typeButtonDESC.addEventListener("click", () => {
+    items.sort((a, b) => {
+      return a["type"].idType - b["type"].idType;
+
+    });
+    displayItems(items);
+  });
 
 };
 
@@ -78,9 +89,10 @@ function displayItems(items) {
         </div>
       `;
 
-    itemDiv = document.querySelector("#receptionItem" + i);
-    itemDiv.addEventListener("click", () => {
-    });
+    // itemDiv = document.querySelector("#receptionItem" + i);
+    // itemDiv.addEventListener("click", () => {
+    //   console.log("why im here");
+    // });
   }
   for (let j = 0; j < items.length; j++) {
     itemDiv = document.querySelector("#receptionItem" + j);
@@ -106,6 +118,12 @@ function displayItems(items) {
           <p class="modalItemInfo"></p>
       </div>
     `
+    const photoSrc = document.querySelector("#receptionImage" + j);
+    if (items[j]["photo"] === null) {
+      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+    } else {
+      photoSrc.src = items[j]["photo"];
+    }
   }
 
   function reformateDate(date) {
