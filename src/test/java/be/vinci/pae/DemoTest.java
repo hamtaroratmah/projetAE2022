@@ -148,4 +148,5 @@ public class DemoTest {
         () -> assertThrows(IllegalArgumentException.class, () -> offerUCC.getOffer(0))
     );
   }
+
 }
