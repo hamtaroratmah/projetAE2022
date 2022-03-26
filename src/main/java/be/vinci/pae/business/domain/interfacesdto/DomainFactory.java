@@ -9,4 +9,6 @@ public interface DomainFactory {
   TypeDTO getType();
 
   OfferDTO getOffer();
+  
+  AddressDTO getAddress();
 }

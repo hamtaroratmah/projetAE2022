@@ -4,9 +4,14 @@ import java.sql.PreparedStatement;
 
 public interface DalServices {
 
-  /**
-   * Return a preparedStatement that can be executed after setting the username if the query is
-   * executed, it'll give a member he's username match with your parameter.
-   */
+  void openConnection();
+
+  void startTransaction();
+
+  void commitTransaction();
+
+  void rollbackTransaction();
+
   PreparedStatement getPreparedStatement(String query);
+
 }
