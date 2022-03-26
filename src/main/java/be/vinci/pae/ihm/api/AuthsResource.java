@@ -44,8 +44,7 @@ public class AuthsResource {
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
 
-    String token = createToken(publicUser.getIdMember());
-    return token;
+    return createToken(publicUser.getIdMember());
   }
 
   /**
@@ -90,8 +89,7 @@ public class AuthsResource {
     return token;
   }
 
-  private String createToken(int id) { //TODO
-
+  private String createToken(int id) {
     String token;
     try {
       token = JWT.create().withIssuer("auth0")

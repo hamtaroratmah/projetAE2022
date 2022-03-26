@@ -2,6 +2,7 @@ package be.vinci.pae.dal.interfaces;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import java.sql.SQLException;
 
 public interface MemberDao {
 
@@ -13,7 +14,7 @@ public interface MemberDao {
    */
   MemberDTO getMember(String username);
 
-  MemberDTO getMember(int id);
+  MemberDTO getMember(int id) throws SQLException;
 
   void insertMember(Member member);
 }

@@ -4,5 +4,11 @@ public interface DomainFactory {
 
   MemberDTO getMember();
 
+  ItemDTO getItem();
+
+  TypeDTO getType();
+
+  OfferDTO getOffer();
+  
   AddressDTO getAddress();
 }
