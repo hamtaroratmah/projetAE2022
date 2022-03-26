@@ -4,12 +4,12 @@ const receptionDiv = `
   <button id="dateSortedButtonASC" class="sortedButton">Date ASC</button>
   <button id="dateSortedButtonDESC" class="sortedButton">Date DESC</button>
   <select name="itemCondition" id="selectItemConditionList" class="sortedList sortedButton">
-    <option comparator="1" selected="yes" value="default">Etat de l'objet</option>
-    <option comparator="2" value="published">Publié</option>
-    <option comparator="3" value="interestShown">Intérêt marqué</option>
-    <option comparator="4" value="assigned">assigné</option>
-    <option comparator="5" value="given">Donné</option>
-    <option comparator="6" value="canceled">Annulé</option>
+    <option selected="yes" value="default">Etat de l'objet</option>
+    <option value="published">Publié</option>
+    <option value="interestShown">Intérêt marqué</option>
+    <option value="assigned">assigné</option>
+    <option value="given">Donné</option>
+    <option value="canceled">Annulé</option>
   </select>
   <div id="receptionPage">
     
@@ -116,7 +116,7 @@ const HomePage = async () => {
 };
 
 function displayItems(items) {
-  let itemDiv, item, offer;
+  let item, offer;
   const receptionPage = document.querySelector("#receptionPage")
   receptionPage.innerHTML = ""
   for (let i = 0; i < items.length; i++) {
@@ -137,17 +137,21 @@ function displayItems(items) {
       offer: offer
     }
     receptionPage.innerHTML += `
-        <div id="receptionItem${i}" class="receptionItems">
-          <img src="" alt="" class="receptionImage" id="receptionImage${i}">
-          <p class="receptionDescription">${item.description}</p>
-          <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
-          <p class="receptionType">${item["type"].type}</p>
-        </div>
+       <div class="modalItemInfo receptionItems" id="receptionItem${i}">
+        <img src="" alt="" class="receptionImage" id="receptionImage${i}">
+          <p id="receptionDescription">${item.description}</p>
+          <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
+          <p id="receptionType">${item["type"].type}</p>
+          <p id="receptionDate">${reformateDate(item["offer"].dateOffer)}</p>
+          <p id="receptionItemCondition">${item.itemCondition}</p>
+          <p id="receptionAvailabilities">${item.availabilities}</p>
+          <p class="modalItemInfo"></p>
+      </div>
       `;
 
   }
   for (let j = 0; j < items.length; j++) {
-    itemDiv = document.querySelector("#receptionItem" + j);
+    const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j);
     });
