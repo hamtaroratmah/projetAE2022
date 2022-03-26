@@ -36,6 +36,7 @@ public class MemberUCCImpl implements MemberUCC {
     Member member = (Member) memberDao.getMember(username);
     if (!member.checkPassword(password)) {
       throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
+
     }
     return member;
   }

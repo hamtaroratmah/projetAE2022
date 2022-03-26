@@ -1,4 +1,4 @@
-package be.vinci.pae.dal;
+package be.vinci.pae.utils;
 
 import java.io.File;
 import java.io.IOException;

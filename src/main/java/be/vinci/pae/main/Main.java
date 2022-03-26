@@ -1,12 +1,10 @@
 package be.vinci.pae.main;
 
-import be.vinci.pae.dal.Log;
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.WebExceptionMapper;
 import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -51,16 +49,10 @@ public class Main {
    */
   public static void main(String[] args) throws IOException {
     final HttpServer server = startServer();
+
     System.out.println(String.format("Jersey app started with WADL available at "
         + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
     System.in.read();
-    Log myLog = new Log("log.txt");
-    myLog.logger.setLevel(Level.WARNING);
-
-    myLog.logger.info("Info msg");
-    myLog.logger.warning("warning msg");
-
-    myLog.logger.severe("severe msg");
 
     server.stop();
   }
