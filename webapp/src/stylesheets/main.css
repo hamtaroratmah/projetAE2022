@@ -54,3 +54,7 @@ img {
 .receptionItems {
   border: 1px solid black;
 }
+
+.sortedButton {
+  margin: 50px auto;
+}
