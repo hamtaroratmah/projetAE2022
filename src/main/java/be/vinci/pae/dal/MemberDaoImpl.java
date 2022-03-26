@@ -62,6 +62,7 @@ public class MemberDaoImpl implements MemberDao {
     }
     return member;
   }
+  
 
   /**
    * Avoid duplicate code if we want to get a user from the dataBase.
