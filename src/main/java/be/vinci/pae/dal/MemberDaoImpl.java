@@ -3,7 +3,6 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
@@ -50,7 +49,7 @@ public class MemberDaoImpl implements MemberDao {
    * @param id member's id that you want get
    */
   @Override
-  public MemberDTO getMember(int id) {
+  public MemberDTO getMember(int id) throws SQLException {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT id_member, password, username,"
@@ -61,19 +60,10 @@ public class MemberDaoImpl implements MemberDao {
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
       e.printStackTrace();
-      "SELECT id_member, password, username,"
-        + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-        + " state, count_object_not_collected, count_object_given, count_object_got"
-        + " FROM pae.members " + "WHERE id_member = ?")) {
-      query.setInt(1, id);
-      member = getMemberFromDataBase(query);
-    } catch (SQLException e) {
-      e.printStackTrace();
     }
     return member;
   }
   
-
 
   /**
    * Insert a member in the dataBase from the informations given in the parameter and execute
@@ -84,9 +74,9 @@ public class MemberDaoImpl implements MemberDao {
     PreparedStatement queryAddress = null;
     try {
       queryAddress = services.getPreparedStatement(
-        "INSERT INTO pae.addresses"
-          + "( street, building_number, postcode, commune, city,unit_number)"
-          + " VALUES (?,?,?,?,?,?);"
+          "INSERT INTO pae.addresses"
+              + "( street, building_number, postcode, commune, city,unit_number)"
+              + " VALUES (?,?,?,?,?,?);"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
@@ -101,10 +91,10 @@ public class MemberDaoImpl implements MemberDao {
     }
     try {
       queryMember = services.getPreparedStatement(
-        "INSERT INTO pae.members"
-          + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
-          + " reasonForConnRefusal, state)\n"
-          + "VALUES (?,?,?,?,?,?,?,?,?);"
+          "INSERT INTO pae.members"
+              + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
+              + " reasonForConnRefusal, state)\n"
+              + "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
       queryMember.setString(1, member.getPassword());
