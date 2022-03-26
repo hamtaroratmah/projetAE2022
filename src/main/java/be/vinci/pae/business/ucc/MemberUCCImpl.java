@@ -17,18 +17,6 @@ public class MemberUCCImpl implements MemberUCC {
   @Inject
   private DalServices dalServices;
 
-  @Override
-  public MemberDTO getOne(String login) {
-    try {
-      dalServices.startTransaction();
-      return memberDao.getMember(login);
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw e;
-    } finally {
-      dalServices.commitTransaction();
-    }
-  }
 
   //test
   @Override

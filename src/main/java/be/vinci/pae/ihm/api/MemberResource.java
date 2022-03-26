@@ -84,6 +84,7 @@ public class MemberResource {
     return memberUCC.denyRegistration(username);
   }
 
+  //list of users whos state is pending
   @GET
   @Path("pending")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -93,6 +94,7 @@ public class MemberResource {
     return memberUCC.listPendingUsers();
   }
 
+  //list of users whos state is denied
   @GET
   @Path("denied")
   @Consumes(MediaType.APPLICATION_JSON)
