@@ -1,5 +1,6 @@
 package be.vinci.pae.dal.interfaces;
 
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 
 public interface MemberDao {
@@ -13,4 +14,6 @@ public interface MemberDao {
   MemberDTO getMember(String username);
 
   MemberDTO getMember(int id);
+
+  void insertMember(Member member);
 }

@@ -1,6 +1,8 @@
 package be.vinci.pae.business.domain.dtos;
 
 import static org.mindrot.jbcrypt.BCrypt.checkpw;
+import static org.mindrot.jbcrypt.BCrypt.gensalt;
+import static org.mindrot.jbcrypt.BCrypt.hashpw;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -19,6 +21,7 @@ public class MemberImpl implements MemberDTO, Member {
   private int countObjectNotCollected;
   private int countObjectGiven;
   private int countObjectGot = 0;
+  private AddressImpl address;
 
   /**
    * Empty constructor.
@@ -30,6 +33,10 @@ public class MemberImpl implements MemberDTO, Member {
   @Override
   public boolean checkPassword(String password) {
     return checkpw(password, this.password);
+  }
+
+  public String hashPassword(String password) {
+    return hashpw(password, gensalt());
   }
 
   @Override
@@ -152,21 +159,29 @@ public class MemberImpl implements MemberDTO, Member {
     this.countObjectGot = countObjectGot;
   }
 
+  public AddressImpl getAddress() {
+    return address;
+  }
+
+  public void setAddress(AddressImpl address) {
+    this.address = address;
+  }
+
   @Override
   public String toString() {
     return "Member{"
-        + "id_member="
-        + idMember
-        + ", username='"
-        + username
-        + '\''
-        + ", last_name='"
-        + lastName
-        + '\''
-        + ", first_name='"
-        + firstName
-        + '\''
-        + '}';
+      + "id_member="
+      + idMember
+      + ", username='"
+      + username
+      + '\''
+      + ", last_name='"
+      + lastName
+      + '\''
+      + ", first_name='"
+      + firstName
+      + '\''
+      + '}';
   }
 
 }
