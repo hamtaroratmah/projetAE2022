@@ -1,5 +1,6 @@
 package be.vinci.pae.dal;
 
+import be.vinci.pae.business.domain.interfacesbusiness.Item;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -65,6 +66,31 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
+  public ItemDTO createItem(ItemDTO newItem) {
+    ItemDTO item = null;
+
+    try (PreparedStatement query = services.getPreparedStatement(
+        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
+      query.setInt(1,newItem.getType().getIdType());
+      query.setString(2,newItem.getPhoto());
+      query.setString(3,newItem.getDescription());
+      query.setString(4,newItem.getAvailabilities());
+      query.setString(5,newItem.getItemCondition());
+      query.setInt(6,newItem.getOfferingMember().getIdMember());
+
+
+      item = createItemInstance(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    if (newItem.size() > 0) {
+      return newItem.get(0);
+    }
+    return null;
+  }
+  }
+
+  @Override
   public List<ItemDTO> getGivenItems() {
     List<ItemDTO> items = null;
     String tempQuery = "SELECT it.id_item,it.type,it.description,it.availabilities,"
@@ -107,6 +133,15 @@ public class ItemDaoImpl implements ItemDao {
     resultSet.close();
     return items;
   }
+
+
+     private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
+         ItemDTO item= domainFactory.getItem();
+         ResultSet rs= query.executeQuery();
+       item.setIdItem(rs.getInt(1));
+       item.setType(rs.getType(2));
+      }
+
 
 }
 
