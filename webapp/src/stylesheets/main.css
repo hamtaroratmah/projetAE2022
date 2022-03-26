@@ -1,0 +1,60 @@
+body {
+  background-color: #B5CED7;
+  margin: 0;
+  padding: 0;
+}
+
+#loginContainer {
+  background-color: #E5BE10;
+  display: flex;
+  height: 50vh;
+  width: 20vw;
+  margin: 20vh auto;
+  border-radius: 20px;
+}
+
+.fields {
+  background-color: #ECE4D0;
+  margin: 5% 20%;
+  height: 40px;
+  width: 60%;
+  border-radius: 10px;
+  border: none;
+}
+
+.fields:focus {
+  outline: none;
+}
+
+#loginText {
+  margin: 5% 25%;
+  font-size: 2.5vw;
+  max-width: 400px;
+}
+
+#labelRememberCheckBox {
+  margin: 0 30%;
+  width: 40%;
+}
+
+#loginSubmitButton {
+  border-radius: 40px;
+  border: none;
+  width: 50%;
+  height: 40px;
+  margin: auto 25%;
+}
+
+/*# sourceMappingURL=main.css.map */
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.receptionItems {
+  border: 1px solid black;
+}
+
+.sortedButton {
+  margin: 50px auto;
+}

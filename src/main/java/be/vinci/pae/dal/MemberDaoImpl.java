@@ -5,7 +5,6 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,27 +28,15 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO getMember(String username) {
     MemberDTO member = null;
-    PreparedStatement query = null;
-    try {
-      query = services.getPreparedStatement(
-          "SELECT id_member, password, username,"
-              + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-              + " state, count_object_not_collected, count_object_given, count_object_got"
-              + " FROM pae.members "
-              + "WHERE username = ?");
+    try (PreparedStatement query = services.getPreparedStatement(
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
-
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        assert query != null;
-        query.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-
     }
     return member;
   }
@@ -62,13 +49,13 @@ public class MemberDaoImpl implements MemberDao {
    * @param id member's id that you want get
    */
   @Override
-  public MemberDTO getMember(int id) {
+  public MemberDTO getMember(int id) throws SQLException {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
-      "SELECT id_member, password, username,"
-        + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-        + " state, count_object_not_collected, count_object_given, count_object_got"
-        + " FROM pae.members " + "WHERE id_member = ?")) {
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE id_member = ?")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -80,16 +67,16 @@ public class MemberDaoImpl implements MemberDao {
 
   /**
    * Insert a member in the dataBase from the informations given in the parameter and execute
-   * queries
+   * queries.
    */
   public void insertMember(Member member) {
     PreparedStatement queryMember = null;
     PreparedStatement queryAddress = null;
     try {
       queryAddress = services.getPreparedStatement(
-        "INSERT INTO pae.addresses"
-          + "( street, building_number, postcode, commune, city,unit_number)"
-          + " VALUES (?,?,?,?,?,?);"
+          "INSERT INTO pae.addresses"
+              + "( street, building_number, postcode, commune, city,unit_number)"
+              + " VALUES (?,?,?,?,?,?);"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
@@ -104,10 +91,10 @@ public class MemberDaoImpl implements MemberDao {
     }
     try {
       queryMember = services.getPreparedStatement(
-        "INSERT INTO pae.members"
-          + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
-          + " reasonForConnRefusal, state)\n"
-          + "VALUES (?,?,?,?,?,?,?,?,?);"
+          "INSERT INTO pae.members"
+              + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
+              + " reasonForConnRefusal, state)\n"
+              + "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -132,12 +119,12 @@ public class MemberDaoImpl implements MemberDao {
    * @param query query to execute
    * @return return the member got in the database
    */
-  private MemberDTO getMemberFromDataBase(PreparedStatement query) throws SQLException {
+  public MemberDTO getMemberFromDataBase(PreparedStatement query) throws SQLException {
     MemberDTO member = domainFactory.getMember();
     ResultSet resultSetMember = query.executeQuery();
 
     if (!resultSetMember.next()) {
-      throw new WebApplicationException("Username not found");
+      throw new IllegalArgumentException("Username not found");
     }
     member.setIdMember(resultSetMember.getInt(1));
     member.setPassword(resultSetMember.getString(2));
@@ -152,8 +139,6 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
     resultSetMember.close();
-    System.out.println(member);
     return member;
   }
-
 }

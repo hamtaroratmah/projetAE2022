@@ -58,10 +58,9 @@ CREATE TABLE pae.items
 
 CREATE TABLE pae.offers
 (
-    id_offer            SERIAL PRIMARY KEY,
-    date_offer          DATE,
-    id_item             INTEGER REFERENCES pae.items (id_item),
-    id_recipient_member INTEGER REFERENCES pae.members (id_member)
+    id_offer   SERIAL PRIMARY KEY,
+    date_offer DATE,
+    id_item    INTEGER REFERENCES pae.items (id_item)
 );
 
 CREATE TABLE pae.interests
@@ -81,7 +80,7 @@ INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
  reason_for_conn_refusal, state)
 VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
-        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'valid');
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
 
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, call_number, isadmin,
@@ -183,15 +182,29 @@ INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
 VALUES (8, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
 
+INSERT INTO pae.items
+(id_offering_member, type, availabilities, description, item_condition, photo)
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test published', 'published', null);
+
+INSERT INTO pae.items
+(id_offering_member, type, availabilities, description, item_condition, photo)
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test canceled', 'canceled', null);
+
 --Insert demo's offers
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('21-03-2022', 1, 8);
+    (date_offer, id_item)
+VALUES ('21-03-2022', 1);
 
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('25-03-2022', 2, 8);
+    (date_offer, id_item)
+VALUES ('25-03-2022', 2);
 
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('25-03-2022', 3, 7);
+    (date_offer, id_item)
+VALUES ('25-03-2022', 3);
+
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('10-03-2022', 4);
+
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('10-03-2022', 5);

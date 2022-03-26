@@ -107,3 +107,6 @@ target/
 webapp/node_modules
 webapp/package-lock.json
 *.properties
+
+#logger
+log.txt

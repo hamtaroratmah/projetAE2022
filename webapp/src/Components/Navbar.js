@@ -7,7 +7,7 @@
 
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
-  let navbar = `
+  navbarWrapper.innerHTML = `
     <nav id="navbar">
        <p id="navbarTitle">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
@@ -16,8 +16,6 @@ const Navbar = async () => {
        <p id="userIdentifier"></p>
     </nav>
   `;
-
-  navbarWrapper.innerHTML = navbar;
 
   let isConnected = window.localStorage.getItem("user") !== null
       || window.sessionStorage.getItem("user") !== null;
@@ -36,7 +34,6 @@ const Navbar = async () => {
       token = window.sessionStorage.getItem("user");
     }
     let name = await getName(token);
-    console.log(name);
 
     username.innerText = `Bonjour ${name}`
   }
