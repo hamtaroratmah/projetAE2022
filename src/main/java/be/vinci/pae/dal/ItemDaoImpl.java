@@ -141,7 +141,7 @@ public class ItemDaoImpl implements ItemDao {
     item.setDescription(rs.getString(3));
     item.setAvailabilities(rs.getString(4));
     item.setItemCondition(rs.getString(5));
-    int idMember = rs.getInt((6));
+    int idMember = rs.getInt(6);
     MemberDTO member = memberDao.getMember(idMember);
 
     item.setOfferingMember(member);
