@@ -2,7 +2,7 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.dal.DalServices;
+import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
@@ -36,10 +36,11 @@ public class MemberUCCImpl implements MemberUCC {
       return memberDao.getMember(id);
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw e;
+      e.printStackTrace();
     } finally {
       dalServices.commitTransaction();
     }
+    return null;
   }
 
 
