@@ -1,6 +1,5 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Item;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -65,30 +64,6 @@ public class ItemDaoImpl implements ItemDao {
     return null;
   }
 
-  @Override
-  public ItemDTO createItem(ItemDTO newItem) {
-    ItemDTO item = null;
-
-    try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
-      query.setInt(1,newItem.getType().getIdType());
-      query.setString(2,newItem.getPhoto());
-      query.setString(3,newItem.getDescription());
-      query.setString(4,newItem.getAvailabilities());
-      query.setString(5,newItem.getItemCondition());
-      query.setInt(6,newItem.getOfferingMember().getIdMember());
-
-
-      item = createItemInstance(query);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    if (newItem.size() > 0) {
-      return newItem.get(0);
-    }
-    return null;
-  }
-  }
 
   @Override
   public List<ItemDTO> getGivenItems() {
@@ -134,13 +109,47 @@ public class ItemDaoImpl implements ItemDao {
     return items;
   }
 
+  //daoImpl
 
-     private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
-         ItemDTO item= domainFactory.getItem();
-         ResultSet rs= query.executeQuery();
-       item.setIdItem(rs.getInt(1));
-       item.setType(rs.getType(2));
-      }
+  @Override
+  public ItemDTO createItem(ItemDTO newItem) {
+    ItemDTO item = null;
+
+    try (PreparedStatement query = services.getPreparedStatement(
+        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
+      query.setInt(1, newItem.getType().getIdType());
+      query.setString(2, newItem.getPhoto());
+      query.setString(3, newItem.getDescription());
+      query.setString(4, newItem.getAvailabilities());
+      query.setString(5, newItem.getItemCondition());
+      query.setInt(6, newItem.getOfferingMember().getIdMember());
+
+      item = createItemInstance(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return item;
+
+  }
+
+  private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
+    ItemDTO item = domainFactory.getItem();
+    ResultSet rs = query.executeQuery();
+    item.setIdItem(rs.getInt(1));
+
+    item.setDescription(rs.getString(3));
+    item.setAvailabilities(rs.getString(4));
+    item.setItemCondition(rs.getString(5));
+    int idMember = rs.getInt((6));
+    MemberDTO member = memberDao.getMember(idMember);
+
+    item.setOfferingMember(member);
+    rs.close();
+    return item;
+
+
+  }
 
 
 }

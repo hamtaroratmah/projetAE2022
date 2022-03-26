@@ -11,5 +11,5 @@ public interface ItemDao {
 
   ItemDTO getItem(int idItem);
 
-  ItemDTO createItem(ItemDTO item);
+  ItemDTO createItem(ItemDTO newItem);
 }

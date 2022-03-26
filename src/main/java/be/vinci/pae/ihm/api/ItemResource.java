@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Item;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -66,8 +65,6 @@ public class ItemResource {
 
   /**
    * Get a specified item according to its id.
-   *
-   * @param idItem item's id that we want more details
    */
   @POST
   @Path("/createItem")
@@ -90,9 +87,10 @@ public class ItemResource {
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("item_condition").asText());
     item.setOfferingMember(offeringMember);
-    Item newItem = (Item) item;
-    return itemUcc.createItem(newItem);
+
+    return itemUcc.createItem(item);
   }
 
 
 }
+

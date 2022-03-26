@@ -33,11 +33,6 @@ public class ItemUCCImpl implements ItemUCC {
     return item;
   }
 
-  @Override
-  public ItemDTO createItem(ItemDTO item) {
-   return itemDao.createItem(item);
-
-  }
 
   @Override
   public List<ItemDTO> getGivenItems() {
@@ -47,4 +42,12 @@ public class ItemUCCImpl implements ItemUCC {
     }
     return items;
   }
+
+
+  @Override
+  public ItemDTO createItem(ItemDTO item) {
+    return itemDao.createItem(item);
+
+  }
+}
 
