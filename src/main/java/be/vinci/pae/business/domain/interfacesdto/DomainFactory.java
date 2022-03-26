@@ -9,5 +9,11 @@ public interface DomainFactory {
   MemberDTO confirmInscription();
 
  
+  ItemDTO getItem();
+
+  TypeDTO getType();
+
+  OfferDTO getOffer();
+  
   AddressDTO getAddress();
 }

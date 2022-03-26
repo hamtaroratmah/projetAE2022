@@ -6,20 +6,38 @@ import static org.mindrot.jbcrypt.BCrypt.hashpw;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonView;
 
+@JsonInclude(Include.NON_DEFAULT)
+// ignore all null fields in order to avoid sending props not linked to a JSON view
 public class MemberImpl implements MemberDTO, Member {
 
+  @JsonView(Views.Public.class)
   private int idMember;
+  @JsonView(Views.Internal.class)
   private String password;
+  @JsonView(Views.Public.class)
   private String username;
+  @JsonView(Views.Public.class)
   private String lastName;
+  @JsonView(Views.Public.class)
   private String firstName;
+  @JsonView(Views.Public.class)
   private String callNumber;
+  @JsonView(Views.Public.class)
   private String reasonForConnRefusal;
+  @JsonView(Views.Public.class)
   private String state;
+  @JsonView(Views.Public.class)
   private boolean isAdmin;
+  @JsonView(Views.Public.class)
   private int countObjectNotCollected;
+  @JsonView(Views.Public.class)
   private int countObjectGiven;
+  @JsonView(Views.Public.class)
   private int countObjectGot = 0;
   private AddressImpl address;
 
@@ -46,6 +64,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setIdMember(int idMember) {
+    if (idMember <= 0) {
+      throw new IllegalArgumentException();
+    }
     this.idMember = idMember;
   }
 
@@ -66,6 +87,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setUsername(String username) {
+    if (username == null) {
+      throw new IllegalArgumentException();
+    }
     this.username = username;
   }
 
@@ -76,6 +100,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setLastName(String lastName) {
+    if (lastName == null) {
+      throw new IllegalArgumentException();
+    }
     this.lastName = lastName;
   }
 
@@ -86,6 +113,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setFirstName(String firstName) {
+    if (firstName == null) {
+      throw new IllegalArgumentException();
+    }
     this.firstName = firstName;
   }
 
@@ -106,6 +136,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setReasonForConnRefusal(String reasonForConnRefusal) {
+    //    if (reasonForConnRefusal == null) {
+    //      throw new IllegalArgumentException();
+    //    }
     this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
@@ -116,6 +149,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setState(String state) {
+    //    if (state == null) {
+    //      throw new IllegalArgumentException();
+    //    }
     this.state = state;
   }
 

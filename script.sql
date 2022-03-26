@@ -58,10 +58,9 @@ CREATE TABLE pae.items
 
 CREATE TABLE pae.offers
 (
-    id_offer            SERIAL PRIMARY KEY,
-    date_offer          DATE,
-    id_item             INTEGER REFERENCES pae.items (id_item),
-    id_recipient_member INTEGER REFERENCES pae.members (id_member)
+    id_offer   SERIAL PRIMARY KEY,
+    date_offer DATE,
+    id_item    INTEGER REFERENCES pae.items (id_item)
 );
 
 CREATE TABLE pae.interests
@@ -182,16 +181,41 @@ VALUES (7, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un f
 INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
 VALUES (8, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
+INSERT INTO pae.items
+(id_offering_member, type, availabilities, description, item_condition, photo)
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test', 'given', null);
 
 --Insert demo's offers
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('21-03-2022', 1, 8);
+    (date_offer, id_item)
+VALUES ('21-03-2022', 1);
 
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('25-03-2022', 2, 8);
+    (date_offer, id_item)
+VALUES ('25-03-2022', 2);
 
 INSERT INTO pae.offers
-    (date_offer, id_item, id_recipient_member)
-VALUES ('25-03-2022', 3, 7);
+    (date_offer, id_item)
+VALUES ('25-03-2022', 3);
+
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES (now(), 4);
+
+
+-- SELECT it.id_item,
+--        it.type,
+--        it.description,
+--        it.availabilities,
+--        it.item_condition,
+--        it.photo,
+--        it.rating,
+--        it.id_offering_member,
+--        ty.type,
+--        of.date_offer
+-- FROM pae.items it,
+--      pae.types ty,
+--      pae.offers of
+-- WHERE it.type = ty.id_type
+--   AND of.id_item = it.id_item
+-- ORDER BY date_offer DESC,
+--          it.type;

@@ -3,6 +3,7 @@ package be.vinci.pae.dal.interfaces;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import java.util.ArrayList;
+import java.sql.SQLException;
 
 public interface MemberDao {
 
@@ -17,7 +18,7 @@ public interface MemberDao {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
-  MemberDTO getMember(int id);
+  MemberDTO getMember(int id) throws SQLException;
 
   ArrayList<MemberDTO> listUsersByState(String state);
 
