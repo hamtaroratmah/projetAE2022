@@ -13,6 +13,7 @@ import be.vinci.pae.business.ucc.ItemUCCImpl;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.business.ucc.MemberUCCImpl;
 import be.vinci.pae.dal.AddressDaoImpl;
+import be.vinci.pae.dal.DalBackendServices;
 import be.vinci.pae.dal.DalServicesImpl;
 import be.vinci.pae.dal.ItemDaoImpl;
 import be.vinci.pae.dal.MemberDaoImpl;
@@ -40,7 +41,8 @@ public class ApplicationBinder extends AbstractBinder {
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
     // DAL and Factory
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
-    bind(DalServicesImpl.class).to(DalServices.class).in(Singleton.class);
+    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
+        .in(Singleton.class);
     bind(ItemUCCImpl.class).to(ItemUCC.class).in(Singleton.class);
     bind(ItemDaoImpl.class).to(ItemDao.class).in(Singleton.class);
     bind(OfferImpl.class).to(OfferDTO.class).in(Singleton.class);
