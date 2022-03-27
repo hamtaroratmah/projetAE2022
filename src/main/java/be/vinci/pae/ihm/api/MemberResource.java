@@ -52,7 +52,8 @@ public class MemberResource {
   /**
    * Get the state of the member.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member state.
    */
   @POST
   @Path("state")
@@ -67,9 +68,10 @@ public class MemberResource {
   }
 
   /**
-   * confirm a member.
+   * confirm a registration.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member confirmed.
    */
   @POST
   @Path("confirm")
@@ -88,9 +90,10 @@ public class MemberResource {
   }
 
   /**
-   * deny a member.
+   * deny a registration.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member denyes.
    */
   @POST
   @Path("deny")
@@ -108,7 +111,9 @@ public class MemberResource {
   }
 
   /**
-   * list members who are pending.
+   * get list of pending members.
+   *
+   * @return the list
    */
   @GET
   @Path("pending")
@@ -120,7 +125,9 @@ public class MemberResource {
   }
 
   /**
-   * list members who are denied.
+   * get the list of denied members.
+   *
+   * @return the list
    */
   @GET
   @Path("denied")

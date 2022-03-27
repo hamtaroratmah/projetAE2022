@@ -11,7 +11,7 @@ import java.util.List;
 public class ItemUCCImpl implements ItemUCC {
 
   @Inject
-  ItemDao itemDao;
+  private ItemDao itemDao;
 
   @Inject
   private DalServices dalServices;
@@ -73,6 +73,49 @@ public class ItemUCCImpl implements ItemUCC {
       dalServices.commitTransaction();
     }
   }
+
+  /**
+   * like an offer by its id.
+   *
+   * @return number of interests on this offer.
+   * @params offerId and memberId
+   */
+  @Override
+  public int likeAnItem(int offerId, int memberId) {
+    try {
+      dalServices.startTransaction();
+
+      return itemDao.likeAnItem(offerId, memberId);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return -1;
+  }
+
+
+  /**
+   * Cancel an offer.
+   *
+   * @return 1 if ok.
+   * @params itemId
+   */
+  @Override
+  public int cancelAnOffer(int itemId) {
+    try {
+      dalServices.startTransaction();
+      return itemDao.cancelAnOffer(itemId);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return -1;
+  }
+
 
 }
 

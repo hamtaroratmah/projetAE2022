@@ -57,6 +57,8 @@ public class ItemResource {
 
   /**
    * Get list of given items.
+   *
+   * @return the list
    */
   @GET
   @Path("/getGivenItems")
@@ -69,6 +71,9 @@ public class ItemResource {
 
   /**
    * Get a specified item according to its id.
+   *
+   * @param json item's id that we want more details
+   * @return the itemDTO
    */
   @POST
   @Path("/createItem")
@@ -96,6 +101,41 @@ public class ItemResource {
     item.setOfferingMember(offeringMember);
     Item newItem = (Item) item;
     return itemUcc.createItem(newItem);
+  }
+
+  /**
+   * like an item.
+   *
+   * @param json the json
+   * @return number of interests.
+   */
+  @POST
+  @Path("like")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public int likeAnItem(JsonNode json) {
+    int offerId;
+    int memberId;
+    memberId = json.get("memberId").asInt();
+    offerId = json.get("offerId").asInt();
+    return itemUcc.likeAnItem(offerId, memberId);
+  }
+
+
+  /**
+   * cancel an offer.
+   *
+   * @param json the json
+   * @return 1 if ok, -1 if ko.
+   */
+  @POST
+  @Path("cancelOffer")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public int cancelAnOffer(JsonNode json) {
+    int itemId;
+    itemId = json.get("itemId").asInt();
+    return itemUcc.cancelAnOffer(itemId);
   }
 
 
