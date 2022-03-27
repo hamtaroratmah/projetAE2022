@@ -10,4 +10,6 @@ public interface ItemDao {
   List<ItemDTO> getGivenItems();
 
   ItemDTO getItem(int idItem);
+
+  ItemDTO createItem(ItemDTO item);
 }
