@@ -39,7 +39,7 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public String getMember(JsonNode jsonNode) {
-    if (jsonNode.get("token") != null) {
+    if (jsonNode.get("token") == null) {
       throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
     }
     String token = jsonNode.get("token").asText();

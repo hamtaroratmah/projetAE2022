@@ -65,9 +65,12 @@ CREATE TABLE pae.offers
 
 CREATE TABLE pae.interests
 (
-    id_interest SERIAL PRIMARY KEY,
-    id_item     INTEGER REFERENCES pae.items (id_item),
-    id_member   INTEGER REFERENCES pae.members (id_member)
+    id_interest     SERIAL PRIMARY KEY,
+    id_item         INTEGER REFERENCES pae.items (id_item),
+    id_member       INTEGER REFERENCES pae.members (id_member),
+    isRecipient     bool    DEFAULT FALSE,
+    date_delivery   DATE,
+    came            bool DEFAULT FALSE
 );
 
 -- INSERT FAKE MEMBERS

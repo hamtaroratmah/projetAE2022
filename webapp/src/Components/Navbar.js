@@ -41,7 +41,6 @@ const Navbar = async () => {
 };
 
 async function getName(token) {
-  let user;
   const request = {
     method: "POST",
     body: JSON.stringify(
