@@ -73,8 +73,8 @@ public class MemberDaoImpl implements MemberDao {
    * @return returns nothing
    */
   public void insertMember(Member member) {
-    PreparedStatement queryMember = null;
-    PreparedStatement queryAddress = null;
+    PreparedStatement queryMember;
+    PreparedStatement queryAddress;
     try {
       queryAddress = services.getPreparedStatement(
           "INSERT INTO pae.addresses"
