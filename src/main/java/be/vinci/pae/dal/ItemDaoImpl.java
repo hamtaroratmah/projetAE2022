@@ -66,6 +66,8 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
+    ItemDTO item = null;
+
     try (PreparedStatement query = services.getPreparedStatement(
         "INSERT (type,photo, description, availabilities,"
             + " item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
@@ -81,7 +83,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return null;
+    return item;
   }
 
 
