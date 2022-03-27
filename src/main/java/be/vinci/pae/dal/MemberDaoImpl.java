@@ -7,6 +7,7 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MemberDaoImpl implements MemberDao {
 
 
   /**
-   * Insert a member in the dataBase from the informations given in the parameter and execute
+   * Insert a member in the dataBase from the informations given in the parameter and execute.
    *
    * @param member to insert
    */

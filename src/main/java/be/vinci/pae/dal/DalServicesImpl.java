@@ -4,11 +4,11 @@ import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.utils.Config;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class DalServicesImpl implements DalBackendServices, DalServices {
 
