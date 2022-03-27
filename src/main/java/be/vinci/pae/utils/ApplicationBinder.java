@@ -41,6 +41,8 @@ public class ApplicationBinder extends AbstractBinder {
     //Address
     bind(AddressImpl.class).to(Address.class).in(Singleton.class);
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
+    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
+        .in(Singleton.class);
     // DAL and Factory
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).in(Singleton.class);

@@ -35,4 +35,6 @@ public interface ItemDTO {
   void setOfferingMember(MemberDTO offeringMember);
 
   void setOffer(OfferDTO offer);
+
+
 }

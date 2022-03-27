@@ -13,6 +13,11 @@ public interface ItemUCC {
 
   ItemDTO createItem(ItemDTO item);
 
+  int typeExisting(String type);
+
+  int createType(String type);
+
+
   int likeAnItem(int offerId, int memberId);
 
   int cancelAnOffer(int itemId);

@@ -65,27 +65,6 @@ public class ItemDaoImpl implements ItemDao {
     return null;
   }
 
-  @Override
-  public ItemDTO createItem(ItemDTO newItem) {
-    ItemDTO item = null;
-
-    try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member)"
-            + " INTO pae.items VALUES(?,?,?,?,?,?)")) {
-      query.setInt(1, newItem.getType().getIdType());
-      query.setString(2, newItem.getPhoto());
-      query.setString(3, newItem.getDescription());
-      query.setString(4, newItem.getAvailabilities());
-      query.setString(5, newItem.getItemCondition());
-      query.setInt(6, newItem.getOfferingMember().getIdMember());
-
-      item = createItemInstance(query);
-    } catch (SQLException e) {
-      throw new FatalException(e.getMessage());
-    }
-
-    return item;
-  }
 
   @Override
   public int likeAnItem(int itemId, int memberId) {
@@ -173,11 +152,98 @@ public class ItemDaoImpl implements ItemDao {
     return items;
   }
 
-  private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
-    ItemDTO item = domainFactory.getItem();
-    ResultSet rs = query.executeQuery();
-    item.setIdItem(rs.getInt(1));
+  //daoImpl
+
+  @Override
+  public ItemDTO createItem(ItemDTO newItem) {
+    System.out.print("ok1");
+
+    ItemDTO item = null;
+    String query = "INSERT  INTO pae.items "
+        + "(type,photo, description, availabilities, item_condition,id_offering_member) "
+        + " VALUES(?,?,?,?,?,?) "
+        + "RETURNING type,photo,description,availabilities,item_condition,id_offering_member";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, newItem.getType().getIdType());
+      ps.setString(2, newItem.getPhoto());
+      ps.setString(3, newItem.getDescription());
+      ps.setString(4, newItem.getAvailabilities());
+      ps.setString(5, newItem.getItemCondition());
+
+      ps.setInt(6, newItem.getOfferingMember().getIdMember());
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          item = createItemInstance(rs);
+          return item;
+        }
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
     return null;
+
   }
+
+  @Override
+  public int typeExisting(String type) {
+    String query = "SELECT id_type FROM pae.types WHERE type=? ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, type);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          return rs.getInt(1);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+
+  }
+
+
+  @Override
+  public int createType(String type) {
+    String query = "INSERT INTO pae.types (type) VALUES (?) RETURNING id_type  ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, type);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          return rs.getInt(1);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+
+  }
+
+
+  private ItemDTO createItemInstance(ResultSet rs) throws SQLException {
+    ItemDTO item = domainFactory.getItem();
+    TypeDTO type = domainFactory.getType();
+
+    type.setIdType(rs.getInt(1));
+    item.setType(type);
+    item.setPhoto(rs.getString(2));
+    item.setDescription(rs.getString(3));
+    item.setAvailabilities(rs.getString(4));
+    item.setItemCondition(rs.getString(5));
+    int idMember = rs.getInt(6);
+    MemberDTO member = memberDao.getMember(idMember);
+
+    item.setOfferingMember(member);
+    rs.close();
+    return item;
+
+
+  }
+
+
 }
 
