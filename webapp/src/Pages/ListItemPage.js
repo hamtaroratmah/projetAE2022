@@ -15,24 +15,11 @@ const receptionDiv = `
     
   </div>
 `
-const HomePage = async () => {
+const ListItemPage = async () => {
 
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   pageDiv.innerHTML = receptionDiv;
-  // let token = null;
-  // if (window.localStorage.getItem("user") === null) {
-  //   token = window.sessionStorage.getItem("user");
-  // } else {
-  //   token = window.localStorage.getItem("user");
-  // }
-  // if (token !== null) {
-  //   token = token.split("\"");
-  //   console.log(token)
-  //   token = token[3];
-  //
-  //   console.log(token);
-  // }
 
   let items = [];
   try {
@@ -40,8 +27,7 @@ const HomePage = async () => {
     const request = {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        // "Authorization": token
+        "Content-Type": "application/json"
       }
     };
 
@@ -203,4 +189,4 @@ function reformateDate(date) {
   return new Date(date[0], date[1], date[2]);
 }
 
-export default HomePage;
+export default ListItemPage;
