@@ -60,6 +60,9 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String getState(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
     return memberUCC.getState(username);
   }
 
@@ -75,6 +78,10 @@ public class MemberResource {
   public MemberDTO confirmRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
     boolean isAdmin = json.get("isAdmin").asBoolean();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
+
     System.out.println(username);
     System.out.println("test de confirm");
     return memberUCC.confirmRegistration(username, isAdmin);
@@ -91,6 +98,10 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO denyRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
+
     System.out.println(username);
     System.out.println("test de deny");
     return memberUCC.denyRegistration(username);

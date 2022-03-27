@@ -1,6 +1,6 @@
 package be.vinci.pae.exceptions;
 
-public class BizExceptioinUnauthorized extends Exception {
+public class BizExceptioinUnauthorized extends RuntimeException {
 
   /**
    * Exception.

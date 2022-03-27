@@ -1,6 +1,6 @@
 package be.vinci.pae.exceptions;
 
-public class BizExceptionForbidden extends Exception {
+public class BizExceptionForbidden extends RuntimeException {
 
   /**
    * Exception.

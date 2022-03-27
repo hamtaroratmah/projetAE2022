@@ -1,6 +1,6 @@
 package be.vinci.pae.exceptions;
 
-public class BizExceptionConflict extends Exception {
+public class BizExceptionConflict extends RuntimeException {
 
   /**
    * Exception.
