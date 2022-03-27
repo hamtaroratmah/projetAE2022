@@ -51,14 +51,14 @@ public class AuthorizerMemberOrQuidamFilter implements ContainerRequestFilter {
     try {
       MemberDTO member;
       member = memberUCC.getOne(
-          decodedToken.getClaim("utilisateur").asInt());
+          decodedToken.getClaim("user").asInt());
 
       if (member == null) {
         requestContext.abortWith(Response.status(Status.FORBIDDEN)
             .entity("You are forbidden to access this resource").build());
       }
       requestContext.setProperty("utilisateur",
-          memberUCC.getOne(decodedToken.getClaim("utilisateur").asInt()));
+          memberUCC.getOne(decodedToken.getClaim("user").asInt()));
     } catch (FatalException e) {
       e.printStackTrace();
     }
