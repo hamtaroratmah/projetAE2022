@@ -113,31 +113,79 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
+    System.out.print("ok1");
+
     ItemDTO item = null;
+    String query = "INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(?,?,?,?,?,?) RETURNING type,photo,description,availabilities,item_condition,id_offering_member";
+    TypeDTO typeDTO = null;
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, newItem.getType().getIdType());
+      ps.setString(2, newItem.getPhoto());
+      ps.setString(3, newItem.getDescription());
+      ps.setString(4, newItem.getAvailabilities());
+      ps.setString(5, newItem.getItemCondition());
 
-    try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
-      query.setInt(1, newItem.getType().getIdType());
-      query.setString(2, newItem.getPhoto());
-      query.setString(3, newItem.getDescription());
-      query.setString(4, newItem.getAvailabilities());
-      query.setString(5, newItem.getItemCondition());
-      query.setInt(6, newItem.getOfferingMember().getIdMember());
+      ps.setInt(6, newItem.getOfferingMember().getIdMember());
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          item = createItemInstance(rs);
+          return item;
+        }
+      }
 
-      item = createItemInstance(query);
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    return item;
+    return null;
 
   }
 
-  private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
-    ItemDTO item = domainFactory.getItem();
-    ResultSet rs = query.executeQuery();
-    item.setIdItem(rs.getInt(1));
+  @Override
+  public int typeExisting(String type) {
+    String query = "SELECT id_type FROM pae.types WHERE type=? ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, type);
 
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          return rs.getInt(1);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+
+  }
+
+
+  @Override
+  public int createType(String type) {
+    String query = "INSERT INTO pae.types (type) VALUES (?) RETURNING id_type  ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, type);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          return rs.getInt(1);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+
+  }
+
+
+  private ItemDTO createItemInstance(ResultSet rs) throws SQLException {
+    ItemDTO item = domainFactory.getItem();
+    TypeDTO type = domainFactory.getType();
+
+    type.setIdType(rs.getInt(1));
+    item.setType(type);
+    item.setPhoto(rs.getString(2));
     item.setDescription(rs.getString(3));
     item.setAvailabilities(rs.getString(4));
     item.setItemCondition(rs.getString(5));

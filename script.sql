@@ -201,7 +201,7 @@ VALUES ('25-03-2022', 3);
 INSERT INTO pae.offers (date_offer, id_item)
 VALUES (now(), 4);
 
-
+INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member) VALUES(1,'url','description','availabiliteis','hfhg',4);
 -- SELECT it.id_item,
 --        it.type,
 --        it.description,
@@ -219,3 +219,11 @@ VALUES (now(), 4);
 --   AND of.id_item = it.id_item
 -- ORDER BY date_offer DESC,
 --          it.type;
+
+SELECT * FROM pae.items;
+
+SELECT * FROM pae.types ;
+
+INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4, null, 'kjhk','ikjknjn','knknk',4) RETURNING type,photo,description,availabilities,item_condition,id_offering_member;
+
+

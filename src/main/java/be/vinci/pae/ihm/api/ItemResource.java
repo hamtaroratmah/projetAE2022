@@ -16,6 +16,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.List;
 
 @Path("/item")
@@ -70,7 +71,7 @@ public class ItemResource {
   @Path("/createItem")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ItemDTO createItem(JsonNode json) {
+  public ItemDTO createItem(JsonNode json) throws SQLException {
     if (!json.hasNonNull("type") || !json.hasNonNull("description") || !json.hasNonNull(
         "availabilities")
         || !json.hasNonNull("item_condition") || !json.hasNonNull("id_offering_member")) {
@@ -81,7 +82,20 @@ public class ItemResource {
 
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
-    type.setType(json.get("type").asText());
+    String typeText = json.get("type").asText();
+    type.setType(typeText);
+    int idType = typeExisting(type.getType());
+    System.out.print(idType);
+    //si le type n existe pas , le creer
+
+    if (idType == -1) {
+      System.out.print("ko1");
+
+      idType = itemUcc.createType(json.get("type").asText());
+    }
+    System.out.print("ok2");
+
+    type.setIdType(idType);
     item.setType(type);
     item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
@@ -89,6 +103,15 @@ public class ItemResource {
     item.setOfferingMember(offeringMember);
 
     return itemUcc.createItem(item);
+  }
+
+
+  /**
+   * Get a specified item according to its id.
+   */
+
+  public int typeExisting(String type) {
+    return itemUcc.typeExisting(type);
   }
 
 

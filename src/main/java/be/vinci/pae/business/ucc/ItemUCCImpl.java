@@ -1,6 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -9,6 +10,8 @@ public class ItemUCCImpl implements ItemUCC {
 
   @Inject
   ItemDao itemDao;
+  @Inject
+  private DalServices dalServices;
 
   public ItemUCCImpl() {
   }
@@ -46,8 +49,50 @@ public class ItemUCCImpl implements ItemUCC {
 
   @Override
   public ItemDTO createItem(ItemDTO item) {
-    return itemDao.createItem(item);
+    try {
+      dalServices.startTransaction();
 
+      return itemDao.createItem(item);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
   }
+
+  @Override
+  public int typeExisting(String type) {
+    try {
+      dalServices.startTransaction();
+      return itemDao.typeExisting(type);
+
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return -1;
+  }
+
+  @Override
+  public int createType(String type) {
+    try {
+      dalServices.startTransaction();
+      return itemDao.createType(type);
+
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return -1;
+  }
+
+
 }
+
 
