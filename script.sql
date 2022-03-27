@@ -201,6 +201,7 @@ VALUES ('25-03-2022', 3);
 INSERT INTO pae.offers (date_offer, id_item)
 VALUES (now(), 4);
 
+SELECT * FROM pae.members
 
 -- SELECT it.id_item,
 --        it.type,

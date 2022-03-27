@@ -12,12 +12,7 @@ import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.ItemUCCImpl;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.business.ucc.MemberUCCImpl;
-import be.vinci.pae.dal.AddressDaoImpl;
-import be.vinci.pae.dal.DalServicesImpl;
-import be.vinci.pae.dal.ItemDaoImpl;
-import be.vinci.pae.dal.MemberDaoImpl;
-import be.vinci.pae.dal.OfferDao;
-import be.vinci.pae.dal.OfferDaoImpl;
+import be.vinci.pae.dal.*;
 import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
@@ -45,5 +40,7 @@ public class ApplicationBinder extends AbstractBinder {
     bind(ItemDaoImpl.class).to(ItemDao.class).in(Singleton.class);
     bind(OfferImpl.class).to(OfferDTO.class).in(Singleton.class);
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
+    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
+            .in(Singleton.class);
   }
 }
