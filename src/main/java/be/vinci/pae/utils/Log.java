@@ -13,9 +13,9 @@ public class Log {
 
 
   /**
-   * create a new file log.txt
+   * create a new file log.txt.
    *
-   * @param fileName
+   * @param fileName the name for the new file
    * @throws SecurityException
    * @throws IOException
    */

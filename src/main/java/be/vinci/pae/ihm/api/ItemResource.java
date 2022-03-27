@@ -54,6 +54,8 @@ public class ItemResource {
 
   /**
    * Get list of given items.
+   *
+   * @return the list
    */
   @GET
   @Path("/getGivenItems")
@@ -68,6 +70,7 @@ public class ItemResource {
    * Get a specified item according to its id.
    *
    * @param json item's id that we want more details
+   * @return the itemDTO
    */
   @POST
   @Path("/createItem")
@@ -95,9 +98,9 @@ public class ItemResource {
   }
 
   /**
-   * like an item
+   * like an item.
    *
-   * @param json
+   * @param json the json
    * @return number of interests.
    */
   @POST
@@ -114,9 +117,9 @@ public class ItemResource {
 
 
   /**
-   * cancel an offer
+   * cancel an offer.
    *
-   * @param json
+   * @param json the json
    * @return 1 if ok, -1 if ko.
    */
   @POST

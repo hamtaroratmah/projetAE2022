@@ -50,10 +50,10 @@ public class MemberResource {
   }
 
   /**
-   * get a memmber state
+   * get a memmber state.
    *
-   * @param json
-   * @return the member state
+   * @param json the json
+   * @return the member state.
    */
   @POST
   @Path("state")
@@ -65,10 +65,10 @@ public class MemberResource {
   }
 
   /**
-   * confirm a registration
+   * confirm a registration.
    *
-   * @param json
-   * @return the member confirmed
+   * @param json the json
+   * @return the member confirmed.
    */
   @POST
   @Path("confirm")
@@ -83,10 +83,10 @@ public class MemberResource {
   }
 
   /**
-   * deny a registration
+   * deny a registration.
    *
-   * @param json
-   * @return the member denyes
+   * @param json the json
+   * @return the member denyes.
    */
   @POST
   @Path("deny")
@@ -100,7 +100,7 @@ public class MemberResource {
   }
 
   /**
-   * get list of pending members
+   * get list of pending members.
    *
    * @return the list
    */
@@ -114,7 +114,7 @@ public class MemberResource {
   }
 
   /**
-   * get the list of denied members
+   * get the list of denied members.
    *
    * @return the list
    */
