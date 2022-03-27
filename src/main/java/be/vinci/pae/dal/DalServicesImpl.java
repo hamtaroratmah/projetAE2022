@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+
 public class DalServicesImpl implements DalBackendServices, DalServices {
 
   private ThreadLocal<Connection> threadLocalValue;
@@ -29,8 +30,8 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     dataSource.setUsername(dbUsername);
     dataSource.setPassword(dbPassword);
     try {
-      dataSource.setDriverClassName("org.postgresql.Driver");
-    } catch (SecurityException e) {
+      Class.forName("org.postgresql.Driver");
+    } catch (ClassNotFoundException e) {
       System.out.println("Driver PostgreSQL manquant !");
       System.exit(1);
     }

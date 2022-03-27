@@ -31,10 +31,10 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO getMemberByUsername(String username) {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
-        "SELECT id_member, password, username,"
-            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-            + " state, count_object_not_collected, count_object_given, count_object_got"
-            + " FROM pae.members " + "WHERE username = ?")) {
+            "SELECT id_member, password, username,"
+                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+                    + " state, count_object_not_collected, count_object_given, count_object_got"
+                    + " FROM pae.members " + "WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -54,10 +54,10 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO getMember(int id) throws SQLException {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
-        "SELECT id_member, password, username,"
-            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-            + " state, count_object_not_collected, count_object_given, count_object_got"
-            + " FROM pae.members " + "WHERE id_member = ?")) {
+            "SELECT id_member, password, username,"
+                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+                    + " state, count_object_not_collected, count_object_given, count_object_got"
+                    + " FROM pae.members " + "WHERE id_member = ?")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -77,9 +77,9 @@ public class MemberDaoImpl implements MemberDao {
     PreparedStatement queryAddress;
     try {
       queryAddress = services.getPreparedStatement(
-          "INSERT INTO pae.addresses"
-              + "( street, building_number, postcode, commune, city,unit_number)"
-              + " VALUES (?,?,?,?,?,?);"
+              "INSERT INTO pae.addresses"
+                      + "( street, building_number, postcode, commune, city,unit_number)"
+                      + " VALUES (?,?,?,?,?,?);"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
@@ -94,10 +94,10 @@ public class MemberDaoImpl implements MemberDao {
     }
     try {
       queryMember = services.getPreparedStatement(
-          "INSERT INTO pae.members"
-              + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
-              + " reasonForConnRefusal, state)\n"
-              + "VALUES (?,?,?,?,?,?,?,?,?);"
+              "INSERT INTO pae.members"
+                      + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
+                      + " reasonForConnRefusal, state)\n"
+                      + "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -151,7 +151,7 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
     String query =
-        "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+            "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
     System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);

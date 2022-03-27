@@ -8,10 +8,10 @@ import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
@@ -88,8 +88,8 @@ public class ItemResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO createItem(JsonNode json) {
     if (!json.hasNonNull("type") || !json.hasNonNull("description") || !json.hasNonNull(
-        "availabilities")
-        || !json.hasNonNull("item_condition") || !json.hasNonNull("id_offering_member")) {
+            "availabilities")
+            || !json.hasNonNull("item_condition") || !json.hasNonNull("id_offering_member")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     MemberDTO offeringMember = domainFactory.getMember();

@@ -29,10 +29,10 @@ public class AddressDaoImpl implements AddressDao {
     PreparedStatement query = null;
     try {
       query = services.getPreparedStatement(
-          "SELECT id_address, street, building_number,"
-              + " postcode, commune, city, unit_number"
-              + " FROM pae.addresses "
-              + "WHERE id_address = ?");
+              "SELECT id_address, street, building_number,"
+                      + " postcode, commune, city, unit_number"
+                      + " FROM pae.addresses "
+                      + "WHERE id_address = ?");
       address = getAdressFromDatabase(query);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
@@ -46,7 +46,7 @@ public class AddressDaoImpl implements AddressDao {
     ResultSet resultSetAdress = query.executeQuery();
 
     if (!resultSetAdress.next()) {
-      throw new WebApplicationException("Adress not found");
+      throw new WebApplicationException("Address not found");
     }
     address.setIdAddress(resultSetAdress.getInt(1));
     address.setStreet(resultSetAdress.getString(2));

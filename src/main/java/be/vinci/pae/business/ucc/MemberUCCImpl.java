@@ -139,7 +139,7 @@ public class MemberUCCImpl implements MemberUCC {
     } finally {
       dalServices.commitTransaction();
     }
- 
   }
+
 
 }
