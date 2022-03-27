@@ -3,10 +3,7 @@ import Navbar from "../Components/Navbar";
 
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">
-            <div id="ListInscriptionsButtons">
-               <button id="listDeniedButton"> Liste d'inscriptions refusées</button>
-               <button id="listPendingButton">Liste d'inscription en attentes</button>
-           </div>
+           
         </div>
 `;
 const ListInscriptionsPage = async() => {
@@ -14,10 +11,9 @@ const ListInscriptionsPage = async() => {
     const pageDiv = document.querySelector("#page");
     const error = document.getElementById("errorText");
     pageDiv.innerHTML = listInscriptionsDiv;
-    const ListInscriptionsPage = document.querySelector("#ListInscriptionsPage")
+    const listInscriptionsPage = document.querySelector("#listInscriptionsPage")
 
-    let inscriptionsDenied = [];
-    let inscriptionsPending = [];
+    let inscriptions = [];
     try {
 
         const request = {
@@ -26,79 +22,65 @@ const ListInscriptionsPage = async() => {
                 "Content-Type": "application/json"
             }
         };
-        // fill inscriptionsPending []
+        // fill inscriptions [] with inscriptions pending
         await fetch("/api/member/pending", request)
             .then(response => response.json())
             .then((commits) => {
                 for (let i = 0; i < commits.length; i++) {
-                    inscriptionsPending.push(commits[i]);
+                    inscriptions.push(commits[i]);
                 }
 
             })
             .catch(() =>
                 error.innerHTML = "Une erreur est survenue"
-                    + " durant la récupération des objets"
+                    + " durant la récupération des inscriptions"
             );
 
-        // fill inscriptionsDenied []
+        // fill inscriptions [] with inscriptions denied
         await fetch("/api/member/denied", request)
             .then(response => response.json())
             .then((commits) => {
                 for (let i = 0; i < commits.length; i++) {
-                    inscriptionsDenied.push(commits[i]);
+                    inscriptions.push(commits[i]);
                 }
 
             })
             .catch(() =>
                 error.innerHTML = "Une erreur est survenue"
-                    + " durant la récupération des objets"
+                    + " durant la récupération des inscriptions"
             );
-        DisplayInscriptionPending(inscriptionsPending);
+        // display inscriptions denied and pending
+        DisplayInscriptions(inscriptions)
+
     }catch (e) {
         console.error("Home page error", e);
     }
 
-    const DisplayInscriptionDeniedButton = document.querySelector("#listDeniedButton")
-    DisplayInscriptionDeniedButton.addEventListener("click", () => {
-        DisplayInscriptionDenied(inscriptionsDenied);
-    })
-
-    const DisplayInscriptionPendingButton = document.querySelector("#listPendingButton")
-    DisplayInscriptionDeniedButton.addEventListener("click", () => {
-        DisplayInscriptionPending(inscriptionsPending);
-    })
-
-}
-
-function DisplayInscriptionDenied(inscriptionsDenied){
-    ListInscriptionsPage.innerHTML = ""
-    for (let i = 0; i < inscriptionsDenied.length; i++) {
-        ListInscriptionsPage.innerHTML += `
-        <div id="inscriptionDenied" class="inscriptionDenied">
-          <p>${inscriptionsDenied[i].username}</p>
-          <p>${inscriptionsDenied[i].lastName}</p>
-          <p>${inscriptionsDenied[i].firstName}</p>
-          <p>${inscriptionsDenied[i].state}</p>
+    function DisplayInscriptions(inscriptions){
+        listInscriptionsPage.innerHTML = ""
+        for (let i = 0; i < inscriptions.length; i++) {
+            listInscriptionsPage.innerHTML += `
+        <div id="inscriptionPending" class="receptionInscriptionParent">
+          <div class="receptionInscriptionChild">
+              <p>
+                ${inscriptions[i].username}
+                ${inscriptions[i].lastName} 
+                ${inscriptions[i].firstName}
+              </p>
+         </div>
+         <div  class="receptionInscriptionChild">
+           state : ${inscriptions[i].state}
         </div>
+        <div  class="receptionInscriptionChild">
+          <button>Confirmer inscription</button>
+        </div>
+        <div  class="receptionInscriptionChild">
+          <button>X</button>
+        </div>
+     </div>
       `;
+        }
     }
 }
-
-function DisplayInscriptionPending(inscriptionsPending){
-    ListInscriptionsPage.innerHTML = ""
-    for (let i = 0; i < inscriptionsPending.length; i++) {
-        ListInscriptionsPage.innerHTML += `
-        <div id="inscriptionDenied" class="inscriptionDenied">
-          <p>${inscriptionsPending[i].username}</p>
-          <p>${inscriptionsPending[i].lastName}</p>
-          <p>${inscriptionsPending[i].firstName}</p>
-          <p>${inscriptionsPending[i].state}</p>
-        </div>
-      `;
-    }
-}
-
-
-
 
 export default ListInscriptionsPage;
