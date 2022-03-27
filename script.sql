@@ -181,9 +181,14 @@ VALUES (7, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un f
 INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
 VALUES (8, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
+
 INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
-VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test', 'given', null);
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test published', 'published', null);
+
+INSERT INTO pae.items
+(id_offering_member, type, availabilities, description, item_condition, photo)
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test canceled', 'canceled', null);
 
 --Insert demo's offers
 INSERT INTO pae.offers
@@ -199,9 +204,10 @@ INSERT INTO pae.offers
 VALUES ('25-03-2022', 3);
 
 INSERT INTO pae.offers (date_offer, id_item)
-VALUES (now(), 4);
+VALUES ('10-03-2022', 4);
 
-SELECT * FROM pae.members
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('10-03-2022', 5);
 
 -- SELECT it.id_item,
 --        it.type,
