@@ -85,6 +85,47 @@ public class ItemDaoImpl implements ItemDao {
     return null;
   }
 
+  @Override
+  public int likeAnItem(int itemId, int memberId) {
+    int interests = 7;
+    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?) RETURNING id_interest";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+
+      ps.setInt(1, itemId);
+      ps.setInt(2, memberId);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          interests = rs.getInt(1);
+          return interests;
+        }
+
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+    
+  }
+
+  @Override
+  public int cancelAnOffer(int itemId) {
+    ItemDTO item;
+    String query =
+        "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, itemId);
+      try (ResultSet rs = ps.executeQuery()) {
+        return 1;
+
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
 
   @Override
   public List<ItemDTO> getGivenItems() {

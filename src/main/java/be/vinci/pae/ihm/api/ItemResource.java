@@ -67,7 +67,7 @@ public class ItemResource {
   /**
    * Get a specified item according to its id.
    *
-   * @param idItem item's id that we want more details
+   * @param json item's id that we want more details
    */
   @POST
   @Path("/createItem")
@@ -92,6 +92,47 @@ public class ItemResource {
     item.setOfferingMember(offeringMember);
     Item newItem = (Item) item;
     return itemUcc.createItem(newItem);
+  }
+
+  /**
+   * like an item
+   *
+   * @return number of interests
+   */
+  @POST
+  @Path("like")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public int likeAnItem(JsonNode json) {
+    int offerId;
+    int memberId;
+    memberId = json.get("memberId").asInt();
+    offerId = json.get("offerId").asInt();
+    return itemUcc.likeAnItem(offerId, memberId);
+  }
+
+
+  /**
+   * get the number of interests for an offer
+   *
+   * @return number of interests
+   * @return 1 if ok -1 if ko
+   * @POST
+   * @Path("interests")
+   * @Consumes(MediaType.APPLICATION_JSON)
+   * @Produces(MediaType.APPLICATION_JSON) public int interestsOfAnOffer(JsonNode json) { int
+   * offerId; offerId = json.get("offerId").asInt(); return itemUcc.interestsOfAnOffer(offerId); }
+   * <p>
+   * /** cancel an offer
+   */
+  @POST
+  @Path("cancelOffer")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public int cancelAnOffer(JsonNode json) {
+    int itemId;
+    itemId = json.get("itemId").asInt();
+    return itemUcc.cancelAnOffer(itemId);
   }
 
 
