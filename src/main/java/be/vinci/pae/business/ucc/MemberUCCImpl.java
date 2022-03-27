@@ -65,7 +65,17 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Override
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
-    return memberDao.confirmRegistration(username, isAdmin);
+    try {
+      dalServices.startTransaction();
+      return memberDao.confirmRegistration(username, isAdmin);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
+
   }
 
   @Override

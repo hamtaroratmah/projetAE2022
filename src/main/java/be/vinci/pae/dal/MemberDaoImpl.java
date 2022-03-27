@@ -72,8 +72,8 @@ public class MemberDaoImpl implements MemberDao {
    * @param member to insert
    */
   public void insertMember(Member member) {
-    PreparedStatement queryMember = null;
-    PreparedStatement queryAddress = null;
+    PreparedStatement queryMember;
+    PreparedStatement queryAddress;
     try {
       queryAddress = services.getPreparedStatement(
           "INSERT INTO pae.addresses"
@@ -151,6 +151,7 @@ public class MemberDaoImpl implements MemberDao {
     MemberDTO member;
     String query =
         "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+    System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);

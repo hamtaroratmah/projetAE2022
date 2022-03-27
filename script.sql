@@ -211,3 +211,6 @@ VALUES ('10-03-2022', 4);
 
 INSERT INTO pae.offers (date_offer, id_item)
 VALUES ('10-03-2022', 5);
+
+UPDATE pae.members SET state='confirmed', isAdmin =false WHERE username='souli' RETURNING *
+
