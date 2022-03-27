@@ -20,7 +20,13 @@ const createDiv = `
         </div>
 `;
 
+function newItem(){
 
+  const pageDiv = document.querySelector("#page");
+  pageDiv.innerHTML = createDiv;
+  const form = document.getElementById("newItemForm");
+  form.addEventListener("submit", createItem);
+}
 
 
 async function createItem(e) {
