@@ -80,7 +80,8 @@ public class ItemUCCImpl implements ItemUCC {
   /**
    * like an offer by its id
    *
-   * @return number of interests on this offer
+   * @return number of interests on this offer.
+   * @params offerId and memberId
    */
   @Override
   public int likeAnItem(int offerId, int memberId) {
@@ -97,28 +98,18 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-  /**
-   * get number of interests for an offer
-   *
-   * @return number of interests on this offer
-
-   @Override public int interestsOfAnOffer(int offerId) {
-   return itemDao.interestsOfAnOffer(offerId);
-   }
-   */
 
   /**
-   * cancel an offer
+   * Cancel an offer
    *
-   * @return 1 if ok
+   * @return 1 if ok.
+   * @params itemId
    */
   @Override
   public int cancelAnOffer(int itemId) {
     try {
       dalServices.startTransaction();
       return itemDao.cancelAnOffer(itemId);
-
-
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();

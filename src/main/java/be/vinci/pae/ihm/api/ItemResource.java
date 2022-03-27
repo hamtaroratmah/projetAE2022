@@ -97,7 +97,8 @@ public class ItemResource {
   /**
    * like an item
    *
-   * @return number of interests
+   * @param json
+   * @return number of interests.
    */
   @POST
   @Path("like")
@@ -113,17 +114,10 @@ public class ItemResource {
 
 
   /**
-   * get the number of interests for an offer
+   * cancel an offer
    *
-   * @return number of interests
-   * @return 1 if ok -1 if ko
-   * @POST
-   * @Path("interests")
-   * @Consumes(MediaType.APPLICATION_JSON)
-   * @Produces(MediaType.APPLICATION_JSON) public int interestsOfAnOffer(JsonNode json) { int
-   * offerId; offerId = json.get("offerId").asInt(); return itemUcc.interestsOfAnOffer(offerId); }
-   * <p>
-   * /** cancel an offer
+   * @param json
+   * @return 1 if ok, -1 if ko.
    */
   @POST
   @Path("cancelOffer")

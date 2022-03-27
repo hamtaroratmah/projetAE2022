@@ -69,7 +69,8 @@ public class ItemDaoImpl implements ItemDao {
     ItemDTO item = null;
 
     try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
+        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member)"
+            + " INTO pae.items VALUES(?,?,?,?,?,?)")) {
       query.setInt(1, newItem.getType().getIdType());
       query.setString(2, newItem.getPhoto());
       query.setString(3, newItem.getDescription());
@@ -88,7 +89,8 @@ public class ItemDaoImpl implements ItemDao {
   @Override
   public int likeAnItem(int itemId, int memberId) {
     int interests = 7;
-    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?) RETURNING id_interest";
+    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
+        + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
@@ -105,7 +107,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
     return -1;
-    
+
   }
 
   @Override
