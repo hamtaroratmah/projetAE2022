@@ -16,8 +16,8 @@ public class Log {
    * create a new file log.txt.
    *
    * @param fileName the name for the new file
-   * @throws SecurityException
-   * @throws IOException
+   * @throws SecurityException throw a new securityException
+   * @throws IOException       thorw a new IOException
    */
   public Log(String fileName) throws SecurityException, IOException {
     File f = new File(fileName);

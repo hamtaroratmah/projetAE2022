@@ -83,7 +83,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return null;
+    return item;
   }
 
   @Override
@@ -112,7 +112,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int cancelAnOffer(int itemId) {
-    ItemDTO item;
     String query =
         "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {

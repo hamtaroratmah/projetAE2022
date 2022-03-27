@@ -78,7 +78,7 @@ public class ItemUCCImpl implements ItemUCC {
   }
 
   /**
-   * like an offer by its id
+   * like an offer by its id.
    *
    * @return number of interests on this offer.
    * @params offerId and memberId
@@ -100,7 +100,7 @@ public class ItemUCCImpl implements ItemUCC {
 
 
   /**
-   * Cancel an offer
+   * Cancel an offer.
    *
    * @return 1 if ok.
    * @params itemId
