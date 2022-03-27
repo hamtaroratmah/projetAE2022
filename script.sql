@@ -22,7 +22,7 @@ CREATE TABLE pae.members
     call_number                VARCHAR(10),
     isAdmin                    bool    DEFAULT FALSE,
     reason_for_conn_refusal    VARCHAR(300),
-    state                      VARCHAR(7),
+    state                      VARCHAR(10),
     count_object_not_collected INTEGER DEFAULT (0),
     count_object_given         INTEGER DEFAULT (0),
     count_object_got           INTEGER DEFAULT (0)
@@ -65,9 +65,12 @@ CREATE TABLE pae.offers
 
 CREATE TABLE pae.interests
 (
-    id_interest SERIAL PRIMARY KEY,
-    id_item     INTEGER REFERENCES pae.items (id_item),
-    id_member   INTEGER REFERENCES pae.members (id_member)
+    id_interest     SERIAL PRIMARY KEY,
+    id_item         INTEGER REFERENCES pae.items (id_item),
+    id_member       INTEGER REFERENCES pae.members (id_member),
+    isRecipient     bool    DEFAULT FALSE,
+    date_delivery   DATE,
+    came            bool DEFAULT FALSE
 );
 
 -- INSERT FAKE MEMBERS

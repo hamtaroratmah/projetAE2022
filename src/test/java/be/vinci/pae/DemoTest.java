@@ -60,7 +60,7 @@ public class DemoTest {
     Mockito.when(member.getPassword()).thenReturn("password");
     Mockito.when(member.getUsername()).thenReturn("username");
     Mockito.when(member.checkPassword(member.getPassword())).thenReturn(true);
-    Mockito.when(memberDao.getMember(member.getUsername())).thenReturn(member);
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
     try {
       Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(member);
     } catch (SQLException e) {
@@ -87,8 +87,8 @@ public class DemoTest {
   @Test
   public void getOneLogin() {
     assertAll(
-        () -> assertEquals(member, memberUCC.getOne(member.getUsername())),
-        () -> assertNull(memberUCC.getOne("badUsername"))
+        () -> assertEquals(member, memberUCC.getOneByUsername(member.getUsername())),
+        () -> assertNull(memberUCC.getOneByUsername("badUsername"))
     );
   }
 
@@ -104,7 +104,7 @@ public class DemoTest {
   public void login() {
     assertAll(
         () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-        () -> Mockito.verify(memberDao, Mockito.times(2)).getMember(member.getUsername()),
+        () -> Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
         () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
     );
   }

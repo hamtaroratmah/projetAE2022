@@ -192,7 +192,7 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setCountObjectGot(int countObjectGot) {
-    this.countObjectGot = countObjectGot;
+
   }
 
   public AddressImpl getAddress() {
