@@ -54,11 +54,6 @@ public class ItemUCCImpl implements ItemUCC {
     }
   }
 
-  @Override
-  public ItemDTO createItem(ItemDTO item) {
-    return itemDao.createItem(item);
-
-  }
 
   @Override
   public List<ItemDTO> getGivenItems() {
