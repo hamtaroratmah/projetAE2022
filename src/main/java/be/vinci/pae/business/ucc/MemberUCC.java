@@ -31,4 +31,6 @@ public interface MemberUCC {
   MemberDTO denyRegistration(String username);
 
   MemberDTO register(Member member);
+
+  Object getOneByUsername(String username);
 }

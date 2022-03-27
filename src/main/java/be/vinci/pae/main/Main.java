@@ -17,12 +17,13 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public class Main {
 
-  // Base URI the Grizzly HTTP server will listen on
-  public static final String BASE_URI = Config.getProperty("BaseUri");
-
   static {
     Config.load("dev.properties");
   }
+
+  // Base URI the Grizzly HTTP server will listen on
+  public static final String BASE_URI = Config.getProperty("BaseUri");
+
 
   /**
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.

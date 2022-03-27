@@ -28,8 +28,8 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     dataSource.setUsername(dbUsername);
     dataSource.setPassword(dbPassword);
     try {
-      Class.forName("org.postgresql.Driver");
-    } catch (ClassNotFoundException e) {
+      dataSource.setDriverClassName("org.postgresql.Driver");
+    } catch (SecurityException e) {
       System.out.println("Driver PostgreSQL manquant !");
       System.exit(1);
     }
@@ -55,7 +55,10 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   public void openConnection() {
     try {
       Connection conn = dataSource.getConnection();
+
       threadLocalValue.set(conn);
+
+
     } catch (SQLException e) {
       System.out.println("Impossible de joindre le server !");
       System.exit(1);
@@ -79,7 +82,6 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       Connection conn = threadLocalValue.get();
       conn.commit();
       conn.close();
-      dataSource.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -91,7 +93,6 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       Connection conn = threadLocalValue.get();
       conn.rollback();
       conn.close();
-      dataSource.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }

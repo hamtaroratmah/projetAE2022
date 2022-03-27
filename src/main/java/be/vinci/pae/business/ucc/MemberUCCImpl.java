@@ -70,19 +70,53 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Override
   public MemberDTO denyRegistration(String username) {
-    return memberDao.denyRegistration(username);
+    try {
+      dalServices.startTransaction();
+      return memberDao.denyRegistration(username);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
+
+
   }
+
 
   @Override
   public ArrayList<MemberDTO> listPendingUsers() {
-    return memberDao.listUsersByState("pending");
+    try {
+      dalServices.startTransaction();
+      return memberDao.listUsersByState("pending");
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
+
 
   }
 
   @Override
   public ArrayList<MemberDTO> listDeniedUsers() {
-    return memberDao.listUsersByState("denied");
+    try {
+      dalServices.startTransaction();
+      return memberDao.listUsersByState("denied");
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
+
+
   }
+
 
   @Override
   public MemberDTO register(Member member) {
@@ -91,6 +125,21 @@ public class MemberUCCImpl implements MemberUCC {
     memberDao.insertMember(member);
     MemberDTO newMember = (MemberDTO) member;
     return newMember;
+  }
+
+  @Override
+  public Object getOneByUsername(String username) {
+    try {
+      dalServices.startTransaction();
+      return memberDao.getMemberByUsername(username);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    } finally {
+      dalServices.commitTransaction();
+    }
+    return null;
+
   }
 
 }
