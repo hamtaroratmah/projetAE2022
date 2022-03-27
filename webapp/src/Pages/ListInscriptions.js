@@ -59,7 +59,8 @@ const ListInscriptionsPage = async() => {
     function DisplayInscriptions(inscriptions){
         listInscriptionsPage.innerHTML = ""
         for (let i = 0; i < inscriptions.length; i++) {
-            listInscriptionsPage.innerHTML += `
+            if(inscriptions[i].state = "Denied") {
+                listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionParent">
           <div class="receptionInscriptionChild">
               <p>
@@ -79,6 +80,25 @@ const ListInscriptionsPage = async() => {
         </div>
      </div>
       `;
+            }else{
+                listInscriptionsPage.innerHTML += `
+        <div id="inscriptionPending" class="receptionInscriptionParent">
+          <div class="receptionInscriptionChild">
+              <p>
+                ${inscriptions[i].username}
+                ${inscriptions[i].lastName} 
+                ${inscriptions[i].firstName}
+              </p>
+         </div>
+         <div  class="receptionInscriptionChild">
+           state : ${inscriptions[i].state}
+        </div>
+        <div  class="receptionInscriptionChild">
+          <button>Confirmer inscription</button>
+        </div>
+     </div>
+      `;
+            }
         }
     }
 }
