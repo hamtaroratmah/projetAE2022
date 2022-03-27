@@ -8,7 +8,7 @@ const routes = {
   "/": HomePage,
   "/login": LoginPage,
   "/logout": Logout,
-  "/listInscriptions": ListInscriptions
+  "/listItem": ListItemPage,
 };
 
 /**

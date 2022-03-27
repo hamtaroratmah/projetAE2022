@@ -35,8 +35,15 @@ public class ItemResource {
   @Path("/getLastOfferedItems")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ItemDTO> getLastOfferedItems() {
-    return itemUcc.getLastOfferedItems();
+  //  @AuthorizerMemberOrQuidam
+  public List<ItemDTO> getLastOfferedItems(/*@Context ContainerRequest request*/) {
+    //    MemberDTO member = (MemberDTO) request.getProperty("user");
+    //    System.out.println("Member = " + member);
+    List<ItemDTO> list = itemUcc.getLastOfferedItems();
+    //    if (member == null && list.size() > 12) {
+    //      return list.subList(0, 9);
+    //    }
+    return list;
   }
 
   /**
