@@ -50,7 +50,7 @@ public class MemberResource {
   }
 
   /**
-   * get a memmber state.
+   * Get the state of the member.
    *
    * @param json the json
    * @return the member state.

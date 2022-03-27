@@ -32,7 +32,7 @@ public class ItemResource {
    * Get offered items from databased sorted by date_offer or type.
    */
   @GET
-  @Path("/")
+  @Path("/getLastOfferedItems")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItems() {

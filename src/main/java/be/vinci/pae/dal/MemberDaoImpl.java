@@ -67,13 +67,13 @@ public class MemberDaoImpl implements MemberDao {
 
 
   /**
-   * Insert a member in the dataBase from the infos given in the parameter and execute.
+   * Insert a member in the dataBase from the informations given in the parameter and execute.
    *
-   * @params member to insert
+   * @param member to insert
    */
   public void insertMember(Member member) {
-    PreparedStatement queryMember = null;
-    PreparedStatement queryAddress = null;
+    PreparedStatement queryMember;
+    PreparedStatement queryAddress;
     try {
       queryAddress = services.getPreparedStatement(
           "INSERT INTO pae.addresses"
