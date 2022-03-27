@@ -78,7 +78,6 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.commit();
-      //conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -89,7 +88,6 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.rollback();
-      //conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }

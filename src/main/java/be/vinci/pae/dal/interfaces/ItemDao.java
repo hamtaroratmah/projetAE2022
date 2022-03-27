@@ -7,9 +7,13 @@ public interface ItemDao {
 
   List<ItemDTO> getLastOfferedItems();
 
+  int cancelAnOffer(int itemId);
+
   List<ItemDTO> getGivenItems();
 
   ItemDTO getItem(int idItem);
 
   ItemDTO createItem(ItemDTO item);
+
+  int likeAnItem(int itemId, int memberId);
 }
