@@ -65,27 +65,6 @@ public class ItemDaoImpl implements ItemDao {
     return null;
   }
 
-  @Override
-  public ItemDTO createItem(ItemDTO newItem) {
-    ItemDTO item = null;
-
-    try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member)"
-            + " INTO pae.items VALUES(?,?,?,?,?,?)")) {
-      query.setInt(1, newItem.getType().getIdType());
-      query.setString(2, newItem.getPhoto());
-      query.setString(3, newItem.getDescription());
-      query.setString(4, newItem.getAvailabilities());
-      query.setString(5, newItem.getItemCondition());
-      query.setInt(6, newItem.getOfferingMember().getIdMember());
-
-      item = createItemInstance(query);
-    } catch (SQLException e) {
-      throw new FatalException(e.getMessage());
-    }
-
-    return item;
-  }
 
   @Override
   public int likeAnItem(int itemId, int memberId) {
