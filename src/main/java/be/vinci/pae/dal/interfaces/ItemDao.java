@@ -7,6 +7,8 @@ public interface ItemDao {
 
   List<ItemDTO> getLastOfferedItems();
 
+  int cancelAnOffer(int itemId);
+
   List<ItemDTO> getGivenItems();
 
   ItemDTO getItem(int idItem);
@@ -16,4 +18,6 @@ public interface ItemDao {
   int typeExisting(String type);
 
   int createType(String type);
+
+  int likeAnItem(int itemId, int memberId);
 }

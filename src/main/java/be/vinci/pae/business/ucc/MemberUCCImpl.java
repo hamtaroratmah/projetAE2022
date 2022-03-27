@@ -4,9 +4,10 @@ import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.BizExceptioinUnauthorized;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response.Status;
+import java.util.ArrayList;
 
 public class MemberUCCImpl implements MemberUCC {
 
@@ -16,19 +17,8 @@ public class MemberUCCImpl implements MemberUCC {
   @Inject
   private DalServices dalServices;
 
-  @Override
-  public MemberDTO getOne(String login) {
-    try {
-      dalServices.startTransaction();
-      return memberDao.getMember(login);
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw e;
-    } finally {
-      dalServices.commitTransaction();
-    }
-  }
 
+  //test
   @Override
   public MemberDTO getOne(int id) {
     try {
@@ -36,11 +26,10 @@ public class MemberUCCImpl implements MemberUCC {
       return memberDao.getMember(id);
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     } finally {
       dalServices.commitTransaction();
     }
-    return null;
   }
 
 
@@ -54,18 +43,81 @@ public class MemberUCCImpl implements MemberUCC {
   public Member login(String username, String password) {
     try {
       dalServices.startTransaction();
-      Member member = (Member) memberDao.getMember(username);
+      Member member = (Member) memberDao.getMemberByUsername(username);
       if (!member.checkPassword(password)) {
-        throw new WebApplicationException("Invalid password", Status.UNAUTHORIZED);
+        throw new BizExceptioinUnauthorized("Invalid password");
       }
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw e;
+      throw new FatalException(e.getMessage());
     } finally {
       dalServices.commitTransaction();
     }
   }
+
+
+  @Override
+  public String getState(String username) {
+    return memberDao.getMemberByUsername(username).getState();
+  }
+
+  @Override
+  public MemberDTO confirmRegistration(String username, boolean isAdmin) {
+    try {
+      dalServices.startTransaction();
+      return memberDao.confirmRegistration(username, isAdmin);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
+    }
+  }
+
+  @Override
+  public MemberDTO denyRegistration(String username) {
+    try {
+      dalServices.startTransaction();
+      return memberDao.denyRegistration(username);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
+    }
+
+  }
+
+
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    try {
+      dalServices.startTransaction();
+      return memberDao.listUsersByState("pending");
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
+    }
+
+  }
+
+  @Override
+  public ArrayList<MemberDTO> listDeniedUsers() {
+    try {
+      dalServices.startTransaction();
+      return memberDao.listUsersByState("denied");
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
+    }
+
+  }
+
 
   @Override
   public MemberDTO register(Member member) {
@@ -75,5 +127,19 @@ public class MemberUCCImpl implements MemberUCC {
     MemberDTO newMember = (MemberDTO) member;
     return newMember;
   }
+
+  @Override
+  public Object getOneByUsername(String username) {
+    try {
+      dalServices.startTransaction();
+      return memberDao.getMemberByUsername(username);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
+    }
+  }
+
 
 }

@@ -18,4 +18,7 @@ public interface ItemUCC {
   int createType(String type);
 
 
+  int likeAnItem(int offerId, int memberId);
+
+  int cancelAnOffer(int itemId);
 }

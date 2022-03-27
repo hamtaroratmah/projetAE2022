@@ -8,6 +8,7 @@ import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,6 +65,69 @@ public class ItemDaoImpl implements ItemDao {
     return null;
   }
 
+  @Override
+  public ItemDTO createItem(ItemDTO newItem) {
+    ItemDTO item = null;
+
+    try (PreparedStatement query = services.getPreparedStatement(
+        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member)"
+            + " INTO pae.items VALUES(?,?,?,?,?,?)")) {
+      query.setInt(1, newItem.getType().getIdType());
+      query.setString(2, newItem.getPhoto());
+      query.setString(3, newItem.getDescription());
+      query.setString(4, newItem.getAvailabilities());
+      query.setString(5, newItem.getItemCondition());
+      query.setInt(6, newItem.getOfferingMember().getIdMember());
+
+      item = createItemInstance(query);
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+
+    return item;
+  }
+
+  @Override
+  public int likeAnItem(int itemId, int memberId) {
+    int interests = 7;
+    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
+        + " RETURNING id_interest";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+
+      ps.setInt(1, itemId);
+      ps.setInt(2, memberId);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          interests = rs.getInt(1);
+          return interests;
+        }
+
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+
+  }
+
+  @Override
+  public int cancelAnOffer(int itemId) {
+    String query =
+        "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, itemId);
+      try (ResultSet rs = ps.executeQuery()) {
+        return 1;
+
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
 
   @Override
   public List<ItemDTO> getGivenItems() {
@@ -76,7 +140,7 @@ public class ItemDaoImpl implements ItemDao {
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
       items = getItemFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return items;
   }

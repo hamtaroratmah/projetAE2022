@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,14 +28,13 @@ public class OfferDaoImpl implements OfferDao {
       query.setInt(1, idOffer);
       offer = getOfferFromDatabase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return offer;
   }
 
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {
     ResultSet resultSet = query.executeQuery();
-
     OfferDTO offer = domainFactory.getOffer();
     while (resultSet.next()) {
       offer.setIdOffer(resultSet.getInt(1));

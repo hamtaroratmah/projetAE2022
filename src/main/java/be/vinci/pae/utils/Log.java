@@ -11,13 +11,21 @@ public class Log {
   public Logger logger;
   FileHandler fh;
 
-  public Log(String file_name) throws SecurityException, IOException {
-    File f = new File(file_name);
+
+  /**
+   * create a new file log.txt.
+   *
+   * @param fileName the name for the new file
+   * @throws SecurityException throw a new securityException
+   * @throws IOException       thorw a new IOException
+   */
+  public Log(String fileName) throws SecurityException, IOException {
+    File f = new File(fileName);
     if (!f.exists()) {
       f.createNewFile();
 
     }
-    fh = new FileHandler(file_name, true);
+    fh = new FileHandler(fileName, true);
     logger = Logger.getLogger("test");
     logger.addHandler(fh);
     SimpleFormatter formatter = new SimpleFormatter();

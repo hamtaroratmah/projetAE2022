@@ -11,8 +11,11 @@ const Navbar = async () => {
     <nav id="navbar">
        <p id="navbarTitle">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
+       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en 
+            attendes/refusées</button>
        <button id="profileNavbarButton" data-uri="/login">
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
+       <button id="logoutButton" data-uri="/listItem">Voir tout les objets</button>
        <p id="userIdentifier"></p>
     </nav>
   `;
@@ -41,7 +44,6 @@ const Navbar = async () => {
 };
 
 async function getName(token) {
-  let user;
   const request = {
     method: "POST",
     body: JSON.stringify(

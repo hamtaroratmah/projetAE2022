@@ -54,3 +54,25 @@ img {
 .receptionItems {
   border: 1px solid black;
 }
+
+.sortedButton {
+  margin: 50px auto;
+}
+
+.receptionInscriptionParent {
+  border: 1px solid black;
+  width: 1500px;
+  height: 100px;
+  margin : auto;
+  text-align: center;
+}
+.receptionInscriptionChild {
+  width: 250px;
+  padding: 10px;
+  vertical-align: middle;
+  display : inline-block;
+}
+
+.listInscriptionsButton {
+  margin: 50px auto;
+}

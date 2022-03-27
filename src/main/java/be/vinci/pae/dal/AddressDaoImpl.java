@@ -4,6 +4,7 @@ import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
@@ -28,13 +29,13 @@ public class AddressDaoImpl implements AddressDao {
     PreparedStatement query = null;
     try {
       query = services.getPreparedStatement(
-          "SELECT id_address, street, building_number,"
-              + " postcode, commune, city, unit_number"
-              + " FROM pae.addresses "
-              + "WHERE id_address = ?");
+              "SELECT id_address, street, building_number,"
+                      + " postcode, commune, city, unit_number"
+                      + " FROM pae.addresses "
+                      + "WHERE id_address = ?");
       address = getAdressFromDatabase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return address;
   }
@@ -45,7 +46,7 @@ public class AddressDaoImpl implements AddressDao {
     ResultSet resultSetAdress = query.executeQuery();
 
     if (!resultSetAdress.next()) {
-      throw new WebApplicationException("Adress not found");
+      throw new WebApplicationException("Address not found");
     }
     address.setIdAddress(resultSetAdress.getInt(1));
     address.setStreet(resultSetAdress.getString(2));

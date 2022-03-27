@@ -46,6 +46,10 @@ public class AuthsResource {
     }
     String login = json.get("username").asText().toLowerCase();
     login = login.replace(" ", "");
+    if (login.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
+
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
 
@@ -63,35 +67,66 @@ public class AuthsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-        "firstname")
-        || !json.hasNonNull("lastname") || !json.hasNonNull("street") || !json.hasNonNull(
-        "building_number")
-        || !json.hasNonNull("unit_number") || !json.hasNonNull("postcode") || !json.hasNonNull(
-        "commune")
-        || !json.hasNonNull("city")) {
+            "firstName")
+            || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
+            "buildingNumber")
+            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
+            "commune")
+            || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
+    if (json.get("username").asText().isBlank()) {
+      throw new WebApplicationException("Le pseudo ne peut être vide", Response.Status.BAD_REQUEST);
+    }
+    if (json.get("password").asText().isBlank()) {
+      throw new WebApplicationException("Le mot de passe ne peut être vide",
+          Response.Status.BAD_REQUEST);
+    }
+    if (json.get("firstname").asText().isBlank()) {
+      throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
+    }
+    if (json.get("lastname").asText().isBlank()) {
+      throw new WebApplicationException("Le nom ne peut être vide", Response.Status.BAD_REQUEST);
+    }
+    if (json.get("street").asText().isBlank()) {
+      throw new WebApplicationException("La rue ne peut être vide", Response.Status.BAD_REQUEST);
+    }
+    if (json.get("building_number").asText().isBlank()) {
+      throw new WebApplicationException("Le numéro de maison ne peut être vide",
+          Response.Status.BAD_REQUEST);
+    }
+    if (json.get("postcode").asText().isBlank()) {
+      throw new WebApplicationException("Le code postale ne peut être vide",
+          Response.Status.BAD_REQUEST);
+    }
+    if (json.get("commune").asText().isBlank()) {
+      throw new WebApplicationException("La commune ne peut être vide",
+          Response.Status.BAD_REQUEST);
+    }
+    if (json.get("city").asText().isBlank()) {
+      throw new WebApplicationException("La ville ne peut être vide", Response.Status.BAD_REQUEST);
+    }
+
     // create the Address object of the member
     AddressDTO address = domainFactory.getAddress();
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
-    address.setBuildingNumber(json.get("building_number").asInt());
-    address.setUnitNumber(json.get("unit_number").asInt());
+    address.setBuildingNumber(json.get("buildingNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
     address.setCommune(json.get("commune").asText());
     AddressImpl addressImpl = (AddressImpl) address;
     // create the member
     MemberDTO member = domainFactory.getMember();
     member.setAddress(addressImpl);
-    member.setUsername(json.get("username").asText());
+    member.setUsername(json.get("username").asText().toLowerCase().replace(" ", ""));
     member.setPassword(json.get("password").asText());
-    member.setFirstName(json.get("firstname").asText());
-    member.setLastName(json.get("lastname").asText());
+    member.setFirstName(json.get("firstName").asText());
+    member.setLastName(json.get("lastName").asText());
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
-    String token = createToken(publicUser.getIdMember());
-    return token;
+    return createToken(publicUser.getIdMember());
   }
 
   private String createToken(int id) {

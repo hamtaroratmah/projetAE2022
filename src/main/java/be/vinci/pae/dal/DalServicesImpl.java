@@ -1,16 +1,18 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.utils.Config;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import org.apache.commons.dbcp2.BasicDataSource;
+
 
 public class DalServicesImpl implements DalBackendServices, DalServices {
 
-  Connection conn = null;
   private ThreadLocal<Connection> threadLocalValue;
+  private BasicDataSource dataSource;
   private String dbUsername;
   private String dbPassword;
   private String url;
@@ -20,19 +22,17 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
    */
   public DalServicesImpl() {
     threadLocalValue = new ThreadLocal<>();
+    dataSource = new BasicDataSource();
     dbUsername = Config.getProperty("dbUsername");
     dbPassword = Config.getProperty("dbPassword");
     url = Config.getProperty("dbUrl");
+    dataSource.setUrl(url);
+    dataSource.setUsername(dbUsername);
+    dataSource.setPassword(dbPassword);
     try {
       Class.forName("org.postgresql.Driver");
     } catch (ClassNotFoundException e) {
       System.out.println("Driver PostgreSQL manquant !");
-      System.exit(1);
-    }
-    try {
-      conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    } catch (SQLException e) {
-      System.out.println("Impossible de joindre le server !");
       System.exit(1);
     }
   }
@@ -45,9 +45,10 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   public PreparedStatement getPreparedStatement(String query) {
     PreparedStatement statement = null;
     try {
+      Connection conn = threadLocalValue.get();
       statement = conn.prepareStatement(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return statement;
   }
@@ -55,7 +56,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   @Override
   public void openConnection() {
     try {
-      conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+      Connection conn = dataSource.getConnection();
       threadLocalValue.set(conn);
     } catch (SQLException e) {
       System.out.println("Impossible de joindre le server !");
@@ -67,30 +68,30 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   public void startTransaction() {
     try {
       openConnection();
-      conn = threadLocalValue.get();
+      Connection conn = threadLocalValue.get();
       conn.setAutoCommit(false);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
   @Override
   public void commitTransaction() {
     try {
-      conn = threadLocalValue.get();
+      Connection conn = threadLocalValue.get();
       conn.commit();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
   @Override
   public void rollbackTransaction() {
     try {
-      conn = threadLocalValue.get();
+      Connection conn = threadLocalValue.get();
       conn.rollback();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
