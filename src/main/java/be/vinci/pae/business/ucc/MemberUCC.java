@@ -2,10 +2,13 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import java.util.ArrayList;
 
 public interface MemberUCC {
 
-  MemberDTO getOne(String login);
+
+  String getState(String username);
+
 
   MemberDTO getOne(int id);
 
@@ -17,5 +20,17 @@ public interface MemberUCC {
    */
   Member login(String username, String password);
 
+  MemberDTO confirmRegistration(String username, boolean isAdmin);
+
+
+  ArrayList<MemberDTO> listPendingUsers();
+
+
+  ArrayList<MemberDTO> listDeniedUsers();
+
+  MemberDTO denyRegistration(String username);
+
   MemberDTO register(Member member);
+
+  Object getOneByUsername(String username);
 }

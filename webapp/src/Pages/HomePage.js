@@ -1,6 +1,16 @@
 const receptionDiv = `
   <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>
   <button id="typeSortedButtonDESC" class="sortedButton">Type DESC</button>
+  <button id="dateSortedButtonASC" class="sortedButton">Date ASC</button>
+  <button id="dateSortedButtonDESC" class="sortedButton">Date DESC</button>
+  <select name="itemCondition" id="selectItemConditionList" class="sortedList sortedButton">
+    <option selected="yes" value="default">Etat de l'objet</option>
+    <option value="published">Publié</option>
+    <option value="interestShown">Intérêt marqué</option>
+    <option value="assigned">assigné</option>
+    <option value="given">Donné</option>
+    <option value="canceled">Annulé</option>
+  </select>
   <div id="receptionPage">
     
   </div>
@@ -39,7 +49,9 @@ const HomePage = async () => {
   } catch (e) {
     console.error("Home page error", e);
   }
-  const typeButtonASC = document.querySelector("#typeSortedButtonASC")
+
+  //Sort part
+  const typeButtonASC = document.querySelector("#typeSortedButtonASC");
   typeButtonASC.addEventListener("click", () => {
     items.sort((a, b) => {
       return b["type"].idType - a["type"].idType;
@@ -47,7 +59,7 @@ const HomePage = async () => {
     });
     displayItems(items);
   });
-  const typeButtonDESC = document.querySelector("#typeSortedButtonDESC")
+  const typeButtonDESC = document.querySelector("#typeSortedButtonDESC");
   typeButtonDESC.addEventListener("click", () => {
     items.sort((a, b) => {
       return a["type"].idType - b["type"].idType;
@@ -55,11 +67,56 @@ const HomePage = async () => {
     });
     displayItems(items);
   });
+  const dateButtonASC = document.querySelector("#dateSortedButtonASC");
+  dateButtonASC.addEventListener("click", () => {
+    items.sort((a, b) => {
+      let dateA = reformateDate(a["offer"].dateOffer);
+      let dateB = reformateDate(b["offer"].dateOffer);
+      if (dateA < dateB) {
+        return -1;
+      }
+      if (dateA > dateB) {
+        return 1;
+      }
+      return 0;
+    })
+    displayItems(items);
+  });
+  const dateButtonDESC = document.querySelector("#dateSortedButtonDESC");
+  dateButtonDESC.addEventListener("click", () => {
+    items.sort((a, b) => {
+      let dateA = reformateDate(a["offer"].dateOffer);
+      let dateB = reformateDate(b["offer"].dateOffer);
+      if (dateA < dateB) {
+        return 1;
+      }
+      if (dateA > dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    displayItems(items);
+  });
 
+  const selectItemCondition = document.querySelector(
+      "#selectItemConditionList");
+  selectItemCondition.addEventListener("change", () => {
+    let value = selectItemCondition.options[selectItemCondition.selectedIndex].value;
+    items.sort((a, b) => {
+      if (a.itemCondition === value && b.itemCondition !== value) {
+        return -1;
+      }
+      if (a.itemCondition !== value && b.itemCondition === value) {
+        return 1;
+      }
+      return 0;
+    });
+    displayItems(items);
+  })
 };
 
 function displayItems(items) {
-  let itemDiv, item, offer;
+  let item, offer;
   const receptionPage = document.querySelector("#receptionPage")
   receptionPage.innerHTML = ""
   for (let i = 0; i < items.length; i++) {
@@ -79,23 +136,22 @@ function displayItems(items) {
       availabilities: items[i].availabilities,
       offer: offer
     }
-    console.log(item)
     receptionPage.innerHTML += `
-        <div id="receptionItem${i}" class="receptionItems">
-          <img src="" alt="" class="receptionImage" id="receptionImage${i}">
-          <p class="receptionDescription">${item.description}</p>
-          <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
-          <p class="receptionType">${item["type"].type}</p>
-        </div>
+       <div class="modalItemInfo receptionItems" id="receptionItem${i}">
+        <img src="" alt="" class="receptionImage" id="receptionImage${i}">
+          <p id="receptionDescription">${item.description}</p>
+          <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
+          <p id="receptionType">${item["type"].type}</p>
+          <p id="receptionDate">${reformateDate(item["offer"].dateOffer)}</p>
+          <p id="receptionItemCondition">${item.itemCondition}</p>
+          <p id="receptionAvailabilities">${item.availabilities}</p>
+          <p class="modalItemInfo"></p>
+      </div>
       `;
 
-    // itemDiv = document.querySelector("#receptionItem" + i);
-    // itemDiv.addEventListener("click", () => {
-    //   console.log("why im here");
-    // });
   }
   for (let j = 0; j < items.length; j++) {
-    itemDiv = document.querySelector("#receptionItem" + j);
+    const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j);
     });
@@ -126,13 +182,12 @@ function displayItems(items) {
     }
   }
 
-  function reformateDate(date) {
-    let year = date[0];
-    date[0] = date[2];
-    date[2] = year
-    return date[0] + "/" + date[1] + "/" + date[2];
-  }
+}
 
+function reformateDate(date) {
+  let stringDate = date.toString();
+  stringDate.replace(",", "/");
+  return new Date(date[0], date[1], date[2]);
 }
 
 export default HomePage;

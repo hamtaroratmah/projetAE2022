@@ -22,7 +22,7 @@ CREATE TABLE pae.members
     call_number                VARCHAR(10),
     isAdmin                    bool    DEFAULT FALSE,
     reason_for_conn_refusal    VARCHAR(300),
-    state                      VARCHAR(7),
+    state                      VARCHAR(10),
     count_object_not_collected INTEGER DEFAULT (0),
     count_object_given         INTEGER DEFAULT (0),
     count_object_got           INTEGER DEFAULT (0)
@@ -65,9 +65,12 @@ CREATE TABLE pae.offers
 
 CREATE TABLE pae.interests
 (
-    id_interest SERIAL PRIMARY KEY,
-    id_item     INTEGER REFERENCES pae.items (id_item),
-    id_member   INTEGER REFERENCES pae.members (id_member)
+    id_interest     SERIAL PRIMARY KEY,
+    id_item         INTEGER REFERENCES pae.items (id_item),
+    id_member       INTEGER REFERENCES pae.members (id_member),
+    isRecipient     bool    DEFAULT FALSE,
+    date_delivery   DATE,
+    came            bool DEFAULT FALSE
 );
 
 -- INSERT FAKE MEMBERS
@@ -181,9 +184,14 @@ VALUES (7, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un f
 INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
 VALUES (8, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
+
 INSERT INTO pae.items
 (id_offering_member, type, availabilities, description, item_condition, photo)
-VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test', 'given', null);
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test published', 'published', null);
+
+INSERT INTO pae.items
+(id_offering_member, type, availabilities, description, item_condition, photo)
+VALUES (7, 2, 'Tous les jours de 15h à 18h', 'Item de test canceled', 'canceled', null);
 
 --Insert demo's offers
 INSERT INTO pae.offers
@@ -199,23 +207,7 @@ INSERT INTO pae.offers
 VALUES ('25-03-2022', 3);
 
 INSERT INTO pae.offers (date_offer, id_item)
-VALUES (now(), 4);
+VALUES ('10-03-2022', 4);
 
-
--- SELECT it.id_item,
---        it.type,
---        it.description,
---        it.availabilities,
---        it.item_condition,
---        it.photo,
---        it.rating,
---        it.id_offering_member,
---        ty.type,
---        of.date_offer
--- FROM pae.items it,
---      pae.types ty,
---      pae.offers of
--- WHERE it.type = ty.id_type
---   AND of.id_item = it.id_item
--- ORDER BY date_offer DESC,
---          it.type;
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('10-03-2022', 5);
