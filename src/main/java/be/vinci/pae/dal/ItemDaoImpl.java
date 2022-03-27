@@ -116,8 +116,10 @@ public class ItemDaoImpl implements ItemDao {
     System.out.print("ok1");
 
     ItemDTO item = null;
-    String query = "INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(?,?,?,?,?,?) RETURNING type,photo,description,availabilities,item_condition,id_offering_member";
-    TypeDTO typeDTO = null;
+    String query = "INSERT  INTO pae.items "
+        + "(type,photo, description, availabilities, item_condition,id_offering_member) "
+        + " VALUES(?,?,?,?,?,?) "
+        + "RETURNING type,photo,description,availabilities,item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());
       ps.setString(2, newItem.getPhoto());

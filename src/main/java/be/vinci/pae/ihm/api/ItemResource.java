@@ -79,15 +79,14 @@ public class ItemResource {
     }
     MemberDTO offeringMember = domainFactory.getMember();
     offeringMember.setIdMember(json.get("id_offering_member").asInt());
-
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = typeExisting(type.getType());
     System.out.print(idType);
-    //si le type n existe pas , le creer
 
+    //si le type n existe pas , le creer
     if (idType == -1) {
       System.out.print("ko1");
 
