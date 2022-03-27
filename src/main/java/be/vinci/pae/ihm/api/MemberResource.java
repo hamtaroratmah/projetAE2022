@@ -52,7 +52,8 @@ public class MemberResource {
   /**
    * Get the state of the member.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member state.
    */
   @POST
   @Path("state")
@@ -60,13 +61,17 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String getState(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
     return memberUCC.getState(username);
   }
 
   /**
-   * confirma a member.
+   * confirm a registration.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member confirmed.
    */
   @POST
   @Path("confirm")
@@ -75,15 +80,20 @@ public class MemberResource {
   public MemberDTO confirmRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
     boolean isAdmin = json.get("isAdmin").asBoolean();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
+
     System.out.println(username);
     System.out.println("test de confirm");
     return memberUCC.confirmRegistration(username, isAdmin);
   }
 
   /**
-   * deny a member.
+   * deny a registration.
    *
-   * @param json jsonNode created by the request and contains information given by the client
+   * @param json the json
+   * @return the member denyes.
    */
   @POST
   @Path("deny")
@@ -91,13 +101,19 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO denyRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    if (username.isBlank()) {
+      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
+    }
+
     System.out.println(username);
     System.out.println("test de deny");
     return memberUCC.denyRegistration(username);
   }
 
   /**
-   * list members who are pending.
+   * get list of pending members.
+   *
+   * @return the list
    */
   @GET
   @Path("pending")
@@ -109,7 +125,9 @@ public class MemberResource {
   }
 
   /**
-   * list members who are denied.
+   * get the list of denied members.
+   *
+   * @return the list
    */
   @GET
   @Path("denied")
