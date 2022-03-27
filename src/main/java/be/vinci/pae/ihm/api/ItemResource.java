@@ -66,8 +66,6 @@ public class ItemResource {
 
   /**
    * Get a specified item according to its id.
-   *
-   * @param idItem item's id that we want more details
    */
   @POST
   @Path("/createItem")

@@ -69,7 +69,8 @@ public class ItemDaoImpl implements ItemDao {
     ItemDTO item = null;
 
     try (PreparedStatement query = services.getPreparedStatement(
-        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) INTO pae.items VALUES(?,?,?,?,?,?)")) {
+        "INSERT (type,photo, description, availabilities, item_condition,id_offering_member) "
+            + "INTO pae.items VALUES(?,?,?,?,?,?)")) {
       query.setInt(1, newItem.getType().getIdType());
       query.setString(2, newItem.getPhoto());
       query.setString(3, newItem.getDescription());
@@ -82,7 +83,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return null;
+    return item;
   }
 
 
