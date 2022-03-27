@@ -2,9 +2,11 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.utils.Config;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
