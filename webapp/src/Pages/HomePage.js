@@ -15,7 +15,6 @@ const receptionDiv = `
     
   </div>
 `
-//todo trier par type, par date et par état d'un objet
 const HomePage = async () => {
 
   const pageDiv = document.querySelector("#page");
@@ -32,7 +31,7 @@ const HomePage = async () => {
       }
     };
 
-    await fetch("/api/item/", request)
+    await fetch("/api/item/getLastOfferedItems", request)
     .then(response => response.json())
     .then((commits) => {
       for (let i = 0; i < commits.length; i++) {

@@ -55,10 +55,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   public void openConnection() {
     try {
       Connection conn = dataSource.getConnection();
-
       threadLocalValue.set(conn);
-
-
     } catch (SQLException e) {
       System.out.println("Impossible de joindre le server !");
       System.exit(1);
@@ -81,7 +78,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.commit();
-      conn.close();
+//      conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -92,7 +89,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.rollback();
-      conn.close();
+//      conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
