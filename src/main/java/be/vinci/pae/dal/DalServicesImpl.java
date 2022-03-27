@@ -2,10 +2,11 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.utils.Config;
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DalServicesImpl implements DalBackendServices, DalServices {
 
@@ -28,8 +29,8 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     dataSource.setUsername(dbUsername);
     dataSource.setPassword(dbPassword);
     try {
-      dataSource.setDriverClassName("org.postgresql.Driver");
-    } catch (SecurityException e) {
+      Class.forName("org.postgresql.Driver");
+    } catch (ClassNotFoundException e) {
       System.out.println("Driver PostgreSQL manquant !");
       System.exit(1);
     }
@@ -78,7 +79,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.commit();
-      //conn.close();
+      conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -89,7 +90,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.rollback();
-      //conn.close();
+      conn.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }

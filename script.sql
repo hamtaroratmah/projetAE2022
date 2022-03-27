@@ -212,7 +212,6 @@ VALUES ('10-03-2022', 4);
 INSERT INTO pae.offers (date_offer, id_item)
 VALUES ('10-03-2022', 5);
 
-<<<<<<< HEAD
 
 SELECT * FROM pae.members
 
@@ -233,7 +232,4 @@ SELECT * FROM pae.members
 --   AND of.id_item = it.id_item
 -- ORDER BY date_offer DESC,
 --          it.type;
-=======
-UPDATE pae.members SET state='confirmed', isAdmin =false WHERE username='souli' RETURNING *
 
->>>>>>> 35b6cf0384eee7fe20f9506f6542067153bdc026

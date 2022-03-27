@@ -7,6 +7,7 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
+
 import java.util.ArrayList;
 
 public class MemberUCCImpl implements MemberUCC {
@@ -149,7 +150,6 @@ public class MemberUCCImpl implements MemberUCC {
       dalServices.commitTransaction();
     }
     return null;
-
   }
 
 }

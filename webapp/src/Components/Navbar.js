@@ -11,6 +11,8 @@ const Navbar = async () => {
     <nav id="navbar">
        <p id="navbarTitle">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
+       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en 
+            attendes/refusées</button>
        <button id="profileNavbarButton" data-uri="/login">
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
        <p id="userIdentifier"></p>

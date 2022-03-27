@@ -12,11 +12,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -63,20 +59,20 @@ public class AuthsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-        "firstname")
-        || !json.hasNonNull("lastname") || !json.hasNonNull("street") || !json.hasNonNull(
-        "building_number")
-        || !json.hasNonNull("unit_number") || !json.hasNonNull("postcode") || !json.hasNonNull(
-        "commune")
-        || !json.hasNonNull("city")) {
+            "firstName")
+            || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
+            "buildingNumber")
+            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
+            "commune")
+            || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     // create the Address object of the member
     AddressDTO address = domainFactory.getAddress();
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
-    address.setBuildingNumber(json.get("building_number").asInt());
-    address.setUnitNumber(json.get("unit_number").asInt());
+    address.setBuildingNumber(json.get("buildingNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
     address.setCommune(json.get("commune").asText());
     AddressImpl addressImpl = (AddressImpl) address;
@@ -85,8 +81,8 @@ public class AuthsResource {
     member.setAddress(addressImpl);
     member.setUsername(json.get("username").asText());
     member.setPassword(json.get("password").asText());
-    member.setFirstName(json.get("firstname").asText());
-    member.setLastName(json.get("lastname").asText());
+    member.setFirstName(json.get("firstName").asText());
+    member.setLastName(json.get("lastName").asText());
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
@@ -98,14 +94,14 @@ public class AuthsResource {
     String token;
     try {
       token = JWT.create().withIssuer("auth0")
-          .withClaim("id_member", id).sign(this.jwtAlgorithm);
+              .withClaim("id_member", id).sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;
     }
     return jsonMapper.createObjectNode()
-        .put("token", token)
-        .put("id", id).toPrettyString();
+            .put("token", token)
+            .put("id", id).toPrettyString();
   }
 
 
