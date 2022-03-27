@@ -8,6 +8,7 @@ import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +81,7 @@ public class ItemDaoImpl implements ItemDao {
 
       item = createItemInstance(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
 
     return item;
@@ -139,7 +140,7 @@ public class ItemDaoImpl implements ItemDao {
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
       items = getItemFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return items;
   }
@@ -172,14 +173,11 @@ public class ItemDaoImpl implements ItemDao {
     return items;
   }
 
-
   private ItemDTO createItemInstance(PreparedStatement query) throws SQLException {
     ItemDTO item = domainFactory.getItem();
     ResultSet rs = query.executeQuery();
     item.setIdItem(rs.getInt(1));
     return null;
   }
-
-
 }
 

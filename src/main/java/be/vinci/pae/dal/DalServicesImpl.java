@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.utils.Config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +47,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       Connection conn = threadLocalValue.get();
       statement = conn.prepareStatement(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return statement;
   }
@@ -69,7 +70,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       Connection conn = threadLocalValue.get();
       conn.setAutoCommit(false);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
@@ -78,8 +79,9 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.commit();
+      conn.close();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
@@ -88,8 +90,9 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     try {
       Connection conn = threadLocalValue.get();
       conn.rollback();
+      conn.close();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 

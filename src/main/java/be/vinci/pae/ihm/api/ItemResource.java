@@ -44,11 +44,14 @@ public class ItemResource {
    *
    * @param idItem item's id that we want more details
    */
-  @POST
+  @GET
   @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO getItem(@PathParam("id") int idItem) {
+    if (idItem < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
     return itemUcc.getItem(idItem);
   }
 
@@ -83,6 +86,9 @@ public class ItemResource {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     MemberDTO offeringMember = domainFactory.getMember();
+    if (json.get("id_offering_member").asInt() < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
     offeringMember.setIdMember(json.get("id_offering_member").asInt());
 
     ItemDTO item = domainFactory.getItem();

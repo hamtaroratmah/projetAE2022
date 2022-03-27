@@ -3,6 +3,8 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
+import be.vinci.pae.exceptions.BizExceptionForbidden;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 
@@ -27,11 +29,10 @@ public class ItemUCCImpl implements ItemUCC {
       return itemDao.getLastOfferedItems();
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     } finally {
       dalServices.commitTransaction();
     }
-    return null;
   }
 
   @Override
@@ -39,16 +40,16 @@ public class ItemUCCImpl implements ItemUCC {
     try {
       dalServices.startTransaction();
       if (idItem < 1) {
-        throw new IllegalArgumentException("L'id de l'objet doit être supérieur à 0.");
+        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
       }
       ItemDTO item = itemDao.getItem(idItem);
       if (item == null) {
-        throw new IllegalArgumentException("L'objet désiré n'existe pas.");
+        throw new BizExceptionForbidden("L'objet désiré n'existe pas.");
       }
       return item;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw e;
+      throw new FatalException(e.getMessage());
     } finally {
       dalServices.commitTransaction();
     }
@@ -64,14 +65,10 @@ public class ItemUCCImpl implements ItemUCC {
   public List<ItemDTO> getGivenItems() {
     try {
       dalServices.startTransaction();
-      List<ItemDTO> items = itemDao.getGivenItems();
-      if (items.isEmpty()) {
-        throw new IllegalArgumentException("Il n'y a aucun objet déjà offert.");
-      }
-      return items;
+      return itemDao.getGivenItems();
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw e;
+      throw new FatalException(e.getMessage());
     } finally {
       dalServices.commitTransaction();
     }
