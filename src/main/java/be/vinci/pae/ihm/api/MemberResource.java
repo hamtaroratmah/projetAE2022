@@ -50,7 +50,7 @@ public class MemberResource {
   }
 
   /**
-   * Get the state of the member
+   * Get the state of the member.
    *
    * @param json jsonNode created by the request and contains information given by the client
    */
@@ -64,7 +64,7 @@ public class MemberResource {
   }
 
   /**
-   * confirma a member
+   * confirma a member.
    *
    * @param json jsonNode created by the request and contains information given by the client
    */
@@ -81,7 +81,7 @@ public class MemberResource {
   }
 
   /**
-   * deny a member
+   * deny a member.
    *
    * @param json jsonNode created by the request and contains information given by the client
    */
@@ -97,7 +97,7 @@ public class MemberResource {
   }
 
   /**
-   * list members who are pending
+   * list members who are pending.
    */
   @GET
   @Path("pending")
@@ -109,7 +109,7 @@ public class MemberResource {
   }
 
   /**
-   * list members who are denied
+   * list members who are denied.
    */
   @GET
   @Path("denied")

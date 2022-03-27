@@ -67,11 +67,9 @@ public class MemberDaoImpl implements MemberDao {
 
 
   /**
-   * Insert a member in the dataBase from the informations given in the parameter and execute
-
+   * Insert a member in the dataBase from the informations given in the parameter and execute.
    *
    * @param member to insert
-   * @return returns nothing
    */
   public void insertMember(Member member) {
     PreparedStatement queryMember = null;
