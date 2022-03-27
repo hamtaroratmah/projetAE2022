@@ -6,7 +6,6 @@ import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
