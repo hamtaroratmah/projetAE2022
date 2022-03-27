@@ -64,7 +64,7 @@ public class MemberResource {
   }
 
   /**
-   * confirma a member.
+   * confirm a member.
    *
    * @param json jsonNode created by the request and contains information given by the client
    */

@@ -4,6 +4,7 @@ import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class AddressDaoImpl implements AddressDao {
               + "WHERE id_address = ?");
       address = getAdressFromDatabase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return address;
   }

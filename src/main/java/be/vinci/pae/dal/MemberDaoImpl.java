@@ -4,6 +4,7 @@ import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ public class MemberDaoImpl implements MemberDao {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return member;
   }
@@ -60,7 +61,7 @@ public class MemberDaoImpl implements MemberDao {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return member;
   }
@@ -89,7 +90,7 @@ public class MemberDaoImpl implements MemberDao {
 
       queryAddress.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     try {
       queryMember = services.getPreparedStatement(
@@ -111,7 +112,7 @@ public class MemberDaoImpl implements MemberDao {
 
       queryMember.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
   }
 
@@ -135,7 +136,7 @@ public class MemberDaoImpl implements MemberDao {
 
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return list;
 
@@ -165,7 +166,7 @@ public class MemberDaoImpl implements MemberDao {
 
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return null;
   }
@@ -191,7 +192,7 @@ public class MemberDaoImpl implements MemberDao {
 
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return null;
   }
@@ -233,7 +234,7 @@ public class MemberDaoImpl implements MemberDao {
     ResultSet resultSetMember = query.executeQuery();
 
     if (!resultSetMember.next()) {
-      throw new IllegalArgumentException("Username not found");
+      throw new FatalException("Username not found");
     }
     member.setIdMember(resultSetMember.getInt(1));
     member.setPassword(resultSetMember.getString(2));
