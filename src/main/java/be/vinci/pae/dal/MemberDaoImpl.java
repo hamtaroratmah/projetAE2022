@@ -78,15 +78,14 @@ public class MemberDaoImpl implements MemberDao {
     try {
       queryAddress = services.getPreparedStatement(
               "INSERT INTO pae.addresses"
-                      + "( street, building_number, postcode, commune, city,unit_number)"
-                      + " VALUES (?,?,?,?,?,?);"
+                      + "( street, building_number, postcode, city,unit_number)"
+                      + " VALUES (?,?,?,?,?);"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
       queryAddress.setInt(3, member.getAddress().getPostcode());
-      queryAddress.setString(4, member.getAddress().getCommune());
-      queryAddress.setString(5, member.getAddress().getCity());
-      queryAddress.setInt(6, member.getAddress().getUnitNumber());
+      queryAddress.setString(4, member.getAddress().getCity());
+      queryAddress.setInt(5, member.getAddress().getUnitNumber());
 
       queryAddress.executeQuery();
     } catch (SQLException e) {
@@ -105,9 +104,9 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(3, member.getLastName());
       queryMember.setString(4, member.getFirstName());
       queryMember.setObject(5, member.getAddress());
-      queryMember.setString(6, member.getCallNumber());
-      queryMember.setBoolean(7, member.isAdmin());
-      queryMember.setString(8, member.getReasonForConnRefusal());
+      queryMember.setString(6, "nrzucvnze");
+      queryMember.setBoolean(7, false);
+      queryMember.setString(8, "jocnrz");
       queryMember.setString(9, member.getState());
 
       queryMember.executeQuery();

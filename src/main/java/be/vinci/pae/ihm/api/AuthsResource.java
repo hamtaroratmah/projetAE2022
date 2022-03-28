@@ -70,8 +70,7 @@ public class AuthsResource {
             "firstName")
             || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
             "buildingNumber")
-            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
-            "commune")
+            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode")
             || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
@@ -82,25 +81,25 @@ public class AuthsResource {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
-    if (json.get("firstname").asText().isBlank()) {
+    if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("lastname").asText().isBlank()) {
+    if (json.get("lastName").asText().isBlank()) {
       throw new WebApplicationException("Le nom ne peut être vide", Response.Status.BAD_REQUEST);
     }
     if (json.get("street").asText().isBlank()) {
       throw new WebApplicationException("La rue ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("building_number").asText().isBlank()) {
+    if (json.get("buildingNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
+    if (json.get("unitNumber").asText().isBlank()) {
+      throw new WebApplicationException("Le numéro de maison ne peut être vide",
+              Response.Status.BAD_REQUEST);
+    }
     if (json.get("postcode").asText().isBlank()) {
       throw new WebApplicationException("Le code postale ne peut être vide",
-          Response.Status.BAD_REQUEST);
-    }
-    if (json.get("commune").asText().isBlank()) {
-      throw new WebApplicationException("La commune ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
     if (json.get("city").asText().isBlank()) {
@@ -114,7 +113,6 @@ public class AuthsResource {
     address.setBuildingNumber(json.get("buildingNumber").asInt());
     address.setUnitNumber(json.get("unitNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
-    address.setCommune(json.get("commune").asText());
     AddressImpl addressImpl = (AddressImpl) address;
     // create the member
     MemberDTO member = domainFactory.getMember();
@@ -123,9 +121,11 @@ public class AuthsResource {
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
+    System.out.println(member.getCallNumber());
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
+    System.out.print(publicUser);
     return createToken(publicUser.getIdMember());
   }
 

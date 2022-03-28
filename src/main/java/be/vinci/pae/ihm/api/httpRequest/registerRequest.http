@@ -11,6 +11,5 @@ Content-Type: application/json
   "buildingNumber": 8,
   "unitNumber": 12,
   "postcode":1235,
-  "commune": "inshallah",
   "city": "mashala Land"
 }
