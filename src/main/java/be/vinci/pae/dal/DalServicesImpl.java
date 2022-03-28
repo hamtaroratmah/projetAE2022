@@ -66,6 +66,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
 
   @Override
   public void startTransaction() {
+    System.out.print("tu es passé");
     try {
       openConnection();
       Connection conn = threadLocalValue.get();

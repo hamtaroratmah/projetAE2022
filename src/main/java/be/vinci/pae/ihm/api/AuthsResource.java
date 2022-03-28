@@ -82,16 +82,16 @@ public class AuthsResource {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
-    if (json.get("firstname").asText().isBlank()) {
+    if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("lastname").asText().isBlank()) {
+    if (json.get("lastName").asText().isBlank()) {
       throw new WebApplicationException("Le nom ne peut être vide", Response.Status.BAD_REQUEST);
     }
     if (json.get("street").asText().isBlank()) {
       throw new WebApplicationException("La rue ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("building_number").asText().isBlank()) {
+    if (json.get("buildingNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
@@ -106,7 +106,6 @@ public class AuthsResource {
     if (json.get("city").asText().isBlank()) {
       throw new WebApplicationException("La ville ne peut être vide", Response.Status.BAD_REQUEST);
     }
-
     // create the Address object of the member
     AddressDTO address = domainFactory.getAddress();
     address.setCity(json.get("city").asText());
@@ -126,6 +125,7 @@ public class AuthsResource {
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
+    System.out.print(publicUser);
     return createToken(publicUser.getIdMember());
   }
 
