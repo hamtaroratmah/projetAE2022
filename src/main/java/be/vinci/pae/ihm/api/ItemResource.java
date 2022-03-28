@@ -89,14 +89,14 @@ public class ItemResource {
   public ItemDTO createItem(JsonNode json) throws SQLException {
     if (!json.hasNonNull("type") || !json.hasNonNull("description") || !json.hasNonNull(
         "availabilities")
-        || !json.hasNonNull("item_condition") || !json.hasNonNull("id_offering_member")) {
+        || !json.hasNonNull("itemCondition") || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     MemberDTO offeringMember = domainFactory.getMember();
-    if (json.get("id_offering_member").asInt() < 1) {
+    if (json.get("idOfferingMember").asInt() < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    offeringMember.setIdMember(json.get("id_offering_member").asInt());
+    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
@@ -116,7 +116,7 @@ public class ItemResource {
     item.setType(type);
     item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
-    item.setItemCondition(json.get("item_condition").asText());
+    item.setItemCondition(json.get("itemCondition").asText());
     item.setOfferingMember(offeringMember);
 
     return itemUcc.createItem(item);

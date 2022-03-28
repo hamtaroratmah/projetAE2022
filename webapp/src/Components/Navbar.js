@@ -15,13 +15,10 @@ const Navbar = async () => {
             attendes/refusées</button>
        <button id="profileNavbarButton" data-uri="/login">
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
-<<<<<<< HEAD
        <button id="logoutButton" data-uri="/listItem">Voir tout les objets</button>
-=======
        <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
 
        
->>>>>>> a42a65dc9589f4966d4384a1da52b28381af123d
        <p id="userIdentifier"></p>
     </nav>
   `;

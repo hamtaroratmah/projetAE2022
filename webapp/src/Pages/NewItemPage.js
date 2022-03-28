@@ -20,7 +20,7 @@ const createDiv = `
         </div>
 `;
 
-function newItem(){
+function NewItem(){
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
@@ -31,14 +31,18 @@ function newItem(){
 
 async function createItem(e) {
   e.preventDefault();
-  const type = document.getElementById("type").value();
-  const photo = document.getElementById("photo").value();
-  const description = document.getElementById("description").value();
-  const availabilities = document.getElementById("availabilities").value();
-  const itemCondition = document.getElementById("itemCondition").value();
-  const errorCreate = document.getElementById("errorText");
-  errorCreate.innerHTML = "";
-
+  const type = document.getElementById("type").value;
+  const photo = document.getElementById("photo").value;
+  const description = document.getElementById("description").value;
+  const availabilities = document.getElementById("availabilities").value;
+  const itemCondition = document.getElementById("itemCondition").value;
+  const errorLogin = document.getElementById("errorText");
+  // errorCreate.innerHTML = "";
+  const idOfferingMember= window.localStorage;
+  let idMember=4;
+  // if(window.localStorage.getItem("user"))
+  // idMember = window.localStorage.getItem("user") !== null
+  //     || window.sessionStorage.getItem("user") !== null;
   //Verify the user entered all informations toto create an item
   // and show an error message if not
   try {
@@ -61,7 +65,7 @@ async function createItem(e) {
             description: description,
             availabilities: availabilities,
             itemCondition: itemCondition,
-
+            idOfferingMember: idMember,
           }
       ),
       headers: {
@@ -82,5 +86,7 @@ async function createItem(e) {
     console.error("CreatePage::error ", e);
   }
 
+
 }
+export default NewItem
 
