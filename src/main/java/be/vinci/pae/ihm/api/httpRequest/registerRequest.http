@@ -3,10 +3,10 @@ POST {{baseUrl}}/auths/register
 Content-Type: application/json
 
 {
-  "username":"Stal",
+  "username":"TEST",
   "password":"password",
-  "firstName": "guillaume",
-  "lastName": "bouillon",
+  "firstName": "masm",
+  "lastName": "edfede",
   "street": "Rue de la trouille",
   "buildingNumber": 8,
   "unitNumber": 12,

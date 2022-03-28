@@ -124,7 +124,6 @@ public class AuthsResource {
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
-    System.out.print(publicUser);
     return createToken(publicUser.getIdMember());
   }
 

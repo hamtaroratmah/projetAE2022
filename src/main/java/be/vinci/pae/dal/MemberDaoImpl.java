@@ -75,11 +75,12 @@ public class MemberDaoImpl implements MemberDao {
   public void insertMember(Member member) {
     PreparedStatement queryMember;
     PreparedStatement queryAddress;
+    int idAddress = -1;
     try {
       queryAddress = services.getPreparedStatement(
               "INSERT INTO pae.addresses"
                       + "( street, building_number, postcode, city,unit_number)"
-                      + " VALUES (?,?,?,?,?);"
+                      + " VALUES (?,?,?,?,?) RETURNING id_address;"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
@@ -87,15 +88,19 @@ public class MemberDaoImpl implements MemberDao {
       queryAddress.setString(4, member.getAddress().getCity());
       queryAddress.setInt(5, member.getAddress().getUnitNumber());
 
-      queryAddress.executeQuery();
+      ResultSet rs = queryAddress.executeQuery();
+      if (rs.next()) {
+        idAddress = rs.getInt(1);
+      }
+
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
     try {
       queryMember = services.getPreparedStatement(
               "INSERT INTO pae.members"
-                      + "(password, username, lastName, firstName, address, callNumber, isadmin,\n"
-                      + " reasonForConnRefusal, state)\n"
+                      + "(password, username, last_name, first_name, address, call_number, isadmin,\n"
+                      + " reason_for_conn_refusal, state)\n"
                       + "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
@@ -103,13 +108,13 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(2, member.getUsername());
       queryMember.setString(3, member.getLastName());
       queryMember.setString(4, member.getFirstName());
-      queryMember.setObject(5, member.getAddress());
-      queryMember.setString(6, "nrzucvnze");
-      queryMember.setBoolean(7, false);
-      queryMember.setString(8, "jocnrz");
+      queryMember.setInt(5, idAddress);
+      queryMember.setString(6, member.getCallNumber());
+      queryMember.setBoolean(7, member.isAdmin());
+      queryMember.setString(8, member.getReasonForConnRefusal());
       queryMember.setString(9, member.getState());
 
-      queryMember.executeQuery();
+      queryMember.executeUpdate();
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
