@@ -40,7 +40,6 @@ public class AuthsResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public String login(JsonNode json) {
-    // Get and check credentials
     if (!json.hasNonNull("username") || !json.hasNonNull("password")) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
@@ -49,10 +48,8 @@ public class AuthsResource {
     if (login.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
-
     return createToken(publicUser.getIdMember());
   }
 
@@ -67,12 +64,12 @@ public class AuthsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-            "firstName")
-            || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
-            "buildingNumber")
-            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
-            "commune")
-            || !json.hasNonNull("city")) {
+        "firstName")
+        || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
+        "buildingNumber")
+        || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
+        "commune")
+        || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
