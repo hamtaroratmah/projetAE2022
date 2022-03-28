@@ -189,15 +189,14 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   private void createOffer(int idItem) {
-    ItemDTO offer = null;
     String now = LocalDate.now().toString();
-    Date date= Date.valueOf(now);
-    System.out.println("now = " +now);
-    System.out.println("date = " +date);
+    Date date = Date.valueOf(now);
+    System.out.println("now = " + now);
+    System.out.println("date = " + date);
     String query = "INSERT  INTO pae.offers (date,idItem) VALUES (?,?) ";
-    try(PreparedStatement ps = services.getPreparedStatement(query)){
-      ps.setDate(1,date);
-      ps.setInt(2,idItem);
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setDate(1, date);
+      ps.setInt(2, idItem);
     } catch (SQLException e) {
       e.printStackTrace();
     }

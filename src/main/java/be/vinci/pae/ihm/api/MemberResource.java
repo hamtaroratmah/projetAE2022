@@ -79,13 +79,13 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
-    boolean isAdmin = json.get("isAdmin").asBoolean();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
 
     System.out.println(username);
     System.out.println("test de confirm");
+    boolean isAdmin = json.get("isAdmin").asBoolean();
     return memberUCC.confirmRegistration(username, isAdmin);
   }
 

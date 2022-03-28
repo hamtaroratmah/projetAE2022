@@ -87,9 +87,12 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO createItem(JsonNode json) throws SQLException {
-    if (!json.hasNonNull("type") || !json.hasNonNull("description") || !json.hasNonNull(
+    if (!json.hasNonNull("type")
+        || !json.hasNonNull("description")
+        || !json.hasNonNull(
         "availabilities")
-        || !json.hasNonNull("itemCondition") || !json.hasNonNull("idOfferingMember")) {
+        || !json.hasNonNull("itemCondition")
+        || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     MemberDTO offeringMember = domainFactory.getMember();
