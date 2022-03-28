@@ -2,6 +2,8 @@ import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/Login";
 import Logout from "./Pages/Logout";
 import ListItemPage from "./Pages/ListItemPage";
+import NewItem from "./Pages/NewItemPage";
+
 
 // Configure your routes here
 const routes = {
@@ -9,6 +11,7 @@ const routes = {
   "/login": LoginPage,
   "/logout": Logout,
   "/listItem": ListItemPage,
+  "/newItem": NewItem,
 };
 
 /**
