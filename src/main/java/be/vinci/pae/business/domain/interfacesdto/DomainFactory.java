@@ -7,7 +7,6 @@ public interface DomainFactory {
   MemberDTO getState();
 
   MemberDTO confirmInscription();
-
  
   ItemDTO getItem();
 
