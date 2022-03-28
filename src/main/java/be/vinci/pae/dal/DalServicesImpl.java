@@ -57,7 +57,6 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   public void openConnection() {
     try {
       Connection conn = dataSource.getConnection();
-      System.out.println(conn + " op");
       threadLocalValue.set(conn);
     } catch (SQLException e) {
       System.out.println("Impossible de joindre le server !");

@@ -13,9 +13,8 @@ const registerDiv = `
                     <input class="inputForm fields" type="text" id="firstName" placeholder="Prénom">
                     <input class="inputForm fields" type="text" id="street" placeholder="Rue">
                     <input class="inputForm fields" type="text" id="buildingNumber" placeholder="Numéro de batiment">
-                     <input class="inputForm fields" type="text" id="unit_number" placeholder="numéro de boîte">
+                     <input class="inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
                      <input class="inputForm fields" type="text" id="postcode" placeholder="code postal">
-                     <input class="inputForm fields" type="text" id="commune" placeholder="Commune">
                      <input class="inputForm fields" type="text" id="city" placeholder="ville">
                     <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="S'inscrire">
@@ -53,10 +52,9 @@ async function register(e) {
     const buildingNumber = document.getElementById("buildingNumber").value;
     const unitNumber = document.getElementById("unitNumber").value;
     const postcode = document.getElementById("postcode").value;
-    const commune = document.getElementById("commune").value;
     const street = document.getElementById("street").value;
     const city = document.getElementById("city").value;
-    const errorLogin = document.getElementById("errorLogin");
+    const errorLogin = document.getElementById("errorText");
     errorLogin.innerHTML = "";
 
     //Verify the user entered all informations to log in and show an error message if not
@@ -84,10 +82,6 @@ async function register(e) {
             errorLogin.innerHTML = "Enter a unit number";
             throw new Error("No unit number");
         }
-        else if (!commune) {
-            errorLogin.innerHTML = "Enter a commune";
-            throw new Error("No commune");
-        }
         else if (!postcode) {
             errorLogin.innerHTML = "Enter a postcode";
             throw new Error("No postcode");
@@ -111,7 +105,6 @@ async function register(e) {
                     lastName: lastName,
                     unitNumber: unitNumber,
                     buildingNumber: buildingNumber,
-                    commune: commune,
                     postcode: postcode,
                     street : street,
                     city : city
@@ -121,7 +114,7 @@ async function register(e) {
                 "Content-Type": "application/json"
             }
         };
-
+        console.log(request);
         const response = await fetch("/api/auths/register", request);
 
         const token = await response.json();

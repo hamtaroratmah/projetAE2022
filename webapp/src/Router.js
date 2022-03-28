@@ -8,7 +8,7 @@ import register from "./Pages/register";
 // Configure your routes here
 const routes = {
   "/": HomePage,
-  "register": register,
+  "/register": register,
   "/login": LoginPage,
   "/logout": Logout,
   "/listInscriptions" : ListInscriptions,
