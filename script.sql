@@ -245,3 +245,5 @@ UPDATE pae.members SET state='confirmed', isAdmin =false WHERE username='souli' 
 SELECT * FROM pae.interests;
 
 SELECT * FROM pae.items;
+
+SELECT * FROM pae.members

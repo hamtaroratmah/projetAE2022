@@ -3,13 +3,16 @@ import LoginPage from "./Pages/Login";
 import Logout from "./Pages/Logout";
 import ListItemPage from "./Pages/ListItemPage";
 import NewItem from "./Pages/NewItemPage";
-
+import ListInscriptions from "./Pages/ListInscriptions";
+import register from "./Pages/register";
 
 // Configure your routes here
 const routes = {
   "/": HomePage,
+  "/register": register,
   "/login": LoginPage,
   "/logout": Logout,
+  "/listInscriptions" : ListInscriptions,
   "/listItem": ListItemPage,
   "/newItem": NewItem,
 };
