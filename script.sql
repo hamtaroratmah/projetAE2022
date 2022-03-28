@@ -198,6 +198,7 @@ INSERT INTO pae.offers
     (date_offer, id_item)
 VALUES ('25-03-2022', 3);
 
+--Queries for the demo
 SELECT id_member, username, isadmin, reason_for_conn_refusal, state
 FROM pae.members;
 
@@ -213,3 +214,4 @@ select me.first_name, it.description
 from pae.items it,
      pae.members me
 order by me.first_name, it.description;
+
