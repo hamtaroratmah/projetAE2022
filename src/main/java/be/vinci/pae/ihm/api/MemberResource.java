@@ -4,9 +4,7 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import be.vinci.pae.utils.Config;
-import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.JWTVerifier;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -28,8 +26,8 @@ public class MemberResource {
   @Inject
   private MemberUCC memberUCC;
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
-  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
-      .build();
+  //private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
+  //    .build();
 
   /**
    * Get a member according to his token by his id.
@@ -77,11 +75,10 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
-    boolean isAdmin = json.get("isAdmin").asBoolean();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-
+    boolean isAdmin = json.get("isAdmin").asBoolean();
     System.out.println(username);
     System.out.println("test de confirm");
     return memberUCC.confirmRegistration(username, isAdmin);
