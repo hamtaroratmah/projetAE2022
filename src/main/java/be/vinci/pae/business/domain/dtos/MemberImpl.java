@@ -136,9 +136,6 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setReasonForConnRefusal(String reasonForConnRefusal) {
-    //    if (reasonForConnRefusal == null) {
-    //      throw new IllegalArgumentException();
-    //    }
     this.reasonForConnRefusal = reasonForConnRefusal;
   }
 
@@ -149,9 +146,6 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setState(String state) {
-    //    if (state == null) {
-    //      throw new IllegalArgumentException();
-    //    }
     this.state = state;
   }
 
@@ -192,7 +186,7 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setCountObjectGot(int countObjectGot) {
-
+    this.countObjectGot = countObjectGot;
   }
 
   public AddressImpl getAddress() {

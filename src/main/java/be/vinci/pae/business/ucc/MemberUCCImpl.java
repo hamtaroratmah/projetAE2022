@@ -120,14 +120,14 @@ public class MemberUCCImpl implements MemberUCC {
 
 
   @Override
-  public MemberDTO register(Member member) {
+  public MemberDTO register(MemberDTO member) {
     try {
       dalServices.startTransaction();
-      String hashPass = member.hashPassword(member.getPassword());
+      Member memberBiz = (Member) member;
+      String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
       memberDao.insertMember(member);
-      MemberDTO newMember = (MemberDTO) member;
-      return newMember;
+      return (MemberDTO) member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());

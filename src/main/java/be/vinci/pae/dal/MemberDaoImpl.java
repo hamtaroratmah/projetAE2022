@@ -1,6 +1,5 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -31,10 +30,10 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO getMemberByUsername(String username) {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
-            "SELECT id_member, password, username,"
-                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-                    + " state, count_object_not_collected, count_object_given, count_object_got"
-                    + " FROM pae.members " + "WHERE username = ?")) {
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -54,10 +53,10 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO getMember(int id) throws SQLException {
     MemberDTO member = null;
     try (PreparedStatement query = services.getPreparedStatement(
-            "SELECT id_member, password, username,"
-                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-                    + " state, count_object_not_collected, count_object_given, count_object_got"
-                    + " FROM pae.members " + "WHERE id_member = ?")) {
+        "SELECT id_member, password, username,"
+            + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+            + " state, count_object_not_collected, count_object_given, count_object_got"
+            + " FROM pae.members " + "WHERE id_member = ?")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -72,15 +71,15 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param member to insert
    */
-  public void insertMember(Member member) {
+  public void insertMember(MemberDTO member) {
     PreparedStatement queryMember;
     PreparedStatement queryAddress;
     int idAddress = -1;
     try {
       queryAddress = services.getPreparedStatement(
-              "INSERT INTO pae.addresses"
-                      + "( street, building_number, postcode, city,unit_number)"
-                      + " VALUES (?,?,?,?,?) RETURNING id_address;"
+          "INSERT INTO pae.addresses"
+              + "( street, building_number, postcode, city,unit_number)"
+              + " VALUES (?,?,?,?,?) RETURNING id_address;"
       );
       queryAddress.setString(1, member.getAddress().getStreet());
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
@@ -98,10 +97,10 @@ public class MemberDaoImpl implements MemberDao {
     }
     try {
       queryMember = services.getPreparedStatement(
-              "INSERT INTO pae.members"
-                      + "(password, username, last_name, first_name, address, call_number, isadmin,\n"
-                      + " reason_for_conn_refusal, state)\n"
-                      + "VALUES (?,?,?,?,?,?,?,?,?);"
+          "INSERT INTO pae.members"
+              + "(password, username, last_name, first_name, address, call_number, isadmin,\n"
+              + " reason_for_conn_refusal, state)\n"
+              + "VALUES (?,?,?,?,?,?,?,?,?);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -155,7 +154,7 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
     String query =
-            "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+        "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
     System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);

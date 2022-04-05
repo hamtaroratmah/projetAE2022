@@ -1,3 +1,5 @@
+import {getToken} from "../utils/token"
+
 const receptionDiv = `
   <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>
   <button id="typeSortedButtonDESC" class="sortedButton">Type DESC</button>
@@ -19,15 +21,15 @@ const HomePage = async () => {
 
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
+  let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items = [];
   try {
-
     const request = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": token
+        "Authorization": token
       }
     };
 
@@ -39,8 +41,7 @@ const HomePage = async () => {
       }
     })
     .catch(() =>
-        error.innerHTML = "Une erreur est survenue"
-            + " durant la récupération des objets"
+        error.innerHTML = "Une erreur est survenue durant la récupération des objets"
     );
 
     displayItems(items);
@@ -54,7 +55,6 @@ const HomePage = async () => {
   typeButtonASC.addEventListener("click", () => {
     items.sort((a, b) => {
       return b["type"].idType - a["type"].idType;
-
     });
     displayItems(items);
   });
@@ -62,7 +62,6 @@ const HomePage = async () => {
   typeButtonDESC.addEventListener("click", () => {
     items.sort((a, b) => {
       return a["type"].idType - b["type"].idType;
-
     });
     displayItems(items);
   });

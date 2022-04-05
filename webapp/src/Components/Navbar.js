@@ -1,9 +1,4 @@
-/**
- * Render the Navbar which is styled by using Bootstrap
- * Each item in the Navbar is tightly coupled with the Router configuration :
- * - the URI associated to a page shall be given in the attribute "data-uri" of the Navbar
- * - the router will show the Page associated to this URI when the user click on a nav-link
- */
+import {getToken} from "../utils/token"
 
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
@@ -20,9 +15,8 @@ const Navbar = async () => {
        <p id="userIdentifier"></p>
     </nav>
   `;
-
-  let isConnected = window.localStorage.getItem("user") !== null
-      || window.sessionStorage.getItem("user") !== null;
+  let token = getToken();
+  let isConnected = token !== null;
 
   const profileButton = document.querySelector("#profileNavbarButton");
   if (!isConnected) {
@@ -31,37 +25,29 @@ const Navbar = async () => {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/");
     const username = document.querySelector("#userIdentifier");
-    let token;
-    if (window.localStorage.getItem("user") !== null) {
-      token = window.localStorage.getItem("user");
-    } else if (window.sessionStorage.getItem("user") !== null) {
-      token = window.sessionStorage.getItem("user");
-    }
-    let name = await getName(token);
+    let member = await getName(token);
 
-    username.innerText = `Bonjour ${name}`
+    username.innerText = `Bonjour ${member.username}`
   }
 
 };
 
 async function getName(token) {
   const request = {
-    method: "POST",
-    body: JSON.stringify(
-        {
-          token: token
-        }
-    ),
+    method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": token
     }
   };
-  const response = await fetch(`/api/member/getMember`, request);
+  const response = await fetch(`/api/members/me`, request);
   if (!response.ok) {
     const error = document.getElementById("errorText");
     error.innerText = `Error while fetching username`;
   }
-  return response.text();
+  let member = await response.json();
+  console.log(member)
+  return member;
 }
 
 export default Navbar;

@@ -1,6 +1,5 @@
 package be.vinci.pae.dal.interfaces;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,5 +24,5 @@ public interface MemberDao {
   MemberDTO denyRegistration(String username);
 
 
-  void insertMember(Member member);
+  void insertMember(MemberDTO member);
 }

@@ -27,29 +27,28 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
   @Inject
   private MemberUCC memberUCC;
 
-
   @Override
   public void filter(ContainerRequestContext requestContext) {
     String token = requestContext.getHeaderString("Authorization");
     if (token == null) {
-      requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-          .entity("A token is needed to access this resource").build());
-    } else {
-      DecodedJWT decodedToken;
-      try {
-        decodedToken = this.jwtVerifier.verify(token);
-      } catch (Exception e) {
-        throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
-            .entity("Malformed token : " + e.getMessage()).type("text/plain").build());
-      }
-      MemberDTO authenticatedUser = memberUCC.getOne(decodedToken.getClaim("id_member").asInt());
-      if (authenticatedUser == null) {
-        requestContext.abortWith(Response.status(Status.FORBIDDEN)
-            .entity("You are forbidden to access this resource").build());
-      }
-
-      requestContext.setProperty("user",
-          memberUCC.getOne(decodedToken.getClaim("id_member").asInt()));
+      System.out.println("A token is needed to access this resource");
+      return;
     }
+    DecodedJWT decodedToken;
+    try {
+      decodedToken = this.jwtVerifier.verify(token);
+    } catch (Exception e) {
+      throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
+          .entity("Malformed token : " + e.getMessage()).type("text/plain").build());
+    }
+    MemberDTO authenticatedUser = memberUCC.getOne(decodedToken.getClaim("id_member").asInt());
+    if (authenticatedUser == null) {
+      requestContext.abortWith(Response.status(Status.FORBIDDEN)
+          .entity("You are forbidden to access this resource").build());
+    }
+
+    requestContext.setProperty("user",
+        memberUCC.getOne(decodedToken.getClaim("id_member").asInt()));
+
   }
 }
