@@ -40,7 +40,6 @@ public class AuthsResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public String login(JsonNode json) {
-    // Get and check credentials
     if (!json.hasNonNull("username") || !json.hasNonNull("password")) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
@@ -49,10 +48,8 @@ public class AuthsResource {
     if (login.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
-
     return createToken(publicUser.getIdMember());
   }
 
@@ -67,12 +64,9 @@ public class AuthsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public String register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-            "firstName")
-            || !json.hasNonNull("lastName") || !json.hasNonNull("street") || !json.hasNonNull(
-            "buildingNumber")
-            || !json.hasNonNull("unitNumber") || !json.hasNonNull("postcode") || !json.hasNonNull(
-            "commune")
-            || !json.hasNonNull("city")) {
+        "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
+        || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber") || !json.hasNonNull(
+        "postcode") || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
@@ -82,16 +76,20 @@ public class AuthsResource {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
-    if (json.get("firstname").asText().isBlank()) {
+    if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("lastname").asText().isBlank()) {
+    if (json.get("lastName").asText().isBlank()) {
       throw new WebApplicationException("Le nom ne peut être vide", Response.Status.BAD_REQUEST);
     }
     if (json.get("street").asText().isBlank()) {
       throw new WebApplicationException("La rue ne peut être vide", Response.Status.BAD_REQUEST);
     }
-    if (json.get("building_number").asText().isBlank()) {
+    if (json.get("buildingNumber").asText().isBlank()) {
+      throw new WebApplicationException("Le numéro de maison ne peut être vide",
+          Response.Status.BAD_REQUEST);
+    }
+    if (json.get("unitNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
@@ -99,14 +97,9 @@ public class AuthsResource {
       throw new WebApplicationException("Le code postale ne peut être vide",
           Response.Status.BAD_REQUEST);
     }
-    if (json.get("commune").asText().isBlank()) {
-      throw new WebApplicationException("La commune ne peut être vide",
-          Response.Status.BAD_REQUEST);
-    }
     if (json.get("city").asText().isBlank()) {
       throw new WebApplicationException("La ville ne peut être vide", Response.Status.BAD_REQUEST);
     }
-
     // create the Address object of the member
     AddressDTO address = domainFactory.getAddress();
     address.setCity(json.get("city").asText());
@@ -114,7 +107,6 @@ public class AuthsResource {
     address.setBuildingNumber(json.get("buildingNumber").asInt());
     address.setUnitNumber(json.get("unitNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
-    address.setCommune(json.get("commune").asText());
     AddressImpl addressImpl = (AddressImpl) address;
     // create the member
     MemberDTO member = domainFactory.getMember();
@@ -123,6 +115,7 @@ public class AuthsResource {
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
+    System.out.println(member.getCallNumber());
     Member newMember = (Member) member;
     // create token
     MemberDTO publicUser = memberUCC.register(newMember);
@@ -132,15 +125,12 @@ public class AuthsResource {
   private String createToken(int id) {
     String token;
     try {
-      token = JWT.create().withIssuer("auth0")
-          .withClaim("id_member", id).sign(this.jwtAlgorithm);
+      token = JWT.create().withIssuer("auth0").withClaim("id_member", id).sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;
     }
-    return jsonMapper.createObjectNode()
-        .put("token", token)
-        .put("id", id).toPrettyString();
+    return jsonMapper.createObjectNode().put("token", token).put("id", id).toPrettyString();
   }
 
 

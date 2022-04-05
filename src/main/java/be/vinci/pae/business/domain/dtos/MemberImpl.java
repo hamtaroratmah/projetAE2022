@@ -206,18 +206,18 @@ public class MemberImpl implements MemberDTO, Member {
   @Override
   public String toString() {
     return "Member{"
-      + "id_member="
-      + idMember
-      + ", username='"
-      + username
-      + '\''
-      + ", last_name='"
-      + lastName
-      + '\''
-      + ", first_name='"
-      + firstName
-      + '\''
-      + '}';
+        + "id_member="
+        + idMember
+        + ", username='"
+        + username
+        + '\''
+        + ", last_name='"
+        + lastName
+        + '\''
+        + ", first_name='"
+        + firstName
+        + '\''
+        + '}';
   }
 
 }

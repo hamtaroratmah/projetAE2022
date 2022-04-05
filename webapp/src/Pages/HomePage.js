@@ -20,20 +20,6 @@ const HomePage = async () => {
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   pageDiv.innerHTML = receptionDiv;
-  // let token = null;
-  // if (window.localStorage.getItem("user") === null) {
-  //   token = window.sessionStorage.getItem("user");
-  // } else {
-  //   token = window.localStorage.getItem("user");
-  // }
-  // if (token !== null) {
-  //   token = token.split("\"");
-  //   console.log(token)
-  //   token = token[3];
-  //
-  //   console.log(token);
-  // }
-
   let items = [];
   try {
 
