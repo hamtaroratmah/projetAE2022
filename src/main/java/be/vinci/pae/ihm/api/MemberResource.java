@@ -79,6 +79,7 @@ public class MemberResource {
     boolean isAdmin = json.get("isAdmin").asBoolean();
     System.out.println(username);
     System.out.println("test de confirm");
+    boolean isAdmin = json.get("isAdmin").asBoolean();
     return memberUCC.confirmRegistration(username, isAdmin);
   }
 

@@ -127,14 +127,11 @@ public class DemoTest {
   public void getItem() {
     assertAll(
         () -> assertEquals(itemDTO, itemUCC.getItem(itemDTO.getIdItem()))
-        //() -> assertThrows(IllegalArgumentException.class, () -> itemUCC.getItem(0)),
-        //() -> assertThrows(IllegalArgumentException.class, () -> itemUCC.getItem(10))
     );
   }
 
   @Test
   public void getGivenItems() {
-    //assertThrows(FatalException.class, () -> itemUCC.getGivenItems());
     items.add(itemDTO);
     assertEquals(items, itemUCC.getGivenItems());
   }
@@ -144,7 +141,6 @@ public class DemoTest {
   public void getOffer() {
     assertAll(
         () -> assertEquals(offerDTO, offerUCC.getOffer(offerDTO.getIdOffer()))
-        //() -> assertThrows(FatalException.class, () -> offerUCC.getOffer(0))
     );
   }
 

@@ -2,6 +2,7 @@ import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/Login";
 import Logout from "./Pages/Logout";
 import ListItemPage from "./Pages/ListItemPage";
+import NewItem from "./Pages/NewItemPage";
 import ListInscriptions from "./Pages/ListInscriptions";
 import register from "./Pages/register";
 
@@ -13,6 +14,7 @@ const routes = {
   "/logout": Logout,
   "/listInscriptions": ListInscriptions,
   "/listItem": ListItemPage,
+  "/newItem": NewItem,
 };
 
 /**

@@ -13,7 +13,9 @@ import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class ItemDaoImpl implements ItemDao {
@@ -156,7 +158,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
-    System.out.print("ok1");
 
     ItemDTO item = null;
     String query = "INSERT  INTO pae.items "
@@ -174,6 +175,7 @@ public class ItemDaoImpl implements ItemDao {
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           item = createItemInstance(rs);
+          createOffer(item.getIdItem());
           return item;
         }
       }
@@ -184,6 +186,20 @@ public class ItemDaoImpl implements ItemDao {
 
     return null;
 
+  }
+
+  private void createOffer(int idItem) {
+    String now = LocalDate.now().toString();
+    Date date = Date.valueOf(now);
+    System.out.println("now = " + now);
+    System.out.println("date = " + date);
+    String query = "INSERT  INTO pae.offers (date,idItem) VALUES (?,?) ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setDate(1, date);
+      ps.setInt(2, idItem);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

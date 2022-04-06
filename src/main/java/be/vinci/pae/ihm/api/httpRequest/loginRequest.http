@@ -22,8 +22,8 @@ POST {{baseUrl}}/login/login
 Content-Type: application/json
 
 {
-  "username": "STal",
-  "password": "password"
+  "username": "bri",
+  "password": "Mdpuser.1"
 }
 
 ###
