@@ -140,7 +140,7 @@ function displayItems(items) {
           <p id="receptionDescription">${item.description}</p>
           <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p id="receptionType">${item["type"].type}</p>
-          <p id="receptionDate">${reformateDate(item["offer"].dateOffer)}</p>
+          <p id="receptionDate">${item["offer"].dateOffer}</p>
           <p id="receptionItemCondition">${item.itemCondition}</p>
           <p id="receptionAvailabilities">${item.availabilities}</p>
           <p class="modalItemInfo"></p>
@@ -183,9 +183,7 @@ function displayItems(items) {
 }
 
 function reformateDate(date) {
-  let stringDate = date.toString();
-  stringDate.replace(",", "/");
-  return new Date(date[0], date[1], date[2]);
+  return new Date(date[0], date[1], date[2]).toDateString();
 }
 
 export default HomePage;

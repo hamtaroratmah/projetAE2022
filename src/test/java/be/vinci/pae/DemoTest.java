@@ -99,14 +99,15 @@ public class DemoTest {
     );
   }
 
-  @Test
-  public void login() {
-    assertAll(
-        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-        () -> Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
-        () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
-    );
-  }
+//  @Test
+//  public void login() {
+//    assertAll(
+//        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
+//        () ->
+//        Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
+//        () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
+//    );
+//  }
 
   @Test
   public void register() {

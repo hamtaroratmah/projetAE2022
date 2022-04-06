@@ -4,8 +4,8 @@ import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.BizExceptioinUnauthorized;
 import be.vinci.pae.exceptions.FatalException;
+import be.vinci.pae.exceptions.LoginException;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
 
@@ -44,14 +44,23 @@ public class MemberUCCImpl implements MemberUCC {
     try {
       dalServices.startTransaction();
       Member member = (Member) memberDao.getMemberByUsername(username);
-      dalServices.commitTransaction();
-      if (!member.checkPassword(password)) {
-        throw new BizExceptioinUnauthorized("Invalid password");
+      switch (member.getState()) {
+        case "pending":
+          throw new LoginException("L'utilisateur est en attente de confirmation.");
+        case "denied":
+          throw new LoginException("L'utilisateur est refusé pour la raison suivante : "
+              + member.getReasonForConnRefusal());
+        default:
+          break;
       }
+      if (!member.checkPassword(password)) {
+        throw new LoginException("Invalid password");
+      }
+      dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw new LoginException(e.getMessage());
     }
   }
 
