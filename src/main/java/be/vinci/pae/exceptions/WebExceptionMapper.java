@@ -38,6 +38,10 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
       return Response.status(Status.INTERNAL_SERVER_ERROR)
           .entity(exception.getMessage())
           .build();
+    } else if (exception instanceof LoginException) {
+      return Response.status(Status.FORBIDDEN)
+          .entity(exception.getMessage())
+          .build();
     }
     return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
         .entity(exception.getMessage())
