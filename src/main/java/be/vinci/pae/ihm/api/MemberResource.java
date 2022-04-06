@@ -3,8 +3,6 @@ package be.vinci.pae.ihm.api;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
-import be.vinci.pae.utils.Config;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -25,7 +23,7 @@ public class MemberResource {
 
   @Inject
   private MemberUCC memberUCC;
-  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
+  //private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   //private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
   //    .build();
 

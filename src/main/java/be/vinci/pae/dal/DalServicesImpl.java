@@ -11,28 +11,25 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DalServicesImpl implements DalBackendServices, DalServices {
 
-  private ThreadLocal<Connection> threadLocalValue;
-  private BasicDataSource dataSource;
-  private String dbUsername;
-  private String dbPassword;
-  private String url;
+  private final ThreadLocal<Connection> threadLocalValue;
+  private final BasicDataSource dataSource;
 
   /**
    * Constructor : open the database's connexion.
    */
   public DalServicesImpl() {
-    threadLocalValue = new ThreadLocal<>();
-    dataSource = new BasicDataSource();
-    dbUsername = Config.getProperty("dbUsername");
-    dbPassword = Config.getProperty("dbPassword");
-    url = Config.getProperty("dbUrl");
+    this.threadLocalValue = new ThreadLocal<>();
+    this.dataSource = new BasicDataSource();
+    String dbUsername = Config.getProperty("dbUsername");
+    String dbPassword = Config.getProperty("dbPassword");
+    String url = Config.getProperty("dbUrl");
     dataSource.setUrl(url);
     dataSource.setUsername(dbUsername);
     dataSource.setPassword(dbPassword);
     try {
       Class.forName("org.postgresql.Driver");
     } catch (ClassNotFoundException e) {
-      System.out.println("Driver PostgreSQL manquant !");
+      System.out.println("PostgresSQL's Driver missing !");
       System.exit(1);
     }
   }
@@ -43,7 +40,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
    */
   @Override
   public PreparedStatement getPreparedStatement(String query) {
-    PreparedStatement statement = null;
+    PreparedStatement statement;
     try {
       Connection conn = threadLocalValue.get();
       statement = conn.prepareStatement(query);
@@ -54,22 +51,14 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
   }
 
   @Override
-  public void openConnection() {
-    try {
-      Connection conn = dataSource.getConnection();
-      threadLocalValue.set(conn);
-    } catch (SQLException e) {
-      System.out.println("Impossible de joindre le server !");
-      System.exit(1);
-    }
-  }
-
-  @Override
   public void startTransaction() {
     try {
-      openConnection();
-      Connection conn = threadLocalValue.get();
+      if (threadLocalValue.get() != null) {
+        throw new FatalException("Cannot have two transactions at the same time\n");
+      }
+      Connection conn = dataSource.getConnection();
       conn.setAutoCommit(false);
+      threadLocalValue.set(conn);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
@@ -77,9 +66,13 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
 
   @Override
   public void commitTransaction() {
-    try {
-      Connection conn = threadLocalValue.get();
+    try (Connection conn = threadLocalValue.get()) {
+      if (conn == null) {
+        throw new FatalException("No connection available\n");
+      }
       conn.commit();
+      conn.setAutoCommit(true);
+      threadLocalValue.set(null);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
@@ -87,11 +80,25 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
 
   @Override
   public void rollbackTransaction() {
-    try {
-      Connection conn = threadLocalValue.get();
+    try (Connection conn = threadLocalValue.get()) {
+      if (conn == null) {
+        throw new FatalException("No connection available\n");
+      }
       conn.rollback();
+      threadLocalValue.set(null);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
+    }
+  }
+
+  private void openConnection() {
+    try {
+      Connection conn = dataSource.getConnection();
+      conn.setAutoCommit(false);
+      threadLocalValue.set(conn);
+    } catch (SQLException e) {
+      System.out.println("Cannot join the server !\n");
+      System.exit(1);
     }
   }
 

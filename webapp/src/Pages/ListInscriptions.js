@@ -1,66 +1,63 @@
-import {Redirect} from "../Router";
-import Navbar from "../Components/Navbar";
-
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">
            
         </div>
 `;
-const ListInscriptionsPage = async() => {
+const ListInscriptionsPage = async () => {
 
-    const pageDiv = document.querySelector("#page");
-    const error = document.getElementById("errorText");
-    pageDiv.innerHTML = listInscriptionsDiv;
-    const listInscriptionsPage = document.querySelector("#listInscriptionsPage")
+  const pageDiv = document.querySelector("#page");
+  const error = document.getElementById("errorText");
+  pageDiv.innerHTML = listInscriptionsDiv;
+  const listInscriptionsPage = document.querySelector("#listInscriptionsPage")
 
-    let inscriptions = [];
-    try {
+  let inscriptions = [];
+  try {
 
-        const request = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        };
-        // fill inscriptions [] with inscriptions pending
-        await fetch("/api/member/pending", request)
-            .then(response => response.json())
-            .then((commits) => {
-                for (let i = 0; i < commits.length; i++) {
-                    inscriptions.push(commits[i]);
-                }
+    const request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    // fill inscriptions [] with inscriptions pending
+    await fetch("/api/members/pending", request)
+    .then(response => response.json())
+    .then((commits) => {
+      for (let i = 0; i < commits.length; i++) {
+        inscriptions.push(commits[i]);
+      }
 
-            })
-            .catch(() =>
-                error.innerHTML = "Une erreur est survenue"
-                    + " durant la récupération des inscriptions"
-            );
+    })
+    .catch(() =>
+        error.innerHTML = "Une erreur est survenue"
+            + " durant la récupération des inscriptions"
+    );
 
-        // fill inscriptions [] with inscriptions denied
-        await fetch("/api/member/denied", request)
-            .then(response => response.json())
-            .then((commits) => {
-                for (let i = 0; i < commits.length; i++) {
-                    inscriptions.push(commits[i]);
-                }
+    // fill inscriptions [] with inscriptions denied
+    await fetch("/api/members/denied", request)
+    .then(response => response.json())
+    .then((commits) => {
+      for (let i = 0; i < commits.length; i++) {
+        inscriptions.push(commits[i]);
+      }
 
-            })
-            .catch(() =>
-                error.innerHTML = "Une erreur est survenue"
-                    + " durant la récupération des inscriptions"
-            );
-        // display inscriptions denied and pending
-        DisplayInscriptions(inscriptions)
+    })
+    .catch(() =>
+        error.innerHTML = "Une erreur est survenue"
+            + " durant la récupération des inscriptions"
+    );
+    // display inscriptions denied and pending
+    DisplayInscriptions(inscriptions)
 
-    }catch (e) {
-        console.error("Home page error", e);
-    }
+  } catch (e) {
+    console.error("Home page error", e);
+  }
 
-    function DisplayInscriptions(inscriptions){
-        listInscriptionsPage.innerHTML = ""
-        for (let i = 0; i < inscriptions.length; i++) {
-            if(inscriptions[i].state = "Denied") {
-                listInscriptionsPage.innerHTML += `
+  function DisplayInscriptions(inscriptions) {
+    listInscriptionsPage.innerHTML = ""
+    for (let i = 0; i < inscriptions.length; i++) {
+      if (inscriptions[i].state === "Denied") {
+        listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionParent">
           <div class="receptionInscriptionChild">
               <p>
@@ -80,8 +77,8 @@ const ListInscriptionsPage = async() => {
         </div>
      </div>
       `;
-            }else{
-                listInscriptionsPage.innerHTML += `
+      } else {
+        listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionParent">
           <div class="receptionInscriptionChild">
               <p>
@@ -98,9 +95,9 @@ const ListInscriptionsPage = async() => {
         </div>
      </div>
       `;
-            }
-        }
+      }
     }
+  }
 }
 
 export default ListInscriptionsPage;

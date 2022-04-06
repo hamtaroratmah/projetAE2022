@@ -5,6 +5,7 @@ import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -14,10 +15,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
+import org.glassfish.jersey.server.ContainerRequest;
 
 @Path("/item")
 public class ItemResource {
@@ -35,14 +38,14 @@ public class ItemResource {
   @Path("/getLastOfferedItems")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  //  @AuthorizerMemberOrQuidam
-  public List<ItemDTO> getLastOfferedItems(/*@Context ContainerRequest request*/) {
-    //    MemberDTO member = (MemberDTO) request.getProperty("user");
-    //    System.out.println("Member = " + member);
+  @Authorize
+  public List<ItemDTO> getLastOfferedItems(@Context ContainerRequest request) {
+    MemberDTO member = (MemberDTO) request.getProperty("user");
+
     List<ItemDTO> list = itemUcc.getLastOfferedItems();
-    //    if (member == null && list.size() > 12) {
-    //      return list.subList(0, 9);
-    //    }
+    if (member == null && list.size() > 12) {
+      return list.subList(0, 9);
+    }
     return list;
   }
 
@@ -88,8 +91,8 @@ public class ItemResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO createItem(JsonNode json) throws SQLException {
     if (!json.hasNonNull("type") || !json.hasNonNull("description") || !json.hasNonNull(
-        "availabilities")
-        || !json.hasNonNull("item_condition") || !json.hasNonNull("id_offering_member")) {
+        "availabilities") || !json.hasNonNull("item_condition") || !json.hasNonNull(
+        "id_offering_member")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     MemberDTO offeringMember = domainFactory.getMember();

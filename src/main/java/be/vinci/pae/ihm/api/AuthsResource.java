@@ -55,6 +55,7 @@ public class AuthsResource {
 
   /**
    * API register.
+   * TODO il ne faut pas renvoyer le token car attente de confirmation d'insciption
    *
    * @param json jsonNode created by the request and contains information given by the client.
    */
@@ -62,7 +63,7 @@ public class AuthsResource {
   @Path("register")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public String register(JsonNode json) {
+  public boolean register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
         "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
         || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber") || !json.hasNonNull(
@@ -118,8 +119,8 @@ public class AuthsResource {
     System.out.println(member.getCallNumber());
     Member newMember = (Member) member;
     // create token
-    MemberDTO publicUser = memberUCC.register(newMember);
-    return createToken(publicUser.getIdMember());
+    memberUCC.register(newMember);
+    return true;
   }
 
   private String createToken(int id) {

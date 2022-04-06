@@ -44,6 +44,7 @@ public class MemberUCCImpl implements MemberUCC {
     try {
       dalServices.startTransaction();
       Member member = (Member) memberDao.getMemberByUsername(username);
+      dalServices.commitTransaction();
       if (!member.checkPassword(password)) {
         throw new BizExceptioinUnauthorized("Invalid password");
       }
@@ -51,8 +52,6 @@ public class MemberUCCImpl implements MemberUCC {
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -66,12 +65,12 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     try {
       dalServices.startTransaction();
-      return memberDao.confirmRegistration(username, isAdmin);
+      MemberDTO member = memberDao.confirmRegistration(username, isAdmin);
+      dalServices.commitTransaction();
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -79,12 +78,12 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO denyRegistration(String username) {
     try {
       dalServices.startTransaction();
-      return memberDao.denyRegistration(username);
+      MemberDTO member = memberDao.denyRegistration(username);
+      dalServices.commitTransaction();
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
 
   }
@@ -127,7 +126,7 @@ public class MemberUCCImpl implements MemberUCC {
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
       memberDao.insertMember(member);
-      return (MemberDTO) member;
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());

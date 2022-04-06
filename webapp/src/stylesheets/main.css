@@ -4,6 +4,12 @@ body {
   padding: 0;
 }
 
+#errorText {
+  background-color: white;
+  color: red;
+  font-size: 3em;
+}
+
 #loginContainer {
   background-color: #E5BE10;
   display: flex;
@@ -63,14 +69,15 @@ img {
   border: 1px solid black;
   width: 1500px;
   height: 100px;
-  margin : auto;
+  margin: auto;
   text-align: center;
 }
+
 .receptionInscriptionChild {
   width: 250px;
   padding: 10px;
   vertical-align: middle;
-  display : inline-block;
+  display: inline-block;
 }
 
 .listInscriptionsButton {

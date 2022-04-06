@@ -25,7 +25,9 @@ public class ItemUCCImpl implements ItemUCC {
   public List<ItemDTO> getLastOfferedItems() {
     try {
       dalServices.startTransaction();
-      return itemDao.getLastOfferedItems();
+      List<ItemDTO> list = itemDao.getLastOfferedItems();
+      System.out.println("transactions finie");
+      return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
