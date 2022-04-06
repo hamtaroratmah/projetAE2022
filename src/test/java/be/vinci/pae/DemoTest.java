@@ -79,7 +79,8 @@ public class DemoTest {
 //  public void login() {
 //    assertAll(
 //        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-//        () -> Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
+//        () ->
+//        Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
 //        () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
 //    );
 //  }

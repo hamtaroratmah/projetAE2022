@@ -50,6 +50,8 @@ public class MemberUCCImpl implements MemberUCC {
         case "denied":
           throw new LoginException("L'utilisateur est refusé pour la raison suivante : "
               + member.getReasonForConnRefusal());
+        default:
+          break;
       }
       if (!member.checkPassword(password)) {
         throw new LoginException("Invalid password");
