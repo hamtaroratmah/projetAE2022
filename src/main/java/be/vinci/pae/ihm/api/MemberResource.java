@@ -76,7 +76,6 @@ public class MemberResource {
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    boolean isAdmin = json.get("isAdmin").asBoolean();
     System.out.println(username);
     System.out.println("test de confirm");
     boolean isAdmin = json.get("isAdmin").asBoolean();
