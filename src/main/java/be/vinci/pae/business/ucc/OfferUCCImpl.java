@@ -25,14 +25,14 @@ public class OfferUCCImpl implements OfferUCC {
   public OfferDTO getOffer(int idOffer) {
     try {
       dalServices.startTransaction();
+      OfferDTO offer = offerDao.getOffer(idOffer);
+      dalServices.commitTransaction();
       if (idOffer < 1) {
         throw new BizExceptionForbidden("un id ne peut être inférieur à 0");
       }
-      return offerDao.getOffer(idOffer);
+      return offer;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-    } finally {
-      dalServices.commitTransaction();
     }
     return null;
   }

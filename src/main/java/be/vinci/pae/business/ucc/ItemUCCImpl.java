@@ -26,13 +26,11 @@ public class ItemUCCImpl implements ItemUCC {
     try {
       dalServices.startTransaction();
       List<ItemDTO> list = itemDao.getLastOfferedItems();
-      System.out.println("transactions finie");
+      dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -47,12 +45,11 @@ public class ItemUCCImpl implements ItemUCC {
       if (item == null) {
         throw new BizExceptionForbidden("L'objet désiré n'existe pas.");
       }
+      dalServices.commitTransaction();
       return item;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -61,12 +58,12 @@ public class ItemUCCImpl implements ItemUCC {
   public List<ItemDTO> getGivenItems() {
     try {
       dalServices.startTransaction();
-      return itemDao.getGivenItems();
+      List<ItemDTO> items = itemDao.getGivenItems();
+      dalServices.commitTransaction();
+      return items;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -80,13 +77,12 @@ public class ItemUCCImpl implements ItemUCC {
   public int likeAnItem(int offerId, int memberId) {
     try {
       dalServices.startTransaction();
-
-      return itemDao.likeAnItem(offerId, memberId);
+      int interests = itemDao.likeAnItem(offerId, memberId);
+      dalServices.commitTransaction();
+      return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
-    } finally {
-      dalServices.commitTransaction();
     }
     return -1;
   }
@@ -102,12 +98,12 @@ public class ItemUCCImpl implements ItemUCC {
   public int cancelAnOffer(int itemId) {
     try {
       dalServices.startTransaction();
-      return itemDao.cancelAnOffer(itemId);
+      int returned = itemDao.cancelAnOffer(itemId);
+      dalServices.commitTransaction();
+      return returned;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
-    } finally {
-      dalServices.commitTransaction();
     }
     return -1;
   }
@@ -117,13 +113,12 @@ public class ItemUCCImpl implements ItemUCC {
   public ItemDTO createItem(ItemDTO item) {
     try {
       dalServices.startTransaction();
-
-      return itemDao.createItem(item);
+      ItemDTO itemDTO = itemDao.createItem(item);
+      dalServices.commitTransaction();
+      return itemDTO;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
-    } finally {
-      dalServices.commitTransaction();
     }
     return null;
   }
@@ -132,13 +127,12 @@ public class ItemUCCImpl implements ItemUCC {
   public int typeExisting(String type) {
     try {
       dalServices.startTransaction();
-      return itemDao.typeExisting(type);
-
+      int typeId = itemDao.typeExisting(type);
+      dalServices.commitTransaction();
+      return typeId;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
-    } finally {
-      dalServices.commitTransaction();
     }
     return -1;
   }
@@ -147,18 +141,15 @@ public class ItemUCCImpl implements ItemUCC {
   public int createType(String type) {
     try {
       dalServices.startTransaction();
-      return itemDao.createType(type);
-
+      int typeId = itemDao.createType(type);
+      dalServices.commitTransaction();
+      return typeId;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
-    } finally {
-      dalServices.commitTransaction();
     }
     return -1;
   }
-
-
 }
 
 

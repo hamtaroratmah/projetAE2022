@@ -91,15 +91,4 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
     }
   }
 
-  private void openConnection() {
-    try {
-      Connection conn = dataSource.getConnection();
-      conn.setAutoCommit(false);
-      threadLocalValue.set(conn);
-    } catch (SQLException e) {
-      System.out.println("Cannot join the server !\n");
-      System.exit(1);
-    }
-  }
-
 }

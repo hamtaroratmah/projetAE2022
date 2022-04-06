@@ -23,12 +23,12 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO getOne(int id) {
     try {
       dalServices.startTransaction();
-      return memberDao.getMember(id);
+      MemberDTO member = memberDao.getMember(id);
+      dalServices.commitTransaction();
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -40,7 +40,7 @@ public class MemberUCCImpl implements MemberUCC {
    * @param password non hashed password
    */
   @Override
-  public Member login(String username, String password) {
+  public MemberDTO login(String username, String password) {
     try {
       dalServices.startTransaction();
       Member member = (Member) memberDao.getMemberByUsername(username);
@@ -93,28 +93,26 @@ public class MemberUCCImpl implements MemberUCC {
   public ArrayList<MemberDTO> listPendingUsers() {
     try {
       dalServices.startTransaction();
-      return memberDao.listUsersByState("pending");
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      dalServices.commitTransaction();
+      return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
-
   }
 
   @Override
   public ArrayList<MemberDTO> listDeniedUsers() {
     try {
       dalServices.startTransaction();
-      return memberDao.listUsersByState("denied");
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("denied");
+      dalServices.commitTransaction();
+      return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
-
   }
 
 
@@ -126,12 +124,11 @@ public class MemberUCCImpl implements MemberUCC {
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
       memberDao.insertMember(member);
+      dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
 
@@ -139,14 +136,12 @@ public class MemberUCCImpl implements MemberUCC {
   public Object getOneByUsername(String username) {
     try {
       dalServices.startTransaction();
-      return memberDao.getMemberByUsername(username);
+      MemberDTO member = memberDao.getMemberByUsername(username);
+      dalServices.commitTransaction();
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
-    } finally {
-      dalServices.commitTransaction();
     }
   }
-
-
 }
