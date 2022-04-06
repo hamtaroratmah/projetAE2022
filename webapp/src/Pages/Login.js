@@ -58,10 +58,10 @@ async function login(e) {
   };
   let token;
 
-  const response = fetch("/api/auths/login", request).catch()
+  const response = await fetch("/api/auths/login", request)
   if (!response.ok) {
-    (await response).text().then((result) => {
-      errorLogin.innerHTML = result;
+    response.text().then((result) => {
+      errorLogin.innerHTML = `${result}`;
     })
   } else {
     token = await response.json();
