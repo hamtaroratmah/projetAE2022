@@ -215,3 +215,15 @@ from pae.items it,
      pae.members me
 order by me.first_name, it.description;
 
+SELECT * FROM pae.offers;
+SELECT * FROM pae.items;
+
+
+
+INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,' ','objet test 2','lubdi et mardi','published',2)
+        RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
+
+
+INSERT  INTO pae.offers (date_offer,id_item) VALUES ('2022-04-07 +02',1) RETURNING id_offer, date_offer, id_item;
+
+    INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,NULL,'objet test 2','lundi et mardi','published',2) RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member

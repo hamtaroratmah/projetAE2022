@@ -1,13 +1,12 @@
-package be.vinci.pae.business.ucc;
+package be.vinci.pae.dal.interfaces;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 
-public interface OfferUCC {
+public interface OfferDao {
 
   OfferDTO getOffer(int idOffer);
 
-  OfferDTO createOffer(ItemDTO item);
-
+  OfferDTO createOffer(ItemDTO newItem);
 
 }
