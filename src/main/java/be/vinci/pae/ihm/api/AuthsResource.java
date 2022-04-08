@@ -64,10 +64,15 @@ public class AuthsResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public boolean register(JsonNode json) {
-    if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-        "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
-        || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber") || !json.hasNonNull(
-        "postcode") || !json.hasNonNull("city")) {
+    if (!json.hasNonNull("username")
+        || !json.hasNonNull("password")
+        || !json.hasNonNull("firstName")
+        || !json.hasNonNull("lastName")
+        || !json.hasNonNull("street")
+        || !json.hasNonNull("buildingNumber")
+        || !json.hasNonNull("unitNumber")
+        || !json.hasNonNull("postcode")
+        || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
@@ -112,7 +117,8 @@ public class AuthsResource {
     // create the member
     MemberDTO member = domainFactory.getMember();
     member.setAddress(addressImpl);
-    member.setUsername(json.get("username").asText().toLowerCase().replace(" ", ""));
+    member.setUsername(json.get("username")
+        .asText().toLowerCase().replace(" ", ""));
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
