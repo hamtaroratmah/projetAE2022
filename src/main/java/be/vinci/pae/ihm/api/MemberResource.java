@@ -24,20 +24,6 @@ public class MemberResource {
   @Inject
   private MemberUCC memberUCC;
 
-//  @GET
-//  @Path("/")
-//  @Consumes(MediaType.APPLICATION_JSON)
-//  @Produces(MediaType.APPLICATION_JSON)
-//  @Authorize
-//  public MemberDTO verifyToken(@Context ContainerRequestContext requestContext) {
-//    MemberDTO member = (MemberDTO) requestContext.getProperty("user");
-//    System.out.println("member from verifyToken path " + member);
-//    if (member == null) {
-//      throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
-//    }
-//    return member;
-//  }
-
   /**
    * Get a member according to his token by his id.
    */
