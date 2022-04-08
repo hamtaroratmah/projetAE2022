@@ -172,6 +172,23 @@ public class ItemResource {
     return itemUcc.typeExisting(type);
   }
 
+  /**
+   * Get a specified item according to its id.
+   *
+   * @param idItem item's id that we want more details
+   */
+  @GET
+  @Path("/isLiked/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean isLiked(@PathParam("id") int idItem) {
+    if (idItem < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return itemUcc.isLiked(idItem);
+  }
+
+
 
 }
 

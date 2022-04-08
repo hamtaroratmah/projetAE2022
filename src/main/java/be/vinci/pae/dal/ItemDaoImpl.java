@@ -172,7 +172,7 @@ public class ItemDaoImpl implements ItemDao {
       ps.setString(2, newItem.getPhoto());
       ps.setString(3, newItem.getDescription());
       ps.setString(4, newItem.getAvailabilities());
-      ps.setString(5, newItem.getItemCondition());
+      ps.setString(5, "published");
 
       ps.setInt(6, newItem.getOfferingMember().getIdMember());
       System.out.println(ps);
@@ -257,17 +257,36 @@ public class ItemDaoImpl implements ItemDao {
     item.setPhoto(rs.getString(3));
     item.setDescription(rs.getString(4));
     item.setAvailabilities(rs.getString(5));
-    item.setItemCondition(rs.getString(6));
+    item.setItemCondition("published");
     int idMember = rs.getInt(7);
     MemberDTO member = memberDao.getMember(idMember);
 
-    item.setOfferingMember(member);
+    item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;
 
 
   }
 
+  @Override
+  public boolean isLiked(int idItem) {
+    boolean isLiked=false;
+    String query="SELECT * FROM pae.interests WHERE id_item= idItem AND id_member = ..." ;//TODO ajouter l id du member qui est connecte
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
-}
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+
+          isLiked=true;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return isLiked;
+  }
+
+
+
+  }
 
