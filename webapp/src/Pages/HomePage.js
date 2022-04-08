@@ -19,6 +19,13 @@ const receptionDiv = `
 `
 const HomePage = async () => {
 
+  //Refresh la page,
+  // car le token n'est pas vérifié directement lors de la connexion
+  if (window.sessionStorage.getItem("justLogged") === true.toString()) {
+    setTimeout(window.location.reload(), 5000);
+    window.sessionStorage.removeItem("justLogged");
+  }
+
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   let token = getToken();

@@ -71,6 +71,7 @@ async function login(e) {
     } else {
       window.sessionStorage.setItem("user", JSON.stringify(token));
     }
+    window.sessionStorage.setItem("justLogged", true.toString())
     await Navbar();
     Redirect("/");
   }
