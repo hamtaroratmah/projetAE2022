@@ -30,7 +30,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext requestContext) {
-    System.out.println("bonsoir @Authorize");
     String token = requestContext.getHeaderString("Authorization");
     if (token == null) {
       System.out.println("A token is needed to access this resource");
