@@ -10,7 +10,7 @@ public class LoginException extends RuntimeException {
   }
 
   /**
-   * Exception.
+   * Exception thrown if an exception is raised during the login.
    *
    * @param message message
    */
