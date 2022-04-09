@@ -10,7 +10,7 @@ public class FatalException extends RuntimeException {
   }
 
   /**
-   * Exception.
+   * Exception thrown if an exception is raised by the database
    *
    * @param message message
    */

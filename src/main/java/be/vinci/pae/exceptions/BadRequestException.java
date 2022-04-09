@@ -10,7 +10,7 @@ public class BadRequestException extends RuntimeException {
   }
 
   /**
-   * Exception.
+   * Exception thrown if request contains invalid arguments.
    *
    * @param message message
    */

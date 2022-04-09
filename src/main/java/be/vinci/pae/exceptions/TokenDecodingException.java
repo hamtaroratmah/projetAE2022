@@ -1,37 +1,18 @@
 package be.vinci.pae.exceptions;
 
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
-
-public class TokenDecodingException extends WebApplicationException {
+public class TokenDecodingException extends RuntimeException {
 
   public TokenDecodingException() {
-    super(Response.status(Response.Status.UNAUTHORIZED)
-        .build());
+    super();
   }
 
-
   /**
-   * Filling javadoc to avoid jenkins error.
+   * Exceptions thrown if token is invalid.
    *
    * @param message message
    */
   public TokenDecodingException(String message) {
-    super(Response.status(Response.Status.UNAUTHORIZED)
-        .entity(message)
-        .type("text/plain")
-        .build());
+    super(message);
   }
 
-  /**
-   * Filling javadoc to avoid jenkins error.
-   *
-   * @param cause cause
-   */
-  public TokenDecodingException(Throwable cause) {
-    super(Response.status(Response.Status.UNAUTHORIZED)
-        .entity(cause.getMessage())
-        .type("text/plain")
-        .build());
-  }
 }
