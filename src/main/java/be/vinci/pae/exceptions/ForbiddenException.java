@@ -1,11 +1,11 @@
 package be.vinci.pae.exceptions;
 
-public class BizExceptionConflict extends RuntimeException {
+public class ForbiddenException extends RuntimeException {
 
   /**
    * Exception.
    */
-  public BizExceptionConflict() {
+  public ForbiddenException() {
     super();
   }
 
@@ -14,7 +14,8 @@ public class BizExceptionConflict extends RuntimeException {
    *
    * @param message message
    */
-  public BizExceptionConflict(String message) {
+  public ForbiddenException(String message) {
     super(message);
   }
+
 }

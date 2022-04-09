@@ -1,4 +1,4 @@
-package be.vinci.pae.ihm.api.filters;
+package be.vinci.pae.exceptions;
 
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
