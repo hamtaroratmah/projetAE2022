@@ -3,7 +3,7 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.OfferDao;
 import be.vinci.pae.dal.interfaces.DalServices;
-import be.vinci.pae.exceptions.BizExceptionForbidden;
+import be.vinci.pae.exceptions.ForbiddenException;
 import jakarta.inject.Inject;
 
 public class OfferUCCImpl implements OfferUCC {
@@ -28,7 +28,7 @@ public class OfferUCCImpl implements OfferUCC {
       OfferDTO offer = offerDao.getOffer(idOffer);
       dalServices.commitTransaction();
       if (idOffer < 1) {
-        throw new BizExceptionForbidden("un id ne peut être inférieur à 0");
+        throw new ForbiddenException("un id ne peut être inférieur à 0");
       }
       return offer;
     } catch (Exception e) {

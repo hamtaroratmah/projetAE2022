@@ -1,11 +1,11 @@
 package be.vinci.pae.exceptions;
 
-public class BizExceptioinUnauthorized extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
   /**
    * Exception.
    */
-  public BizExceptioinUnauthorized() {
+  public BadRequestException() {
     super();
   }
 
@@ -14,7 +14,8 @@ public class BizExceptioinUnauthorized extends RuntimeException {
    *
    * @param message message
    */
-  public BizExceptioinUnauthorized(String message) {
+  public BadRequestException(String message) {
     super(message);
   }
+
 }

@@ -1,4 +1,5 @@
 import {getToken} from "../utils/token"
+import {getMember} from "../utils/member";
 
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
@@ -28,28 +29,10 @@ const Navbar = async () => {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/");
     const username = document.querySelector("#userIdentifier");
-    let member = await getName(token);
-
+    let member = await getMember(token);
     username.innerText = `Bonjour ${member.username}`
   }
 
 };
-
-async function getName(token) {
-  const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
-    }
-  };
-  const response = await fetch(`/api/members/`, request);
-  if (!response.ok) {
-    const error = document.getElementById("errorText");
-    error.innerText = `Error while fetching username`;
-  }
-  let member = await response.json();
-  return member;
-}
 
 export default Navbar;
