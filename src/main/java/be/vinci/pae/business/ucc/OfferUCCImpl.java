@@ -64,9 +64,9 @@ public class OfferUCCImpl implements OfferUCC {
   public boolean isLiked(int idItem, int idMember) {
     try {
       dalServices.startTransaction();
-//      if (idItem < 1) {
-//        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
-//      }
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
       boolean isLiked = offerDao.isLiked(idItem, idMember);
       dalServices.commitTransaction();
       return isLiked;

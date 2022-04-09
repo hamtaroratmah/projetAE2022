@@ -163,7 +163,8 @@ public class ItemDaoImpl implements ItemDao {
     String query = "INSERT  INTO pae.items "
         + "(type,photo, description, availabilities, item_condition,id_offering_member) "
         + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member";
+        + "RETURNING id_item,type,photo,description,availabilities,"
+        + "item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());
       ps.setString(2, newItem.getPhoto());
@@ -242,7 +243,6 @@ public class ItemDaoImpl implements ItemDao {
     item.setDescription(rs.getString(4));
     item.setAvailabilities(rs.getString(5));
     item.setItemCondition("published");
-    int idMember = rs.getInt(7);
     item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;

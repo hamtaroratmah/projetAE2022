@@ -20,12 +20,12 @@ import be.vinci.pae.dal.DalBackendServices;
 import be.vinci.pae.dal.DalServicesImpl;
 import be.vinci.pae.dal.ItemDaoImpl;
 import be.vinci.pae.dal.MemberDaoImpl;
-import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.dal.OfferDaoImpl;
 import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.dal.interfaces.OfferDao;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -60,6 +60,6 @@ public class ApplicationBinder extends AbstractBinder {
     bind(OfferImpl.class).to(OfferDTO.class).in(Singleton.class);
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
-            .in(Singleton.class);
+        .in(Singleton.class);
   }
 }
