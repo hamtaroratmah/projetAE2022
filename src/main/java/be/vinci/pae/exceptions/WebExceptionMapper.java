@@ -22,15 +22,7 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
       return Response.status(((WebApplicationException) exception).getResponse().getStatus())
           .entity(exception.getMessage())
           .build();
-    } else if (exception instanceof BizExceptioinUnauthorized) {
-      return Response.status(Status.UNAUTHORIZED)
-          .entity(exception.getMessage())
-          .build();
-    } else if (exception instanceof BizExceptionForbidden) {
-      return Response.status(Status.FORBIDDEN)
-          .entity(exception.getMessage())
-          .build();
-    } else if (exception instanceof BizExceptionConflict) {
+    } else if (exception instanceof ForbiddenException) {
       return Response.status(Status.FORBIDDEN)
           .entity(exception.getMessage())
           .build();

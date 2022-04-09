@@ -2,6 +2,7 @@ package be.vinci.pae.ihm.api.filters;
 
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
+import be.vinci.pae.exceptions.TokenDecodingException;
 import be.vinci.pae.utils.Config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
