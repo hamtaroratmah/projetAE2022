@@ -13,6 +13,8 @@ public interface ItemDao {
 
   ItemDTO getItem(int idItem);
 
+  ItemDTO createItem(ItemDTO newItem);
+
   int typeExisting(String type);
 
   int createType(String type);

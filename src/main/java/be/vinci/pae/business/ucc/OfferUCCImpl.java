@@ -3,12 +3,10 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
-<<<<<<< src/main/java/be/vinci/pae/business/ucc/OfferUCCImpl.java
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
-import be.vinci.pae.exceptions.FatalException;
-import be.vinci.pae.exceptions.ForbiddenException;
 import be.vinci.pae.exceptions.BadRequestException;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 
 public class OfferUCCImpl implements OfferUCC {
