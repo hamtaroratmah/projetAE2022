@@ -1,6 +1,7 @@
 import Navbar from "../Components/Navbar";
 import {Redirect} from "../Router";
 import {getToken} from "../utils/token";
+import {getMember} from "../utils/member";
 
 
 const createDiv = `
@@ -39,10 +40,10 @@ async function createItem(e) {
   // errorCreate.innerHTML = "";
  // const idOfferingMember= window.localStorage;
   //TODO changer le 4 pour recuperer le bon id de membre connecté
-  let member=  sessionStorage.getItem("member");
-  let idMember= member.idMember;
-  console.log("id"+idMember);
+  let member= await getMember(getToken());
   console.log(getToken());
+
+  console.log(member.idMember);
 
 
   // if(window.localStorage.getItem("user"))
@@ -67,7 +68,7 @@ async function createItem(e) {
             photo: photo,
             description: description,
             availabilities: availabilities,
-            idOfferingMember: idMember,
+            idOfferingMember: member.idMember,
           }
       ),
       headers: {

@@ -155,9 +155,9 @@ public class ItemUCCImpl implements ItemUCC {
   public boolean isLiked(int idItem) {
     try {
       dalServices.startTransaction();
-      if (idItem < 1) {
-        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
-      }
+//      if (idItem < 1) {
+//        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
+//      }
       boolean isLiked = itemDao.isLiked(idItem);
       dalServices.commitTransaction();
       return isLiked;
