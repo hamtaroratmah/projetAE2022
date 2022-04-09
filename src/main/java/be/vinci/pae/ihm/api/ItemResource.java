@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
@@ -21,8 +20,6 @@ public class ItemResource {
 
   @Inject
   ItemUCC itemUcc;
-  @Inject
-  private DomainFactory domainFactory;
 
 
   /**
