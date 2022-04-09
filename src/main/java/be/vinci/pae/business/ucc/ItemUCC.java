@@ -11,8 +11,6 @@ public interface ItemUCC {
 
   ItemDTO getItem(int idItem);
 
-  ItemDTO createItem(ItemDTO item);
-
   int typeExisting(String type);
 
 

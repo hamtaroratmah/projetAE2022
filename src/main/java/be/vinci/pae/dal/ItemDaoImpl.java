@@ -157,44 +157,6 @@ public class ItemDaoImpl implements ItemDao {
 
 
   @Override
-  public ItemDTO createItem(ItemDTO newItem) {
-
-    ItemDTO item = null;
-    String query = "INSERT  INTO pae.items "
-        + "(type,photo, description, availabilities, item_condition,id_offering_member) "
-        + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING id_item,type,photo,description,availabilities,"
-        + "item_condition,id_offering_member";
-    try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setInt(1, newItem.getType().getIdType());
-      ps.setString(2, newItem.getPhoto());
-      ps.setString(3, newItem.getDescription());
-      ps.setString(4, newItem.getAvailabilities());
-      ps.setString(5, "published");
-
-      ps.setInt(6, newItem.getOfferingMember().getIdMember());
-      System.out.println(ps);
-
-      try (ResultSet rs = ps.executeQuery()) {
-        if (rs.next()) {
-          item = createItemInstance(rs);
-          System.out.println("ici" + item.getIdItem());
-          System.out.println("on passe par ici");
-
-          return item;
-        }
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return null;
-
-  }
-
-
-  @Override
   public int typeExisting(String type) {
     String query = "SELECT id_type FROM pae.types WHERE type=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
