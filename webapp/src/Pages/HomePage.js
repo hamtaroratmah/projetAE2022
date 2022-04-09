@@ -32,15 +32,21 @@ const HomePage = async () => {
   pageDiv.innerHTML = receptionDiv;
   let items = [];
   try {
-    const request = {
+    let request = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       }
     };
+    let path;
+    if (token) {
+      path = "/api/item/getLastOfferedItems";
+    } else {
+      path = "/api/item/getLastOfferedItemsNonConnected";
+    }
 
-    await fetch("/api/item/getLastOfferedItems", request)
+    await fetch(path, request)
     .then(response => response.json())
     .then((commits) => {
       for (let i = 0; i < commits.length; i++) {
