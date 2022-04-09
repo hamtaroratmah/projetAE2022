@@ -18,6 +18,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Path("/offer")
 public class OfferRessource {
@@ -109,6 +110,25 @@ public class OfferRessource {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
     return offerUCC.isLiked(idItem, idMember);
+  }
+
+  /**
+   * Get a specified item according to its id.
+   *
+   * @params idItem, idMember item's id that we want more details
+   */
+  @POST
+  @Path("/interests")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> interests(JsonNode json) {
+    int idItem = json.get("idItem").asInt();
+    int idMember = json.get("idMember").asInt();
+
+    if (idItem < 1 || idMember < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return offerUCC.interests(idItem, idMember);
   }
 
 

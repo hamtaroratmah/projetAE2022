@@ -206,7 +206,7 @@ public class MemberDaoImpl implements MemberDao {
    * @param resultSetMember to execute this query
    * @return returns the member DTO
    */
-  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
+  public static MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
 
     MemberDTO member = domainFactory.getMember();
 

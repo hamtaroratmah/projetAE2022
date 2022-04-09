@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.OfferDao;
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class OfferDaoImpl implements OfferDao {
 
@@ -80,6 +82,27 @@ public class OfferDaoImpl implements OfferDao {
       e.printStackTrace();
     }
     return isLiked;
+  }
+
+  @Override
+  public ArrayList<MemberDTO> interests(int idItem, int idMember) {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    String query = "SELECT * FROM pae.interests WHERE idItem=? RETURNING id_member";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      try (ResultSet resultSet = ps.executeQuery()) {
+        while (resultSet.next()) {
+          list.add(MemberDaoImpl.createMemberInstance(resultSet));
+        }
+      }
+
+
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return list;
+
+
   }
 
 
