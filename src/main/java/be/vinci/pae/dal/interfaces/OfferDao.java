@@ -9,4 +9,6 @@ public interface OfferDao {
 
   OfferDTO createOffer(ItemDTO newItem);
 
+  boolean isLiked(int idItem, int idMember);
+
 }

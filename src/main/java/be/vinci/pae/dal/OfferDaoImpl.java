@@ -62,6 +62,25 @@ public class OfferDaoImpl implements OfferDao {
 
   }
 
+  @Override
+  public boolean isLiked(int idItem,int idMember) {
+    boolean isLiked=false;
+    String query="SELECT * FROM pae.interests WHERE id_item= ? AND id_member = ?" ;//TODO ajouter l id du member qui est connecte
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1,idItem);
+      ps.setInt(2,idMember);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+
+          isLiked=true;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return isLiked;
+  }
+
 
 
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {

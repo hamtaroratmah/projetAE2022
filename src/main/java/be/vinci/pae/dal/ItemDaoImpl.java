@@ -71,14 +71,14 @@ public class ItemDaoImpl implements ItemDao {
 
 
   @Override
-  public int likeAnItem(int itemId, int memberId) {
+  public int likeAnItem(int itemId, int idMember) {
     int interests = 7;
     String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
         + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
-      ps.setInt(2, memberId);
+      ps.setInt(2, idMember);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           interests = rs.getInt(1);
@@ -195,19 +195,7 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
-  private void createOffer(int idItem) {
-    String now = LocalDate.now().toString();
-    Date date = Date.valueOf(now);
-    System.out.println("now = " + now);
-    System.out.println("date = " + date);
-    String query = "INSERT  INTO pae.offers (date,idItem) VALUES (?,?) ";
-    try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setDate(1, date);
-      ps.setInt(2, idItem);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
+
 
   @Override
   public int typeExisting(String type) {
@@ -268,23 +256,7 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
-  @Override
-  public boolean isLiked(int idItem) {
-    boolean isLiked=false;
-    String query="SELECT * FROM pae.interests WHERE id_item= idItem AND id_member = ..." ;//TODO ajouter l id du member qui est connecte
-    try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
-      try (ResultSet rs = ps.executeQuery()) {
-        if (rs.next()) {
-
-          isLiked=true;
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return isLiked;
-  }
 
 
 

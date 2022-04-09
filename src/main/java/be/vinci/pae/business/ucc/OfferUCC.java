@@ -9,5 +9,5 @@ public interface OfferUCC {
 
   OfferDTO createOffer(ItemDTO item);
 
-
+  boolean isLiked(int idItem, int idMember);
 }

@@ -15,7 +15,6 @@ public interface ItemUCC {
 
   int typeExisting(String type);
 
-  boolean isLiked(int idItem);
 
   int createType(String type);
 

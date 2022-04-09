@@ -11,8 +11,10 @@ import be.vinci.pae.business.ucc.OfferUCC;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
@@ -91,5 +93,27 @@ public class OfferRessource {
   public int typeExisting(String type) {
     return itemUcc.typeExisting(type);
   }
+
+  /**
+   * Get a specified item according to its id.
+   *
+   * @params idItem, idMember item's id that we want more details
+   */
+  @POST
+  @Path("/isLiked")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean isLiked(JsonNode json) {
+    int idItem = json.get("idItem").asInt();
+    int idMember = json.get("idMember").asInt();
+
+
+
+    if (idItem < 1||idMember<1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return offerUCC.isLiked(idItem,idMember);
+  }
+
 
 }

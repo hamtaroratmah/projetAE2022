@@ -5,6 +5,7 @@ import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.ForbiddenException;
 import jakarta.inject.Inject;
 
@@ -59,4 +60,20 @@ public class OfferUCCImpl implements OfferUCC {
     return null;
   }
 
+  @Override
+  public boolean isLiked(int idItem, int idMember) {
+    try {
+      dalServices.startTransaction();
+//      if (idItem < 1) {
+//        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
+//      }
+      boolean isLiked = offerDao.isLiked(idItem, idMember);
+      dalServices.commitTransaction();
+      return isLiked;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+
+  }
 }
