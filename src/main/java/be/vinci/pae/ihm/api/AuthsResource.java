@@ -40,14 +40,12 @@ public class AuthsResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public String login(JsonNode json) {
-    if (!json.hasNonNull("username") || !json.hasNonNull("password")) {
+    if (!json.hasNonNull("username") || !json.hasNonNull("password")
+        || json.get("username").asText().isBlank() || json.get("password").asText().isBlank()) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
     String login = json.get("username").asText().toLowerCase();
     login = login.replace(" ", "");
-    if (login.isBlank()) {
-      throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
-    }
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
     return createToken(publicUser.getIdMember());
@@ -55,7 +53,6 @@ public class AuthsResource {
 
   /**
    * API register.
-   * TODO il ne faut pas renvoyer le token car attente de confirmation d'insciption
    *
    * @param json jsonNode created by the request and contains information given by the client.
    */
@@ -132,12 +129,16 @@ public class AuthsResource {
   private String createToken(int id) {
     String token;
     try {
-      token = JWT.create().withIssuer("auth0").withClaim("id_member", id).sign(this.jwtAlgorithm);
+      token = JWT.create().withIssuer("auth0")
+          .withClaim("id_member", id)
+          .sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");
       return null;
     }
-    return jsonMapper.createObjectNode().put("token", token).put("id", id).toPrettyString();
+    return jsonMapper.createObjectNode()
+        .put("token", token)
+        .toPrettyString();
   }
 
 
