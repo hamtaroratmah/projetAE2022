@@ -8,13 +8,12 @@ import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,14 +68,14 @@ public class ItemDaoImpl implements ItemDao {
 
 
   @Override
-  public int likeAnItem(int itemId, int memberId) {
+  public int likeAnItem(int itemId, int idMember) {
     int interests = 7;
     String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
         + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
-      ps.setInt(2, memberId);
+      ps.setInt(2, idMember);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           interests = rs.getInt(1);
@@ -156,6 +155,7 @@ public class ItemDaoImpl implements ItemDao {
 
   //daoImpl
 
+
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
 
@@ -163,19 +163,24 @@ public class ItemDaoImpl implements ItemDao {
     String query = "INSERT  INTO pae.items "
         + "(type,photo, description, availabilities, item_condition,id_offering_member) "
         + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING type,photo,description,availabilities,item_condition,id_offering_member";
+        + "RETURNING id_item,type,photo,description,availabilities,"
+        + "item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());
       ps.setString(2, newItem.getPhoto());
       ps.setString(3, newItem.getDescription());
       ps.setString(4, newItem.getAvailabilities());
-      ps.setString(5, newItem.getItemCondition());
+      ps.setString(5, "published");
 
       ps.setInt(6, newItem.getOfferingMember().getIdMember());
+      System.out.println(ps);
+
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           item = createItemInstance(rs);
-          createOffer(item.getIdItem());
+          System.out.println("ici" + item.getIdItem());
+          System.out.println("on passe par ici");
+
           return item;
         }
       }
@@ -188,19 +193,6 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
-  private void createOffer(int idItem) {
-    String now = LocalDate.now().toString();
-    Date date = Date.valueOf(now);
-    System.out.println("now = " + now);
-    System.out.println("date = " + date);
-    String query = "INSERT  INTO pae.offers (date,idItem) VALUES (?,?) ";
-    try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setDate(1, date);
-      ps.setInt(2, idItem);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
 
   @Override
   public int typeExisting(String type) {
@@ -243,17 +235,15 @@ public class ItemDaoImpl implements ItemDao {
   private ItemDTO createItemInstance(ResultSet rs) throws SQLException {
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
-
-    type.setIdType(rs.getInt(1));
+    item.setIdItem(rs.getInt(1));
+    System.out.println("testIci" + item.getIdItem());
+    type.setIdType(rs.getInt(2));
     item.setType(type);
-    item.setPhoto(rs.getString(2));
-    item.setDescription(rs.getString(3));
-    item.setAvailabilities(rs.getString(4));
-    item.setItemCondition(rs.getString(5));
-    int idMember = rs.getInt(6);
-    MemberDTO member = memberDao.getMember(idMember);
-
-    item.setOfferingMember(member);
+    item.setPhoto(rs.getString(3));
+    item.setDescription(rs.getString(4));
+    item.setAvailabilities(rs.getString(5));
+    item.setItemCondition("published");
+    item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;
 

@@ -19,5 +19,7 @@ public interface ItemDao {
 
   int createType(String type);
 
+
   int likeAnItem(int itemId, int memberId);
+
 }

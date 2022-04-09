@@ -1,6 +1,7 @@
 import Navbar from "../Components/Navbar";
 import {Redirect} from "../Router";
-
+import {getToken} from "../utils/token";
+import {getMember} from "../utils/member";
 
 const createDiv = `
         <div id="newItemPage">
@@ -12,15 +13,14 @@ const createDiv = `
                     <input class="inputForm fields" type="text" id="photo" placeholder="URL de la photo">
                     <input class="inputForm fields" type="text" id="description" placeholder="Description">
                     <input class="inputForm fields" type="text" id="availabilities" placeholder="Disponibilités">
-
-                    <input class="inputForm fields" type="text" id="itemCondition" placeholder="Condition de l'objet">
+                    
                     <input class="inputForm submitButton" type="submit" id="newItemSubmitButton" value="Creer un nouvel objet">
                 </form>
             </div>
         </div>
 `;
 
-function NewItem(){
+function NewItem() {
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
@@ -28,18 +28,21 @@ function NewItem(){
   form.addEventListener("submit", createItem);
 }
 
-
 async function createItem(e) {
   e.preventDefault();
   const type = document.getElementById("type").value;
   const photo = document.getElementById("photo").value;
   const description = document.getElementById("description").value;
   const availabilities = document.getElementById("availabilities").value;
-  const itemCondition = document.getElementById("itemCondition").value;
   const errorLogin = document.getElementById("errorText");
   // errorCreate.innerHTML = "";
-  const idOfferingMember= window.localStorage;
-  let idMember=4;
+  // const idOfferingMember= window.localStorage;
+  //TODO changer le 4 pour recuperer le bon id de membre connecté
+  let member = await getMember(getToken());
+  console.log(getToken());
+
+  console.log(member.idMember);
+
   // if(window.localStorage.getItem("user"))
   // idMember = window.localStorage.getItem("user") !== null
   //     || window.sessionStorage.getItem("user") !== null;
@@ -53,8 +56,6 @@ async function createItem(e) {
 
     } else if (!availabilities) {
       errorCreate.innerHTML = "Enter your availabilities";
-    } else if (!itemCondition) {
-      errorCreate.innerHTML = "Enter an item condition";
     }
     const request = {
       method: "POST",
@@ -64,15 +65,14 @@ async function createItem(e) {
             photo: photo,
             description: description,
             availabilities: availabilities,
-            itemCondition: itemCondition,
-            idOfferingMember: idMember,
+            idOfferingMember: member.idMember,
           }
       ),
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/item/createItem", request);
+    const response = await fetch("/api/offer/createOffer", request);
     if (!response.ok) {
       if (response.status === 403) {
         errorLogin.innerHTML = "Impossible to create a new item";
@@ -86,7 +86,7 @@ async function createItem(e) {
     console.error("CreatePage::error ", e);
   }
 
-
 }
+
 export default NewItem
 
