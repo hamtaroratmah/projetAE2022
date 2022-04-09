@@ -2,8 +2,6 @@ package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
-import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,8 +14,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import java.sql.SQLException;
 import java.util.List;
 
 @Path("/item")
@@ -82,55 +78,6 @@ public class ItemResource {
     return itemUcc.getGivenItems();
   }
 
-
-  /**
-   * Get a specified item according to its id.
-   *
-   * @param json item's id that we want more details
-   * @return the itemDTO
-   */
-  @POST
-  @Path("/createItem")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public ItemDTO createItem(JsonNode json) throws SQLException {
-
-    if (!json.hasNonNull("type")
-        || !json.hasNonNull("description")
-        || !json.hasNonNull(
-        "availabilities")
-        || !json.hasNonNull("itemCondition")
-        || !json.hasNonNull("idOfferingMember")) {
-      throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
-    }
-    MemberDTO offeringMember = domainFactory.getMember();
-    if (json.get("idOfferingMember").asInt() < 1) {
-      throw new WebApplicationException("L'id ne peut être négatif");
-    }
-    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
-    TypeDTO type = domainFactory.getType();
-    String typeText = json.get("type").asText();
-    type.setType(typeText);
-    int idType = typeExisting(type.getType());
-    System.out.print(idType);
-
-    //si le type n existe pas , le creer
-    if (idType == -1) {
-      System.out.print("ko1");
-
-      idType = itemUcc.createType(json.get("type").asText());
-    }
-    System.out.print("ok2");
-    ItemDTO item = domainFactory.getItem();
-    type.setIdType(idType);
-    item.setType(type);
-    item.setDescription(json.get("description").asText());
-    item.setAvailabilities(json.get("availabilities").asText());
-    item.setItemCondition(json.get("itemCondition").asText());
-    item.setOfferingMember(offeringMember);
-
-    return itemUcc.createItem(item);
-  }
 
   /**
    * like an item.
