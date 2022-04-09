@@ -43,13 +43,12 @@ async function getName(token) {
       "Authorization": token
     }
   };
-  const response = await fetch(`/api/members/me`, request);
+  const response = await fetch(`/api/members/`, request);
   if (!response.ok) {
     const error = document.getElementById("errorText");
     error.innerText = `Error while fetching username`;
   }
   let member = await response.json();
-  console.log(member)
   return member;
 }
 

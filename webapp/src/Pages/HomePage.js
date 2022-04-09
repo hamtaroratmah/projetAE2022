@@ -19,21 +19,34 @@ const receptionDiv = `
 `
 const HomePage = async () => {
 
+  //Refresh la page,
+  // car le token n'est pas vérifié directement lors de la connexion
+  if (window.sessionStorage.getItem("justLogged") === true.toString()) {
+    setTimeout(window.location.reload(), 5000);
+    window.sessionStorage.removeItem("justLogged");
+  }
+
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items = [];
   try {
-    const request = {
+    let request = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       }
     };
+    let path;
+    if (token) {
+      path = "/api/item/getLastOfferedItems";
+    } else {
+      path = "/api/item/getLastOfferedItemsNonConnected";
+    }
 
-    await fetch("/api/item/getLastOfferedItems", request)
+    await fetch(path, request)
     .then(response => response.json())
     .then((commits) => {
       for (let i = 0; i < commits.length; i++) {
@@ -140,7 +153,7 @@ function displayItems(items) {
           <p id="receptionDescription">${item.description}</p>
           <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p id="receptionType">${item["type"].type}</p>
-          <p id="receptionDate">${reformateDate(item["offer"].dateOffer)}</p>
+          <p id="receptionDate">${item["offer"].dateOffer}</p>
           <p id="receptionItemCondition">${item.itemCondition}</p>
           <p id="receptionAvailabilities">${item.availabilities}</p>
           <p class="modalItemInfo"></p>
@@ -183,9 +196,7 @@ function displayItems(items) {
 }
 
 function reformateDate(date) {
-  let stringDate = date.toString();
-  stringDate.replace(",", "/");
-  return new Date(date[0], date[1], date[2]);
+  return new Date(date[0], date[1], date[2]).toDateString();
 }
 
 export default HomePage;

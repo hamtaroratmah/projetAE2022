@@ -39,8 +39,9 @@ async function createItem(e) {
   // errorCreate.innerHTML = "";
  // const idOfferingMember= window.localStorage;
   //TODO changer le 4 pour recuperer le bon id de membre connecté
-  let idMember=4;
-  console.log(idMember);
+  let member=  sessionStorage.getItem("member");
+  let idMember= member.idMember;
+  console.log("id"+idMember);
   console.log(getToken());
 
 

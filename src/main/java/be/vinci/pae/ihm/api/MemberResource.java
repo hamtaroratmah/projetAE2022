@@ -23,15 +23,12 @@ public class MemberResource {
 
   @Inject
   private MemberUCC memberUCC;
-  //private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
-  //private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
-  //    .build();
 
   /**
    * Get a member according to his token by his id.
    */
   @GET
-  @Path("me")
+  @Path("/")
   @Authorize
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
