@@ -3,7 +3,6 @@ import {Redirect} from "../Router";
 import {getToken} from "../utils/token";
 import {getMember} from "../utils/member";
 
-
 const createDiv = `
         <div id="newItemPage">
             <div id="newItemContainer">
@@ -21,14 +20,13 @@ const createDiv = `
         </div>
 `;
 
-function NewItem(){
+function NewItem() {
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
   const form = document.getElementById("newItemForm");
   form.addEventListener("submit", createItem);
 }
-
 
 async function createItem(e) {
   e.preventDefault();
@@ -38,13 +36,12 @@ async function createItem(e) {
   const availabilities = document.getElementById("availabilities").value;
   const errorLogin = document.getElementById("errorText");
   // errorCreate.innerHTML = "";
- // const idOfferingMember= window.localStorage;
+  // const idOfferingMember= window.localStorage;
   //TODO changer le 4 pour recuperer le bon id de membre connecté
-  let member= await getMember(getToken());
+  let member = await getMember(getToken());
   console.log(getToken());
 
   console.log(member.idMember);
-
 
   // if(window.localStorage.getItem("user"))
   // idMember = window.localStorage.getItem("user") !== null
@@ -89,7 +86,7 @@ async function createItem(e) {
     console.error("CreatePage::error ", e);
   }
 
-
 }
+
 export default NewItem
 

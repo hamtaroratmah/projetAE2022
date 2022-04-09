@@ -1,6 +1,5 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Item;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -12,11 +11,9 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,7 +177,7 @@ public class ItemDaoImpl implements ItemDao {
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           item = createItemInstance(rs);
-          System.out.println("ici"+item.getIdItem());
+          System.out.println("ici" + item.getIdItem());
           System.out.println("on passe par ici");
 
           return item;
@@ -194,7 +191,6 @@ public class ItemDaoImpl implements ItemDao {
     return null;
 
   }
-
 
 
   @Override
@@ -239,7 +235,7 @@ public class ItemDaoImpl implements ItemDao {
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
     item.setIdItem(rs.getInt(1));
-    System.out.println("testIci" +item.getIdItem());
+    System.out.println("testIci" + item.getIdItem());
     type.setIdType(rs.getInt(2));
     item.setType(type);
     item.setPhoto(rs.getString(3));
@@ -247,8 +243,6 @@ public class ItemDaoImpl implements ItemDao {
     item.setAvailabilities(rs.getString(5));
     item.setItemCondition("published");
     int idMember = rs.getInt(7);
-    MemberDTO member = memberDao.getMember(idMember);
-
     item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;
@@ -257,8 +251,5 @@ public class ItemDaoImpl implements ItemDao {
   }
 
 
-
-
-
-  }
+}
 

@@ -11,10 +11,8 @@ import be.vinci.pae.business.ucc.OfferUCC;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
@@ -74,7 +72,7 @@ public class OfferRessource {
     String description = json.get("description").asText();
     System.out.println(description);
 
-    description = description.replaceAll("[;&amp;|`]*","");
+    description = description.replaceAll("[;&amp;|`]*", "");
     System.out.println(description);
 
     item.setDescription(description);
@@ -107,12 +105,10 @@ public class OfferRessource {
     int idItem = json.get("idItem").asInt();
     int idMember = json.get("idMember").asInt();
 
-
-
-    if (idItem < 1||idMember<1) {
+    if (idItem < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    return offerUCC.isLiked(idItem,idMember);
+    return offerUCC.isLiked(idItem, idMember);
   }
 
 

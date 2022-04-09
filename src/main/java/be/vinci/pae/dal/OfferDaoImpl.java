@@ -43,14 +43,14 @@ public class OfferDaoImpl implements OfferDao {
     String now = LocalDate.now().toString();
     Date date = Date.valueOf(now);
     String query = "INSERT  INTO pae.offers (date_offer,id_item) VALUES (?,?) RETURNING id_offer, date_offer, id_item ";
-    int idItem= newItem.getIdItem();
+    int idItem = newItem.getIdItem();
     System.out.println(idItem);
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setDate(1, date);
       ps.setInt(2, idItem);
       System.out.println(ps);
-      OfferDTO offer=getOfferFromDatabase(ps);
+      OfferDTO offer = getOfferFromDatabase(ps);
       System.out.println("ok");
       return offer;
 
@@ -63,16 +63,16 @@ public class OfferDaoImpl implements OfferDao {
   }
 
   @Override
-  public boolean isLiked(int idItem,int idMember) {
-    boolean isLiked=false;
-    String query="SELECT * FROM pae.interests WHERE id_item= ? AND id_member = ?" ;//TODO ajouter l id du member qui est connecte
+  public boolean isLiked(int idItem, int idMember) {
+    boolean isLiked = false;
+    String query = "SELECT * FROM pae.interests WHERE id_item= ? AND id_member = ?";//TODO ajouter l id du member qui est connecte
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setInt(1,idItem);
-      ps.setInt(2,idMember);
+      ps.setInt(1, idItem);
+      ps.setInt(2, idMember);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
 
-          isLiked=true;
+          isLiked = true;
         }
       }
     } catch (SQLException e) {
@@ -80,7 +80,6 @@ public class OfferDaoImpl implements OfferDao {
     }
     return isLiked;
   }
-
 
 
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {
