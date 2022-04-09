@@ -15,12 +15,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
-import org.glassfish.jersey.server.ContainerRequest;
 
 @Path("/item")
 public class ItemResource {
@@ -39,14 +37,20 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Authorize
-  public List<ItemDTO> getLastOfferedItems(@Context ContainerRequest request) {
-    MemberDTO member = (MemberDTO) request.getProperty("user");
+  public List<ItemDTO> getLastOfferedItems() {
+    return itemUcc.getLastOfferedItems();
+  }
 
+  /**
+   * Get offered items from database for non-connected users.
+   */
+  @GET
+  @Path("/getLastOfferedItemsNonConnected")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ItemDTO> getLastOfferedItemsNonConnected() {
     List<ItemDTO> list = itemUcc.getLastOfferedItems();
-    if (member == null && list.size() > 12) {
-      return list.subList(0, 9);
-    }
-    return list;
+    return list.subList(0, 5);
   }
 
   /**

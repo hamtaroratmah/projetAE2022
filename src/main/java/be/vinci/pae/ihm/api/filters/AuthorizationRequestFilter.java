@@ -20,7 +20,6 @@ import jakarta.ws.rs.ext.Provider;
 @Authorize
 public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
-  // TODO: Refactor to can see items without being connected
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
       .acceptExpiresAt(0)
@@ -47,7 +46,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
       requestContext.abortWith(Response.status(Status.FORBIDDEN)
           .entity("You are forbidden to access this resource").build());
     }
-
     requestContext.setProperty("user",
         memberUCC.getOne(decodedToken.getClaim("id_member").asInt()));
   }
