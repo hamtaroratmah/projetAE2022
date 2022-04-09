@@ -11,4 +11,27 @@ function getToken() {
   return token;
 }
 
-export {getToken};
+const verifyToken = async () => {
+  const request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getToken()
+    }
+  };
+  const response = await fetch("/api/members/", request);
+  if (!response.ok) {
+    response.text().catch((err) => {
+      console.log("token invalid </3")
+      const errorDiv = document.querySelector("#errorText");
+      errorDiv.innerHTML = `${err}`
+      console.log(err)
+    })
+  } else {
+    let member = await response.json()
+    sessionStorage.setItem("member", member)
+    console.log("token valid <3")
+  }
+}
+
+export {getToken, verifyToken};

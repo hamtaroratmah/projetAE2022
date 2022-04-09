@@ -1,5 +1,6 @@
 import Navbar from "../Components/Navbar";
 import {Redirect} from "../Router";
+import {getToken} from "../utils/token";
 
 
 const createDiv = `
@@ -40,6 +41,8 @@ async function createItem(e) {
   //TODO changer le 4 pour recuperer le bon id de membre connecté
   let idMember=4;
   console.log(idMember);
+  console.log(getToken());
+
 
   // if(window.localStorage.getItem("user"))
   // idMember = window.localStorage.getItem("user") !== null
