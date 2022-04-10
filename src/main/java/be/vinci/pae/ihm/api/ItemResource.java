@@ -1,9 +1,6 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
-import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,8 +15,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import java.sql.SQLException;
 import java.util.List;
 
 @Path("/item")
@@ -27,8 +22,6 @@ public class ItemResource {
 
   @Inject
   ItemUCC itemUcc;
-  @Inject
-  private DomainFactory domainFactory;
 
 
   /**

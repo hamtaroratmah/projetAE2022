@@ -121,21 +121,6 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-
-  @Override
-  public ItemDTO createItem(ItemDTO item) {
-    try {
-      dalServices.startTransaction();
-      ItemDTO itemDTO = itemDao.createItem(item);
-      dalServices.commitTransaction();
-      return itemDTO;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   @Override
   public int typeExisting(String type) {
     try {
@@ -163,6 +148,8 @@ public class ItemUCCImpl implements ItemUCC {
     }
     return -1;
   }
+
+
 }
 
 

@@ -34,3 +34,4 @@ const verifyToken = async () => {
 }
 
 export {getToken, verifyToken};
+

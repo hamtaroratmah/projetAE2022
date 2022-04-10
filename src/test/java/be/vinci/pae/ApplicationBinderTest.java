@@ -1,5 +1,6 @@
 package be.vinci.pae;
 
+
 import be.vinci.pae.business.domain.dtos.ItemImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
@@ -15,11 +16,11 @@ import be.vinci.pae.business.ucc.OfferUCCImpl;
 import be.vinci.pae.dal.DalServicesImpl;
 import be.vinci.pae.dal.ItemDaoImpl;
 import be.vinci.pae.dal.MemberDaoImpl;
-import be.vinci.pae.dal.OfferDao;
 import be.vinci.pae.dal.OfferDaoImpl;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.dal.interfaces.OfferDao;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
