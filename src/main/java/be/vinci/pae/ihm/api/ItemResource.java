@@ -124,16 +124,16 @@ public class ItemResource {
         || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
-    MemberDTO offeringMember = domainFactory.getMember();
     if (json.get("idOfferingMember").asInt() < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
+    MemberDTO offeringMember = domainFactory.getMember();
     offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = typeExisting(type.getType());
-    //si le type n existe pas , le creer
+    //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
     }
