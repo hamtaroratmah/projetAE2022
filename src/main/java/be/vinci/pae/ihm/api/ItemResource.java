@@ -9,11 +9,13 @@ import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -42,7 +44,23 @@ public class ItemResource {
   }
 
   /**
-   * Get offered items from database for non-connected users.
+   * Get offered items from databased sorted by date_offer or type.
+   */
+  @GET
+  @Path("/getItemSortedBy")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
+  public List<ItemDTO> getItemSortedBy(
+      @DefaultValue("date_offer")
+      @QueryParam("sortingParam") String sortingParam,
+      @DefaultValue("ASC")
+      @QueryParam("order") String order) {
+    return itemUcc.getItemSortedBy(sortingParam, order);
+  }
+
+  /**
+   * Get offered items from database for non-connected users.x
    */
   @GET
   @Path("/getLastOfferedItemsNonConnected")
@@ -50,7 +68,10 @@ public class ItemResource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
     List<ItemDTO> list = itemUcc.getLastOfferedItems();
-    return list.subList(0, 5);
+    if (list.size() >= 4) {
+      return list.subList(0, 2);
+    }
+    return list;
   }
 
   /**
@@ -112,15 +133,10 @@ public class ItemResource {
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = typeExisting(type.getType());
-    System.out.print(idType);
-
     //si le type n existe pas , le creer
     if (idType == -1) {
-      System.out.print("ko1");
-
       idType = itemUcc.createType(json.get("type").asText());
     }
-    System.out.print("ok2");
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
     item.setType(type);

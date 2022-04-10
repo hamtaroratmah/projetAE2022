@@ -13,6 +13,8 @@ public interface ItemDao {
 
   ItemDTO getItem(int idItem);
 
+  List<ItemDTO> getItemSortedBy(String sortingParam, String order);
+
   ItemDTO createItem(ItemDTO newItem);
 
   int typeExisting(String type);

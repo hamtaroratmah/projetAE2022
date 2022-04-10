@@ -35,6 +35,19 @@ public class ItemUCCImpl implements ItemUCC {
   }
 
   @Override
+  public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
+    try {
+      dalServices.startTransaction();
+      List<ItemDTO> list = itemDao.getItemSortedBy(sortingParam, order);
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  @Override
   public ItemDTO getItem(int idItem) {
     try {
       dalServices.startTransaction();

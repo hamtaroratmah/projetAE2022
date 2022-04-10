@@ -29,7 +29,6 @@ const verifyToken = async () => {
     })
   } else {
     let member = await response.json()
-    sessionStorage.setItem("member", member)
     console.log("token valid <3")
   }
 }

@@ -9,6 +9,8 @@ public interface ItemUCC {
 
   List<ItemDTO> getGivenItems();
 
+  List<ItemDTO> getItemSortedBy(String sortingParam, String order);
+
   ItemDTO getItem(int idItem);
 
   ItemDTO createItem(ItemDTO item);
