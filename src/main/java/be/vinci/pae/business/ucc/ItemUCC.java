@@ -22,4 +22,6 @@ public interface ItemUCC {
   int likeAnItem(int offerId, int memberId);
 
   int cancelAnOffer(int itemId);
+
+  ItemDTO createItem(ItemDTO item);
 }
