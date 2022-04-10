@@ -43,7 +43,10 @@ public class ItemResource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
     List<ItemDTO> list = itemUcc.getLastOfferedItems();
-    return list.subList(0, 5);
+    if (list.size() >= 5) {
+      return list.subList(0, 5);
+    }
+    return list;
   }
 
   /**

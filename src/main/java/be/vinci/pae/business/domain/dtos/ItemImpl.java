@@ -54,9 +54,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setPhoto(String photo) {
-    if (photo != null && photo.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.photo = photo;
   }
 
@@ -80,9 +77,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setAvailabilities(String availabilities) {
-    if (availabilities == null || availabilities.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.availabilities = availabilities;
   }
 
@@ -93,9 +87,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setItemCondition(String itemCondition) {
-    if (itemCondition == null || itemCondition.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.itemCondition = itemCondition;
   }
 
@@ -106,9 +97,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setRating(int rating) {
-    //    if (rating <= 0) {
-    //      throw new IllegalArgumentException();
-    //    }
     this.rating = rating;
   }
 
@@ -119,9 +107,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setOfferingMember(MemberDTO offeringMember) {
-    //    if (offeringMember == null) {
-    //      throw new IllegalArgumentException();
-    //    }
     this.offeringMember = offeringMember;
   }
 
