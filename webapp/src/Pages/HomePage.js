@@ -1,28 +1,43 @@
-import {getToken} from "../utils/token"
+import {getToken} from "../utils/functions/token"
+import {
+  displayItems,
+  getItemUnordered,
+  getOrderedItems
+} from "../utils/functions/items";
 
 const receptionDiv = `
-  <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>
-  <button id="typeSortedButtonDESC" class="sortedButton">Type DESC</button>
-  <button id="dateSortedButtonASC" class="sortedButton">Date ASC</button>
-  <button id="dateSortedButtonDESC" class="sortedButton">Date DESC</button>
-  <select name="itemCondition" id="selectItemConditionList" class="sortedList sortedButton">
-    <option selected="yes" value="default">Etat de l'objet</option>
-    <option value="published">Publié</option>
-    <option value="interestShown">Intérêt marqué</option>
-    <option value="assigned">assigné</option>
-    <option value="given">Donné</option>
-    <option value="canceled">Annulé</option>
-  </select>
+  <div id="sortingDiv">
+    <select name="type" id="selectItemType" class="sortedList sortedButton">
+      <option></option>
+      <option value="ASC">Type ASC</option>
+      <option value="DESC">Type DESC</option>
+    </select>
+    <select name="date_offer" id="selectItemDate" class="sortedList sortedButton">
+      <option selected="yes"></option>
+      <option value="ASC">Date ASC</option>
+      <option value="DESC">Date DESC</option>
+    </select>
+    <select name="item_condition" id="selectItemCondition" class="sortedList sortedButton">
+      <option selected="yes" value="default">Etat de l'objet</option>
+      <option value="published">Publié</option>
+      <option value="interestShown">Intérêt marqué</option>
+      <option value="assigned">assigné</option>
+      <option value="given">Donné</option>
+      <option value="canceled">Annulé</option>
+    </select>
+  </div>
+
   <div id="receptionPage">
     
   </div>
 `
+
 const HomePage = async () => {
 
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion
   if (window.sessionStorage.getItem("justLogged") === true.toString()) {
-    setTimeout(window.location.reload(), 5000);
+    window.location.reload();
     window.sessionStorage.removeItem("justLogged");
   }
 
@@ -31,172 +46,34 @@ const HomePage = async () => {
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items = [];
-  try {
-    let request = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    };
-    let path;
-    if (token) {
-      path = "/api/item/getLastOfferedItems";
-    } else {
-      path = "/api/item/getLastOfferedItemsNonConnected";
-    }
 
-    await fetch(path, request)
-    .then(response => response.json())
-    .then((commits) => {
-      for (let i = 0; i < commits.length; i++) {
-        items.push(commits[i]);
-      }
-    })
-    .catch(() =>
-        error.innerHTML = "Une erreur est survenue durant la récupération des objets"
-    );
-
-    displayItems(items);
-
-  } catch (e) {
-    console.error("Home page error", e);
+  if (token) {
+    items = await getOrderedItems("date_offer", "DESC")
+  } else {
+    const sortedDiv = document.querySelector("#sortingDiv");
+    sortedDiv.style = "display: none;"
+    items = await getItemUnordered()
   }
+  displayItems(items);
 
-  //Sort part
-  const typeButtonASC = document.querySelector("#typeSortedButtonASC");
-  typeButtonASC.addEventListener("click", () => {
-    items.sort((a, b) => {
-      return b["type"].idType - a["type"].idType;
-    });
+  const typeSelect = document.querySelector("#selectItemType");
+  const dateSelect = document.querySelector("#selectItemDate");
+  const itemConditionSelect = document.querySelector("#selectItemCondition");
+
+  typeSelect.addEventListener("change", async () => {
+    let items = await getOrderedItems(typeSelect.name, typeSelect.value);
     displayItems(items);
   });
-  const typeButtonDESC = document.querySelector("#typeSortedButtonDESC");
-  typeButtonDESC.addEventListener("click", () => {
-    items.sort((a, b) => {
-      return a["type"].idType - b["type"].idType;
-    });
+  dateSelect.addEventListener("change", async () => {
+    let items = await getOrderedItems(dateSelect.name, dateSelect.value);
     displayItems(items);
   });
-  const dateButtonASC = document.querySelector("#dateSortedButtonASC");
-  dateButtonASC.addEventListener("click", () => {
-    items.sort((a, b) => {
-      let dateA = reformateDate(a["offer"].dateOffer);
-      let dateB = reformateDate(b["offer"].dateOffer);
-      if (dateA < dateB) {
-        return -1;
-      }
-      if (dateA > dateB) {
-        return 1;
-      }
-      return 0;
-    })
-    displayItems(items);
-  });
-  const dateButtonDESC = document.querySelector("#dateSortedButtonDESC");
-  dateButtonDESC.addEventListener("click", () => {
-    items.sort((a, b) => {
-      let dateA = reformateDate(a["offer"].dateOffer);
-      let dateB = reformateDate(b["offer"].dateOffer);
-      if (dateA < dateB) {
-        return 1;
-      }
-      if (dateA > dateB) {
-        return -1;
-      }
-      return 0;
-    })
+  itemConditionSelect.addEventListener("change", async () => {
+    let items = await getOrderedItems(itemConditionSelect.name,
+        itemConditionSelect.value);
     displayItems(items);
   });
 
-  const selectItemCondition = document.querySelector(
-      "#selectItemConditionList");
-  selectItemCondition.addEventListener("change", () => {
-    let value = selectItemCondition.options[selectItemCondition.selectedIndex].value;
-    items.sort((a, b) => {
-      if (a.itemCondition === value && b.itemCondition !== value) {
-        return -1;
-      }
-      if (a.itemCondition !== value && b.itemCondition === value) {
-        return 1;
-      }
-      return 0;
-    });
-    displayItems(items);
-  })
-};
-
-function displayItems(items) {
-  let item, offer;
-  const receptionPage = document.querySelector("#receptionPage")
-  receptionPage.innerHTML = ""
-  for (let i = 0; i < items.length; i++) {
-    offer = {
-      idOffer: items[i]["offer"].idOffer,
-      dateOffer: reformateDate(items[i]["offer"]["dateOffer"]),
-      idItem: items[i]["offer"].idItem
-    }
-    item = {
-      idItem: items[i].idItem,
-      description: items[i].description,
-      itemCondition: items[i].itemCondition,
-      offeringMember: items[i]["offeringMember"],
-      photo: items[i].photo,
-      rating: items[i].rating,
-      type: items[i].type,
-      availabilities: items[i].availabilities,
-      offer: offer
-    }
-    receptionPage.innerHTML += `
-       <div class="modalItemInfo receptionItems" id="receptionItem${i}">
-        <img src="" alt="" class="receptionImage" id="receptionImage${i}">
-          <p id="receptionDescription">${item.description}</p>
-          <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
-          <p id="receptionType">${item["type"].type}</p>
-          <p id="receptionDate">${item["offer"].dateOffer}</p>
-          <p id="receptionItemCondition">${item.itemCondition}</p>
-          <p id="receptionAvailabilities">${item.availabilities}</p>
-          <p class="modalItemInfo"></p>
-      </div>
-      `;
-
-  }
-  for (let j = 0; j < items.length; j++) {
-    const itemDiv = document.querySelector("#receptionItem" + j);
-    itemDiv.addEventListener("click", () => {
-      openItemModal(items[j], j);
-    });
-    const photoSrc = document.querySelector("#receptionImage" + j);
-    if (items[j]["photo"] === null) {
-      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    } else {
-      photoSrc.src = items[j]["photo"];
-    }
-  }
-
-  function openItemModal(item, j) {
-    const modal = document.querySelector("modal");
-    modal.innerHTML = `
-      <div>
-        <img src="" alt="" class="receptionImage" id="receptionImage${j}">
-          <p class="receptionDescription">${item.description}</p>
-          <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
-          <p class="receptionType">${item["type"].type}</p>
-          <p class="modalItemInfo"></p>
-      </div>
-    `
-    const photoSrc = document.querySelector("#receptionImage" + j);
-    if (items[j]["photo"] === null) {
-      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    } else {
-      photoSrc.src = items[j]["photo"];
-    }
-  }
-
-}
-
-function reformateDate(date) {
-  return new Date(date[0], date[1], date[2]).toDateString();
 }
 
 export default HomePage;
