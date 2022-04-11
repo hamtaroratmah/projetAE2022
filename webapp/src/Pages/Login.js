@@ -4,10 +4,10 @@ import {getToken} from "../utils/token";
 
 const loginDiv = `
         <div id="loginPage">
+            <h1 class="loginText">Donnamis</h1>
             <div id="loginContainer">
                 <form id="loginForm" class="loginRegisterContainer">
                     <h1 id="loginText">Connexion</h1>
-                    <h1 class="loginText">Donnamis</h1>
                     <input class="inputForm fields" type="text" id="usernameLogin" placeholder="Pseudo">
                     <input class="inputForm fields" type="password" id="passwordLogin" placeholder="Mot de passe">
                     <label id="labelRememberCheckBox"><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
@@ -17,10 +17,6 @@ const loginDiv = `
         </div>
 `;
 
-/**
- * Render the NewPage :
- * Just an example to demonstrate how to use the router to "redirect" to a new page
- */
 function LoginPage() {
   if (getToken()) {
     Redirect("/");

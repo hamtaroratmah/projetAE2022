@@ -1,51 +1,25 @@
-body {
-  background-color: #B5CED7;
+@import "modules/mixins";
+@import "modules/variables";
+@import "pages/login";
+@import "pages/navbar";
+
+//html reset default style
+*, ::before, ::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-
 }
 
-#loginContainer {
-  background-color: #E5BE10;
-  display: flex;
-  height: 50vh;
-  width: 20vw;
-  margin: 20vh auto;
-  border-radius: 20px;
+body {
+  background-color: $background;
+  height: 100%;
 }
 
-
-.fields {
-  background-color: #ECE4D0;
-  margin: 5% 20%;
-  height: 40px;
-  width: 60%;
-  border-radius: 10px;
-  border: none;
-
-  &:focus {
-    outline: none;
-  }
+img {
+  width: 200px;
+  height: 200px;
 }
 
-
-#loginText {
-  margin: 5% 25%;
-  font-size: 2.5vw;
-  max-width: 400px;
-}
-
-
-#labelRememberCheckBox {
-  margin: 0 30%;
-  width: 40%;
-}
-
-
-#loginSubmitButton {
-  border-radius: 40px;
-  border: none;
-  width: 50%;
-  height: 40px;
-  margin: auto 25%;
+.displayNone {
+  display: none;
 }

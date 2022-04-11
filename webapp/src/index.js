@@ -4,7 +4,6 @@ import {Router} from "./Router";
 import Navbar from "./Components/Navbar";
 import {getToken, verifyToken} from "./utils/token";
 
-
 getToken() ? verifyToken() : console.log("Aucun token à vérifier");
 Navbar();
 Router(); // The router will automatically load the root page
