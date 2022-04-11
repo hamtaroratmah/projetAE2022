@@ -31,6 +31,44 @@ public class ItemDaoImpl implements ItemDao {
   public ItemDaoImpl() {
   }
 
+
+  @Override
+  public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
+    List<ItemDTO> list = null;
+    boolean isCondition = false;
+    if (sortingParam.equals("type") || sortingParam.equals("item_condition")) {
+      sortingParam = "it." + sortingParam;
+      System.out.println(sortingParam);
+    } else {
+      sortingParam = "of." + sortingParam;
+    }
+    String queryString;
+    if (sortingParam.equals("it.item_condition")) {
+      isCondition = true;
+      queryString = "SELECT it.id_item,it.type,it.description,it.availabilities,"
+          + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
+          + "FROM pae.items it,pae.types ty,pae.offers of "
+          + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
+          + "AND it.item_condition = ?";
+    } else {
+      queryString = "SELECT it.id_item,it.type,it.description,it.availabilities,"
+          + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
+          + "FROM pae.items it,pae.types ty,pae.offers of "
+          + "WHERE it.type = ty.id_type AND of.id_item = it.id_item "
+          + "ORDER BY " + sortingParam + " " + order;
+    }
+
+    try (PreparedStatement query = services.getPreparedStatement(queryString)) {
+      if (isCondition) {
+        query.setString(1, order);
+      }
+      list = getItemFromDataBase(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return list;
+  }
+
   @Override
   public List<ItemDTO> getLastOfferedItems() {
     List<ItemDTO> items = null;
@@ -99,7 +137,7 @@ public class ItemDaoImpl implements ItemDao {
       ps.setInt(1, itemId);
       try (ResultSet rs = ps.executeQuery()) {
         return 1;
-
+        //todo
 
       }
     } catch (SQLException e) {
@@ -111,7 +149,7 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public List<ItemDTO> getGivenItems() {
-    List<ItemDTO> items = null;
+    List<ItemDTO> items;
     String tempQuery = "SELECT it.id_item,it.type,it.description,it.availabilities,"
         + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
         + "FROM pae.items it,pae.types ty,pae.offers of "
@@ -126,10 +164,8 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
-
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();
-
     while (resultSet.next()) {
       ItemDTO item = domainFactory.getItem();
       TypeDTO type = domainFactory.getType();
@@ -148,6 +184,7 @@ public class ItemDaoImpl implements ItemDao {
       item.setOfferingMember(member);
       item.setOffer(offer);
       items.add(item);
+
     }
     resultSet.close();
     return items;
@@ -159,7 +196,7 @@ public class ItemDaoImpl implements ItemDao {
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
 
-    ItemDTO item = null;
+    ItemDTO item;
     String query = "INSERT  INTO pae.items "
         + "(type,photo, description, availabilities, item_condition,id_offering_member) "
         + " VALUES(?,?,?,?,?,?) "

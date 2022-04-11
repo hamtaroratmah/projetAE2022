@@ -9,6 +9,8 @@ public interface ItemUCC {
 
   List<ItemDTO> getGivenItems();
 
+  List<ItemDTO> getItemSortedBy(String sortingParam, String order);
+
   ItemDTO getItem(int idItem);
 
   int typeExisting(String type);
@@ -20,4 +22,6 @@ public interface ItemUCC {
   int likeAnItem(int offerId, int memberId);
 
   int cancelAnOffer(int itemId);
+
+  ItemDTO createItem(ItemDTO item);
 }
