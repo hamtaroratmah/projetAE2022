@@ -22,6 +22,8 @@ public class OfferDaoImpl implements OfferDao {
   DomainFactory domainFactory;
   @Inject
   DalServices services;
+  @Inject
+  MemberDaoImpl memberDao;
 
   public OfferDaoImpl() {
 
@@ -86,7 +88,6 @@ public class OfferDaoImpl implements OfferDao {
 
   @Override
   public ArrayList<MemberDTO> interests(int idItem, int idMember) {
-    ArrayList<MemberDTO> list = new ArrayList<>();
     ArrayList<Integer> listId = new ArrayList<>();
     String query = "SELECT * FROM pae.interests WHERE id_item=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
@@ -115,7 +116,7 @@ public class OfferDaoImpl implements OfferDao {
         preparedStatement.setInt(1, id);
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
           while (resultSet.next()) {
-            list.add(createMemberInstance(resultSet));
+            list.add(memberDao.createMemberInstance(resultSet));
           }
         }
       }
@@ -125,31 +126,6 @@ public class OfferDaoImpl implements OfferDao {
     return list;
 
 
-  }
-
-  /**
-   * create a member instance used in methods confirm and deny.
-   *
-   * @param resultSetMember to execute this query
-   * @return returns the member DTO
-   */
-  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
-
-    MemberDTO member = domainFactory.getMember();
-
-    member.setIdMember(resultSetMember.getInt(1));
-    member.setPassword(resultSetMember.getString(2));
-    member.setUsername(resultSetMember.getString(3));
-    member.setLastName(resultSetMember.getString(4));
-    member.setFirstName(resultSetMember.getString(5));
-    member.setCallNumber(resultSetMember.getString(7));
-    member.setAdmin(resultSetMember.getBoolean(8));
-    member.setReasonForConnRefusal(resultSetMember.getString(9));
-    member.setState(resultSetMember.getString(10));
-    member.setCountObjectNotCollected(resultSetMember.getInt(11));
-    member.setCountObjectGiven(resultSetMember.getInt(12));
-    member.setCountObjectGot(resultSetMember.getInt(13));
-    return member;
   }
 
 
