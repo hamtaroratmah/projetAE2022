@@ -87,12 +87,13 @@ public class OfferDaoImpl implements OfferDao {
   @Override
   public ArrayList<MemberDTO> interests(int idItem, int idMember) {
     ArrayList<MemberDTO> list = new ArrayList<>();
-    String query = "SELECT * FROM pae.interests WHERE idItem=? RETURNING id_member";
+    ArrayList<Integer> listId = new ArrayList<>();
+    String query = "SELECT * FROM pae.interests WHERE id_item=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       try (ResultSet resultSet = ps.executeQuery()) {
         while (resultSet.next()) {
-          list.add(MemberDaoImpl.createMemberInstance(resultSet));
+          listId.add(resultSet.getInt(3));
         }
       }
 
@@ -100,9 +101,55 @@ public class OfferDaoImpl implements OfferDao {
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
+    return addMember(listId);
+
+
+  }
+
+  private ArrayList<MemberDTO> addMember(ArrayList<Integer> listId) {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    String query = "SELECT * FROM pae.members WHERE id_member =? ";
+    try (PreparedStatement preparedStatement = services.getPreparedStatement(query)) {
+      for (Integer id : listId
+      ) {
+        preparedStatement.setInt(1, id);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+          while (resultSet.next()) {
+            list.add(createMemberInstance(resultSet));
+          }
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return list;
 
 
+  }
+
+  /**
+   * create a member instance used in methods confirm and deny.
+   *
+   * @param resultSetMember to execute this query
+   * @return returns the member DTO
+   */
+  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
+
+    MemberDTO member = domainFactory.getMember();
+
+    member.setIdMember(resultSetMember.getInt(1));
+    member.setPassword(resultSetMember.getString(2));
+    member.setUsername(resultSetMember.getString(3));
+    member.setLastName(resultSetMember.getString(4));
+    member.setFirstName(resultSetMember.getString(5));
+    member.setCallNumber(resultSetMember.getString(7));
+    member.setAdmin(resultSetMember.getBoolean(8));
+    member.setReasonForConnRefusal(resultSetMember.getString(9));
+    member.setState(resultSetMember.getString(10));
+    member.setCountObjectNotCollected(resultSetMember.getInt(11));
+    member.setCountObjectGiven(resultSetMember.getInt(12));
+    member.setCountObjectGot(resultSetMember.getInt(13));
+    return member;
   }
 
 

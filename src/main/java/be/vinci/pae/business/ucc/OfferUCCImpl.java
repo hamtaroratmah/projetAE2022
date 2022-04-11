@@ -86,7 +86,7 @@ public class OfferUCCImpl implements OfferUCC {
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
-      ArrayList<MemberDTO> list = new ArrayList<>();
+      ArrayList<MemberDTO> list;
       list = offerDao.interests(idItem, idMember);
       dalServices.commitTransaction();
       return list;
