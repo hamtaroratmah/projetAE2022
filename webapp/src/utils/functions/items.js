@@ -115,10 +115,10 @@ function openItemModal(item, j) {
       </div>
     `
   const photoSrc = document.querySelector("#receptionImage" + j);
-  if (items[j]["photo"] === null) {
+  if (item["photo"] === null) {
     photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
   } else {
-    photoSrc.src = items[j]["photo"];
+    photoSrc.src = item["photo"];
   }
 }
 

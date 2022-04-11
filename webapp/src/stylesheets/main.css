@@ -99,4 +99,9 @@ img {
   display: none;
 }
 
+.receptionItems {
+  border: solid 1px black;
+  border-bottom: none;
+}
+
 /*# sourceMappingURL=main.css.map */
