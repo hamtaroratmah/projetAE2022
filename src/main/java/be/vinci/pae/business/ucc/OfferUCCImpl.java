@@ -96,4 +96,19 @@ public class OfferUCCImpl implements OfferUCC {
     }
 
   }
+
+  @Override
+  public boolean cancel(int idItem) {
+    try {
+      dalServices.startTransaction();
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      dalServices.commitTransaction();
+      return offerDao.cancel(idItem);
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
 }
