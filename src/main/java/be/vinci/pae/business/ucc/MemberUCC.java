@@ -23,7 +23,7 @@ public interface MemberUCC {
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
 
-  ArrayList<MemberDTO> listPendingUsers();
+  ArrayList<MemberDTO> listUsersByState(String state);
 
 
   ArrayList<MemberDTO> listDeniedUsers();

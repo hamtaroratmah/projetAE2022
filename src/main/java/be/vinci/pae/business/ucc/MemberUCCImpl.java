@@ -103,10 +103,10 @@ public class MemberUCCImpl implements MemberUCC {
 
 
   @Override
-  public ArrayList<MemberDTO> listPendingUsers() {
+  public ArrayList<MemberDTO> listUsersByState(String state) {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      ArrayList<MemberDTO> list = memberDao.listUsersByState(state);
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {

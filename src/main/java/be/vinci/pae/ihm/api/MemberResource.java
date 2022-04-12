@@ -105,13 +105,14 @@ public class MemberResource {
    *
    * @return the list
    */
-  @GET
-  @Path("pending")
+  @POST
+  @Path("list")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ArrayList<MemberDTO> listPendingUsers() {
+  public ArrayList<MemberDTO> listUsersByState(JsonNode json) {
     System.out.println("lister les utilisateur donc l inscription est en attente");
-    return memberUCC.listPendingUsers();
+    String state = json.get("state").asText();
+    return memberUCC.listUsersByState(state);
   }
 
   /**
