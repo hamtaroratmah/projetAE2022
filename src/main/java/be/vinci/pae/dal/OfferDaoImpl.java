@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.OfferDao;
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class OfferDaoImpl implements OfferDao {
 
@@ -20,6 +22,8 @@ public class OfferDaoImpl implements OfferDao {
   DomainFactory domainFactory;
   @Inject
   DalServices services;
+  @Inject
+  MemberDaoImpl memberDao;
 
   public OfferDaoImpl() {
 
@@ -80,6 +84,48 @@ public class OfferDaoImpl implements OfferDao {
       e.printStackTrace();
     }
     return isLiked;
+  }
+
+  @Override
+  public ArrayList<MemberDTO> interests(int idItem, int idMember) {
+    ArrayList<Integer> listId = new ArrayList<>();
+    String query = "SELECT * FROM pae.interests WHERE id_item=? ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      try (ResultSet resultSet = ps.executeQuery()) {
+        while (resultSet.next()) {
+          listId.add(resultSet.getInt(3));
+        }
+      }
+
+
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return addMember(listId);
+
+
+  }
+
+  private ArrayList<MemberDTO> addMember(ArrayList<Integer> listId) {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    String query = "SELECT * FROM pae.members WHERE id_member =? ";
+    try (PreparedStatement preparedStatement = services.getPreparedStatement(query)) {
+      for (Integer id : listId
+      ) {
+        preparedStatement.setInt(1, id);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+          while (resultSet.next()) {
+            list.add(memberDao.createMemberInstance(resultSet));
+          }
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return list;
+
+
   }
 
 

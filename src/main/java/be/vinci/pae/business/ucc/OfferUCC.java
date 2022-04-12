@@ -1,7 +1,9 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
+import java.util.ArrayList;
 
 public interface OfferUCC {
 
@@ -10,4 +12,8 @@ public interface OfferUCC {
   OfferDTO createOffer(ItemDTO item);
 
   boolean isLiked(int idItem, int idMember);
+
+  ArrayList<MemberDTO> interests(int idItem, int idMember);
+
+
 }
