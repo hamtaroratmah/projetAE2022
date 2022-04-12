@@ -79,6 +79,26 @@
   font-weight: bold;
 }
 
+#receptionPage {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-template-rows: repeat(auto-fill, 400px);
+  grid-gap: 3vw;
+  justify-content: center;
+}
+
+.receptionItems {
+  border-radius: 20px;
+  background-color: #E5BE10;
+}
+
+.receptionImage {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
 *, ::before, ::after {
   box-sizing: border-box;
   margin: 0;
@@ -97,11 +117,6 @@ img {
 
 .displayNone {
   display: none;
-}
-
-.receptionItems {
-  border: solid 1px black;
-  border-bottom: none;
 }
 
 /*# sourceMappingURL=main.css.map */

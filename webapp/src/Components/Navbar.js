@@ -4,14 +4,20 @@ import {getMember} from "../utils/functions/member";
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
   if (window.location.pathname === "/login") {
-    navbarWrapper.classList += " displayNone";
+    //todo FIXBUG navbar displayed in login page
+    if (navbarWrapper.classList.contains("displayNone")) {
+      console.log("bonsoir")
+      window.location.reload();
+    }
+    navbarWrapper.classList.add("displayNone");
+  } else {
+    navbarWrapper.classList.remove("displayNone");
   }
-  //todo faire un menu pour l'admin
   navbarWrapper.innerHTML = `
     <nav id="navbar">
        <p id="navbarTitle" data-uri="/">Donnamis</p>
        <button id="OfferNavbarButton">Offrir un objet</button>
-       <button id="profileNavbarButton" data-uri="/profile"></button>
+       <button id="profileNavbarButton" data-uri="/login"></button>
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
       <!--todo à ajouter dans le menu fait pour l'admin-->
 <!--       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en -->
@@ -30,7 +36,7 @@ const Navbar = async () => {
     logout.classList += " displayNone";
   } else {
     profileButton.innerText = "Connecté"
-    profileButton.setAttribute("data-uri", "/");
+    profileButton.setAttribute("data-uri", "/profile");
     let member = await getMember(token);
     profileButton.innerText = member.username;
   }

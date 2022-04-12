@@ -2,6 +2,7 @@
 @import "modules/variables";
 @import "pages/login";
 @import "pages/navbar";
+@import "pages/homePage";
 
 //html reset default style
 *, ::before, ::after {
@@ -22,9 +23,4 @@ img {
 
 .displayNone {
   display: none;
-}
-
-.receptionItems {
-  border: solid 1px black;
-  border-bottom: none;
 }
