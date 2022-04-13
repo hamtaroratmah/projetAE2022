@@ -128,6 +128,19 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    try {
+      dalServices.startTransaction();
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
 
   @Override
   public MemberDTO register(MemberDTO member) {
