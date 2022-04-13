@@ -7,15 +7,15 @@ const registerDiv = `
                 <form id="registerForm" class="loginRegisterContainer">
                     <h1 class="registerText">Donnamis</h1>
                     <div id="errorRegister"></div>
-                    <input class="inputForm fields" type="text" id="username" placeholder="Pseudo">
-                    <input class="inputForm fields" type="text" id="password" placeholder="Mot de passe">  
-                    <input class="inputForm fields" type="text" id="lastName" placeholder="Nom">
-                    <input class="inputForm fields" type="text" id="firstName" placeholder="Prénom">
-                    <input class="inputForm fields" type="text" id="street" placeholder="Rue">
-                    <input class="inputForm fields" type="text" id="buildingNumber" placeholder="Numéro de batiment">
-                     <input class="inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
-                     <input class="inputForm fields" type="text" id="postcode" placeholder="code postal">
-                     <input class="inputForm fields" type="text" id="city" placeholder="ville">
+                    <input type="text" id="username" placeholder="Pseudo">
+                    <input type="text" id="password" placeholder="Mot de passe">  
+                    <input type="text" id="lastName" placeholder="Nom">
+                    <input type="text" id="firstName" placeholder="Prénom">
+                    <input type="text" id="street" placeholder="Rue">
+                    <input type="text" id="buildingNumber" placeholder="Numéro de batiment">
+                    <input type="text" id="unitNumber" placeholder="numéro de boîte">
+                    <input type="text" id="postcode" placeholder="code postal">
+                    <input type="text" id="city" placeholder="ville">
                     <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="S'inscrire">
                 </form>

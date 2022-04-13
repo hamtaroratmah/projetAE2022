@@ -137,11 +137,12 @@ public class MemberUCCImpl implements MemberUCC {
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
       memberDao.insertMember(member);
-      dalServices.commitTransaction();
-      return member;
+      return (MemberDTO) member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
     }
   }
 
