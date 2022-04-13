@@ -1,7 +1,7 @@
 import Navbar from "../Components/Navbar";
 import {Redirect} from "../Router";
-import {getToken} from "../utils/token";
-import {getMember} from "../utils/member";
+import {getToken} from "../utils/functions/token";
+import {getMember} from "../utils/functions/member";
 
 const createDiv = `
         <div id="newItemPage">
