@@ -54,44 +54,44 @@ async function register(e) {
     const postcode = document.getElementById("postcode").value;
     const street = document.getElementById("street").value;
     const city = document.getElementById("city").value;
-    const errorLogin = document.getElementById("errorText");
-    errorLogin.innerHTML = "";
+    const errorRegister = document.getElementById("errorText");
+    errorRegister.innerHTML = "";
 
     //Verify the user entered all informations to log in and show an error message if not
     try {
         if (!username) {
-            errorLogin.innerHTML = "Enter a username";
+            errorRegister.innerHTML = "Enter a username";
             throw new Error("No username");
         } else if (!password) {
-            errorLogin.innerHTML = "Enter a password";
+            errorRegister.innerHTML = "Enter a password";
             throw new Error("No password");
         }
         else if (!firstName) {
-            errorLogin.innerHTML = "Enter a first name";
+            errorRegister.innerHTML = "Enter a first name";
             throw new Error("No first name");
         }
         else if (!lastName) {
-            errorLogin.innerHTML = "Enter a last name";
+            errorRegister.innerHTML = "Enter a last name";
             throw new Error("No last name");
         }
         else if (!buildingNumber) {
-            errorLogin.innerHTML = "Enter a building number";
+            errorRegister.innerHTML = "Enter a building number";
             throw new Error("No building number");
         }
         else if (!unitNumber) {
-            errorLogin.innerHTML = "Enter a unit number";
+            errorRegister.innerHTML = "Enter a unit number";
             throw new Error("No unit number");
         }
         else if (!postcode) {
-            errorLogin.innerHTML = "Enter a postcode";
+            errorRegister.innerHTML = "Enter a postcode";
             throw new Error("No postcode");
         }
         else if (!street) {
-            errorLogin.innerHTML = "Enter a street";
+            errorRegister.innerHTML = "Enter a street";
             throw new Error("No street");
         }
         else if (!city) {
-            errorLogin.innerHTML = "Enter a city";
+            errorRegister.innerHTML = "Enter a city";
             throw new Error("No city");
         }
 
