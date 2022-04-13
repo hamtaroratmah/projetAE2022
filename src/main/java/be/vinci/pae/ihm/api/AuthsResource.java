@@ -1,7 +1,6 @@
 package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.dtos.AddressImpl;
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -63,8 +62,8 @@ public class AuthsResource {
   public String register(JsonNode json) {
     if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
             "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
-            || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber") || !json.hasNonNull(
-            "postcode") || !json.hasNonNull("city")) {
+            || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber")
+            || !json.hasNonNull("postcode") || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
