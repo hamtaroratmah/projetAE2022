@@ -215,13 +215,6 @@ from pae.items it,
      pae.members me
 order by me.first_name, it.description;
 
-SELECT * FROM pae.items;
-SELECT * FROM pae.members;
-
-
-
-
-
 INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,' ','objet test 2','lubdi et mardi','published',2)
         RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
 
