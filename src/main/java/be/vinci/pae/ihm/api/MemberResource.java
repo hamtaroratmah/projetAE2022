@@ -105,7 +105,7 @@ public class MemberResource {
    *
    * @return the list
    */
-  @POST
+  @GET
   @Path("list")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -121,7 +121,7 @@ public class MemberResource {
    * @return the list
    */
   @GET
-  @Path("denied")
+  @Path("listDenied")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
@@ -129,5 +129,18 @@ public class MemberResource {
     return memberUCC.listDeniedUsers();
   }
 
+  /**
+   * get the list of pending members.
+   *
+   * @return the list
+   */
+  @GET
+  @Path("listPending")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> listPendingUsers() {
+    System.out.println("lister les utilisateur dont l inscription est en attente");
+    return memberUCC.listPendingUsers();
+  }
 
 }

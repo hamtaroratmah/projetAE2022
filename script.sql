@@ -227,3 +227,5 @@ INSERT  INTO pae.offers (date_offer,id_item) VALUES ('2022-04-07 +02',1) RETURNI
 SELECT * FROM pae.members;
 
 SELECT * FROM pae.interests WHERE id_item=1 ;
+
+SELECT * FROM pae.members WHERE state= 'denied';
