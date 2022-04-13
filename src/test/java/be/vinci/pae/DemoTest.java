@@ -113,7 +113,7 @@ public class DemoTest {
   public void register() {
     assertAll(
         () -> assertEquals(member, memberUCC.register(member)),
-        () -> Mockito.verify(member, Mockito.times(2)).hashPassword(member.getPassword()),
+        () -> Mockito.verify(member, Mockito.times(1)).hashPassword(member.getPassword()),
         () -> Mockito.verify(memberDao).insertMember(member)
     );
   }
