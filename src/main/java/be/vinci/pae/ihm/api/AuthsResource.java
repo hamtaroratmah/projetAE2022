@@ -1,7 +1,6 @@
 package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.domain.dtos.AddressImpl;
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -60,16 +59,11 @@ public class AuthsResource {
   @Path("register")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean register(JsonNode json) {
-    if (!json.hasNonNull("username")
-        || !json.hasNonNull("password")
-        || !json.hasNonNull("firstName")
-        || !json.hasNonNull("lastName")
-        || !json.hasNonNull("street")
-        || !json.hasNonNull("buildingNumber")
-        || !json.hasNonNull("unitNumber")
-        || !json.hasNonNull("postcode")
-        || !json.hasNonNull("city")) {
+  public String register(JsonNode json) {
+    if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
+            "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
+            || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber")
+            || !json.hasNonNull("postcode") || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
@@ -77,7 +71,7 @@ public class AuthsResource {
     }
     if (json.get("password").asText().isBlank()) {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
-          Response.Status.BAD_REQUEST);
+              Response.Status.BAD_REQUEST);
     }
     if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
@@ -90,15 +84,15 @@ public class AuthsResource {
     }
     if (json.get("buildingNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
-          Response.Status.BAD_REQUEST);
+              Response.Status.BAD_REQUEST);
     }
     if (json.get("unitNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
-          Response.Status.BAD_REQUEST);
+              Response.Status.BAD_REQUEST);
     }
     if (json.get("postcode").asText().isBlank()) {
       throw new WebApplicationException("Le code postale ne peut être vide",
-          Response.Status.BAD_REQUEST);
+              Response.Status.BAD_REQUEST);
     }
     if (json.get("city").asText().isBlank()) {
       throw new WebApplicationException("La ville ne peut être vide", Response.Status.BAD_REQUEST);
@@ -114,16 +108,13 @@ public class AuthsResource {
     // create the member
     MemberDTO member = domainFactory.getMember();
     member.setAddress(addressImpl);
-    member.setUsername(json.get("username")
-        .asText().toLowerCase().replace(" ", ""));
+    member.setUsername(json.get("username").asText().toLowerCase().replace(" ", ""));
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
-    System.out.println(member.getCallNumber());
-    Member newMember = (Member) member;
     // create token
-    memberUCC.register(newMember);
-    return true;
+    MemberDTO publicUser = memberUCC.register(member);
+    return createToken(publicUser.getIdMember());
   }
 
   private String createToken(int id) {

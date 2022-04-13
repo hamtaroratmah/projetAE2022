@@ -109,6 +109,7 @@ public class DemoTest {
   //    );
   //  }
 
+  /*
   @Test
   public void register() {
     assertAll(
@@ -117,7 +118,7 @@ public class DemoTest {
         () -> Mockito.verify(memberDao).insertMember(member)
     );
   }
-
+*/
   @DisplayName("Tests ItemUCC")
   @Test
   public void getLastOfferedItems() {

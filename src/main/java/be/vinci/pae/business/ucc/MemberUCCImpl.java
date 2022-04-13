@@ -133,15 +133,19 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO register(MemberDTO member) {
     try {
       dalServices.startTransaction();
+      if (getOneByUsername(member.getUsername()) != null) {
+        throw new IllegalArgumentException("L'utilisateur existe déjà !");
+      }
       Member memberBiz = (Member) member;
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
       memberDao.insertMember(member);
-      dalServices.commitTransaction();
-      return member;
+      return (MemberDTO) member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
+    } finally {
+      dalServices.commitTransaction();
     }
   }
 
