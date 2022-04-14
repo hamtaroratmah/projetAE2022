@@ -1,5 +1,6 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.exceptions.FatalException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public interface MemberUCC {
 
   MemberDTO denyRegistration(String username);
 
-  MemberDTO register(MemberDTO member);
+  MemberDTO register(MemberDTO member, AddressDTO address);
 
   Object getOneByUsername(String username);
 }

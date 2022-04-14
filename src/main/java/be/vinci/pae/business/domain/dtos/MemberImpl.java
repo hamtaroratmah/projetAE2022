@@ -5,13 +5,14 @@ import static org.mindrot.jbcrypt.BCrypt.gensalt;
 import static org.mindrot.jbcrypt.BCrypt.hashpw;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.utils.Views;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonView;
 
-@JsonInclude(Include.NON_DEFAULT)
+@JsonInclude(Include.NON_NULL)
 // ignore all null fields in order to avoid sending props not linked to a JSON view
 public class MemberImpl implements MemberDTO, Member {
 
@@ -39,7 +40,8 @@ public class MemberImpl implements MemberDTO, Member {
   private int countObjectGiven;
   @JsonView(Views.Public.class)
   private int countObjectGot = 0;
-  private AddressImpl address;
+  @JsonView(Views.Public.class)
+  private AddressDTO address;
 
   /**
    * Empty constructor.
@@ -189,11 +191,11 @@ public class MemberImpl implements MemberDTO, Member {
     this.countObjectGot = countObjectGot;
   }
 
-  public AddressImpl getAddress() {
+  public AddressDTO getAddress() {
     return address;
   }
 
-  public void setAddress(AddressImpl address) {
+  public void setAddress(AddressDTO address) {
     this.address = address;
   }
 

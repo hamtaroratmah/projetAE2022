@@ -1,6 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -130,13 +131,13 @@ public class MemberUCCImpl implements MemberUCC {
 
 
   @Override
-  public MemberDTO register(MemberDTO member) {
+  public MemberDTO register(MemberDTO member, AddressDTO address) {
     try {
       dalServices.startTransaction();
       Member memberBiz = (Member) member;
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
-      memberDao.insertMember(member);
+      memberDao.register(member, address);
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {

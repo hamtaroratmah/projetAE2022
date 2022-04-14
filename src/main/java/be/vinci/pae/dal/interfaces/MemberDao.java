@@ -1,6 +1,8 @@
 package be.vinci.pae.dal.interfaces;
 
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public interface MemberDao {
 
   MemberDTO denyRegistration(String username);
 
+  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException;
 
-  void insertMember(MemberDTO member);
+  void register(MemberDTO member, AddressDTO address);
 }

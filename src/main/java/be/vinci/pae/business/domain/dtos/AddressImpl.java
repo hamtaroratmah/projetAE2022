@@ -8,7 +8,6 @@ public class AddressImpl implements AddressDTO {
   private String street;
   private int buildingNumber;
   private int postcode;
-  private String commune;
   private String city;
   private int unitNumber;
 
@@ -55,16 +54,6 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
-  public String getCommune() {
-    return commune;
-  }
-
-  @Override
-  public void setCommune(String commune) {
-    this.commune = commune;
-  }
-
-  @Override
   public String getCity() {
     return city;
   }
@@ -87,22 +76,20 @@ public class AddressImpl implements AddressDTO {
   @Override
   public String toString() {
     return "AddressesImpl{"
-      + "id_address='"
-      + idAddress
-      + '\''
-      + ", building_number='"
-      + buildingNumber
-      + '\''
-      + ", postcode="
-      + postcode
-      + ", commune='"
-      + commune
-      + '\''
-      + ", city='"
-      + city
-      + '\''
-      + ", unit_number="
-      + unitNumber
-      + '}';
+        + "id_address='"
+        + idAddress
+        + '\''
+        + ", building_number='"
+        + buildingNumber
+        + '\''
+        + ", postcode="
+        + postcode
+        + '\''
+        + ", city='"
+        + city
+        + '\''
+        + ", unit_number="
+        + unitNumber
+        + '}';
   }
 }

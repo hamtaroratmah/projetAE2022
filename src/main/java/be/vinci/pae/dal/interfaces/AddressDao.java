@@ -5,4 +5,6 @@ import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 public interface AddressDao {
 
   AddressDTO getAddress(int id);
+
+  int insertAddress(AddressDTO adress);
 }

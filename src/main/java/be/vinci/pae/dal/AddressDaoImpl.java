@@ -25,19 +25,47 @@ public class AddressDaoImpl implements AddressDao {
   // get an addresse by his id
   @Override
   public AddressDTO getAddress(int id) {
-    AddressDTO address = null;
-    PreparedStatement query = null;
+    AddressDTO address;
+    PreparedStatement query;
     try {
       query = services.getPreparedStatement(
-              "SELECT id_address, street, building_number,"
-                      + " postcode, commune, city, unit_number"
-                      + " FROM pae.addresses "
-                      + "WHERE id_address = ?");
+          "SELECT id_address, street, building_number,"
+              + " postcode, city, unit_number"
+              + " FROM pae.addresses "
+              + "WHERE id_address = ?");
+      query.setInt(1, id);
       address = getAdressFromDatabase(query);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
     return address;
+  }
+
+  @Override
+  public int insertAddress(AddressDTO address) {
+    PreparedStatement queryAddress;
+    int idAddress = -1;
+    try {
+      queryAddress = services.getPreparedStatement(
+          "INSERT INTO pae.addresses"
+              + "( street, building_number, postcode, city,unit_number)"
+              + " VALUES (?,?,?,?,?) RETURNING id_address;"
+      );
+      queryAddress.setString(1, address.getStreet());
+      queryAddress.setInt(2, address.getBuildingNumber());
+      queryAddress.setInt(3, address.getPostcode());
+      queryAddress.setString(4, address.getCity());
+      queryAddress.setInt(5, address.getUnitNumber());
+
+      ResultSet rs = queryAddress.executeQuery();
+      if (rs.next()) {
+        idAddress = rs.getInt(1);
+      }
+
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return idAddress;
   }
 
 
@@ -48,13 +76,12 @@ public class AddressDaoImpl implements AddressDao {
     if (!resultSetAdress.next()) {
       throw new WebApplicationException("Address not found");
     }
-    address.setIdAddress(resultSetAdress.getInt(1));
-    address.setStreet(resultSetAdress.getString(2));
-    address.setBuildingNumber(resultSetAdress.getInt(3));
-    address.setPostcode(resultSetAdress.getInt(4));
-    address.setCommune(resultSetAdress.getString(5));
-    address.setCity(resultSetAdress.getString(6));
-    address.setUnitNumber(resultSetAdress.getInt(7));
+    address.setIdAddress(resultSetAdress.getInt("id_address"));
+    address.setStreet(resultSetAdress.getString("street"));
+    address.setBuildingNumber(resultSetAdress.getInt("building_number"));
+    address.setPostcode(resultSetAdress.getInt("postcode"));
+    address.setCity(resultSetAdress.getString("city"));
+    address.setUnitNumber(resultSetAdress.getInt("unit_number"));
 
     resultSetAdress.close();
     return address;

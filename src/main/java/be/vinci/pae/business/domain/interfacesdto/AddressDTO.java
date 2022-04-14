@@ -18,10 +18,6 @@ public interface AddressDTO {
 
   void setPostcode(int postcode);
 
-  String getCommune();
-
-  void setCommune(String commune);
-
   String getCity();
 
   void setCity(String city);

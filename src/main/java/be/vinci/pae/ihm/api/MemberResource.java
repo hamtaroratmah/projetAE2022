@@ -3,6 +3,7 @@ package be.vinci.pae.ihm.api;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
+import be.vinci.pae.utils.Json;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 @Path("/members")
 public class MemberResource {
 
-
+  private final Json<MemberDTO> jsonDB = new Json<>(MemberDTO.class);
   @Inject
   private MemberUCC memberUCC;
 
@@ -33,6 +34,7 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO getMember(@Context ContainerRequestContext requestContext) {
+
     MemberDTO member = (MemberDTO) requestContext.getProperty("user");
     if (member == null) {
       throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
@@ -76,7 +78,7 @@ public class MemberResource {
     System.out.println(username);
     System.out.println("test de confirm");
     boolean isAdmin = json.get("isAdmin").asBoolean();
-    return memberUCC.confirmRegistration(username, isAdmin);
+    return jsonDB.filterPublicJsonView(memberUCC.confirmRegistration(username, isAdmin));
   }
 
   /**
@@ -97,7 +99,7 @@ public class MemberResource {
 
     System.out.println(username);
     System.out.println("test de deny");
-    return memberUCC.denyRegistration(username);
+    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username));
   }
 
   /**
@@ -111,7 +113,7 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
     System.out.println("lister les utilisateur donc l inscription est en attente");
-    return memberUCC.listPendingUsers();
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
   }
 
   /**
@@ -125,8 +127,6 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
     System.out.println("lister les utilisateur donc l inscription est refusee");
-    return memberUCC.listDeniedUsers();
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
   }
-
-
 }

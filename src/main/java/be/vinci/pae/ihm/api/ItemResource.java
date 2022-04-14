@@ -30,19 +30,6 @@ public class ItemResource {
   @Inject
   DomainFactory domainFactory;
 
-
-  /**
-   * Get offered items from databased sorted by date_offer or type.
-   */
-  @GET
-  @Path("/getLastOfferedItems")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @Authorize
-  public List<ItemDTO> getLastOfferedItems() {
-    return itemUcc.getLastOfferedItems();
-  }
-
   /**
    * Get offered items from databased sorted by date_offer or type.
    */
@@ -67,7 +54,7 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
-    List<ItemDTO> list = itemUcc.getLastOfferedItems();
+    List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
     if (list.size() >= 4) {
       return list.subList(0, 2);
     }
