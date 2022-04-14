@@ -2,9 +2,9 @@ package be.vinci.pae.business.domain.interfacesdto;
 
 public interface TypeDTO {
 
-  int getIdType();
+  Integer getIdType();
 
-  void setIdType(int idType);
+  void setIdType(Integer idType);
 
   String getType();
 

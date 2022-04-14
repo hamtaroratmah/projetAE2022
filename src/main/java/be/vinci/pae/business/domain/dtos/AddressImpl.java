@@ -1,15 +1,23 @@
 package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class AddressImpl implements AddressDTO {
 
-  private int idAddress;
+  @JsonView(Views.Public.class)
+  private Integer idAddress;
+  @JsonView(Views.Public.class)
   private String street;
-  private int buildingNumber;
-  private int postcode;
+  @JsonView(Views.Public.class)
+  private Integer buildingNumber;
+  @JsonView(Views.Public.class)
+  private Integer postcode;
+  @JsonView(Views.Public.class)
   private String city;
-  private int unitNumber;
+  @JsonView(Views.Public.class)
+  private Integer unitNumber;
 
   public AddressImpl() {
 
@@ -24,32 +32,32 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
-  public int getIdAddress() {
+  public Integer getIdAddress() {
     return idAddress;
   }
 
   @Override
-  public void setIdAddress(int idAddress) {
+  public void setIdAddress(Integer idAddress) {
     this.idAddress = idAddress;
   }
 
   @Override
-  public int getBuildingNumber() {
+  public Integer getBuildingNumber() {
     return buildingNumber;
   }
 
   @Override
-  public void setBuildingNumber(int buildingNumber) {
+  public void setBuildingNumber(Integer buildingNumber) {
     this.buildingNumber = buildingNumber;
   }
 
   @Override
-  public int getPostcode() {
+  public Integer getPostcode() {
     return postcode;
   }
 
   @Override
-  public void setPostcode(int postcode) {
+  public void setPostcode(Integer postcode) {
     this.postcode = postcode;
   }
 
@@ -64,12 +72,12 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
-  public int getUnitNumber() {
+  public Integer getUnitNumber() {
     return unitNumber;
   }
 
   @Override
-  public void setUnitNumber(int unitNumber) {
+  public void setUnitNumber(Integer unitNumber) {
     this.unitNumber = unitNumber;
   }
 

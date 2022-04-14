@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 public interface OfferDTO {
 
-  int getIdOffer();
+  Integer getIdOffer();
 
-  void setIdOffer(int idOffer);
+  void setIdOffer(Integer idOffer);
 
   LocalDate getDateOffer();
 
   void setDateOffer(LocalDate dateOffer);
 
-  int getIdItem();
+  Integer getIdItem();
 
-  void setIdItem(int idItem);
+  void setIdItem(Integer idItem);
 
 }

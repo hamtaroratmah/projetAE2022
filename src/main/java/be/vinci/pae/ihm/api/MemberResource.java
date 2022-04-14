@@ -38,7 +38,7 @@ public class MemberResource {
     if (member == null) {
       throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
     }
-    return member;
+    return jsonDB.filterPublicJsonView(member);
   }
 
   /**

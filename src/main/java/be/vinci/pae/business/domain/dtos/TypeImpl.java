@@ -1,10 +1,14 @@
 package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
+import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class TypeImpl implements TypeDTO {
 
-  private int idType;
+  @JsonView(Views.Public.class)
+  private Integer idType;
+  @JsonView(Views.Public.class)
   private String type;
 
   /**
@@ -14,12 +18,12 @@ public class TypeImpl implements TypeDTO {
   }
 
   @Override
-  public int getIdType() {
+  public Integer getIdType() {
     return idType;
   }
 
   @Override
-  public void setIdType(int idType) {
+  public void setIdType(Integer idType) {
     if (idType <= 0) {
       throw new IllegalArgumentException();
     }

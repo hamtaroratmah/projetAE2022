@@ -2,9 +2,9 @@ package be.vinci.pae.business.domain.interfacesdto;
 
 public interface ItemDTO {
 
-  int getIdItem();
+  Integer getIdItem();
 
-  void setIdItem(int idItem);
+  void setIdItem(Integer idItem);
 
   TypeDTO getType();
 
@@ -26,9 +26,9 @@ public interface ItemDTO {
 
   void setItemCondition(String itemCondition);
 
-  int getRating();
+  Integer getRating();
 
-  void setRating(int rating);
+  void setRating(Integer rating);
 
   MemberDTO getOfferingMember();
 
