@@ -69,7 +69,6 @@ public class MemberDaoImpl implements MemberDao {
     return member;
   }
 
-
   /**
    * Insert a member in the dataBase from information given in the parameter and execute.
    *
@@ -168,13 +167,10 @@ public class MemberDaoImpl implements MemberDao {
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, username);
       try (ResultSet rs = ps.executeQuery()) {
-
         if (rs.next()) {
           member = createMemberInstance(rs);
           return member;
         }
-
-
       }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());

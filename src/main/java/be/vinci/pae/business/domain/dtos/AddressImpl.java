@@ -30,7 +30,7 @@ public class AddressImpl implements AddressDTO {
 
   @Override
   public void setIdAddress(int idAddress) {
-
+    this.idAddress = idAddress;
   }
 
   @Override

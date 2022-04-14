@@ -187,16 +187,10 @@ public class ItemDaoImpl implements ItemDao {
       ps.setString(3, newItem.getDescription());
       ps.setString(4, newItem.getAvailabilities());
       ps.setString(5, "published");
-
       ps.setInt(6, newItem.getOfferingMember().getIdMember());
-      System.out.println(ps);
-
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           item = createItemInstance(rs);
-          System.out.println("ici" + item.getIdItem());
-          System.out.println("on passe par ici");
-
           return item;
         }
       }
@@ -234,7 +228,6 @@ public class ItemDaoImpl implements ItemDao {
     String query = "INSERT INTO pae.types (type) VALUES (?) RETURNING id_type  ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, type);
-
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           return rs.getInt(1);
@@ -252,7 +245,6 @@ public class ItemDaoImpl implements ItemDao {
     ItemDTO item = domainFactory.getItem();
     TypeDTO type = domainFactory.getType();
     item.setIdItem(rs.getInt(1));
-    System.out.println("testIci" + item.getIdItem());
     type.setIdType(rs.getInt(2));
     item.setType(type);
     item.setPhoto(rs.getString(3));
@@ -262,10 +254,6 @@ public class ItemDaoImpl implements ItemDao {
     item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;
-
-
   }
-
-
 }
 

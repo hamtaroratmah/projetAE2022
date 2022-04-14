@@ -32,8 +32,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
   public void filter(ContainerRequestContext requestContext) {
     String token = requestContext.getHeaderString("Authorization");
     if (token == null) {
-      System.out.println("A token is needed to access this resource");
-      return;
+      throw new TokenDecodingException("A token is needed to access this resource");
     }
     DecodedJWT decodedToken;
     try {

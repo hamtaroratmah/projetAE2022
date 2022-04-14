@@ -34,7 +34,6 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO getMember(@Context ContainerRequestContext requestContext) {
-
     MemberDTO member = (MemberDTO) requestContext.getProperty("user");
     if (member == null) {
       throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
@@ -75,8 +74,6 @@ public class MemberResource {
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    System.out.println(username);
-    System.out.println("test de confirm");
     boolean isAdmin = json.get("isAdmin").asBoolean();
     return jsonDB.filterPublicJsonView(memberUCC.confirmRegistration(username, isAdmin));
   }
@@ -96,9 +93,6 @@ public class MemberResource {
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-
-    System.out.println(username);
-    System.out.println("test de deny");
     return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username));
   }
 
@@ -112,7 +106,6 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
-    System.out.println("lister les utilisateur donc l inscription est en attente");
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
   }
 
@@ -126,7 +119,6 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
-    System.out.println("lister les utilisateur donc l inscription est refusee");
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
   }
 }

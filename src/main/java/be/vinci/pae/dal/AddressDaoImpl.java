@@ -56,12 +56,10 @@ public class AddressDaoImpl implements AddressDao {
       queryAddress.setInt(3, address.getPostcode());
       queryAddress.setString(4, address.getCity());
       queryAddress.setInt(5, address.getUnitNumber());
-
       ResultSet rs = queryAddress.executeQuery();
       if (rs.next()) {
         idAddress = rs.getInt(1);
       }
-
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
@@ -72,7 +70,6 @@ public class AddressDaoImpl implements AddressDao {
   private AddressDTO getAdressFromDatabase(PreparedStatement query) throws SQLException {
     AddressDTO address = domainFactory.getAddress();
     ResultSet resultSetAdress = query.executeQuery();
-
     if (!resultSetAdress.next()) {
       throw new WebApplicationException("Address not found");
     }
@@ -82,7 +79,6 @@ public class AddressDaoImpl implements AddressDao {
     address.setPostcode(resultSetAdress.getInt("postcode"));
     address.setCity(resultSetAdress.getString("city"));
     address.setUnitNumber(resultSetAdress.getInt("unit_number"));
-
     resultSetAdress.close();
     return address;
   }

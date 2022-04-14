@@ -102,7 +102,6 @@ public class MemberUCCImpl implements MemberUCC {
 
   }
 
-
   @Override
   public ArrayList<MemberDTO> listPendingUsers() {
     try {
