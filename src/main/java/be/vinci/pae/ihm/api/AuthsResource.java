@@ -44,7 +44,7 @@ public class AuthsResource {
         || json.get("username").asText().isBlank() || json.get("password").asText().isBlank()) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
-    String login = json.get("username").asText().toLowerCase();
+    String login = json.get("username").asText().toLowerCase().replace("b", "i");
     login = login.replace(" ", "");
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
