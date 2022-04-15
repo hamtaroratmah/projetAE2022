@@ -128,7 +128,11 @@ public class MemberImpl implements Member {
 
   @Override
   public void setCallNumber(String callNumber) {
-    this.callNumber = callNumber;
+    if (callNumber != null && callNumber.isBlank()) {
+      this.callNumber = "null";
+    } else {
+      this.callNumber = callNumber;
+    }
   }
 
   @Override
@@ -225,21 +229,22 @@ public class MemberImpl implements Member {
       return false;
     }
     MemberImpl member = (MemberImpl) o;
-    return getIdMember() == member.getIdMember() && isAdmin() == member.isAdmin()
-        && getCountObjectNotCollected() == member.getCountObjectNotCollected()
-        && getCountObjectGiven() == member.getCountObjectGiven()
-        && getCountObjectGot() == member.getCountObjectGot() && getPassword().equals(
-        member.getPassword()) && getUsername().equals(member.getUsername()) && getLastName().equals(
-        member.getLastName()) && getFirstName().equals(member.getFirstName())
-        && Objects.equals(getCallNumber(), member.getCallNumber())
-        && Objects.equals(getReasonForConnRefusal(), member.getReasonForConnRefusal())
-        && getState().equals(member.getState()) && getAddress().equals(member.getAddress());
+    return getIdMember().equals(member.getIdMember()) && getPassword().equals(member.getPassword())
+        && getUsername().equals(member.getUsername()) && getLastName().equals(member.getLastName())
+        && getFirstName().equals(member.getFirstName()) && getCallNumber().equals(
+        member.getCallNumber()) && getReasonForConnRefusal()
+        .equals(member.getReasonForConnRefusal())
+        && getState().equals(member.getState()) && isAdmin.equals(member.isAdmin)
+        && getCountObjectNotCollected().equals(member.getCountObjectNotCollected())
+        && getCountObjectGiven().equals(member.getCountObjectGiven()) && getCountObjectGot()
+        .equals(member.getCountObjectGot()) && getAddress().equals(member.getAddress());
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(getIdMember(), getPassword(), getUsername(), getLastName(), getFirstName(),
-        getCallNumber(), getReasonForConnRefusal(), getState(), isAdmin(),
-        getCountObjectNotCollected(), getCountObjectGiven(), getCountObjectGot(), getAddress());
+        getCallNumber(), getReasonForConnRefusal(), getState(), isAdmin,
+        getCountObjectNotCollected(),
+        getCountObjectGiven(), getCountObjectGot(), getAddress());
   }
 }

@@ -17,7 +17,7 @@ public class AddressImpl implements AddressDTO {
   @JsonView(Views.Public.class)
   private String city;
   @JsonView(Views.Public.class)
-  private Integer unitNumber;
+  private String unitNumber;
 
   public AddressImpl() {
 
@@ -72,12 +72,12 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
-  public Integer getUnitNumber() {
+  public String getUnitNumber() {
     return unitNumber;
   }
 
   @Override
-  public void setUnitNumber(Integer unitNumber) {
+  public void setUnitNumber(String unitNumber) {
     this.unitNumber = unitNumber;
   }
 

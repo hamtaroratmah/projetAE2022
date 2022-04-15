@@ -23,6 +23,7 @@ public interface MemberUCC {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
+  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
 
   ArrayList<MemberDTO> listPendingUsers();
 

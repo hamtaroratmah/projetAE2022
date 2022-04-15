@@ -55,7 +55,7 @@ public class AddressDaoImpl implements AddressDao {
       queryAddress.setInt(2, address.getBuildingNumber());
       queryAddress.setInt(3, address.getPostcode());
       queryAddress.setString(4, address.getCity());
-      queryAddress.setInt(5, address.getUnitNumber());
+      queryAddress.setString(5, address.getUnitNumber());
       ResultSet rs = queryAddress.executeQuery();
       if (rs.next()) {
         idAddress = rs.getInt(1);
@@ -64,6 +64,29 @@ public class AddressDaoImpl implements AddressDao {
       throw new FatalException(e.getMessage());
     }
     return idAddress;
+  }
+
+  @Override
+  public AddressDTO updateAddress(AddressDTO oldAddress, AddressDTO newAddress) {
+    String stringQuery = " UPDATE pae.addresses " +
+        " SET street = ?" +
+        ", city = ?" +
+        ", unit_number = ?" +
+        ", building_number = ?" +
+        ", postcode = ?" +
+        " WHERE id_address = ? "
+        + "RETURNING *";
+    try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
+      query.setString(1, newAddress.getStreet());
+      query.setString(2, newAddress.getCity());
+      query.setString(3, newAddress.getUnitNumber());
+      query.setInt(4, newAddress.getBuildingNumber());
+      query.setInt(5, newAddress.getPostcode());
+      query.setInt(6, oldAddress.getIdAddress());
+      return getAdressFromDatabase(query);
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
   }
 
 
@@ -78,7 +101,7 @@ public class AddressDaoImpl implements AddressDao {
     address.setBuildingNumber(resultSetAdress.getInt("building_number"));
     address.setPostcode(resultSetAdress.getInt("postcode"));
     address.setCity(resultSetAdress.getString("city"));
-    address.setUnitNumber(resultSetAdress.getInt("unit_number"));
+    address.setUnitNumber(resultSetAdress.getString("unit_number"));
     resultSetAdress.close();
     return address;
   }

@@ -21,6 +21,8 @@ public interface MemberDao {
 
   MemberDTO getMember(int id) throws SQLException;
 
+  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
+  
   ArrayList<MemberDTO> listUsersByState(String state);
 
   MemberDTO denyRegistration(String username);

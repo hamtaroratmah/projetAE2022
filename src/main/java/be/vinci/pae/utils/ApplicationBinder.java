@@ -1,6 +1,5 @@
 package be.vinci.pae.utils;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
@@ -40,13 +39,11 @@ public class ApplicationBinder extends AbstractBinder {
 //    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
 //        .in(Singleton.class);
 
-    bind(OfferImpl.class).to(Offer.class).in(Singleton.class);
     bind(OfferUCCImpl.class).to(OfferUCC.class).in(Singleton.class);
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
 //    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
 //        .in(Singleton.class);
     //Address
-    bind(AddressImpl.class).to(Address.class).in(Singleton.class);
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
         .in(Singleton.class);

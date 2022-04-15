@@ -90,5 +90,4 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       throw new FatalException(e.getMessage());
     }
   }
-
 }

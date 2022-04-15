@@ -1,4 +1,4 @@
-import {getMember} from "../utils/functions/member";
+import {getMember, updateMember} from "../utils/functions/member";
 import {getToken} from "../utils/functions/token";
 
 let page = `
@@ -36,33 +36,47 @@ const ProfilePage = async () => {
     <input type="text" class="field" id="unitNumber" value="${address.unitNumber}">
     <button type="submit" id="updateButton">Modifier mes informations</button> 
  `;
+  console.log(member)
   main.innerHTML += profile;
   const button = document.querySelector("#updateButton");
-  button.addEventListener("click", () => {
-    let newMember = new member;
-
-    let newAddress = new address;
-
-    newMember.username = document.querySelector("#username").value;
-    newMember.lastName = document.querySelector("#lastName").value;
-    newMember.firstName = document.querySelector("#firstName").value;
-    newMember.password = document.querySelector("#password").value;
-    newMember.callNumber = document.querySelector("#callNumber").value;
-
-    newAddress.street = document.querySelector("#street").value;
-    newAddress.buildingNumber = document.querySelector("#buildingNumber").value;
-    newAddress.postcode = document.querySelector("#postcode").value;
-    newAddress.city = document.querySelector("#city").value;
-    newAddress.unitNumber = document.querySelector("#unitNumber").value;
-    newMember.address = newAddress;
-    console.log(JSON.stringify(newMember))
-    console.log(JSON.stringify(member))
-    if (JSON.stringify(newMember) !== JSON.stringify(member)) {
+  button.addEventListener("click", async () => {
+    if (
+        member.password !== document.querySelector("#password").value ||
+        member.username !== document.querySelector("#username").value ||
+        member.lastName !== document.querySelector("#lastName").value ||
+        member.firstName !== document.querySelector("#firstName").value ||
+        member.callNumber !== document.querySelector("#callNumber").value ||
+        address.street !== document.querySelector("#street").value ||
+        address.buildingNumber !== parseInt(
+            document.querySelector("#buildingNumber").value) ||
+        address.postcode !== parseInt(
+            document.querySelector("#postcode").value) ||
+        address.city !== document.querySelector("#city").value ||
+        address.unitNumber !== parseInt(
+            document.querySelector("#unitNumber").value)
+    ) {
+      member.password = document.querySelector("#password").value;
+      member.username = document.querySelector("#username").value;
+      member.lastName = document.querySelector("#lastName").value;
+      member.firstName = document.querySelector("#firstName").value;
+      member.callNumber = document.querySelector("#callNumber").value;
+      address.street = document.querySelector("#street").value;
+      address.buildingNumber = parseInt(
+          document.querySelector("#buildingNumber").value);
+      address.postcode = parseInt(
+          document.querySelector("#postcode").value);
+      address.city = document.querySelector("#city").value;
+      address.unitNumber = parseInt(
+          document.querySelector("#unitNumber").value);
+      member.address = address;
+      console.log(member);
+      await updateMember(member);
+      console.log("");
       console.log("fetch à venir");
     } else {
-      console.log("égal")
+      console.log("égal");
     }
-    // updateMember(member);
+
   });
 }
 

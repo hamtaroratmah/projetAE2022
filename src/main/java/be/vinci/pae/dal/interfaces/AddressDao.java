@@ -6,5 +6,7 @@ public interface AddressDao {
 
   AddressDTO getAddress(int id);
 
-  int insertAddress(AddressDTO adress);
+  int insertAddress(AddressDTO address);
+
+  AddressDTO updateAddress(AddressDTO address, AddressDTO address1);
 }

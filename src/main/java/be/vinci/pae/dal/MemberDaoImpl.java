@@ -37,7 +37,7 @@ public class MemberDaoImpl implements MemberDao {
         "SELECT id_member, password, username,"
             + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
             + " state, count_object_not_collected, count_object_given, count_object_got, address"
-            + " FROM pae.members " + "WHERE username = ?")) {
+            + " FROM pae.members WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
     } catch (SQLException e) {
@@ -70,6 +70,34 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   /**
+   * Update member's information.
+   */
+  public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
+    String stringQuery = "UPDATE pae.members " +
+        "SET password = ?" +
+        ", username = ?" +
+        ", last_name = ?" +
+        ", first_name = ?" +
+        ", call_number = ?" +
+        " WHERE id_member = ?"
+        + "RETURNING *";
+    try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
+      query.setString(1, newMember.getPassword());
+      query.setString(2, newMember.getUsername());
+      query.setString(3, newMember.getLastName());
+      query.setString(4, newMember.getFirstName());
+      query.setString(5, newMember.getCallNumber());
+      query.setInt(6, oldMember.getIdMember());
+      System.out.println(query);
+      MemberDTO member = getMemberFromDataBase(query);
+      member.setAddress(addressDao.updateAddress(oldMember.getAddress(), newMember.getAddress()));
+      return member;
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  /**
    * Insert a member in the dataBase from information given in the parameter and execute.
    *
    * @param member to insert
@@ -79,9 +107,9 @@ public class MemberDaoImpl implements MemberDao {
     try {
       queryMember = services.getPreparedStatement(
           "INSERT INTO pae.members"
-              + "(password, username, last_name, first_name, address, call_number, isadmin,\n"
-              + " reason_for_conn_refusal, state)\n"
-              + "VALUES (?,?,?,?,?,?,?,?,?);"
+              + "(password, username, last_name, first_name, address, call_number, "
+              + " reason_for_conn_refusal, state) "
+              + "VALUES (?,?,?,?,?,?,?,?);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -90,9 +118,8 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(4, member.getFirstName());
       queryMember.setInt(5, addressDao.insertAddress(address));
       queryMember.setString(6, member.getCallNumber());
-      queryMember.setBoolean(7, member.isAdmin());
-      queryMember.setString(8, member.getReasonForConnRefusal());
-      queryMember.setString(9, member.getState());
+      queryMember.setString(7, member.getReasonForConnRefusal());
+      queryMember.setString(8, member.getState());
 
       queryMember.executeUpdate();
     } catch (SQLException e) {

@@ -259,4 +259,18 @@ SELECT id_member,
        count_object_got,
        address
 FROM pae.members
-WHERE id_member = 3
+WHERE id_member = 3;
+
+UPDATE pae.members
+SET password    = '$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW',
+    username    = 'quentin659',
+    last_name   = 'Garwig',
+    first_name  = 'Quentin',
+    call_number = 'null'
+WHERE id_member = 2;
+
+SELECT *
+FROm pae.members m,
+     pae.addresses a
+WHERE m.id_member = 10
+  AND a.id_address = m.address;

@@ -22,7 +22,7 @@ public interface AddressDTO {
 
   void setCity(String city);
 
-  Integer getUnitNumber();
+  String getUnitNumber();
 
-  void setUnitNumber(Integer unitNumber);
+  void setUnitNumber(String unitNumber);
 }

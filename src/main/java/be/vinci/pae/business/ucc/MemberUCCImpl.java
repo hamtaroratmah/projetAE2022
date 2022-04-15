@@ -2,6 +2,7 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
@@ -15,6 +16,8 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
+  @Inject
+  private DomainFactory domainFactory;
 
   @Inject
   private DalServices dalServices;
@@ -37,6 +40,21 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
+    try {
+      dalServices.startTransaction();
+      if (newMember.getPassword().length() < 60) {
+        Member memberBiz = (Member) domainFactory.getMember();
+        newMember.setPassword(memberBiz.hashPassword(newMember.getPassword()));
+      }
+      MemberDTO member = memberDao.updateMember(oldMember, newMember);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
 
   /**
    * Permit to a disconnected user to log in.
