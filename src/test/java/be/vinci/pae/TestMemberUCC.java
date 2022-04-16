@@ -33,7 +33,7 @@ public class TestMemberUCC {
     domainFactory = locator.getService(DomainFactory.class);
     memberDao = locator.getService(MemberDao.class);
 
-    member = domainFactory.getMember();
+    member = Mockito.mock(MemberDTO.class);
     member.setIdMember(1);
     member.setUsername("username");
     member.setPassword(memberBiz.hashPassword("password"));
