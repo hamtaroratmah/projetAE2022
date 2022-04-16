@@ -152,22 +152,22 @@ public class TestMemberUCC {
   @Test
   public void testUpdateExistentMember() {
     Member newMember = initNewMember();
+    Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertAll(
-        () -> assertEquals(member.getUsername(),
+        () -> assertEquals(newMember.getUsername(),
             memberUCC.updateMember(member, newMember).getUsername()),
-        () -> assertEquals(member.getPassword(),
+        () -> assertEquals(newMember.getPassword(),
             memberUCC.updateMember(member, newMember).getPassword()),
-        () -> assertEquals(member.getCallNumber(),
+        () -> assertEquals(newMember.getCallNumber(),
             memberUCC.updateMember(member, newMember).getCallNumber()),
-        () -> assertEquals(member.getFirstName(),
+        () -> assertEquals(newMember.getFirstName(),
             memberUCC.updateMember(member, newMember).getFirstName()),
-        () -> assertEquals(member.getLastName(),
+        () -> assertEquals(newMember.getLastName(),
             memberUCC.updateMember(member, newMember).getLastName())
-
     );
   }
 
-  @DisplayName("Test sql exception")
+  @DisplayName("Test update member sql exception")
   @Test
   public void testUpdateMemberSqlException() {
     Member newMember = initNewMember();
