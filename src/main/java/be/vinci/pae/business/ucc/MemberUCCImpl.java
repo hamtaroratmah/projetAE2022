@@ -36,8 +36,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (FatalException e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
-      throw e;
+      throw new FatalException(e.getMessage());
     }
   }
 

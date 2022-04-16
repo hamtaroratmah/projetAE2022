@@ -1,5 +1,6 @@
 package be.vinci.pae;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -127,12 +128,51 @@ public class TestMemberUCC {
 
   @DisplayName("Test sql exception")
   @Test
-  public void testSqlException() {
+  public void testGetOneSqlException() {
     Mockito.when(memberDao.getMember(member.getIdMember())).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+  private Member initNewMember() {
+    Member newMember = Mockito.mock(Member.class);
+    Mockito.when(newMember.getUsername()).thenReturn("newUsername");
+    Mockito.when(newMember.getPassword()).thenReturn("newPassword");
+    Mockito.when(newMember.getLastName()).thenReturn("newLastName");
+    Mockito.when(newMember.getFirstName()).thenReturn("newFirstName");
+    Mockito.when(newMember.getCallNumber()).thenReturn("+32454948595");
+    Mockito.when(newMember.getIdMember()).thenReturn(1);
+    Mockito.when(newMember.getState()).thenReturn("confirm");
+    Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
+    return newMember;
+  }
+
+  @DisplayName("Test update existent member")
+  @Test
+  public void testUpdateExistentMember() {
+    Member newMember = initNewMember();
+    assertAll(
+        () -> assertEquals(member.getUsername(),
+            memberUCC.updateMember(member, newMember).getUsername()),
+        () -> assertEquals(member.getPassword(),
+            memberUCC.updateMember(member, newMember).getPassword()),
+        () -> assertEquals(member.getCallNumber(),
+            memberUCC.updateMember(member, newMember).getCallNumber()),
+        () -> assertEquals(member.getFirstName(),
+            memberUCC.updateMember(member, newMember).getFirstName()),
+        () -> assertEquals(member.getLastName(),
+            memberUCC.updateMember(member, newMember).getLastName())
+
+    );
+  }
+
+  @DisplayName("Test sql exception")
+  @Test
+  public void testUpdateMemberSqlException() {
+    Member newMember = initNewMember();
+    Mockito.when(memberDao.updateMember(member, newMember)).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.updateMember(member, newMember));
+  }
 
 }
