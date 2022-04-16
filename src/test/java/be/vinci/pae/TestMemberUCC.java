@@ -10,6 +10,7 @@ import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.exceptions.BadRequestException;
+import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -99,6 +100,8 @@ public class TestMemberUCC {
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
+///////////////////////////////////////////////////////////////////////////////////
+
   @DisplayName("Test getOne negative id")
   @Test
   public void testGetOneNegativeId() {
@@ -121,5 +124,15 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(null);
     assertNull(memberUCC.getOne(member.getIdMember()));
   }
+
+  @DisplayName("Test sql exception")
+  @Test
+  public void testSqlException() {
+    Mockito.when(memberDao.getMember(member.getIdMember())).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.getOne(member.getIdMember()));
+  }
+
+///////////////////////////////////////////////////////////////////////////////////
+
 
 }
