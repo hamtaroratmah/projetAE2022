@@ -1,6 +1,7 @@
 package be.vinci.pae;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
@@ -111,6 +112,14 @@ public class TestMemberUCC {
     Mockito.when(member.getIdMember()).thenReturn(1);
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(member);
     assertEquals(member, memberUCC.getOne(member.getIdMember()));
+  }
+
+  @DisplayName("Test getOne nonexistent id")
+  @Test
+  public void testGetOneNonexistentId() {
+    Mockito.when(member.getIdMember()).thenReturn(10);
+    Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(null);
+    assertNull(memberUCC.getOne(member.getIdMember()));
   }
 
 }
