@@ -85,7 +85,8 @@ public class TestMemberUCC {
   @DisplayName("Test Login Password wrong and username good")
   @Test
   public void testLoginUsernameGoodPasswordWrong() {
-    Mockito.when(member.checkPassword("password")).thenReturn(false);
+    Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(false);
+
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
