@@ -44,18 +44,37 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
-  @DisplayName("Test login and username good")
+  @DisplayName("Test Password and username good")
   @Test
-  public void testUsernameLoginGood() {
+  public void testUsernamePasswordGood() {
     assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
-  @DisplayName("Test login good and username wrong")
+  @DisplayName("Test Password good and username wrong")
   @Test
-  public void testUsernameWrongLoginGood() {
+  public void testUsernameWrongPasswordGood() {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
         .thenThrow(FatalException.class);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
+
+  @DisplayName("Test Password wrong and username good")
+  @Test
+  public void testUsernameGoodPasswordWrong() {
+    Mockito.when(member.checkPassword("password")).thenReturn(false);
+    assertThrows(LoginException.class,
+        () -> memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
+  @DisplayName("Test Password wrong and username wrong")
+  @Test
+  public void testUsernamePasswordWrong() {
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
+        .thenThrow(FatalException.class);
+    Mockito.when(member.checkPassword("password")).thenReturn(false);
+    assertThrows(LoginException.class,
+        () -> memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
 }
