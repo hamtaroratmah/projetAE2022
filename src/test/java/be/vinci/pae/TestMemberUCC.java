@@ -46,6 +46,9 @@ public class TestMemberUCC {
   void initEach() {
     Mockito.when(member.getUsername()).thenReturn("username");
     Mockito.when(member.getPassword()).thenReturn("password");
+    Mockito.when(member.getLastName()).thenReturn("lastName");
+    Mockito.when(member.getFirstName()).thenReturn("firstName");
+    Mockito.when(member.getCallNumber()).thenReturn("000");
     Mockito.when(member.getIdMember()).thenReturn(1);
     Mockito.when(member.getState()).thenReturn("confirm");
     Mockito.when(member.checkPassword("password")).thenReturn(true);
@@ -173,6 +176,29 @@ public class TestMemberUCC {
     Member newMember = initNewMember();
     Mockito.when(memberDao.updateMember(member, newMember)).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.updateMember(member, newMember));
+  }
+
+  @DisplayName("test Update Existent Member But Only Username Changed")
+  @Test
+  public void testUpdateExistentMemberButOnlyUsernameChanged() {
+    Member newMember = initNewMember();
+    Mockito.when(newMember.getPassword()).thenReturn("password");
+    Mockito.when(newMember.getLastName()).thenReturn("lastName");
+    Mockito.when(newMember.getFirstName()).thenReturn("firstName");
+    Mockito.when(newMember.getCallNumber()).thenReturn("000");
+    Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
+    assertAll(
+        () -> assertEquals(newMember.getUsername(),
+            memberUCC.updateMember(member, newMember).getUsername()),
+        () -> assertEquals(member.getPassword(),
+            memberUCC.updateMember(member, newMember).getPassword()),
+        () -> assertEquals(member.getCallNumber(),
+            memberUCC.updateMember(member, newMember).getCallNumber()),
+        () -> assertEquals(member.getFirstName(),
+            memberUCC.updateMember(member, newMember).getFirstName()),
+        () -> assertEquals(member.getLastName(),
+            memberUCC.updateMember(member, newMember).getLastName())
+    );
   }
 
 }
