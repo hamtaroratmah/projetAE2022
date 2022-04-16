@@ -137,7 +137,7 @@ public class TestMemberUCC {
   @DisplayName("Test getOne nonexistent id")
   @Test
   public void testGetOneNonexistentId() {
-    Mockito.when(member.getIdMember()).thenReturn(10);
+    member.setIdMember(10);
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(null);
     assertNull(memberUCC.getOne(member.getIdMember()));
   }
