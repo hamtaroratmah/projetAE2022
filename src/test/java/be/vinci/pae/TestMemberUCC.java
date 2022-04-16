@@ -96,7 +96,8 @@ public class TestMemberUCC {
   public void testUsernamePasswordWrong() {
     Mockito.when(memberDao.getMemberByUsername(""))
         .thenReturn(null); //todo
-    Mockito.when(member.checkPassword("password")).thenReturn(false);
+    Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(false);
+
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
