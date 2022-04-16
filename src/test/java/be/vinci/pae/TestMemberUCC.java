@@ -123,8 +123,8 @@ public class TestMemberUCC {
   @DisplayName("Test getOne negative id")
   @Test
   public void testGetOneNegativeId() {
-    Mockito.when(member.getIdMember()).thenReturn(-1);
-    assertThrows(BadRequestException.class, () -> memberUCC.getOne(member.getIdMember()));
+    Mockito.when(adaptativeMember.getIdMember()).thenReturn(-1);
+    assertThrows(BadRequestException.class, () -> memberUCC.getOne(adaptativeMember.getIdMember()));
   }
 
   @DisplayName("Test getOne valid id")
