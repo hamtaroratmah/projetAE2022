@@ -8,11 +8,11 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,8 +34,12 @@ public class TestMemberUCC {
     domainFactory = locator.getService(DomainFactory.class);
     memberDao = locator.getService(MemberDao.class);
     memberUCC = locator.getService(MemberUCC.class);
-
     member = Mockito.mock(Member.class);
+    dalServices = locator.getService(DalServices.class);
+  }
+
+  @BeforeEach
+  void initEach() {
     Mockito.when(member.getUsername()).thenReturn("username");
     Mockito.when(member.getPassword()).thenReturn("password");
     Mockito.when(member.getIdMember()).thenReturn(1);
@@ -54,7 +58,7 @@ public class TestMemberUCC {
   @Test
   public void testUsernameWrongPasswordGood() {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
-        .thenThrow(FatalException.class);
+        .thenReturn(null);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
@@ -70,8 +74,8 @@ public class TestMemberUCC {
   @DisplayName("Test Password wrong and username wrong")
   @Test
   public void testUsernamePasswordWrong() {
-    Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
-        .thenThrow(FatalException.class);
+    Mockito.when(memberDao.getMemberByUsername(""))
+        .thenReturn(null); //todo
     Mockito.when(member.checkPassword("password")).thenReturn(false);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));

@@ -63,10 +63,10 @@ public class MemberDaoImpl implements MemberDao {
             + " FROM pae.members WHERE id_member = ? ")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
+      return member;
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    return member;
   }
 
   /**
@@ -90,6 +90,7 @@ public class MemberDaoImpl implements MemberDao {
       query.setInt(6, oldMember.getIdMember());
       System.out.println(query);
       MemberDTO member = getMemberFromDataBase(query);
+      assert member != null;
       member.setAddress(addressDao.updateAddress(oldMember.getAddress(), newMember.getAddress()));
       return member;
     } catch (SQLException e) {
@@ -242,7 +243,7 @@ public class MemberDaoImpl implements MemberDao {
     ResultSet resultSetMember = query.executeQuery();
 
     if (!resultSetMember.next()) {
-      throw new FatalException("Username not found");
+      return null;
     }
     member.setIdMember(resultSetMember.getInt("id_member"));
     member.setPassword(resultSetMember.getString("password"));

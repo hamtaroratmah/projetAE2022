@@ -70,6 +70,9 @@ public class MemberUCCImpl implements MemberUCC {
     try {
       dalServices.startTransaction();
       MemberDTO memberDTO = memberDao.getMemberByUsername(username);
+      if (memberDTO == null) {
+        throw new LoginException("Username not found");
+      }
       Member member = (Member) memberDTO;
       switch (member.getState()) {
         case "pending":

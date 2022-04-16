@@ -9,6 +9,7 @@ import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.business.ucc.MemberUCCImpl;
 import be.vinci.pae.business.ucc.OfferUCC;
 import be.vinci.pae.business.ucc.OfferUCCImpl;
+import be.vinci.pae.dal.DalBackendServices;
 import be.vinci.pae.dal.DalServicesImpl;
 import be.vinci.pae.dal.MemberDaoImpl;
 import be.vinci.pae.dal.interfaces.DalServices;
@@ -27,7 +28,7 @@ public class ApplicationBinderTest extends AbstractBinder {
     bind(ItemUCCImpl.class).to(ItemUCC.class).in(Singleton.class);
     bind(OfferUCCImpl.class).to(OfferUCC.class).in(Singleton.class);
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
-    bind(Mockito.mock(DalServicesImpl.class)).to(DalServices.class);
+    bind(Mockito.mock(DalServicesImpl.class)).to(DalServices.class).to(DalBackendServices.class);
     bind(Mockito.mock(MemberDaoImpl.class)).to(MemberDao.class);
   }
 }
