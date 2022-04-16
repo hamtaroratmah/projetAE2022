@@ -40,6 +40,9 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  /**
+   * update profile.
+   */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
     try {
       dalServices.startTransaction();

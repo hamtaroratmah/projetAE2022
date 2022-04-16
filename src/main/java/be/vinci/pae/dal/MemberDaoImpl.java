@@ -31,7 +31,8 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param username member's username that you want get
    */
-  public MemberDTO getMemberByUsername(String username) {
+  public MemberDTO
+  getMemberByUsername(String username) {
     MemberDTO member;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT id_member, password, username,"
@@ -73,13 +74,13 @@ public class MemberDaoImpl implements MemberDao {
    * Update member's information.
    */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
-    String stringQuery = "UPDATE pae.members " +
-        "SET password = ?" +
-        ", username = ?" +
-        ", last_name = ?" +
-        ", first_name = ?" +
-        ", call_number = ?" +
-        " WHERE id_member = ?"
+    String stringQuery = "UPDATE pae.members "
+        + "SET password = ?"
+        + ", username = ?"
+        + ", last_name = ?"
+        + ", first_name = ?"
+        + ", call_number = ?"
+        + " WHERE id_member = ?"
         + "RETURNING *";
     try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
       query.setString(1, newMember.getPassword());

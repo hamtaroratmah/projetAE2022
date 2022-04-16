@@ -68,13 +68,13 @@ public class AddressDaoImpl implements AddressDao {
 
   @Override
   public AddressDTO updateAddress(AddressDTO oldAddress, AddressDTO newAddress) {
-    String stringQuery = " UPDATE pae.addresses " +
-        " SET street = ?" +
-        ", city = ?" +
-        ", unit_number = ?" +
-        ", building_number = ?" +
-        ", postcode = ?" +
-        " WHERE id_address = ? "
+    String stringQuery = " UPDATE pae.addresses "
+        + " SET street = ?"
+        + ", city = ?"
+        + ", unit_number = ?"
+        + ", building_number = ?"
+        + ", postcode = ?"
+        + " WHERE id_address = ? "
         + "RETURNING *";
     try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
       query.setString(1, newAddress.getStreet());

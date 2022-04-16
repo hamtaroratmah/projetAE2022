@@ -73,10 +73,10 @@ package be.vinci.pae;
 //  //  @Test
 //  //  public void login() {
 //  //    assertAll(
-//  //        () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
-//  //        () ->
-//  //        Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
-//  //        () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
+//  //  () -> assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword())),
+//  //  () ->
+//  //  Mockito.verify(memberDao, Mockito.times(2)).getMemberByUsername(member.getUsername()),
+//  //  () -> Mockito.verify(member, Mockito.times(3)).checkPassword(member.getPassword())
 //  //    );
 //  //  }
 //
@@ -84,9 +84,9 @@ package be.vinci.pae;
 //  public void register() {
 //    assertAll(
 //        () -> assertTrue(true)
-//        //        () -> assertEquals(member, memberUCC.register(member)),
-//        //        () -> Mockito.verify(member, Mockito.times(2)).hashPassword(member.getPassword()),
-//        //        () -> Mockito.verify(memberDao).register(member)
+//        //   () -> assertEquals(member, memberUCC.register(member)),
+//        //   () -> Mockito.verify(member, Mockito.times(2)).hashPassword(member.getPassword()),
+//        //   () -> Mockito.verify(memberDao).register(member)
 //    );
 //  }
 //

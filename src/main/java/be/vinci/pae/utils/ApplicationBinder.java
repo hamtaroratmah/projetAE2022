@@ -36,13 +36,10 @@ public class ApplicationBinder extends AbstractBinder {
     bind(MemberImpl.class).to(Member.class).in(Singleton.class);
     bind(MemberUCCImpl.class).to(MemberUCC.class).in(Singleton.class);
     bind(MemberDaoImpl.class).to(MemberDao.class).in(Singleton.class);
-//    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
-//        .in(Singleton.class);
 
     bind(OfferUCCImpl.class).to(OfferUCC.class).in(Singleton.class);
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
-//    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
-//        .in(Singleton.class);
+
     //Address
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)

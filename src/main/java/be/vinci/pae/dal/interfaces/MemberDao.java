@@ -22,12 +22,12 @@ public interface MemberDao {
   MemberDTO getMember(int id) throws SQLException;
 
   MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
-  
+
   ArrayList<MemberDTO> listUsersByState(String state);
 
   MemberDTO denyRegistration(String username);
 
-  public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException;
+  MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException;
 
   void register(MemberDTO member, AddressDTO address);
 }

@@ -85,28 +85,28 @@ public class MemberResource {
   }
 
   private boolean checkNullOrBlank(JsonNode json) {
-    return json.hasNonNull("idMember") &&
-        json.hasNonNull("password") &&
-        json.hasNonNull("username") &&
-        json.hasNonNull("lastName") &&
-        json.hasNonNull("firstName") &&
-        json.hasNonNull("callNumber") && //not blank
-        json.hasNonNull("idAddress") &&
-        json.hasNonNull("street") &&
-        json.hasNonNull("buildingNumber") &&
-        json.hasNonNull("postcode") &&
-        json.hasNonNull("city") &&
-        json.hasNonNull("unitNumber") && //not blank
-        !json.get("idMember").asText().isBlank() &&
-        !json.get("password").asText().isBlank() &&
-        !json.get("username").asText().isBlank() &&
-        !json.get("lastName").asText().isBlank() &&
-        !json.get("firstName").asText().isBlank() &&
-        !json.get("idAddress").asText().isBlank() &&
-        !json.get("street").asText().isBlank() &&
-        !json.get("buildingNumber").asText().isBlank() &&
-        !json.get("postcode").asText().isBlank() &&
-        !json.get("city").asText().isBlank();
+    return json.hasNonNull("idMember")
+        && json.hasNonNull("password")
+        && json.hasNonNull("username")
+        && json.hasNonNull("lastName")
+        && json.hasNonNull("firstName")
+        && json.hasNonNull("callNumber")
+        && json.hasNonNull("idAddress")
+        && json.hasNonNull("street")
+        && json.hasNonNull("buildingNumber")
+        && json.hasNonNull("postcode")
+        && json.hasNonNull("city")
+        && json.hasNonNull("unitNumber")
+        && !json.get("idMember").asText().isBlank()
+        && !json.get("password").asText().isBlank()
+        && !json.get("username").asText().isBlank()
+        && !json.get("lastName").asText().isBlank()
+        && !json.get("firstName").asText().isBlank()
+        && !json.get("idAddress").asText().isBlank()
+        && !json.get("street").asText().isBlank()
+        && !json.get("buildingNumber").asText().isBlank()
+        && !json.get("postcode").asText().isBlank()
+        && !json.get("city").asText().isBlank();
   }
 
   /**
