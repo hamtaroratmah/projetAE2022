@@ -54,7 +54,7 @@ public class MemberDaoImpl implements MemberDao {
    * @param id member's id that you want get
    */
   @Override
-  public MemberDTO getMember(int id) throws SQLException {
+  public MemberDTO getMember(int id) {
     MemberDTO member;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT id_member, password, username,"

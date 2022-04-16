@@ -19,7 +19,7 @@ public interface MemberDao {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
-  MemberDTO getMember(int id) throws SQLException;
+  MemberDTO getMember(int id);
 
   MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
 
@@ -27,7 +27,7 @@ public interface MemberDao {
 
   MemberDTO denyRegistration(String username);
 
-  MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException;
-
   void register(MemberDTO member, AddressDTO address);
+
+  MemberDTO createMemberInstance(ResultSet resultSet) throws SQLException;
 }

@@ -8,6 +8,7 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -95,6 +96,13 @@ public class TestMemberUCC {
     Mockito.when(member.getState()).thenReturn("pending");
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
+  @DisplayName("Test getOne negative id")
+  @Test
+  public void testGetOneNegativeId() {
+    Mockito.when(member.getIdMember()).thenReturn(-1);
+    assertThrows(BadRequestException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
 }

@@ -34,9 +34,10 @@ public class MemberUCCImpl implements MemberUCC {
       MemberDTO member = memberDao.getMember(id);
       dalServices.commitTransaction();
       return member;
-    } catch (Exception e) {
+    } catch (FatalException e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      e.printStackTrace();
+      throw e;
     }
   }
 
