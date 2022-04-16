@@ -106,7 +106,6 @@ public class TestMemberUCC {
   @Test
   public void testLoginUserDenied() {
     member.setState("denied");
-    Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(true);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
@@ -114,7 +113,7 @@ public class TestMemberUCC {
   @DisplayName("Test Login user pending")
   @Test
   public void testLoginUserPending() {
-    Mockito.when(member.getState()).thenReturn("pending");
+    member.setState("pending");
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
