@@ -15,6 +15,7 @@ import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
+import jakarta.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +31,28 @@ import org.mockito.Mockito;
 @TestInstance(Lifecycle.PER_CLASS)
 public class DemoTest {
 
+
+  @Inject
   private DalServices dalServices;
-
+  @Inject
   private MemberUCC memberUCC;
+  @Inject
   private Member member;
+  @Inject
   private MemberDao memberDao;
-
+  @Inject
   private ItemUCC itemUCC;
+  @Inject
   private ItemDTO itemDTO;
+  @Inject
   private ItemDao itemDao;
+  @Inject
   private List<ItemDTO> items;
-
+  @Inject
   private OfferUCC offerUCC;
+  @Inject
   private OfferDTO offerDTO;
+  @Inject
   private OfferDao offerDao;
 
   @BeforeAll
