@@ -15,7 +15,6 @@ import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
-import be.vinci.pae.utils.Config;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class DemoTest {
 
   @BeforeAll
   void initAll() {
-    Config.load("dev.properties");
+//    Config.load("dev.properties");
     ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderTest());
     dalServices = locator.getService(DalServices.class);
 
