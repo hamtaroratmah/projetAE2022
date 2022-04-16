@@ -105,7 +105,8 @@ public class TestMemberUCC {
   @DisplayName("Test Login user denied")
   @Test
   public void testLoginUserDenied() {
-    Mockito.when(member.getState()).thenReturn("denied");
+    member.setState("denied");
+    Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(true);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
