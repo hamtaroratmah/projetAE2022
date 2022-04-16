@@ -48,24 +48,24 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
-  @DisplayName("Test Password and username good")
+  @DisplayName("Test Login Password and username good")
   @Test
-  public void testUsernamePasswordGood() {
+  public void testLoginUsernamePasswordGood() {
     assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
-  @DisplayName("Test Password good and username wrong")
+  @DisplayName("Test Login Password good and username wrong")
   @Test
-  public void testUsernameWrongPasswordGood() {
+  public void testLoginUsernameWrongPasswordGood() {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
         .thenReturn(null);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
-  @DisplayName("Test Password wrong and username good")
+  @DisplayName("Test Login Password wrong and username good")
   @Test
-  public void testUsernameGoodPasswordWrong() {
+  public void testLoginUsernameGoodPasswordWrong() {
     Mockito.when(member.checkPassword("password")).thenReturn(false);
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
@@ -77,6 +77,22 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMemberByUsername(""))
         .thenReturn(null); //todo
     Mockito.when(member.checkPassword("password")).thenReturn(false);
+    assertThrows(LoginException.class,
+        () -> memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
+  @DisplayName("Test Login user denied")
+  @Test
+  public void testLoginUserDenied() {
+    Mockito.when(member.getState()).thenReturn("denied");
+    assertThrows(LoginException.class,
+        () -> memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
+  @DisplayName("Test Login user pending")
+  @Test
+  public void testLoginUserPending() {
+    Mockito.when(member.getState()).thenReturn("pending");
     assertThrows(LoginException.class,
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
