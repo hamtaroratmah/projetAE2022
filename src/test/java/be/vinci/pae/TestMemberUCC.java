@@ -1,12 +1,15 @@
 package be.vinci.pae;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.FatalException;
+import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,14 +41,21 @@ public class TestMemberUCC {
     Mockito.when(member.getIdMember()).thenReturn(1);
     Mockito.when(member.getState()).thenReturn("confirm");
     Mockito.when(member.checkPassword("password")).thenReturn(true);
-    Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
-        .thenReturn(member);
-
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
-  @DisplayName("Test")
+  @DisplayName("Test login and username good")
   @Test
-  public void testFunction() {
+  public void testUsernameLoginGood() {
     assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword()));
+  }
+
+  @DisplayName("Test login good and username wrong")
+  @Test
+  public void testUsernameWrongLoginGood() {
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
+        .thenThrow(FatalException.class);
+    assertThrows(LoginException.class,
+        () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
 }

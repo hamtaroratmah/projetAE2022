@@ -31,8 +31,7 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param username member's username that you want get
    */
-  public MemberDTO
-  getMemberByUsername(String username) {
+  public MemberDTO getMemberByUsername(String username) {
     MemberDTO member;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT id_member, password, username,"
