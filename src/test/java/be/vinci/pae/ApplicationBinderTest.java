@@ -2,8 +2,6 @@ package be.vinci.pae;
 
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
-import be.vinci.pae.business.domain.dtos.MemberImpl;
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.ItemUCCImpl;
@@ -31,6 +29,5 @@ public class ApplicationBinderTest extends AbstractBinder {
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
     bind(Mockito.mock(DalServicesImpl.class)).to(DalServices.class);
     bind(Mockito.mock(MemberDaoImpl.class)).to(MemberDao.class);
-    bind(Mockito.mock(MemberImpl.class)).to(Member.class);
   }
 }

@@ -66,7 +66,8 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO login(String username, String password) {
     try {
       dalServices.startTransaction();
-      Member member = (Member) memberDao.getMemberByUsername(username);
+      MemberDTO memberDTO = memberDao.getMemberByUsername(username);
+      Member member = (Member) memberDTO;
       switch (member.getState()) {
         case "pending":
           throw new LoginException("L'utilisateur est en attente de confirmation.");
