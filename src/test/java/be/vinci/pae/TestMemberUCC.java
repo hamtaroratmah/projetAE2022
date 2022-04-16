@@ -31,6 +31,7 @@ public class TestMemberUCC {
   private DomainFactory domainFactory;
   private MemberUCC memberUCC;
   private Member member;
+  private Member adaptativeMember;
 
   @BeforeAll
   void initAll() {
@@ -38,27 +39,38 @@ public class TestMemberUCC {
     domainFactory = locator.getService(DomainFactory.class);
     memberDao = locator.getService(MemberDao.class);
     memberUCC = locator.getService(MemberUCC.class);
-    member = Mockito.mock(Member.class);
+    member = (Member) domainFactory.getMember();
+    adaptativeMember = Mockito.mock(Member.class);
     dalServices = locator.getService(DalServices.class);
   }
 
   @BeforeEach
   void initEach() {
-    Mockito.when(member.getUsername()).thenReturn("username");
-    Mockito.when(member.getPassword()).thenReturn("password");
-    Mockito.when(member.getLastName()).thenReturn("lastName");
-    Mockito.when(member.getFirstName()).thenReturn("firstName");
-    Mockito.when(member.getCallNumber()).thenReturn("000");
-    Mockito.when(member.getIdMember()).thenReturn(1);
-    Mockito.when(member.getState()).thenReturn("confirm");
-    Mockito.when(member.checkPassword("password")).thenReturn(true);
+    member.setUsername("username");
+    member.setPassword("password");
+    member.setLastName("lastName");
+    member.setFirstName("firstName");
+    member.setCallNumber("0000");
+    member.setIdMember(1);
+    member.setState("confirm");
+//    Mockito.when(member.getUsername()).thenReturn("username");
+//    Mockito.when(member.getPassword()).thenReturn("password");
+//    Mockito.when(member.getLastName()).thenReturn("lastName");
+//    Mockito.when(member.getFirstName()).thenReturn("firstName");
+//    Mockito.when(member.getCallNumber()).thenReturn("000");
+//    Mockito.when(member.getIdMember()).thenReturn(1);
+//    Mockito.when(member.getState()).thenReturn("confirm");
+//    Mockito.when(member.checkPassword("password")).thenReturn(true);
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
   @DisplayName("Test Login Password and username good")
   @Test
   public void testLoginUsernamePasswordGood() {
-    assertEquals(member, memberUCC.login(member.getUsername(), member.getPassword()));
+    Mockito.when(adaptativeMember.getState()).thenReturn("confirm");
+    Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(true);
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(adaptativeMember);
+    assertEquals(adaptativeMember, memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
   @DisplayName("Test Login Password good and username wrong")
@@ -116,7 +128,6 @@ public class TestMemberUCC {
   @DisplayName("Test getOne valid id")
   @Test
   public void testGetOneValidId() {
-    Mockito.when(member.getIdMember()).thenReturn(1);
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(member);
     assertEquals(member, memberUCC.getOne(member.getIdMember()));
   }
