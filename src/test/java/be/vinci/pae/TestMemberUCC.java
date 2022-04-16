@@ -105,4 +105,12 @@ public class TestMemberUCC {
     assertThrows(BadRequestException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
+  @DisplayName("Test getOne valid id")
+  @Test
+  public void testGetOneValidId() {
+    Mockito.when(member.getIdMember()).thenReturn(1);
+    Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(member);
+    assertEquals(member, memberUCC.getOne(member.getIdMember()));
+  }
+
 }
