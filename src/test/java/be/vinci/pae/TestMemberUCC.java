@@ -10,7 +10,6 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
@@ -53,14 +52,6 @@ public class TestMemberUCC {
     member.setCallNumber("0000");
     member.setIdMember(1);
     member.setState("confirm");
-//    Mockito.when(member.getUsername()).thenReturn("username");
-//    Mockito.when(member.getPassword()).thenReturn("password");
-//    Mockito.when(member.getLastName()).thenReturn("lastName");
-//    Mockito.when(member.getFirstName()).thenReturn("firstName");
-//    Mockito.when(member.getCallNumber()).thenReturn("000");
-//    Mockito.when(member.getIdMember()).thenReturn(1);
-//    Mockito.when(member.getState()).thenReturn("confirm");
-//    Mockito.when(member.checkPassword("password")).thenReturn(true);
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
@@ -95,7 +86,7 @@ public class TestMemberUCC {
   @Test
   public void testUsernamePasswordWrong() {
     Mockito.when(memberDao.getMemberByUsername(""))
-        .thenReturn(null); //todo
+        .thenReturn(null);
     Mockito.when(adaptativeMember.checkPassword(member.getPassword())).thenReturn(false);
 
     assertThrows(LoginException.class,
@@ -120,13 +111,6 @@ public class TestMemberUCC {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-  @DisplayName("Test getOne negative id")
-  @Test
-  public void testGetOneNegativeId() {
-    Mockito.when(adaptativeMember.getIdMember()).thenReturn(-1);
-    assertThrows(BadRequestException.class, () -> memberUCC.getOne(adaptativeMember.getIdMember()));
-  }
-
   @DisplayName("Test getOne valid id")
   @Test
   public void testGetOneValidId() {
@@ -140,13 +124,6 @@ public class TestMemberUCC {
     member.setIdMember(10);
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(null);
     assertNull(memberUCC.getOne(member.getIdMember()));
-  }
-
-  @DisplayName("Test sql exception")
-  @Test
-  public void testGetOneSqlException() {
-    Mockito.when(memberDao.getMember(member.getIdMember())).thenThrow(FatalException.class);
-    assertThrows(FatalException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +175,7 @@ public class TestMemberUCC {
     Mockito.when(newMember.getPassword()).thenReturn("password");
     Mockito.when(newMember.getLastName()).thenReturn("lastName");
     Mockito.when(newMember.getFirstName()).thenReturn("firstName");
-    Mockito.when(newMember.getCallNumber()).thenReturn("000");
+    Mockito.when(newMember.getCallNumber()).thenReturn("0000");
     Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertAll(
         () -> assertEquals(newMember.getUsername(),

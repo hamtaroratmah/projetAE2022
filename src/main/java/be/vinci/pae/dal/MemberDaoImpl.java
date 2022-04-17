@@ -65,7 +65,7 @@ public class MemberDaoImpl implements MemberDao {
       member = getMemberFromDataBase(query);
       return member;
     } catch (SQLException e) {
-      throw new FatalException(e.getMessage());
+      throw new FatalException("Problème en db getMember");
     }
   }
 
@@ -88,9 +88,10 @@ public class MemberDaoImpl implements MemberDao {
       query.setString(4, newMember.getFirstName());
       query.setString(5, newMember.getCallNumber());
       query.setInt(6, oldMember.getIdMember());
-      System.out.println(query);
       MemberDTO member = getMemberFromDataBase(query);
-      assert member != null;
+      if (member == null) {
+        return null;
+      }
       member.setAddress(addressDao.updateAddress(oldMember.getAddress(), newMember.getAddress()));
       return member;
     } catch (SQLException e) {

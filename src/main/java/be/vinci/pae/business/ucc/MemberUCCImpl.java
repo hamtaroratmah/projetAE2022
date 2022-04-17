@@ -6,7 +6,6 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import jakarta.inject.Inject;
@@ -28,15 +27,13 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO getOne(int id) {
     try {
       dalServices.startTransaction();
-      if (id < 1) {
-        throw new BadRequestException("Un id ne peut être négatif");
-      }
       MemberDTO member = memberDao.getMember(id);
       dalServices.commitTransaction();
       return member;
-    } catch (FatalException e) {
+    } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      e.printStackTrace();
+      throw e;
     }
   }
 
