@@ -2,6 +2,7 @@ import {
   getListInscriptions,
   displayInscriptions
 } from "../utils/functions/member";
+import {displayItems, getOrderedItems} from "../utils/functions/items";
 
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">

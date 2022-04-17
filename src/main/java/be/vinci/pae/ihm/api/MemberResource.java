@@ -5,12 +5,7 @@ import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -64,7 +59,7 @@ public class MemberResource {
    * @param json the json
    * @return the member confirmed.
    */
-  @POST
+  @PUT
   @Path("confirm")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -85,7 +80,7 @@ public class MemberResource {
    * @param json the json
    * @return the member denyes.
    */
-  @POST
+  @PUT
   @Path("deny")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
