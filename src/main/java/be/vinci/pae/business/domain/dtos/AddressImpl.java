@@ -2,8 +2,11 @@ package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonView;
 
+@JsonInclude(Include.NON_NULL)
 public class AddressImpl implements AddressDTO {
 
   @JsonView(Views.Public.class)

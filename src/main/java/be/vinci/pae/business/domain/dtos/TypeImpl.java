@@ -1,14 +1,10 @@
 package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
-import be.vinci.pae.utils.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 
 public class TypeImpl implements TypeDTO {
 
-  @JsonView(Views.Public.class)
   private Integer idType;
-  @JsonView(Views.Public.class)
   private String type;
 
   /**

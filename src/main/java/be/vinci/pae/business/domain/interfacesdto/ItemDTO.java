@@ -1,5 +1,9 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.ItemImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = ItemImpl.class)
 public interface ItemDTO {
 
   Integer getIdItem();

@@ -1,5 +1,9 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.AddressImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = AddressImpl.class)
 public interface AddressDTO {
 
   Integer getIdAddress();

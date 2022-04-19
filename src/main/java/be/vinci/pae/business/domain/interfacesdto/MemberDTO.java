@@ -1,5 +1,9 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.MemberImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = MemberImpl.class)
 public interface MemberDTO {
 
   Integer getIdMember();
