@@ -1,21 +1,34 @@
 package be.vinci.pae.business.domain.dtos;
 
-import be.vinci.pae.business.domain.interfacesbusiness.Item;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
+import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonView;
 
-public class ItemImpl implements ItemDTO, Item {
+@JsonInclude(Include.NON_NULL)
+public class ItemImpl implements ItemDTO {
 
-  private int idItem;
+  @JsonView(Views.Public.class)
+  private Integer idItem;
+  @JsonView(Views.Public.class)
   private TypeDTO type;
+  @JsonView(Views.Public.class)
   private String photo;
+  @JsonView(Views.Public.class)
   private String description;
+  @JsonView(Views.Public.class)
   private String availabilities;
+  @JsonView(Views.Public.class)
   private String itemCondition;
-  private int rating;
+  @JsonView(Views.Public.class)
+  private Integer rating;
+  @JsonView(Views.Public.class)
   private MemberDTO offeringMember;
+  @JsonView(Views.Public.class)
   private OfferDTO offer;
 
   /**
@@ -25,12 +38,12 @@ public class ItemImpl implements ItemDTO, Item {
   }
 
   @Override
-  public int getIdItem() {
+  public Integer getIdItem() {
     return idItem;
   }
 
   @Override
-  public void setIdItem(int idItem) {
+  public void setIdItem(Integer idItem) {
     this.idItem = idItem;
   }
 
@@ -54,9 +67,6 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setPhoto(String photo) {
-    if (photo != null && photo.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.photo = photo;
   }
 
@@ -93,22 +103,16 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setItemCondition(String itemCondition) {
-    if (itemCondition == null || itemCondition.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.itemCondition = itemCondition;
   }
 
   @Override
-  public int getRating() {
+  public Integer getRating() {
     return rating;
   }
 
   @Override
-  public void setRating(int rating) {
-    //    if (rating <= 0) {
-    //      throw new IllegalArgumentException();
-    //    }
+  public void setRating(Integer rating) {
     this.rating = rating;
   }
 
@@ -119,14 +123,7 @@ public class ItemImpl implements ItemDTO, Item {
 
   @Override
   public void setOfferingMember(MemberDTO offeringMember) {
-    //    if (offeringMember == null) {
-    //      throw new IllegalArgumentException();
-    //    }
     this.offeringMember = offeringMember;
-  }
-
-  public void tempMethod() {
-
   }
 
   public OfferDTO getOffer() {

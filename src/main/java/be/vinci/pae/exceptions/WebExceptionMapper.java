@@ -22,24 +22,20 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
       return Response.status(((WebApplicationException) exception).getResponse().getStatus())
           .entity(exception.getMessage())
           .build();
-    } else if (exception instanceof BizExceptioinUnauthorized) {
-      return Response.status(Status.UNAUTHORIZED)
-          .entity(exception.getMessage())
-          .build();
-    } else if (exception instanceof BizExceptionForbidden) {
-      return Response.status(Status.FORBIDDEN)
-          .entity(exception.getMessage())
-          .build();
-    } else if (exception instanceof BizExceptionConflict) {
-      return Response.status(Status.FORBIDDEN)
-          .entity(exception.getMessage())
-          .build();
     } else if (exception instanceof FatalException) {
       return Response.status(Status.INTERNAL_SERVER_ERROR)
           .entity(exception.getMessage())
           .build();
     } else if (exception instanceof LoginException) {
       return Response.status(Status.FORBIDDEN)
+          .entity(exception.getMessage())
+          .build();
+    } else if (exception instanceof BadRequestException) {
+      return Response.status(Status.BAD_REQUEST)
+          .entity(exception.getMessage())
+          .build();
+    } else if (exception instanceof TokenDecodingException) {
+      return Response.status(Status.UNAUTHORIZED)
           .entity(exception.getMessage())
           .build();
     }

@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface ItemDao {
 
-  List<ItemDTO> getLastOfferedItems();
-
   int cancelAnOffer(int itemId);
 
   List<ItemDTO> getGivenItems();
 
   ItemDTO getItem(int idItem);
+
+  List<ItemDTO> getItemSortedBy(String sortingParam, String order);
 
   ItemDTO createItem(ItemDTO newItem);
 
@@ -19,5 +19,7 @@ public interface ItemDao {
 
   int createType(String type);
 
+
   int likeAnItem(int itemId, int memberId);
+
 }

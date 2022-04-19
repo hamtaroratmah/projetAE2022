@@ -1,7 +1,7 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.exceptions.FatalException;
 import java.util.ArrayList;
 
 public interface MemberUCC {
@@ -10,7 +10,7 @@ public interface MemberUCC {
   String getState(String username);
 
 
-  MemberDTO getOne(int id) throws FatalException;
+  MemberDTO getOne(int id);
 
   /**
    * Permit to a disconnected user to log in.
@@ -22,6 +22,7 @@ public interface MemberUCC {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
+  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
 
   ArrayList<MemberDTO> listPendingUsers();
 
@@ -30,7 +31,7 @@ public interface MemberUCC {
 
   MemberDTO denyRegistration(String username);
 
-  MemberDTO register(MemberDTO member);
+  MemberDTO register(MemberDTO member, AddressDTO address);
 
   Object getOneByUsername(String username);
 }

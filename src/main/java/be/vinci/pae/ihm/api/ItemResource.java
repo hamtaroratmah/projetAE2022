@@ -9,18 +9,18 @@ import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
-import org.glassfish.jersey.server.ContainerRequest;
 
 @Path("/item")
 public class ItemResource {
@@ -28,23 +28,35 @@ public class ItemResource {
   @Inject
   ItemUCC itemUcc;
   @Inject
-  private DomainFactory domainFactory;
-
+  DomainFactory domainFactory;
 
   /**
    * Get offered items from databased sorted by date_offer or type.
    */
   @GET
-  @Path("/getLastOfferedItems")
+  @Path("/getItemSortedBy")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Authorize
-  public List<ItemDTO> getLastOfferedItems(@Context ContainerRequest request) {
-    MemberDTO member = (MemberDTO) request.getProperty("user");
+  public List<ItemDTO> getItemSortedBy(
+      @DefaultValue("date_offer")
+      @QueryParam("sortingParam") String sortingParam,
+      @DefaultValue("ASC")
+      @QueryParam("order") String order) {
+    return itemUcc.getItemSortedBy(sortingParam, order);
+  }
 
-    List<ItemDTO> list = itemUcc.getLastOfferedItems();
-    if (member == null && list.size() > 12) {
-      return list.subList(0, 9);
+  /**
+   * Get offered items from database for non-connected users.x
+   */
+  @GET
+  @Path("/getLastOfferedItemsNonConnected")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ItemDTO> getLastOfferedItemsNonConnected() {
+    List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
+    if (list.size() >= 4) {
+      return list.subList(0, 2);
     }
     return list;
   }
@@ -99,24 +111,19 @@ public class ItemResource {
         || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
-    MemberDTO offeringMember = domainFactory.getMember();
     if (json.get("idOfferingMember").asInt() < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
+    MemberDTO offeringMember = domainFactory.getMember();
     offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = typeExisting(type.getType());
-    System.out.print(idType);
-
-    //si le type n existe pas , le creer
+    //si le type n'existe pas, le créer
     if (idType == -1) {
-      System.out.print("ko1");
-
       idType = itemUcc.createType(json.get("type").asText());
     }
-    System.out.print("ok2");
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
     item.setType(type);

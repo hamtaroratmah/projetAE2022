@@ -1,12 +1,14 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
+import be.vinci.pae.business.domain.dtos.MemberImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+@JsonDeserialize(as = MemberImpl.class)
 public interface MemberDTO {
 
-  int getIdMember();
+  Integer getIdMember();
 
-  void setIdMember(int idMember);
+  void setIdMember(Integer idMember);
 
   String getPassword();
 
@@ -36,23 +38,23 @@ public interface MemberDTO {
 
   void setState(String state);
 
-  boolean isAdmin();
+  Boolean isAdmin();
 
-  void setAdmin(boolean admin);
+  void setAdmin(Boolean admin);
 
-  int getCountObjectNotCollected();
+  Integer getCountObjectNotCollected();
 
-  void setCountObjectNotCollected(int countObjectNotCollected);
+  void setCountObjectNotCollected(Integer countObjectNotCollected);
 
-  int getCountObjectGiven();
+  Integer getCountObjectGiven();
 
-  void setCountObjectGiven(int countObjectGiven);
+  void setCountObjectGiven(Integer countObjectGiven);
 
-  int getCountObjectGot();
+  Integer getCountObjectGot();
 
-  void setCountObjectGot(int countObjectGot);
+  void setCountObjectGot(Integer countObjectGot);
 
-  void setAddress(AddressImpl address);
+  void setAddress(AddressDTO address);
 
-  AddressImpl getAddress();
+  AddressDTO getAddress();
 }

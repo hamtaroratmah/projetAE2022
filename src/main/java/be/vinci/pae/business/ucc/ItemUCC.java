@@ -5,15 +5,14 @@ import java.util.List;
 
 public interface ItemUCC {
 
-  List<ItemDTO> getLastOfferedItems();
-
   List<ItemDTO> getGivenItems();
+
+  List<ItemDTO> getItemSortedBy(String sortingParam, String order);
 
   ItemDTO getItem(int idItem);
 
-  ItemDTO createItem(ItemDTO item);
-
   int typeExisting(String type);
+
 
   int createType(String type);
 
@@ -21,4 +20,6 @@ public interface ItemUCC {
   int likeAnItem(int offerId, int memberId);
 
   int cancelAnOffer(int itemId);
+
+  ItemDTO createItem(ItemDTO item);
 }

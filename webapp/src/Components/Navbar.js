@@ -1,4 +1,5 @@
-import {getToken} from "../utils/token"
+import {getToken} from "../utils/functions/token"
+import {getMember} from "../utils/functions/member";
 
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
@@ -13,8 +14,6 @@ const Navbar = async () => {
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
        <button id="logoutButton" data-uri="/listItem">Voir tout les objets</button>
        <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
-
-       
        <p id="userIdentifier"></p>
     </nav>
   `;
@@ -28,29 +27,10 @@ const Navbar = async () => {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/");
     const username = document.querySelector("#userIdentifier");
-    let member = await getName(token);
-
+    let member = await getMember(token);
     username.innerText = `Bonjour ${member.username}`
   }
 
 };
-
-async function getName(token) {
-  const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
-    }
-  };
-  const response = await fetch(`/api/members/me`, request);
-  if (!response.ok) {
-    const error = document.getElementById("errorText");
-    error.innerText = `Error while fetching username`;
-  }
-  let member = await response.json();
-  console.log(member)
-  return member;
-}
 
 export default Navbar;

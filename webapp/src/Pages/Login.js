@@ -1,6 +1,6 @@
 import {Redirect} from "../Router";
 import Navbar from "../Components/Navbar";
-import {getToken} from "../utils/token";
+import {getToken} from "../utils/functions/token";
 
 const loginDiv = `
         <div id="loginPage">
@@ -71,6 +71,7 @@ async function login(e) {
     } else {
       window.sessionStorage.setItem("user", JSON.stringify(token));
     }
+    window.sessionStorage.setItem("justLogged", true.toString())
     await Navbar();
     Redirect("/");
   }

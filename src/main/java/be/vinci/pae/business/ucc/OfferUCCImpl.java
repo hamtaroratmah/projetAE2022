@@ -1,15 +1,23 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
-import be.vinci.pae.dal.OfferDao;
 import be.vinci.pae.dal.interfaces.DalServices;
-import be.vinci.pae.exceptions.BizExceptionForbidden;
+import be.vinci.pae.dal.interfaces.ItemDao;
+import be.vinci.pae.dal.interfaces.OfferDao;
+import be.vinci.pae.exceptions.BadRequestException;
+import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
+import java.util.ArrayList;
 
 public class OfferUCCImpl implements OfferUCC {
 
   @Inject
   private OfferDao offerDao;
+  @Inject
+  private ItemDao itemDao;
+
 
   @Inject
   private DalServices dalServices;
@@ -28,7 +36,7 @@ public class OfferUCCImpl implements OfferUCC {
       OfferDTO offer = offerDao.getOffer(idOffer);
       dalServices.commitTransaction();
       if (idOffer < 1) {
-        throw new BizExceptionForbidden("un id ne peut être inférieur à 0");
+        throw new BadRequestException("un id ne peut être inférieur à 0");
       }
       return offer;
     } catch (Exception e) {
@@ -37,4 +45,55 @@ public class OfferUCCImpl implements OfferUCC {
     return null;
   }
 
+  @Override
+  public OfferDTO createOffer(ItemDTO item) {
+    try {
+      dalServices.startTransaction();
+      ItemDTO newItem = itemDao.createItem(item);
+      System.out.println("id : " + newItem.getIdItem());
+
+      OfferDTO offerDTO = offerDao.createOffer(newItem);
+      dalServices.commitTransaction();
+      return offerDTO;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public boolean isLiked(int idItem, int idMember) {
+    try {
+      dalServices.startTransaction();
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      boolean isLiked = offerDao.isLiked(idItem, idMember);
+      dalServices.commitTransaction();
+      return isLiked;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+
+  }
+
+  @Override
+  public ArrayList<MemberDTO> interests(int idItem, int idMember) {
+    try {
+      dalServices.startTransaction();
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      ArrayList<MemberDTO> list;
+      list = offerDao.interests(idItem, idMember);
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+
+  }
 }

@@ -3,7 +3,7 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
-import be.vinci.pae.exceptions.BizExceptionForbidden;
+import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -18,14 +18,11 @@ public class ItemUCCImpl implements ItemUCC {
   public ItemUCCImpl() {
   }
 
-  /**
-   * Get items from databased, sorted by the offer's date DESC.
-   */
   @Override
-  public List<ItemDTO> getLastOfferedItems() {
+  public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
     try {
       dalServices.startTransaction();
-      List<ItemDTO> list = itemDao.getLastOfferedItems();
+      List<ItemDTO> list = itemDao.getItemSortedBy(sortingParam, order);
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
@@ -39,11 +36,11 @@ public class ItemUCCImpl implements ItemUCC {
     try {
       dalServices.startTransaction();
       if (idItem < 1) {
-        throw new BizExceptionForbidden("L'id de l'objet doit être supérieur à 0.");
+        throw new BadRequestException("L'id de l'objet doit être supérieur à 0.");
       }
       ItemDTO item = itemDao.getItem(idItem);
       if (item == null) {
-        throw new BizExceptionForbidden("L'objet désiré n'existe pas.");
+        throw new BadRequestException("L'objet désiré n'existe pas.");
       }
       dalServices.commitTransaction();
       return item;
@@ -108,14 +105,13 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-
   @Override
   public ItemDTO createItem(ItemDTO item) {
     try {
       dalServices.startTransaction();
-      ItemDTO itemDTO = itemDao.createItem(item);
+      ItemDTO returned = itemDao.createItem(item);
       dalServices.commitTransaction();
-      return itemDTO;
+      return returned;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
@@ -150,6 +146,8 @@ public class ItemUCCImpl implements ItemUCC {
     }
     return -1;
   }
+
+
 }
 
 

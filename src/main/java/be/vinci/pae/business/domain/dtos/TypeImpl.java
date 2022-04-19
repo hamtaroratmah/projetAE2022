@@ -4,7 +4,7 @@ import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 
 public class TypeImpl implements TypeDTO {
 
-  private int idType;
+  private Integer idType;
   private String type;
 
   /**
@@ -14,12 +14,12 @@ public class TypeImpl implements TypeDTO {
   }
 
   @Override
-  public int getIdType() {
+  public Integer getIdType() {
     return idType;
   }
 
   @Override
-  public void setIdType(int idType) {
+  public void setIdType(Integer idType) {
     if (idType <= 0) {
       throw new IllegalArgumentException();
     }
