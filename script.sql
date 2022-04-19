@@ -236,6 +236,8 @@ INSERT INTO pae.items (id_type, photo, description, availabilities, item_conditi
                        id_offering_member)
 VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
 RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,' ','objet test 2','lubdi et mardi','published',2)
+        RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
 
 
 SELECT *
@@ -269,6 +271,9 @@ SET password    = '$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW'
     call_number = 'null'
 WHERE id_member = 2;
 
+SELECT * FROM pae.interests WHERE id_item=1 ;
+
+SELECT * FROM pae.members WHERE state= 'denied';
 SELECT *
 FROm pae.members m,
      pae.addresses a

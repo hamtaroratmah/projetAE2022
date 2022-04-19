@@ -20,7 +20,7 @@ const ListInscriptionsPage = async () => {
       }
     };
     // fill inscriptions [] with inscriptions pending
-    await fetch("/api/members/pending", request)
+    await fetch("/api/members/listPending", request)
     .then(response => response.json())
     .then((commits) => {
       for (let i = 0; i < commits.length; i++) {
@@ -34,7 +34,7 @@ const ListInscriptionsPage = async () => {
     );
 
     // fill inscriptions [] with inscriptions denied
-    await fetch("/api/members/denied", request)
+    await fetch("/api/members/listDenied", request)
     .then(response => response.json())
     .then((commits) => {
       for (let i = 0; i < commits.length; i++) {
@@ -48,6 +48,7 @@ const ListInscriptionsPage = async () => {
     );
     // display inscriptions denied and pending
     DisplayInscriptions(inscriptions)
+    console.log(inscriptions)
 
   } catch (e) {
     console.error("Home page error", e);
@@ -92,6 +93,8 @@ const ListInscriptionsPage = async () => {
         </div>
         <div  class="receptionInscriptionChild">
           <button>Confirmer inscription</button>
+        </div>
+         <div  class="receptionInscriptionChild">
         </div>
      </div>
       `;

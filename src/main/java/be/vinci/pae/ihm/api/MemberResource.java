@@ -142,6 +142,8 @@ public class MemberResource {
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
+    System.out.println(username);
+    System.out.println("test de confirm");
     boolean isAdmin = json.get("isAdmin").asBoolean();
     return jsonDB.filterPublicJsonView(memberUCC.confirmRegistration(username, isAdmin));
   }
@@ -170,7 +172,7 @@ public class MemberResource {
    * @return the list
    */
   @GET
-  @Path("pending")
+  @Path("list")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
@@ -183,7 +185,7 @@ public class MemberResource {
    * @return the list
    */
   @GET
-  @Path("denied")
+  @Path("listDenied")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {

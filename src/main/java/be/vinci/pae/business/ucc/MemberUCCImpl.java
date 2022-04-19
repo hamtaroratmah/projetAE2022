@@ -125,10 +125,10 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public ArrayList<MemberDTO> listPendingUsers() {
+  public ArrayList<MemberDTO> listUsersByState(String state) {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      ArrayList<MemberDTO> list = memberDao.listUsersByState(state);
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
@@ -150,11 +150,27 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    try {
+      dalServices.startTransaction();
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
 
   @Override
   public MemberDTO register(MemberDTO member, AddressDTO address) {
     try {
       dalServices.startTransaction();
+      if (getOneByUsername(member.getUsername()) != null) {
+        throw new IllegalArgumentException("L'utilisateur existe déjà !");
+      }
       Member memberBiz = (Member) member;
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);

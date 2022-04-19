@@ -24,10 +24,12 @@ public interface MemberUCC {
 
   MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
 
-  ArrayList<MemberDTO> listPendingUsers();
+  ArrayList<MemberDTO> listUsersByState(String state);
 
 
   ArrayList<MemberDTO> listDeniedUsers();
+
+  ArrayList<MemberDTO>listPendingUsers();
 
   MemberDTO denyRegistration(String username);
 
