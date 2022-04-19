@@ -37,7 +37,6 @@ public class MemberResource {
   @GET
   @Path("/")
   @Authorize
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO getMember(@Context ContainerRequestContext requestContext) {
     MemberDTO member = (MemberDTO) requestContext.getProperty("user");
@@ -53,7 +52,6 @@ public class MemberResource {
   @PUT
   @Path("updateMember")
   @Authorize
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO updateMember(@Context ContainerRequestContext requestContext,
       JsonNode json) {
@@ -173,7 +171,6 @@ public class MemberResource {
    */
   @GET
   @Path("list")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
@@ -186,7 +183,6 @@ public class MemberResource {
    */
   @GET
   @Path("listDenied")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());

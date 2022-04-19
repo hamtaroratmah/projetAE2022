@@ -35,7 +35,6 @@ public class ItemResource {
    */
   @GET
   @Path("/getItemSortedBy")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Authorize
   public List<ItemDTO> getItemSortedBy(
@@ -51,7 +50,6 @@ public class ItemResource {
    */
   @GET
   @Path("/getLastOfferedItemsNonConnected")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
     List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
@@ -68,7 +66,6 @@ public class ItemResource {
    */
   @GET
   @Path("/{id}")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO getItem(@PathParam("id") int idItem) {
     if (idItem < 1) {
@@ -84,7 +81,6 @@ public class ItemResource {
    */
   @GET
   @Path("/getGivenItems")
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getListOfGivenItems() {
     return itemUcc.getGivenItems();
@@ -119,7 +115,7 @@ public class ItemResource {
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     type.setType(typeText);
-    int idType = typeExisting(type.getType());
+    int idType = itemUcc.typeExisting(type.getType());
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
@@ -169,16 +165,6 @@ public class ItemResource {
     itemId = json.get("itemId").asInt();
     return itemUcc.cancelAnOffer(itemId);
   }
-
-
-  /**
-   * Get a specified item according to its id.
-   */
-
-  public int typeExisting(String type) {
-    return itemUcc.typeExisting(type);
-  }
-
 
 }
 

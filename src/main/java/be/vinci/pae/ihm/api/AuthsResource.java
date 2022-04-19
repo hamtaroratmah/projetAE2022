@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -77,7 +76,7 @@ public class AuthsResource {
     }
     if (json.get("password").asText().isBlank()) {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
-              Response.Status.BAD_REQUEST);
+          Response.Status.BAD_REQUEST);
     }
     if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
