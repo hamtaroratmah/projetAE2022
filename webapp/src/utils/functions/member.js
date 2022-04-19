@@ -65,7 +65,7 @@ function displayInscriptions(inscriptions) {
       listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionParent">
           <div class="receptionInscriptionChild1">
-          <form id="confirmForm${i}">
+          <form id="confirmForm">
             <div class="receptionInscriptionGrandChild">
               <p>
                 ${inscriptions[i].username}
@@ -77,26 +77,30 @@ function displayInscriptions(inscriptions) {
                 state : ${inscriptions[i].state}
             </div>
             <div class="receptionInscriptionGrandChild">
-                <input type="checkbox" value="isAdmin" id="isAdmin${1}">
+                <input type="checkbox" value="isAdmin" id="isAdmin${i}">
             </div>
             <div class="receptionInscriptionGrandChild">
-                <input type="submit" value="Confirmer inscription">
+                <input id ="confirm${i}" type="submit" value="Confirmer inscription">
             </div>
           </form>
           </div>
-            <div  class="receptionInscriptionChild2">
-             <form id="denyForm">
+            <div class="receptionInscriptionChild2">
+             <form id="denyForm${i}">
                 <input type="submit" value="X">
                 </form>
             </div>
         </div>
       `;
-      const buttonConfirm = document.querySelector("#confirmForm"+i);
-      buttonConfirm.addEventListener("confirm",async () => {
-          await confirmInscription(inscriptions[i].username,
-              document.getElementById("isAdmin"+i).checked);
-      })
-    }
+      }
+    for (let i = 0; i < inscriptions.length; i++) {
+        // Confirm inscription
+        const buttonConfirm = document.getElementById("confirm"+i);
+        buttonConfirm.addEventListener("click",async (e) => {
+            e.preventDefault();
+            console.log("bpnsoir")
+            await confirmInscription(inscriptions[i].username,false);
+        })
+  }
 }
 
 async function confirmInscription(username, isAdmin){
@@ -112,7 +116,8 @@ async function confirmInscription(username, isAdmin){
             "Content-Type": "application/json"
         }
     };
-    await fetch("/api/members/confirm", request).catch()
+    console.log(request)
+    await fetch("/api/members/confirm", request)
 }
 
 async function denyInscription(username){

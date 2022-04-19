@@ -64,6 +64,7 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmRegistration(JsonNode json) {
+    System.out.println("CONFIRMATION");
     String username = json.get("username").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
