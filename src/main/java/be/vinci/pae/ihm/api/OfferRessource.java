@@ -159,7 +159,7 @@ public class OfferRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO modify(JsonNode json) {
-    int idOffer = json.get("idItem").asInt();
+    int idOffer = json.get("idOffer").asInt();
     String type = json.get("type").asText();
     String photo = json.get("photo").asText();
     String description = json.get("description").asText();
@@ -167,6 +167,7 @@ public class OfferRessource {
     if (idOffer < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
+    System.out.println("ok1");
     return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
   }
 

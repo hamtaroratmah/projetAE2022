@@ -231,6 +231,11 @@ INSERT  INTO pae.offers (date_offer,id_item) VALUES ('2022-04-07 +02',1) RETURNI
     INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,NULL,'objet test 2','lundi et mardi','published',2) RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
 
 
-SELECT * FROM pae.members;
+SELECT * FROM pae.items WHERE id_item=2;
+
 
 SELECT * FROM pae.interests WHERE id_item=1 ;
+
+
+UPDATE  pae.items SET  id_type=4,photo='p^hoptp',description= 'description',availabilities= 'ajd' WHERE id_item=2 RETURNING id_item,id_type,photo,description,availabilities,rating,id_offering_member;
+SELECT id_item FROM pae.offers WHERE id_offer=2;

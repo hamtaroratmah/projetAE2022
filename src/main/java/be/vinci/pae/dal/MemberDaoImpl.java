@@ -209,20 +209,25 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
 
     MemberDTO member = domainFactory.getMember();
+    try {
 
-    member.setIdMember(resultSetMember.getInt(1));
-    member.setPassword(resultSetMember.getString(2));
-    member.setUsername(resultSetMember.getString(3));
-    member.setLastName(resultSetMember.getString(4));
-    member.setFirstName(resultSetMember.getString(5));
-    member.setCallNumber(resultSetMember.getString(7));
-    member.setAdmin(resultSetMember.getBoolean(8));
-    member.setReasonForConnRefusal(resultSetMember.getString(9));
-    member.setState(resultSetMember.getString(10));
-    member.setCountObjectNotCollected(resultSetMember.getInt(11));
-    member.setCountObjectGiven(resultSetMember.getInt(12));
-    member.setCountObjectGot(resultSetMember.getInt(13));
+      member.setIdMember(resultSetMember.getInt(1));
+      member.setPassword(resultSetMember.getString(2));
+      member.setUsername(resultSetMember.getString(3));
+      member.setLastName(resultSetMember.getString(4));
+      member.setFirstName(resultSetMember.getString(5));
+      member.setCallNumber(resultSetMember.getString(7));
+      member.setAdmin(resultSetMember.getBoolean(8));
+      member.setReasonForConnRefusal(resultSetMember.getString(9));
+      member.setState(resultSetMember.getString(10));
+      member.setCountObjectNotCollected(resultSetMember.getInt(11));
+      member.setCountObjectGiven(resultSetMember.getInt(12));
+      member.setCountObjectGot(resultSetMember.getInt(13));
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return member;
+
   }
 
 

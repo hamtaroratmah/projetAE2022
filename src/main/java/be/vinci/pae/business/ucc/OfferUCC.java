@@ -17,7 +17,9 @@ public interface OfferUCC {
 
   boolean cancel(int idItem);
 
-  ItemDTO modify(int idOffer, String type, String photo, String description, String availabilities);
+  ItemDTO modify(int idOffer, String type, String photo, String description, String availabilities);µ
+
+
 
 
 }

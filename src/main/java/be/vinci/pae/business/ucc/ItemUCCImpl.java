@@ -88,13 +88,17 @@ public class ItemUCCImpl implements ItemUCC {
    */
   @Override
   public int likeAnItem(int offerId, int memberId) {
+
     try {
       dalServices.startTransaction();
       int interests = itemDao.likeAnItem(offerId, memberId);
       dalServices.commitTransaction();
+//      Log log = new Log("log.txt");
+//      log.logger.warning("cassé");
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
+
       e.printStackTrace();
     }
     return -1;

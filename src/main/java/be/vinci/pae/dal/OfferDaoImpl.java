@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ public class OfferDaoImpl implements OfferDao {
   @Inject
   DalServices services;
   @Inject
-  MemberDaoImpl memberDao;
+  MemberDao memberDao;
 
   public OfferDaoImpl() {
 
@@ -134,10 +135,14 @@ public class OfferDaoImpl implements OfferDao {
     int id = 0;
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idOffer);
-      id = ps.executeQuery().getInt(1);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        id = rs.getInt(1);
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    System.out.println(id);
     return id;
   }
 
