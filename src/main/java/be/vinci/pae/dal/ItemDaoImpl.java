@@ -163,6 +163,11 @@ public class ItemDaoImpl implements ItemDao {
     return items;
   }
 
+  @Override
+  public boolean offer(int idItem, int idOffer){
+    String query= "UPDATE pae.interests SET isGiven=true WHERE id_item = ? AND id_member= "
+  }
+
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();

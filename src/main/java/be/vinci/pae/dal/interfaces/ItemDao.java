@@ -25,4 +25,6 @@ public interface ItemDao {
 
   int likeAnItem(int itemId, int memberId);
 
+  boolean offer(int idOffer, int idItem);
+
 }
