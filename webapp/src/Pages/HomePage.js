@@ -13,12 +13,12 @@ const receptionDiv = `
       <option value="DESC">Type DESC</option>
     </select>
     <select name="date_offer" id="selectItemDate" class="sortedList sortedButton">
-      <option selected="yes"></option>
+      <option></option>
       <option value="ASC">Date ASC</option>
       <option value="DESC">Date DESC</option>
     </select>
     <select name="item_condition" id="selectItemCondition" class="sortedList sortedButton">
-      <option selected="yes" value="default">Etat de l'objet</option>
+      <option value="default">Etat de l'objet</option>
       <option value="published">Publié</option>
       <option value="interestShown">Intérêt marqué</option>
       <option value="assigned">assigné</option>
@@ -42,7 +42,7 @@ const HomePage = async () => {
   }
 
   const pageDiv = document.querySelector("#page");
-  const error = document.getElementById("errorText");
+  document.getElementById("errorText");
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items = [];

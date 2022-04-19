@@ -1,7 +1,5 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
-import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -19,6 +17,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.Date;
 
 @Path("/auths")
 public class AuthsResource {
@@ -108,21 +107,19 @@ public class AuthsResource {
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
     address.setBuildingNumber(json.get("buildingNumber").asInt());
-    address.setUnitNumber(json.get("unitNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asText());
     address.setPostcode(json.get("postcode").asInt());
-    AddressImpl addressImpl = (AddressImpl) address;
     // create the member
     MemberDTO member = domainFactory.getMember();
-    member.setAddress(addressImpl);
+    member.setAddress(address);
     member.setUsername(json.get("username")
         .asText().toLowerCase().replace(" ", ""));
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
     System.out.println(member.getCallNumber());
-    Member newMember = (Member) member;
     // create token
-    memberUCC.register(newMember);
+    memberUCC.register(member, address);
     return true;
   }
 
@@ -131,6 +128,7 @@ public class AuthsResource {
     try {
       token = JWT.create().withIssuer("auth0")
           .withClaim("id_member", id)
+          .withExpiresAt(new Date(System.currentTimeMillis() + (24 * 60 * 60 * 1000)))
           .sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");

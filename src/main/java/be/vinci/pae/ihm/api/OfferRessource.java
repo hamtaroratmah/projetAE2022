@@ -57,9 +57,7 @@ public class OfferRessource {
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     type.setType(typeText);
-    int idType = typeExisting(type.getType());
-    System.out.print(idType);
-
+    int idType = itemUcc.typeExisting(type.getType());
     //si le type n existe pas , le creer
     if (idType == -1) {
       System.out.print("ko1");
@@ -71,26 +69,12 @@ public class OfferRessource {
     type.setIdType(idType);
     item.setType(type);
     String description = json.get("description").asText();
-    System.out.println(description);
-
     description = description.replaceAll("[;&amp;|`]*", "");
-    System.out.println(description);
-
     item.setDescription(description);
-
     item.setAvailabilities(json.get("availabilities").asText());
     item.setOfferingMember(offeringMember);
 
     return offerUCC.createOffer(item);
-  }
-
-
-  /**
-   * Get a specified item according to its id.
-   */
-
-  public int typeExisting(String type) {
-    return itemUcc.typeExisting(type);
   }
 
   /**
