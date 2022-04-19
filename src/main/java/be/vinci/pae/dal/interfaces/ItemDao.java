@@ -21,6 +21,7 @@ public interface ItemDao {
 
   int createType(String type);
 
+  ItemDTO modify(int idItem, String type, String photo, String description, String availabilities);
 
   int likeAnItem(int itemId, int memberId);
 

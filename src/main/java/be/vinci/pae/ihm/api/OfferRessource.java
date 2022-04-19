@@ -149,5 +149,26 @@ public class OfferRessource {
     return offerUCC.cancel(idItem);
   }
 
+  /**
+   * modify an offer.
+   *
+   * @params idItem, item that we want to modify
+   */
+  @POST
+  @Path("/modify")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ItemDTO modify(JsonNode json) {
+    int idOffer = json.get("idItem").asInt();
+    String type = json.get("type").asText();
+    String photo = json.get("photo").asText();
+    String description = json.get("description").asText();
+    String avalaibilities = json.get("availabilities").asText();
+    if (idOffer < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
+  }
+
 
 }
