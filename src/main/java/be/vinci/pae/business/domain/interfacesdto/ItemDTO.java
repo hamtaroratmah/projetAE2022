@@ -1,10 +1,14 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.ItemImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = ItemImpl.class)
 public interface ItemDTO {
 
-  int getIdItem();
+  Integer getIdItem();
 
-  void setIdItem(int idItem);
+  void setIdItem(Integer idItem);
 
   TypeDTO getType();
 
@@ -26,9 +30,9 @@ public interface ItemDTO {
 
   void setItemCondition(String itemCondition);
 
-  int getRating();
+  Integer getRating();
 
-  void setRating(int rating);
+  void setRating(Integer rating);
 
   MemberDTO getOfferingMember();
 

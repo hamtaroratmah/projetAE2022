@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm.api;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
@@ -18,6 +17,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.Date;
 
 @Path("/auths")
 public class AuthsResource {
@@ -59,11 +59,16 @@ public class AuthsResource {
   @Path("register")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public String register(JsonNode json) {
-    if (!json.hasNonNull("username") || !json.hasNonNull("password") || !json.hasNonNull(
-            "firstName") || !json.hasNonNull("lastName") || !json.hasNonNull("street")
-            || !json.hasNonNull("buildingNumber") || !json.hasNonNull("unitNumber")
-            || !json.hasNonNull("postcode") || !json.hasNonNull("city")) {
+  public boolean register(JsonNode json) {
+    if (!json.hasNonNull("username")
+        || !json.hasNonNull("password")
+        || !json.hasNonNull("firstName")
+        || !json.hasNonNull("lastName")
+        || !json.hasNonNull("street")
+        || !json.hasNonNull("buildingNumber")
+        || !json.hasNonNull("unitNumber")
+        || !json.hasNonNull("postcode")
+        || !json.hasNonNull("city")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("username").asText().isBlank()) {
@@ -71,7 +76,7 @@ public class AuthsResource {
     }
     if (json.get("password").asText().isBlank()) {
       throw new WebApplicationException("Le mot de passe ne peut être vide",
-              Response.Status.BAD_REQUEST);
+          Response.Status.BAD_REQUEST);
     }
     if (json.get("firstName").asText().isBlank()) {
       throw new WebApplicationException("Le prénom ne peut être vide", Response.Status.BAD_REQUEST);
@@ -84,15 +89,15 @@ public class AuthsResource {
     }
     if (json.get("buildingNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
-              Response.Status.BAD_REQUEST);
+          Response.Status.BAD_REQUEST);
     }
     if (json.get("unitNumber").asText().isBlank()) {
       throw new WebApplicationException("Le numéro de maison ne peut être vide",
-              Response.Status.BAD_REQUEST);
+          Response.Status.BAD_REQUEST);
     }
     if (json.get("postcode").asText().isBlank()) {
       throw new WebApplicationException("Le code postale ne peut être vide",
-              Response.Status.BAD_REQUEST);
+          Response.Status.BAD_REQUEST);
     }
     if (json.get("city").asText().isBlank()) {
       throw new WebApplicationException("La ville ne peut être vide", Response.Status.BAD_REQUEST);
@@ -102,19 +107,20 @@ public class AuthsResource {
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
     address.setBuildingNumber(json.get("buildingNumber").asInt());
-    address.setUnitNumber(json.get("unitNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asText());
     address.setPostcode(json.get("postcode").asInt());
-    AddressImpl addressImpl = (AddressImpl) address;
     // create the member
     MemberDTO member = domainFactory.getMember();
-    member.setAddress(addressImpl);
-    member.setUsername(json.get("username").asText().toLowerCase().replace(" ", ""));
+    member.setAddress(address);
+    member.setUsername(json.get("username")
+        .asText().toLowerCase().replace(" ", ""));
     member.setPassword(json.get("password").asText());
     member.setFirstName(json.get("firstName").asText());
     member.setLastName(json.get("lastName").asText());
+    System.out.println(member.getCallNumber());
     // create token
-    MemberDTO publicUser = memberUCC.register(member);
-    return createToken(publicUser.getIdMember());
+    memberUCC.register(member, address);
+    return true;
   }
 
   private String createToken(int id) {
@@ -122,6 +128,7 @@ public class AuthsResource {
     try {
       token = JWT.create().withIssuer("auth0")
           .withClaim("id_member", id)
+          .withExpiresAt(new Date(System.currentTimeMillis() + (24 * 60 * 60 * 1000)))
           .sign(this.jwtAlgorithm);
     } catch (Exception e) {
       System.out.println("Unable to create token");

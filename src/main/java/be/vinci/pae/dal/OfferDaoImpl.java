@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ public class OfferDaoImpl implements OfferDao {
   @Inject
   DalServices services;
   @Inject
-  MemberDaoImpl memberDao;
+  MemberDao memberDao;
 
   public OfferDaoImpl() {
 

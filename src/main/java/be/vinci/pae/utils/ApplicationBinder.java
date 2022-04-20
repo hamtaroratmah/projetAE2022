@@ -1,12 +1,9 @@
 package be.vinci.pae.utils;
 
-import be.vinci.pae.business.domain.dtos.AddressImpl;
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
-import be.vinci.pae.business.domain.interfacesbusiness.Address;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
-import be.vinci.pae.business.domain.interfacesbusiness.Offer;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
@@ -39,16 +36,11 @@ public class ApplicationBinder extends AbstractBinder {
     bind(MemberImpl.class).to(Member.class).in(Singleton.class);
     bind(MemberUCCImpl.class).to(MemberUCC.class).in(Singleton.class);
     bind(MemberDaoImpl.class).to(MemberDao.class).in(Singleton.class);
-    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
-        .in(Singleton.class);
 
-    bind(OfferImpl.class).to(Offer.class).in(Singleton.class);
     bind(OfferUCCImpl.class).to(OfferUCC.class).in(Singleton.class);
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
-    bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
-        .in(Singleton.class);
+
     //Address
-    bind(AddressImpl.class).to(Address.class).in(Singleton.class);
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
         .in(Singleton.class);

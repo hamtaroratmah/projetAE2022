@@ -1,10 +1,15 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.TypeImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = TypeImpl.class)
+
 public interface TypeDTO {
 
-  int getIdType();
+  Integer getIdType();
 
-  void setIdType(int idType);
+  void setIdType(Integer idType);
 
   String getType();
 
