@@ -1,9 +1,6 @@
-import {getToken} from "../utils/functions/token"
-import {
-  displayItems,
-  getItemUnordered,
-  getOrderedItems
-} from "../utils/functions/items";
+import {getToken} from "../utils/utils";
+import {getItemUnordered, getOrderedItems} from "../utils/api/items";
+import {displayItems} from "../utils/displayModule/items";
 
 const receptionDiv = `
   <div id="sortingDiv">
@@ -45,7 +42,7 @@ const HomePage = async () => {
   document.getElementById("errorText");
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
-  let items = [];
+  let items;
 
   if (token) {
     items = await getOrderedItems("date_offer", "DESC")

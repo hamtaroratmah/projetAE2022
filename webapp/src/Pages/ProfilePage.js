@@ -1,5 +1,5 @@
-import {getMember, updateMember} from "../utils/functions/member";
-import {getToken} from "../utils/functions/token";
+import {getMember, updateMember} from "../utils/api/member";
+import {getToken} from "../utils/utils";
 
 let page = `
   <div id="profilePage">

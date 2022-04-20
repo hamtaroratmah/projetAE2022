@@ -49,7 +49,6 @@ public class Json<T> {
       // views are not serialized)
       String publicItemAsString = jsonMapper.writerWithView(Views.Public.class)
           .writeValueAsString(item);
-      System.out.println(publicItemAsString);
       // deserialize using JSON Views : Public View (all fields that are not serialized
       // are set to their default values in the POJO)
       return jsonMapper.readerWithView(Views.Public.class).forType(type)
