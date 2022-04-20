@@ -115,11 +115,7 @@ public class OfferUCCImpl implements OfferUCC {
   /**
    * modify an offer.
    *
-   * @param idOffer
-   * @param type
-   * @param photo
-   * @param description
-   * @param availabilities
+   * @param idOffer,type,photo,description,availabilities
    * @return the new item modified
    */
   public ItemDTO modify(int idOffer, String type, String photo, String description,

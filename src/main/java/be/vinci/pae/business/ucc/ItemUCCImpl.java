@@ -77,8 +77,6 @@ public class ItemUCCImpl implements ItemUCC {
       dalServices.startTransaction();
       int interests = itemDao.likeAnItem(offerId, memberId);
       dalServices.commitTransaction();
-//      Log log = new Log("log.txt");
-//      log.logger.warning("cassé");
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
