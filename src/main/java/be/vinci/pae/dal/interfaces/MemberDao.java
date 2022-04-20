@@ -29,5 +29,7 @@ public interface MemberDao {
 
   void register(MemberDTO member, AddressDTO address);
 
+  void insertMember(MemberDTO member);
+
   MemberDTO createMemberInstance(ResultSet resultSet) throws SQLException;
 }

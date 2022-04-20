@@ -129,6 +129,23 @@ public class OfferDaoImpl implements OfferDao {
 
   }
 
+  @Override
+  public int getIdItem(int idOffer) {
+    String query = "SELECT id_item FROM pae.offers WHERE id_offer=?";
+    int id = 0;
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idOffer);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        id = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    System.out.println(id);
+    return id;
+  }
+
 
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {
     ResultSet resultSet = query.executeQuery();
@@ -140,6 +157,21 @@ public class OfferDaoImpl implements OfferDao {
       System.out.println(resultSet.getInt(3));
     }
     return offer;
+  }
+
+  @Override
+  public boolean cancel(int idOffer) {
+    int idItem = getIdItem(idOffer);
+    boolean cancelled = false;
+    String query = "UPDATE TABLE pae.items SET item_condition= 'cancelled' WHERE id_item=? ";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      cancelled = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return cancelled;
   }
 
 }

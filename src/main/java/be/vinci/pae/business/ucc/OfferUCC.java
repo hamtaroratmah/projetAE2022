@@ -15,5 +15,9 @@ public interface OfferUCC {
 
   ArrayList<MemberDTO> interests(int idItem, int idMember);
 
+  boolean cancel(int idItem);
+
+  ItemDTO modify(int idOffer, String type, String photo, String description, String availabilities);
+
 
 }

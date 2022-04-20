@@ -43,7 +43,7 @@ public class AuthsResource {
         || json.get("username").asText().isBlank() || json.get("password").asText().isBlank()) {
       throw new WebApplicationException("login or password required", Response.Status.BAD_REQUEST);
     }
-    String login = json.get("username").asText().toLowerCase();
+    String login = json.get("username").asText().toLowerCase().replace("a", "i");
     login = login.replace(" ", "");
     String password = json.get("password").asText();
     MemberDTO publicUser = memberUCC.login(login, password);
@@ -107,7 +107,7 @@ public class AuthsResource {
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
     address.setBuildingNumber(json.get("buildingNumber").asInt());
-    address.setUnitNumber(json.get("unitNumber").asText());
+    address.setUnitNumber(json.get("unitNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
     // create the member
     MemberDTO member = domainFactory.getMember();

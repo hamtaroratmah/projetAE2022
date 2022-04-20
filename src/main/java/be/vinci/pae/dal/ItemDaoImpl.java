@@ -240,6 +240,42 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
+  @Override
+  public ItemDTO modify(int idItem, String type, String photo, String description,
+      String availabilities) {
+    int idType = typeExisting(type);
+    ItemDTO item = null;
+    System.out.println("ok1");
+
+    String query =
+        "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
+            + "RETURNING id_item,id_type,photo,description,availabilities,"
+            + "item_condition,id_offering_member";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idType);
+      ps.setString(2, photo);
+      ps.setString(3, description);
+      ps.setString(4, availabilities);
+      ps.setInt(5, idItem);
+      System.out.println(ps);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          item = createItemInstance(rs);
+          System.out.println("ici" + item.getIdItem());
+          System.out.println("on passe par ici");
+
+        }
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return item;
+  }
+
 
   private ItemDTO createItemInstance(ResultSet rs) throws SQLException {
     ItemDTO item = domainFactory.getItem();
