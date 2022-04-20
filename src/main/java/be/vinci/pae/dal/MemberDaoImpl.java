@@ -74,9 +74,7 @@ public class MemberDaoImpl implements MemberDao {
    */
   @Override
   public void insertMember(MemberDTO member) {
-    PreparedStatement queryMember;
     PreparedStatement queryAddress;
-    int idAddress = -1;
     try {
       queryAddress = services.getPreparedStatement(
           "INSERT INTO pae.addresses"
@@ -91,7 +89,7 @@ public class MemberDaoImpl implements MemberDao {
 
       ResultSet rs = queryAddress.executeQuery();
       if (rs.next()) {
-        idAddress = rs.getInt(1);
+        int idAddress = rs.getInt(1);
       }
 
     } catch (SQLException e) {
@@ -100,6 +98,13 @@ public class MemberDaoImpl implements MemberDao {
 
   }
 
+  /**
+   * update a member
+   *
+   * @param oldMember
+   * @param newMember
+   * @return the new member modified
+   */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
     String stringQuery = "UPDATE pae.members "
         + "SET password = ?"

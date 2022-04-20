@@ -248,7 +248,7 @@ public class ItemDaoImpl implements ItemDao {
     System.out.println("ok1");
 
     String query =
-        "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=? "
+        "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
             + "RETURNING id_item,id_type,photo,description,availabilities,"
             + "item_condition,id_offering_member";
 
