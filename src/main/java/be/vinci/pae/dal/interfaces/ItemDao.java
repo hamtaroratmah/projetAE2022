@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface ItemDao {
 
-  List<ItemDTO> getLastOfferedItems();
-
   int cancelAnOffer(int itemId);
 
   List<ItemDTO> getGivenItems();

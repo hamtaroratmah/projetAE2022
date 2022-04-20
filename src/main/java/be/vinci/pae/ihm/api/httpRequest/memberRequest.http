@@ -1,0 +1,16 @@
+###
+GET {{baseUrl}}/members/listPending
+Content-Type: application/json
+
+###
+GET {{baseUrl}}/members/listDenied
+Content-Type: application/json
+
+###
+PUT {{baseUrl}}/members/confirm
+Content-Type: application/json
+
+{
+ "username":"souli",
+  "isAdmin" : "true"
+}

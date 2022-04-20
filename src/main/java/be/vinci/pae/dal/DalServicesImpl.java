@@ -72,6 +72,7 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       }
       conn.commit();
       conn.setAutoCommit(true);
+      conn.close();
       threadLocalValue.set(null);
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
@@ -90,5 +91,4 @@ public class DalServicesImpl implements DalBackendServices, DalServices {
       throw new FatalException(e.getMessage());
     }
   }
-
 }

@@ -1,15 +1,26 @@
 package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.utils.Views;
+import be.vinci.pae.utils.Views.Public;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonView;
 
+@JsonInclude(Include.NON_NULL)
 public class AddressImpl implements AddressDTO {
 
-  private int idAddress;
+  @JsonView(Views.Public.class)
+  private Integer idAddress;
+  @JsonView(Views.Public.class)
   private String street;
-  private int buildingNumber;
-  private int postcode;
-  private String commune;
+  @JsonView(Views.Public.class)
+  private Integer buildingNumber;
+  @JsonView(Views.Public.class)
+  private Integer postcode;
+  @JsonView(Views.Public.class)
   private String city;
+  @JsonView(Public.class)
   private int unitNumber;
 
   public AddressImpl() {
@@ -25,43 +36,33 @@ public class AddressImpl implements AddressDTO {
   }
 
   @Override
-  public int getIdAddress() {
+  public Integer getIdAddress() {
     return idAddress;
   }
 
   @Override
-  public void setIdAddress(int idAddress) {
-
+  public void setIdAddress(Integer idAddress) {
+    this.idAddress = idAddress;
   }
 
   @Override
-  public int getBuildingNumber() {
+  public Integer getBuildingNumber() {
     return buildingNumber;
   }
 
   @Override
-  public void setBuildingNumber(int buildingNumber) {
+  public void setBuildingNumber(Integer buildingNumber) {
     this.buildingNumber = buildingNumber;
   }
 
   @Override
-  public int getPostcode() {
+  public Integer getPostcode() {
     return postcode;
   }
 
   @Override
-  public void setPostcode(int postcode) {
+  public void setPostcode(Integer postcode) {
     this.postcode = postcode;
-  }
-
-  @Override
-  public String getCommune() {
-    return commune;
-  }
-
-  @Override
-  public void setCommune(String commune) {
-    this.commune = commune;
   }
 
   @Override
@@ -87,22 +88,20 @@ public class AddressImpl implements AddressDTO {
   @Override
   public String toString() {
     return "AddressesImpl{"
-      + "id_address='"
-      + idAddress
-      + '\''
-      + ", building_number='"
-      + buildingNumber
-      + '\''
-      + ", postcode="
-      + postcode
-      + ", commune='"
-      + commune
-      + '\''
-      + ", city='"
-      + city
-      + '\''
-      + ", unit_number="
-      + unitNumber
-      + '}';
+        + "id_address='"
+        + idAddress
+        + '\''
+        + ", building_number='"
+        + buildingNumber
+        + '\''
+        + ", postcode="
+        + postcode
+        + '\''
+        + ", city='"
+        + city
+        + '\''
+        + ", unit_number="
+        + unitNumber
+        + '}';
   }
 }
