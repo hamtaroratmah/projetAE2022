@@ -71,6 +71,7 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param member to insert
    */
+  @Override
   public void insertMember(MemberDTO member) {
     PreparedStatement queryMember;
     PreparedStatement queryAddress;
