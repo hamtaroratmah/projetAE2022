@@ -131,11 +131,12 @@ public class MemberResource {
    * @param json the json
    * @return the member confirmed.
    */
-  @POST
+  @PUT
   @Path("confirm")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmRegistration(JsonNode json) {
+    System.out.println("CONFIRMATION");
     String username = json.get("username").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
@@ -150,7 +151,7 @@ public class MemberResource {
    * @param json the json
    * @return the member denyes.
    */
-  @POST
+  @PUT
   @Path("deny")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -168,7 +169,7 @@ public class MemberResource {
    * @return the list
    */
   @GET
-  @Path("list")
+  @Path("listPending")
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());

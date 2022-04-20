@@ -73,14 +73,9 @@ public class MemberDaoImpl implements MemberDao {
    * Update member's information.
    */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
-    String stringQuery = "UPDATE pae.members "
-        + "SET password = ?"
-        + ", username = ?"
-        + ", last_name = ?"
-        + ", first_name = ?"
-        + ", call_number = ?"
-        + " WHERE id_member = ?"
-        + "RETURNING *";
+    String stringQuery =
+        "UPDATE pae.members " + "SET password = ?" + ", username = ?" + ", last_name = ?"
+            + ", first_name = ?" + ", call_number = ?" + " WHERE id_member = ?" + "RETURNING *";
     try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
       query.setString(1, newMember.getPassword());
       query.setString(2, newMember.getUsername());
@@ -107,11 +102,9 @@ public class MemberDaoImpl implements MemberDao {
   public void register(MemberDTO member, AddressDTO address) {
     PreparedStatement queryMember;
     try {
-      queryMember = services.getPreparedStatement(
-          "INSERT INTO pae.members"
-              + "(password, username, last_name, first_name, address, call_number, "
-              + " reason_for_conn_refusal, state) "
-              + "VALUES (?,?,?,?,?,?,?,?);"
+      queryMember = services.getPreparedStatement("INSERT INTO pae.members"
+          + "(password, username, last_name, first_name, address, call_number, "
+          + " reason_for_conn_refusal, state) " + "VALUES (?,?,?,?,?,?,?,pending);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -160,8 +153,7 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
-    String query =
-        "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+    String query = "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);

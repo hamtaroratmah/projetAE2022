@@ -22,6 +22,8 @@ const verifyToken = async () => {
   }
 }
 
+const error = document.querySelector("#errorText");
+
 async function getMember(token) {
   const request = {
     method: "GET",
@@ -38,39 +40,128 @@ async function getMember(token) {
   return await response.json();
 }
 
-async function updateMember(member) {
+// get the list of inscriptions
+async function getListInscriptions(){
   const request = {
-    method: "PUT",
+    method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
-    },
-    body: JSON.stringify(
-        {
-          idMember: member.idMember,
-          password: member.password,
-          username: member.username,
-          lastName: member.lastName,
-          firstName: member.firstName,
-          callNumber: member.callNumber,
-          state: member.state,
-          idAddress: member.address.idAddress,
-          street: member.address.street,
-          buildingNumber: member.address.buildingNumber,
-          postcode: member.address.postcode,
-          city: member.address.city,
-          unitNumber: member.address.unitNumber
-        }
-    )
+      "Content-Type": "application/json"
+    }
   };
-  const response = await fetch("/api/members/updateMember", request);
-  if (!response.ok) {
-    //todo display good error message
-    const error = document.getElementById("errorText");
-    error.innerText = "Error while updating member";
+
+  let inscriptions = [];
+
+  // fill inscriptions [] with inscriptions pending
+  await fetch("/api/members/listPending", request)
+      .then(response => response.json())
+      .then((commits) => {
+        for (let i = 0; i < commits.length; i++) {
+          inscriptions.push(commits[i]);
+        }
+
+      })
+      .catch(() =>
+          error.innerHTML = "Une erreur est survenue"
+              + " durant la récupération des inscriptions"
+      );
+
+  // fill inscriptions [] with inscriptions denied
+  await fetch("/api/members/listDenied", request)
+      .then(response => response.json())
+      .then((commits) => {
+        for (let i = 0; i < commits.length; i++) {
+          inscriptions.push(commits[i]);
+        }
+
+      })
+      .catch(() =>
+          error.innerHTML = "Une erreur est survenue"
+              + " durant la récupération des inscriptions"
+      );
+  return inscriptions;
+}
+// display the list of inscriptions
+function displayInscriptions(inscriptions) {
+  const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
+  for (let i = 0; i < inscriptions.length; i++) {
+      listInscriptionsPage.innerHTML += `
+        <div id="inscriptionPending" class="receptionInscriptionParent">
+          <div class="receptionInscriptionChild1">
+          <form id="confirmForm">
+            <div class="receptionInscriptionGrandChild">
+              <p>
+                ${inscriptions[i].username}
+                ${inscriptions[i].lastName} 
+                ${inscriptions[i].firstName}
+              </p>
+            </div>
+            <div class="receptionInscriptionGrandChild">
+                state : ${inscriptions[i].state}
+            </div>
+            <div class="receptionInscriptionGrandChild">
+                <input type="checkbox" value="isAdmin" id="isAdmin${i}">
+            </div>
+            <div class="receptionInscriptionGrandChild">
+                <input id ="confirm${i}" type="submit" value="Confirmer inscription">
+            </div>
+          </form>
+          </div>
+            <div class="receptionInscriptionChild2">
+             <form id="denyForm${i}">
+                <input type="submit" value="X">
+                </form>
+            </div>
+        </div>
+      `;
+      }
+    for (let i = 0; i < inscriptions.length; i++) {
+        // Confirm inscription
+        const buttonConfirm = document.getElementById("confirm"+i);
+        buttonConfirm.addEventListener("click",async (e) => {
+            e.preventDefault();
+            await confirmInscription(inscriptions[i].username,false);
+        })
   }
-  console.log("ok jusque ici");
-  return await response.json();
 }
 
+<<<<<<< HEAD:webapp/src/utils/api/member.js
 export {getMember, updateMember, verifyToken};
+=======
+async function confirmInscription(username, isAdmin){
+    const request = {
+        method: "PUT",
+        body: JSON.stringify(
+            {
+                username: username,
+                isAdmin : isAdmin
+            }
+        ),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    console.log(request)
+    await fetch("/api/members/confirm", request)
+}
+
+async function denyInscription(username){
+    const request = {
+        method: "PUT",
+        body: JSON.stringify(
+            {
+                username: username,
+            }
+        ),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    await fetch("/api/members/deny", request)
+}
+
+export {
+  getMember,
+  getListInscriptions,
+  displayInscriptions
+};
+>>>>>>> 4ac2fab16dd8f215f48575e14fd00361018b502c:webapp/src/utils/functions/member.js
