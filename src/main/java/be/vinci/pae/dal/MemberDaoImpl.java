@@ -111,7 +111,7 @@ public class MemberDaoImpl implements MemberDao {
           "INSERT INTO pae.members"
               + "(password, username, last_name, first_name, address, call_number, "
               + " reason_for_conn_refusal, state) "
-              + "VALUES (?,?,?,?,?,?,?,?);"
+              + "VALUES (?,?,?,?,?,?,?,pending);"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -121,7 +121,6 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setInt(5, addressDao.insertAddress(address));
       queryMember.setString(6, member.getCallNumber());
       queryMember.setString(7, member.getReasonForConnRefusal());
-      queryMember.setString(8, member.getState());
 
       queryMember.executeUpdate();
     } catch (SQLException e) {
@@ -164,7 +163,7 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
     String query =
-        "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
+        "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
     System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);

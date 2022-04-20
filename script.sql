@@ -165,11 +165,11 @@ VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'achil',
 INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
-        'Ile', 'Basile', 3, 'confirm');
+        'Ile', 'Basile', 3, 'valid');
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, isadmin)
 VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
-        'Lehmann', 'Brigitte', 4, 'confirm', true);
+        'Lehmann', 'Brigitte', 4, 'valid', true);
 
 -- Insert demo's items
 INSERT INTO pae.items
