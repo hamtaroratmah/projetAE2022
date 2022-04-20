@@ -50,14 +50,11 @@ public class OfferDaoImpl implements OfferDao {
     String query = "INSERT  INTO pae.offers (date_offer,id_item)"
         + " VALUES (?,?) RETURNING id_offer, date_offer, id_item ";
     int idItem = newItem.getIdItem();
-    System.out.println(idItem);
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setDate(1, date);
       ps.setInt(2, idItem);
-      System.out.println(ps);
       OfferDTO offer = getOfferFromDatabase(ps);
-      System.out.println("ok");
       return offer;
 
     } catch (SQLException e) {
@@ -128,8 +125,7 @@ public class OfferDaoImpl implements OfferDao {
 
 
   }
-
-
+  
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {
     ResultSet resultSet = query.executeQuery();
     OfferDTO offer = domainFactory.getOffer();
@@ -137,7 +133,6 @@ public class OfferDaoImpl implements OfferDao {
       offer.setIdOffer(resultSet.getInt(1));
       offer.setDateOffer(resultSet.getDate(2).toLocalDate());
       offer.setIdItem(resultSet.getInt(3));
-      System.out.println(resultSet.getInt(3));
     }
     return offer;
   }

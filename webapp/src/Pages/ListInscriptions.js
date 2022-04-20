@@ -1,6 +1,7 @@
+import {displayInscriptions} from "../utils/displayModule/members";
+
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">
-           
         </div>
 `;
 const ListInscriptionsPage = async () => {
@@ -8,7 +9,6 @@ const ListInscriptionsPage = async () => {
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("errorText");
   pageDiv.innerHTML = listInscriptionsDiv;
-  const listInscriptionsPage = document.querySelector("#listInscriptionsPage")
 
   let inscriptions = [];
   try {
@@ -47,60 +47,13 @@ const ListInscriptionsPage = async () => {
             + " durant la récupération des inscriptions"
     );
     // display inscriptions denied and pending
-    DisplayInscriptions(inscriptions)
+    displayInscriptions(inscriptions)
     console.log(inscriptions)
 
   } catch (e) {
     console.error("Home page error", e);
   }
 
-  function DisplayInscriptions(inscriptions) {
-    listInscriptionsPage.innerHTML = ""
-    for (let i = 0; i < inscriptions.length; i++) {
-      if (inscriptions[i].state === "Denied") {
-        listInscriptionsPage.innerHTML += `
-        <div id="inscriptionPending" class="receptionInscriptionParent">
-          <div class="receptionInscriptionChild">
-              <p>
-                ${inscriptions[i].username}
-                ${inscriptions[i].lastName} 
-                ${inscriptions[i].firstName}
-              </p>
-         </div>
-         <div  class="receptionInscriptionChild">
-           state : ${inscriptions[i].state}
-        </div>
-        <div  class="receptionInscriptionChild">
-          <button>Confirmer inscription</button>
-        </div>
-        <div  class="receptionInscriptionChild">
-          <button>X</button>
-        </div>
-     </div>
-      `;
-      } else {
-        listInscriptionsPage.innerHTML += `
-        <div id="inscriptionPending" class="receptionInscriptionParent">
-          <div class="receptionInscriptionChild">
-              <p>
-                ${inscriptions[i].username}
-                ${inscriptions[i].lastName} 
-                ${inscriptions[i].firstName}
-              </p>
-         </div>
-         <div  class="receptionInscriptionChild">
-           state : ${inscriptions[i].state}
-        </div>
-        <div  class="receptionInscriptionChild">
-          <button>Confirmer inscription</button>
-        </div>
-         <div  class="receptionInscriptionChild">
-        </div>
-     </div>
-      `;
-      }
-    }
-  }
 }
 
 export default ListInscriptionsPage;

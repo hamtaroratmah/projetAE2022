@@ -117,7 +117,6 @@ public class ItemDaoImpl implements ItemDao {
       try (ResultSet rs = ps.executeQuery()) {
         return 1;
         //todo
-
       }
     } catch (SQLException e) {
       e.printStackTrace();

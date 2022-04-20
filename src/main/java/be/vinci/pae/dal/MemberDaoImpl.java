@@ -122,7 +122,6 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(6, member.getCallNumber());
       queryMember.setString(7, member.getReasonForConnRefusal());
       queryMember.setString(8, member.getState());
-
       queryMember.executeUpdate();
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
@@ -146,8 +145,6 @@ public class MemberDaoImpl implements MemberDao {
           list.add(createMemberInstance(resultSet));
         }
       }
-
-
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
@@ -165,18 +162,14 @@ public class MemberDaoImpl implements MemberDao {
     MemberDTO member;
     String query =
         "UPDATE pae.members SET state='confirmed', isAdmin =? WHERE username=? RETURNING *";
-    System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
-
         if (rs.next()) {
           member = createMemberInstance(rs);
           return member;
         }
-
-
       }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());

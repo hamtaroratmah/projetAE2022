@@ -1,9 +1,6 @@
-import {getToken} from "../utils/functions/token";
-import {
-  displayItems,
-  getItemUnordered,
-  getOrderedItems
-} from "../utils/functions/items";
+import {getToken} from "../utils/utils";
+import {getItemUnordered, getOrderedItems} from "../utils/api/items";
+import {displayItems} from "../utils/displayModule/items";
 
 const receptionDiv = `
   <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>

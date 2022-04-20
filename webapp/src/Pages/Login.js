@@ -1,6 +1,6 @@
 import {Redirect} from "../Router";
 import Navbar from "../Components/Navbar";
-import {getToken} from "../utils/functions/token";
+import {getToken} from "../utils/utils";
 
 const loginDiv = `
         <div id="loginPage">

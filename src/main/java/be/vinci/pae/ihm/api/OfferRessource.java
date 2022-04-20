@@ -61,7 +61,6 @@ public class OfferRessource {
     //si le type n existe pas , le creer
     if (idType == -1) {
       System.out.print("ko1");
-
       idType = itemUcc.createType(json.get("type").asText());
     }
     System.out.print("ok2");

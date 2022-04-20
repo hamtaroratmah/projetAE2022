@@ -1,4 +1,26 @@
-import {getToken} from "./token";
+import {getToken} from "../utils";
+
+const verifyToken = async () => {
+  const request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getToken()
+    }
+  };
+  const response = await fetch("/api/members/", request);
+  if (!response.ok) {
+    response.text().catch((err) => {
+      console.log("token invalid </3")
+      const errorDiv = document.querySelector("#errorText");
+      errorDiv.innerHTML = `${err}`
+      console.log(err)
+    })
+  } else {
+    let member = await response.json()
+    console.log("token valid <3")
+  }
+}
 
 async function getMember(token) {
   const request = {
@@ -51,4 +73,4 @@ async function updateMember(member) {
   return await response.json();
 }
 
-export {getMember, updateMember};
+export {getMember, updateMember, verifyToken};

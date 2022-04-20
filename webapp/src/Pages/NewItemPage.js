@@ -1,7 +1,7 @@
 import Navbar from "../Components/Navbar";
 import {Redirect} from "../Router";
-import {getToken} from "../utils/functions/token";
-import {getMember} from "../utils/functions/member";
+import {getMember} from "../utils/api/member";
+import {getToken} from "../utils/utils";
 
 const createDiv = `
         <div id="newItemPage">
@@ -13,7 +13,6 @@ const createDiv = `
                     <input class="inputForm fields" type="text" id="photo" placeholder="URL de la photo">
                     <input class="inputForm fields" type="text" id="description" placeholder="Description">
                     <input class="inputForm fields" type="text" id="availabilities" placeholder="Disponibilités">
-                    
                     <input class="inputForm submitButton" type="submit" id="newItemSubmitButton" value="Creer un nouvel objet">
                 </form>
             </div>
