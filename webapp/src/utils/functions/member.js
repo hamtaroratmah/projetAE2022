@@ -97,7 +97,6 @@ function displayInscriptions(inscriptions) {
         const buttonConfirm = document.getElementById("confirm"+i);
         buttonConfirm.addEventListener("click",async (e) => {
             e.preventDefault();
-            console.log("bpnsoir")
             await confirmInscription(inscriptions[i].username,false);
         })
   }

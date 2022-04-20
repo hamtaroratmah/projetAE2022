@@ -14,10 +14,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -173,7 +171,7 @@ public class MemberResource {
    * @return the list
    */
   @GET
-  @Path("list")
+  @Path("listPending")
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listPendingUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());

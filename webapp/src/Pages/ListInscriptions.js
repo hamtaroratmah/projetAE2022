@@ -2,7 +2,6 @@ import {
   getListInscriptions,
   displayInscriptions
 } from "../utils/functions/member";
-import {displayItems, getOrderedItems} from "../utils/functions/items";
 
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">
@@ -11,13 +10,6 @@ const listInscriptionsDiv = `
 `;
 
 const ListInscriptionsPage = async () => {
-
-  //Refresh la page,
-  // car le token n'est pas vérifié directement lors de la connexion
-  if (window.sessionStorage.getItem("justLogged") === true.toString()) {
-    window.location.reload();
-    window.sessionStorage.removeItem("justLogged");
-  }
 
   const pageDiv = document.querySelector("#page");
   const error = document.getElementById("error");
