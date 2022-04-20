@@ -87,10 +87,8 @@ public class MemberDaoImpl implements MemberDao {
       queryAddress.setString(4, member.getAddress().getCity());
       queryAddress.setInt(5, member.getAddress().getUnitNumber());
 
-      ResultSet rs = queryAddress.executeQuery();
-      if (rs.next()) {
-        int idAddress = rs.getInt(1);
-      }
+      queryAddress.executeQuery();
+
 
     } catch (SQLException e) {
       e.printStackTrace();
