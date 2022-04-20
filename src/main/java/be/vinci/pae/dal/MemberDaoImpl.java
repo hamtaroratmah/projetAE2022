@@ -72,6 +72,36 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * Update member's information.
    */
+  @Override
+  public void insertMember(MemberDTO member) {
+    PreparedStatement queryAddress;
+    try {
+      queryAddress = services.getPreparedStatement(
+          "INSERT INTO pae.addresses"
+              + "( street, building_number, postcode, city,unit_number)"
+              + " VALUES (?,?,?,?,?) RETURNING id_address;"
+      );
+      queryAddress.setString(1, member.getAddress().getStreet());
+      queryAddress.setInt(2, member.getAddress().getBuildingNumber());
+      queryAddress.setInt(3, member.getAddress().getPostcode());
+      queryAddress.setString(4, member.getAddress().getCity());
+      queryAddress.setInt(5, member.getAddress().getUnitNumber());
+
+      queryAddress.executeQuery();
+
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  /**
+   * update a member.
+   *
+   * @param oldMember,newMember
+   * @return the new member modified
+   */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
     String stringQuery =
         "UPDATE pae.members " + "SET password = ?" + ", username = ?" + ", last_name = ?"
@@ -201,20 +231,25 @@ public class MemberDaoImpl implements MemberDao {
   public MemberDTO createMemberInstance(ResultSet resultSetMember) throws SQLException {
 
     MemberDTO member = domainFactory.getMember();
+    try {
 
-    member.setIdMember(resultSetMember.getInt(1));
-    member.setPassword(resultSetMember.getString(2));
-    member.setUsername(resultSetMember.getString(3));
-    member.setLastName(resultSetMember.getString(4));
-    member.setFirstName(resultSetMember.getString(5));
-    member.setCallNumber(resultSetMember.getString(7));
-    member.setAdmin(resultSetMember.getBoolean(8));
-    member.setReasonForConnRefusal(resultSetMember.getString(9));
-    member.setState(resultSetMember.getString(10));
-    member.setCountObjectNotCollected(resultSetMember.getInt(11));
-    member.setCountObjectGiven(resultSetMember.getInt(12));
-    member.setCountObjectGot(resultSetMember.getInt(13));
+      member.setIdMember(resultSetMember.getInt(1));
+      member.setPassword(resultSetMember.getString(2));
+      member.setUsername(resultSetMember.getString(3));
+      member.setLastName(resultSetMember.getString(4));
+      member.setFirstName(resultSetMember.getString(5));
+      member.setCallNumber(resultSetMember.getString(7));
+      member.setAdmin(resultSetMember.getBoolean(8));
+      member.setReasonForConnRefusal(resultSetMember.getString(9));
+      member.setState(resultSetMember.getString(10));
+      member.setCountObjectNotCollected(resultSetMember.getInt(11));
+      member.setCountObjectGiven(resultSetMember.getInt(12));
+      member.setCountObjectGot(resultSetMember.getInt(13));
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return member;
+
   }
 
 

@@ -22,7 +22,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/item")
+@Path("/items")
 public class ItemResource {
 
   @Inject

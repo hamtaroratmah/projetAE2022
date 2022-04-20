@@ -26,7 +26,8 @@ public interface AddressDTO {
 
   void setCity(String city);
 
-  String getUnitNumber();
+  int getUnitNumber();
 
-  void setUnitNumber(String unitNumber);
+
+  void setUnitNumber(int unitNumber);
 }

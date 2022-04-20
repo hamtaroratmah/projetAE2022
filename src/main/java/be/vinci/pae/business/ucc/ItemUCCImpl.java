@@ -72,6 +72,7 @@ public class ItemUCCImpl implements ItemUCC {
    */
   @Override
   public int likeAnItem(int offerId, int memberId) {
+
     try {
       dalServices.startTransaction();
       int interests = itemDao.likeAnItem(offerId, memberId);
@@ -79,6 +80,7 @@ public class ItemUCCImpl implements ItemUCC {
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
+
       e.printStackTrace();
     }
     return -1;

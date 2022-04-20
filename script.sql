@@ -270,3 +270,12 @@ SET password    = '$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW'
     first_name  = 'Quentin',
     call_number = 'null'
 WHERE id_member = 2;
+
+SELECT * FROM pae.interests WHERE id_item=1 ;
+
+SELECT * FROM pae.members WHERE state= 'denied';
+SELECT *
+FROm pae.members m,
+     pae.addresses a
+WHERE m.id_member = 10
+  AND a.id_address = m.address;

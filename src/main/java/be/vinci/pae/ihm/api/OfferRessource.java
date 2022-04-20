@@ -96,7 +96,7 @@ public class OfferRessource {
   }
 
   /**
-   * Get a specified item according to its id.
+   * Get all of the interests from an item according to its id.
    *
    * @params idItem, idMember item's id that we want more details
    */
@@ -112,6 +112,46 @@ public class OfferRessource {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
     return offerUCC.interests(idItem, idMember);
+  }
+
+  /**
+   * cancel an offer.
+   *
+   * @params idItem, item that we want to cancel
+   */
+  @POST
+  @Path("/cancel")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean cancel(JsonNode json) {
+    int idItem = json.get("idItem").asInt();
+
+    if (idItem < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return offerUCC.cancel(idItem);
+  }
+
+  /**
+   * modify an offer.
+   *
+   * @params idItem, item that we want to modify
+   */
+  @POST
+  @Path("/modify")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ItemDTO modify(JsonNode json) {
+    int idOffer = json.get("idOffer").asInt();
+    String type = json.get("type").asText();
+    String photo = json.get("photo").asText();
+    String description = json.get("description").asText();
+    String avalaibilities = json.get("availabilities").asText();
+    if (idOffer < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    System.out.println("ok1");
+    return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
   }
 
 

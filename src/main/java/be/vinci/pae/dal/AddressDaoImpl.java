@@ -55,7 +55,7 @@ public class AddressDaoImpl implements AddressDao {
       queryAddress.setInt(2, address.getBuildingNumber());
       queryAddress.setInt(3, address.getPostcode());
       queryAddress.setString(4, address.getCity());
-      queryAddress.setString(5, address.getUnitNumber());
+      queryAddress.setInt(5, address.getUnitNumber());
       ResultSet rs = queryAddress.executeQuery();
       if (rs.next()) {
         idAddress = rs.getInt(1);
@@ -79,7 +79,7 @@ public class AddressDaoImpl implements AddressDao {
     try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
       query.setString(1, newAddress.getStreet());
       query.setString(2, newAddress.getCity());
-      query.setString(3, newAddress.getUnitNumber());
+      query.setInt(3, newAddress.getUnitNumber());
       query.setInt(4, newAddress.getBuildingNumber());
       query.setInt(5, newAddress.getPostcode());
       query.setInt(6, oldAddress.getIdAddress());
@@ -101,7 +101,7 @@ public class AddressDaoImpl implements AddressDao {
     address.setBuildingNumber(resultSetAdress.getInt("building_number"));
     address.setPostcode(resultSetAdress.getInt("postcode"));
     address.setCity(resultSetAdress.getString("city"));
-    address.setUnitNumber(resultSetAdress.getString("unit_number"));
+    address.setUnitNumber(resultSetAdress.getInt("unit_number"));
     resultSetAdress.close();
     return address;
   }
