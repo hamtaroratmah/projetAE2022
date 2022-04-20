@@ -31,5 +31,9 @@ public interface MemberDao {
 
   void insertMember(MemberDTO member);
 
+  ArrayList<MemberDTO> searchMember(String lastName);
+
   MemberDTO createMemberInstance(ResultSet resultSet) throws SQLException;
+
+
 }

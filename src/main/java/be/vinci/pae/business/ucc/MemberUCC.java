@@ -33,7 +33,9 @@ public interface MemberUCC {
 
   MemberDTO denyRegistration(String username);
 
-  MemberDTO register(MemberDTO member, AddressDTO address);
+  void register(MemberDTO member, AddressDTO address);
 
   Object getOneByUsername(String username);
+
+  ArrayList<MemberDTO> searchMember(String lastName);
 }

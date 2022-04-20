@@ -1,10 +1,11 @@
 // If you prefer to style your app with vanilla CSS rather than with Bootstrap
 import "./stylesheets/main.css";
-import {Router} from "./Router";
-import Navbar from "./Components/Navbar";
-import {getToken} from "./utils/utils";
 import {verifyToken} from "./utils/api/member";
+import {getToken} from "./utils/utils";
+import Navbar from "./Components/Navbar";
+import {Router} from "./Router";
 
 getToken() ? verifyToken() : console.log("Aucun token à vérifier");
-Navbar();
+Navbar().then(r => {
+});
 Router(); // The router will automatically load the root page

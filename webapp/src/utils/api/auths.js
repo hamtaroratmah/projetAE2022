@@ -7,7 +7,7 @@ async function login(e) {
   const password = document.getElementById("passwordLogin").value;
   const errorLogin = document.getElementById("errorText");
   errorLogin.innerHTML = "";
-
+  console.log("ici")
   if (!username) {
     errorLogin.innerHTML = "Enter a username";
   } else if (!password) {

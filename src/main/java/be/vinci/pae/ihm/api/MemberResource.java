@@ -10,11 +10,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
@@ -53,58 +55,12 @@ public class MemberResource {
   @Path("updateMember")
   @Authorize
   @Produces(MediaType.APPLICATION_JSON)
-  public MemberDTO updateMember(@Context ContainerRequestContext requestContext,
-      JsonNode json) {
+  public MemberDTO updateMember(@Context ContainerRequestContext requestContext, JsonNode json) {
     MemberDTO oldMember = (MemberDTO) requestContext.getProperty("user");
     if (!checkNullOrBlank(json)) {
       throw new BadRequestException("Il manque certains champs");
     }
     return memberUCC.updateMember(oldMember, createMember(json));
-  }
-
-  private MemberDTO createMember(JsonNode json) {
-    MemberDTO member = domainFactory.getMember();
-    member.setIdMember(json.get("idMember").asInt());
-    member.setUsername(json.get("username").asText());
-    member.setPassword(json.get("password").asText());
-    member.setLastName(json.get("lastName").asText());
-    member.setFirstName(json.get("firstName").asText());
-    member.setCallNumber(json.get("callNumber").asText());
-    member.setState(json.get("state").asText());
-    AddressDTO address = domainFactory.getAddress();
-    address.setIdAddress(json.get("idAddress").asInt());
-    address.setStreet(json.get("street").asText());
-    address.setBuildingNumber(json.get("buildingNumber").asInt());
-    address.setPostcode(json.get("postcode").asInt());
-    address.setCity(json.get("city").asText());
-    address.setUnitNumber(json.get("unitNumber").asInt());
-    member.setAddress(address);
-    return member;
-  }
-
-  private boolean checkNullOrBlank(JsonNode json) {
-    return json.hasNonNull("idMember")
-        && json.hasNonNull("password")
-        && json.hasNonNull("username")
-        && json.hasNonNull("lastName")
-        && json.hasNonNull("firstName")
-        && json.hasNonNull("callNumber")
-        && json.hasNonNull("idAddress")
-        && json.hasNonNull("street")
-        && json.hasNonNull("buildingNumber")
-        && json.hasNonNull("postcode")
-        && json.hasNonNull("city")
-        && json.hasNonNull("unitNumber")
-        && !json.get("idMember").asText().isBlank()
-        && !json.get("password").asText().isBlank()
-        && !json.get("username").asText().isBlank()
-        && !json.get("lastName").asText().isBlank()
-        && !json.get("firstName").asText().isBlank()
-        && !json.get("idAddress").asText().isBlank()
-        && !json.get("street").asText().isBlank()
-        && !json.get("buildingNumber").asText().isBlank()
-        && !json.get("postcode").asText().isBlank()
-        && !json.get("city").asText().isBlank();
   }
 
   /**
@@ -185,5 +141,51 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
+  }
+
+  /**
+   * search member according to the input
+   *
+   * @return a list of member if their username, lastName or firstName match with the input
+   */
+  @GET
+  @Path("/searchMembers?lastName")
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> searchMembers(
+      @DefaultValue("") @QueryParam("lastName") String lastName) {
+    return memberUCC.searchMember(lastName);
+  }
+
+  private MemberDTO createMember(JsonNode json) {
+    MemberDTO member = domainFactory.getMember();
+    member.setIdMember(json.get("idMember").asInt());
+    member.setUsername(json.get("username").asText());
+    member.setPassword(json.get("password").asText());
+    member.setLastName(json.get("lastName").asText());
+    member.setFirstName(json.get("firstName").asText());
+    member.setCallNumber(json.get("callNumber").asText());
+    member.setState(json.get("state").asText());
+    AddressDTO address = domainFactory.getAddress();
+    address.setIdAddress(json.get("idAddress").asInt());
+    address.setStreet(json.get("street").asText());
+    address.setBuildingNumber(json.get("buildingNumber").asInt());
+    address.setPostcode(json.get("postcode").asInt());
+    address.setCity(json.get("city").asText());
+    address.setUnitNumber(json.get("unitNumber").asInt());
+    member.setAddress(address);
+    return member;
+  }
+
+  private boolean checkNullOrBlank(JsonNode json) {
+    return json.hasNonNull("idMember") && json.hasNonNull("password") && json.hasNonNull("username")
+        && json.hasNonNull("lastName") && json.hasNonNull("firstName") && json.hasNonNull(
+        "callNumber") && json.hasNonNull("idAddress") && json.hasNonNull("street")
+        && json.hasNonNull("buildingNumber") && json.hasNonNull("postcode") && json.hasNonNull(
+        "city") && json.hasNonNull("unitNumber") && !json.get("idMember").asText().isBlank()
+        && !json.get("password").asText().isBlank() && !json.get("username").asText().isBlank()
+        && !json.get("lastName").asText().isBlank() && !json.get("firstName").asText().isBlank()
+        && !json.get("idAddress").asText().isBlank() && !json.get("street").asText().isBlank()
+        && !json.get("buildingNumber").asText().isBlank() && !json.get("postcode").asText()
+        .isBlank() && !json.get("city").asText().isBlank();
   }
 }

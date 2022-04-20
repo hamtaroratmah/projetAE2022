@@ -6,7 +6,6 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -87,14 +86,22 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new LoginException(e.getMessage());
+      throw e;
     }
   }
 
 
   @Override
   public String getState(String username) {
-    return memberDao.getMemberByUsername(username).getState();
+    try {
+      dalServices.startTransaction();
+      String state = memberDao.getMemberByUsername(username).getState();
+      dalServices.commitTransaction();
+      return state;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    }
   }
 
   @Override
@@ -106,7 +113,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -119,7 +126,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
 
   }
@@ -133,7 +140,7 @@ public class MemberUCCImpl implements MemberUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -146,7 +153,7 @@ public class MemberUCCImpl implements MemberUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -159,13 +166,13 @@ public class MemberUCCImpl implements MemberUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
 
   @Override
-  public MemberDTO register(MemberDTO member, AddressDTO address) {
+  public void register(MemberDTO member, AddressDTO address) {
     try {
       dalServices.startTransaction();
       if (getOneByUsername(member.getUsername()) != null) {
@@ -176,10 +183,9 @@ public class MemberUCCImpl implements MemberUCC {
       member.setPassword(hashPass);
       memberDao.register(member, address);
       dalServices.commitTransaction();
-      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -192,7 +198,20 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
+    }
+  }
+
+  @Override
+  public ArrayList<MemberDTO> searchMember(String lastName) {
+    try {
+      dalServices.startTransaction();
+      ArrayList<MemberDTO> members = memberDao.searchMember(lastName);
+      dalServices.commitTransaction();
+      return members;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
     }
   }
 }

@@ -222,6 +222,10 @@ public class MemberDaoImpl implements MemberDao {
     return null;
   }
 
+  public ArrayList<MemberDTO> searchMember(String lastName) { //TODO
+    return null;
+  }
+
   /**
    * create a member instance used in methods confirm and deny.
    *

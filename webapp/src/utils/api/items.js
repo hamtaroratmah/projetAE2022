@@ -8,7 +8,6 @@ async function getItemUnordered() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": getToken()
     }
   };
   let items = [];
