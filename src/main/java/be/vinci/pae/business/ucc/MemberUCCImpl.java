@@ -1,10 +1,11 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import jakarta.inject.Inject;
@@ -14,6 +15,8 @@ public class MemberUCCImpl implements MemberUCC {
 
   @Inject
   private MemberDao memberDao;
+  @Inject
+  private DomainFactory domainFactory;
 
   @Inject
   private DalServices dalServices;
@@ -24,10 +27,27 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO getOne(int id) {
     try {
       dalServices.startTransaction();
-      if (id < 1) {
-        throw new BadRequestException("Un id ne peut être négatif");
-      }
       MemberDTO member = memberDao.getMember(id);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      e.printStackTrace();
+      throw e;
+    }
+  }
+
+  /**
+   * update profile.
+   */
+  public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
+    try {
+      dalServices.startTransaction();
+      if (newMember.getPassword().length() < 60) {
+        Member memberBiz = (Member) domainFactory.getMember();
+        newMember.setPassword(memberBiz.hashPassword(newMember.getPassword()));
+      }
+      MemberDTO member = memberDao.updateMember(oldMember, newMember);
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
@@ -35,7 +55,6 @@ public class MemberUCCImpl implements MemberUCC {
       throw new FatalException(e.getMessage());
     }
   }
-
 
   /**
    * Permit to a disconnected user to log in.
@@ -47,7 +66,11 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO login(String username, String password) {
     try {
       dalServices.startTransaction();
-      Member member = (Member) memberDao.getMemberByUsername(username);
+      MemberDTO memberDTO = memberDao.getMemberByUsername(username);
+      if (memberDTO == null) {
+        throw new LoginException("Username not found");
+      }
+      Member member = (Member) memberDTO;
       switch (member.getState()) {
         case "pending":
           throw new LoginException("L'utilisateur est en attente de confirmation.");
@@ -101,7 +124,6 @@ public class MemberUCCImpl implements MemberUCC {
 
   }
 
-
   @Override
   public ArrayList<MemberDTO> listUsersByState(String state) {
     try {
@@ -128,15 +150,31 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
-
   @Override
-  public MemberDTO register(MemberDTO member) {
+  public ArrayList<MemberDTO> listPendingUsers() {
     try {
       dalServices.startTransaction();
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+
+  @Override
+  public MemberDTO register(MemberDTO member, AddressDTO address) {
+    try {
+      dalServices.startTransaction();
+      if (getOneByUsername(member.getUsername()) != null) {
+        throw new IllegalArgumentException("L'utilisateur existe déjà !");
+      }
       Member memberBiz = (Member) member;
       String hashPass = memberBiz.hashPassword(member.getPassword());
       member.setPassword(hashPass);
-      memberDao.insertMember(member);
+      memberDao.register(member, address);
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {

@@ -112,19 +112,24 @@ public class OfferUCCImpl implements OfferUCC {
     }
   }
 
+  /**
+   * modify an offer.
+   *
+   * @param idOffer,type,photo,description,availabilities
+   * @return the new item modified
+   */
   public ItemDTO modify(int idOffer, String type, String photo, String description,
       String availabilities) {
 
     try {
       dalServices.startTransaction();
-      int idItem = offerDao.getIdItem(idOffer);
       System.out.println("ok2");
 
       if (idOffer < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
-      System.out.println("ok3");
-      System.out.println(idOffer);
+      int idItem = offerDao.getIdItem(idOffer);
+
       ItemDTO item = itemDao.modify(idItem, type, photo, description, availabilities);
       dalServices.commitTransaction();
 
