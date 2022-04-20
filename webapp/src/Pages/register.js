@@ -116,7 +116,7 @@ async function register(e) {
       window.sessionStorage.setItem("user", JSON.stringify(token));
     }
 
-    Navbar();
+    await Navbar();
     Redirect("/");
   } catch (e) {
     console.error("RegisterPage::error ", e);

@@ -42,7 +42,7 @@ const HomePage = async () => {
   document.getElementById("errorText");
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
-  let items = [];
+  let items;
 
   if (token) {
     items = await getOrderedItems("date_offer", "DESC")
