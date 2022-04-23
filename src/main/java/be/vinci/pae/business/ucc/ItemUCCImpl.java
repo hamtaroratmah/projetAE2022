@@ -39,9 +39,6 @@ public class ItemUCCImpl implements ItemUCC {
         throw new BadRequestException("L'id de l'objet doit être supérieur à 0.");
       }
       ItemDTO item = itemDao.getItem(idItem);
-      if (item == null) {
-        throw new BadRequestException("L'objet désiré n'existe pas.");
-      }
       dalServices.commitTransaction();
       return item;
     } catch (Exception e) {

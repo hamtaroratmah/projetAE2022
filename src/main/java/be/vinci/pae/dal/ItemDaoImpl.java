@@ -70,21 +70,21 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO getItem(int idItem) {
-    List<ItemDTO> item = new ArrayList<>();
+    ItemDTO item;
     try (PreparedStatement query = services.getPreparedStatement(
         "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
             + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
             + "FROM pae.items it,pae.types ty,pae.offers of "
             + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item AND it.id_item = ? ")) {
       query.setInt(1, idItem);
-      item = getItemFromDataBase(query);
+      ResultSet rs = query.executeQuery();
+      item = createItemInstance(rs);
+      return item;
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException("Problème en db getItem");
     }
-    if (item.size() > 0) {
-      return item.get(0);
-    }
-    return null;
+
+
   }
 
 
@@ -163,6 +163,9 @@ public class ItemDaoImpl implements ItemDao {
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();
+    if (!resultSet.next()) {
+      return null;
+    }
     while (resultSet.next()) {
       ItemDTO item = domainFactory.getItem();
       TypeDTO type = domainFactory.getType();

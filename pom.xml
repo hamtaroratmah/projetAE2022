@@ -51,6 +51,7 @@
       <artifactId>jersey-media-json-jackson</artifactId>
       <groupId>org.glassfish.jersey.media</groupId>
     </dependency>
+
     <dependency>
       <artifactId>postgresql</artifactId>
       <groupId>org.postgresql</groupId>
