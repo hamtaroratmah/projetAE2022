@@ -1,6 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import java.io.IOException;
 import java.util.List;
 
 public interface ItemUCC {
@@ -19,7 +20,7 @@ public interface ItemUCC {
 
   int likeAnItem(int offerId, int memberId);
 
-  int cancelAnOffer(int itemId);
+  int cancelAnOffer(int itemId) throws IOException;
 
   ItemDTO createItem(ItemDTO item);
 }

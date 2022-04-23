@@ -19,6 +19,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -160,7 +161,7 @@ public class ItemResource {
   @Path("cancelOffer")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public int cancelAnOffer(JsonNode json) {
+  public int cancelAnOffer(JsonNode json) throws IOException {
     int itemId;
     itemId = json.get("itemId").asInt();
     return itemUcc.cancelAnOffer(itemId);
