@@ -3,6 +3,8 @@ import {getMember} from "./member";
 import Navbar from "../../Components/Navbar";
 import {Redirect} from "../../Router";
 
+const error = document.querySelector("#errorText");
+
 async function getItemUnordered() {
   let request = {
     method: "GET",
@@ -12,7 +14,7 @@ async function getItemUnordered() {
     }
   };
   let items = [];
-  await fetch("/api/item/getLastOfferedItemsNonConnected", request)
+  await fetch("/api/items/getLastOfferedItemsNonConnected", request)
   .then(response => response.json())
   .then((commits) => {
     for (let i = 0; i < commits.length; i++) {
@@ -35,7 +37,7 @@ async function getOrderedItems(sortingParam, order) {
     }
   };
   await fetch(
-      "/api/item/getItemSortedBy/?sortingParam=" + sortingParam + "&order="
+      "/api/items/getItemSortedBy/?sortingParam=" + sortingParam + "&order="
       + order,
       request)
   .then(response => response.json())
@@ -56,11 +58,7 @@ async function createItem(e) {
   const photo = document.getElementById("photo").value;
   const description = document.getElementById("description").value;
   const availabilities = document.getElementById("availabilities").value;
-  const errorLogin = document.getElementById("errorText");
   let member = await getMember(getToken());
-  console.log(getToken());
-
-  console.log(member.idMember);
 
   // if(window.localStorage.getItem("user"))
   // idMember = window.localStorage.getItem("user") !== null
@@ -69,12 +67,12 @@ async function createItem(e) {
   // and show an error message if not
   try {
     if (!type) {
-      errorCreate.innerHTML = "Choose a type";
+      error.innerHTML = "Choose a type";
     } else if (!description) {
-      errorCreate.innerHTML = "Enter a description";
+      error.innerHTML = "Enter a description";
 
     } else if (!availabilities) {
-      errorCreate.innerHTML = "Enter your availabilities";
+      error.innerHTML = "Enter your availabilities";
     }
     const request = {
       method: "POST",
@@ -94,10 +92,10 @@ async function createItem(e) {
     const response = await fetch("/api/offer/createOffer", request);
     if (!response.ok) {
       if (response.status === 403) {
-        errorLogin.innerHTML = "Impossible to create a new item";
+        error.innerHTML = "Impossible to create a new item";
       }
     } else {
-      errorLogin.innerHTML = "";
+      error.innerHTML = "";
     }
     await Navbar();
     Redirect("/");
