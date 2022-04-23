@@ -154,5 +154,25 @@ public class OfferRessource {
     return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
   }
 
+  /**
+   * Choose a member to give the item.
+   *
+   * @params idItem, idMember that we want to offer
+   */
+  @POST
+  @Path("/offer")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean offer(JsonNode json) {
+    int idOffer = json.get("idOffer").asInt();
+    int idMember = json.get("idMember").asInt();
+
+    if (idOffer < 1 || idMember < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    System.out.println("ok1");
+    return offerUCC.offer(idOffer, idMember);
+  }
+
 
 }

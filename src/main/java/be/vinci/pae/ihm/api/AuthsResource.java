@@ -107,7 +107,7 @@ public class AuthsResource {
     address.setCity(json.get("city").asText());
     address.setStreet(json.get("street").asText());
     address.setBuildingNumber(json.get("buildingNumber").asInt());
-    address.setUnitNumber(json.get("unitNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asText());
     address.setPostcode(json.get("postcode").asInt());
     // create the member
     MemberDTO member = domainFactory.getMember();
