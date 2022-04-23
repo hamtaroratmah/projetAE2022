@@ -18,22 +18,6 @@ public class ItemUCCImpl implements ItemUCC {
   public ItemUCCImpl() {
   }
 
-  /**
-   * Get items from databased, sorted by the offer's date DESC.
-   */
-  @Override
-  public List<ItemDTO> getLastOfferedItems() {
-    try {
-      dalServices.startTransaction();
-      List<ItemDTO> list = itemDao.getLastOfferedItems();
-      dalServices.commitTransaction();
-      return list;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
-
   @Override
   public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
     try {
@@ -88,6 +72,7 @@ public class ItemUCCImpl implements ItemUCC {
    */
   @Override
   public int likeAnItem(int offerId, int memberId) {
+
     try {
       dalServices.startTransaction();
       int interests = itemDao.likeAnItem(offerId, memberId);
@@ -95,6 +80,7 @@ public class ItemUCCImpl implements ItemUCC {
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
+
       e.printStackTrace();
     }
     return -1;

@@ -45,7 +45,7 @@ CREATE TABLE pae.ratings
 CREATE TABLE pae.items
 (
     id_item            SERIAL PRIMARY KEY,
-    type               INTEGER REFERENCES pae.types (id_type),
+    id_type            INTEGER REFERENCES pae.types (id_type),
     photo              VARCHAR(100),
     description        VARCHAR(300),
     availabilities     VARCHAR(300),
@@ -165,24 +165,24 @@ VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'achil',
 INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
-        'Ile', 'Basile', 3, 'confirm');
+        'Ile', 'Basile', 3, 'valid');
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, isadmin)
 VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
-        'Lehmann', 'Brigitte', 4, 'confirm', true);
+        'Lehmann', 'Brigitte', 4, 'valid', true);
 
 -- Insert demo's items
 INSERT INTO pae.items
-(id_offering_member, type, availabilities, description, item_condition, photo)
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
 VALUES (3, 3, 'Mardi de 17h à 22h', 'Décoration de Noël de couleur rouge', 'given', null);
 
 INSERT INTO pae.items
-(id_offering_member, type, availabilities, description, item_condition, photo)
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
 VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir', 'given',
         null);
 
 INSERT INTO pae.items
-(id_offering_member, type, availabilities, description, item_condition, photo)
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
 VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
 
 --Insert demo's offers
@@ -206,7 +206,7 @@ Select it.id_item, it.description, ty.type, it.item_condition, of.date_offer
 From pae.items it,
      pae.types ty,
      pae.offers of
-Where it.type = ty.id_type
+Where it.id_type = ty.id_type
   And it.id_item = of.id_item
 ORDER BY of.date_offer Desc;
 
@@ -215,22 +215,71 @@ from pae.items it,
      pae.members me
 order by me.first_name, it.description;
 
-SELECT * FROM pae.items;
-SELECT * FROM pae.members;
+SELECT *
+FROM pae.items;
+SELECT *
+FROM pae.members;
 
 
 
+INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+                       id_offering_member)
+VALUES (4, ' ', 'objet test 2', 'lubdi et mardi', 'published', 2)
+RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
 
 
-INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,' ','objet test 2','lubdi et mardi','published',2)
-        RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('2022-04-07 +02', 1)
+RETURNING id_offer, date_offer, id_item;
 
+INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+                       id_offering_member)
+VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
+RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
 
-INSERT  INTO pae.offers (date_offer,id_item) VALUES ('2022-04-07 +02',1) RETURNING id_offer, date_offer, id_item;
+SELECT *
+FROM pae.members;
 
-    INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,NULL,'objet test 2','lundi et mardi','published',2) RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
+SELECT *
+FROM pae.interests
+WHERE id_item = 1;
 
+SELECT id_member,
+       password,
+       username,
+       last_name,
+       first_name,
+       call_number,
+       isadmin,
+       reason_for_conn_refusal,
+       state,
+       count_object_not_collected,
+       count_object_given,
+       count_object_got,
+       address
+FROM pae.members
+WHERE id_member = 3;
 
-SELECT * FROM pae.members;
+UPDATE pae.members
+SET password    = '$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW',
+    username    = 'quentin659',
+    last_name   = 'Garwig',
+    first_name  = 'Quentin',
+    call_number = 'null'
+WHERE id_member = 2;
 
 SELECT * FROM pae.interests WHERE id_item=1 ;
+
+SELECT * FROM pae.members WHERE state= 'denied';
+SELECT *
+FROm pae.members m,
+     pae.addresses a
+WHERE m.id_member = 10
+  AND a.id_address = m.address;
+
+
+SELECT * FROM pae.interests;
+UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
+
+                                                                INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+

@@ -67,19 +67,30 @@ img {
 
 .receptionInscriptionParent {
   border: 1px solid black;
-  width: 1500px;
+  width: 1200px;
   height: 100px;
   margin: auto;
   text-align: center;
 }
 
-.receptionInscriptionChild {
-  width: 250px;
+.receptionInscriptionChild1 {
+  width: 1000px;
   padding: 10px;
   vertical-align: middle;
   display: inline-block;
 }
-
+.receptionInscriptionChild2 {
+  width: 100px;
+  padding: 10px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.receptionInscriptionGrandChild {
+  width: 200px;
+  padding: 10px;
+  vertical-align: middle;
+  display: inline-block;
+}
 .listInscriptionsButton {
   margin: 50px auto;
 }

@@ -15,4 +15,9 @@ public interface OfferDao {
 
   ArrayList<MemberDTO> interests(int idItem, int idMember);
 
+  int getIdItem(int idOffer);
+
+  boolean cancel(int idItem);
+
+
 }

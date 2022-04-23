@@ -1,32 +1,33 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
+import be.vinci.pae.business.domain.dtos.AddressImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = AddressImpl.class)
 public interface AddressDTO {
 
-  int getIdAddress();
+  Integer getIdAddress();
 
-  void setIdAddress(int idAddress);
+  void setIdAddress(Integer idAddress);
 
   String getStreet();
 
   void setStreet(String street);
 
-  int getBuildingNumber();
+  Integer getBuildingNumber();
 
-  void setBuildingNumber(int buildingNumber);
+  void setBuildingNumber(Integer buildingNumber);
 
-  int getPostcode();
+  Integer getPostcode();
 
-  void setPostcode(int postcode);
-
-  String getCommune();
-
-  void setCommune(String commune);
+  void setPostcode(Integer postcode);
 
   String getCity();
 
   void setCity(String city);
 
-  int getUnitNumber();
+  String getUnitNumber();
 
-  void setUnitNumber(int unitNumber);
+
+  void setUnitNumber(String unitNumber);
 }

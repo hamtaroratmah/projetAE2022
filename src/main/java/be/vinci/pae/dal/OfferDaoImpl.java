@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ public class OfferDaoImpl implements OfferDao {
   @Inject
   DalServices services;
   @Inject
-  MemberDaoImpl memberDao;
+  MemberDao memberDao;
 
   public OfferDaoImpl() {
 
@@ -49,14 +50,11 @@ public class OfferDaoImpl implements OfferDao {
     String query = "INSERT  INTO pae.offers (date_offer,id_item)"
         + " VALUES (?,?) RETURNING id_offer, date_offer, id_item ";
     int idItem = newItem.getIdItem();
-    System.out.println(idItem);
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setDate(1, date);
       ps.setInt(2, idItem);
-      System.out.println(ps);
       OfferDTO offer = getOfferFromDatabase(ps);
-      System.out.println("ok");
       return offer;
 
     } catch (SQLException e) {
@@ -128,6 +126,22 @@ public class OfferDaoImpl implements OfferDao {
 
   }
 
+  @Override
+  public int getIdItem(int idOffer) {
+    String query = "SELECT id_item FROM pae.offers WHERE id_offer=?";
+    int id = 0;
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idOffer);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        id = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    System.out.println(id);
+    return id;
+  }
 
   private OfferDTO getOfferFromDatabase(PreparedStatement query) throws SQLException {
     ResultSet resultSet = query.executeQuery();
@@ -136,9 +150,23 @@ public class OfferDaoImpl implements OfferDao {
       offer.setIdOffer(resultSet.getInt(1));
       offer.setDateOffer(resultSet.getDate(2).toLocalDate());
       offer.setIdItem(resultSet.getInt(3));
-      System.out.println(resultSet.getInt(3));
     }
     return offer;
+  }
+
+  @Override
+  public boolean cancel(int idOffer) {
+    int idItem = getIdItem(idOffer);
+    boolean cancelled = false;
+    String query = "UPDATE TABLE pae.items SET item_condition= 'cancelled' WHERE id_item=? ";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      cancelled = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return cancelled;
   }
 
 }

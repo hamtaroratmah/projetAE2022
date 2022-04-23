@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface ItemUCC {
 
-  List<ItemDTO> getLastOfferedItems();
-
   List<ItemDTO> getGivenItems();
 
   List<ItemDTO> getItemSortedBy(String sortingParam, String order);
