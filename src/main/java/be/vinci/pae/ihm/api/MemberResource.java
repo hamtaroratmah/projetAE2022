@@ -77,7 +77,7 @@ public class MemberResource {
     address.setBuildingNumber(json.get("buildingNumber").asInt());
     address.setPostcode(json.get("postcode").asInt());
     address.setCity(json.get("city").asText());
-    address.setUnitNumber(json.get("unitNumber").asInt());
+    address.setUnitNumber(json.get("unitNumber").asText());
     member.setAddress(address);
     return member;
   }

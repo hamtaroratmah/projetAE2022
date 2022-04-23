@@ -171,6 +171,7 @@ public class OfferRessource {
     if (idOffer < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
+    System.out.println("ok1");
     return offerUCC.offer(idOffer, idMember);
   }
 

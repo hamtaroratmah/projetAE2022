@@ -143,8 +143,21 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public boolean offer(int idItem, int idOffer){
-    String query= "UPDATE pae.interests SET isGiven=true WHERE id_item = ? AND id_member= "
+  public boolean offer(int idItem, int idOffer) {
+    String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=? RETURNING id_member ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      ps.setInt(2, idOffer);
+      ps.executeQuery();
+      System.out.println(ps);
+
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return true;
+
   }
 
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
@@ -180,11 +193,11 @@ public class ItemDaoImpl implements ItemDao {
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
 
-    ItemDTO item;
+    ItemDTO item = null;
     String query = "INSERT  INTO pae.items "
-        + "(type,photo, description, availabilities, item_condition,id_offering_member) "
+        + "(id_type,photo, description, availabilities, item_condition,id_offering_member) "
         + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING id_item,type,photo,description,availabilities,"
+        + "RETURNING id_item,id_type,photo,description,availabilities,"
         + "item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());
@@ -204,7 +217,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return null;
+    return item;
 
   }
 

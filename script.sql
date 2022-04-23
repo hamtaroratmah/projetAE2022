@@ -236,9 +236,6 @@ INSERT INTO pae.items (id_type, photo, description, availabilities, item_conditi
                        id_offering_member)
 VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
 RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-INSERT  INTO pae.items (type,photo, description, availabilities, item_condition,id_offering_member)  VALUES(4,' ','objet test 2','lubdi et mardi','published',2)
-        RETURNING id_item,type,photo,description,availabilities,item_condition,id_offering_member;
-
 
 SELECT *
 FROM pae.members;
@@ -279,3 +276,10 @@ FROm pae.members m,
      pae.addresses a
 WHERE m.id_member = 10
   AND a.id_address = m.address;
+
+
+SELECT * FROM pae.interests;
+UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
+
+                                                                INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+

@@ -143,25 +143,26 @@ public class OfferUCCImpl implements OfferUCC {
   }
 
   public boolean offer(int idOffer, int idMember) {
+    boolean given;
     try {
-      boolean given;
+      System.out.println("ok2");
+
       dalServices.startTransaction();
       int idItem = offerDao.getIdItem(idOffer);
 
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
-      ItemDTO item = itemDao.offer(idItem, idMember);
+      given = itemDao.offer(idItem, idMember);
       dalServices.commitTransaction();
 
-      given = true;
     } catch (Exception e) {
       System.out.println("ko1");
 
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
     }
-    return true;
+    return given;
   }
 
 }
