@@ -1,5 +1,6 @@
 import {reformateDate} from "../utils";
-
+import {cancelOffer, modifyOffer} from "../api/items";
+let idOfferItem;
 function displayItems(items) {
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
@@ -34,8 +35,16 @@ function displayItems(items) {
           <p id="receptionDate">${item["offer"].dateOffer}</p>
           <p id="receptionItemCondition">${item.itemCondition}</p>
           <p id="receptionAvailabilities">${item.availabilities}</p>
+          <p id="receptionIdOffer">${item["offer"].idOffer}</p>
           <p class="modalItemInfo"></p>
+          <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
+          <button>Annuler l'offre</button>
+          </div>
+          <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
+          <button>Modifier l'offre</button>
+          </div>
       </div>
+      
       `;
 
   }
@@ -43,6 +52,17 @@ function displayItems(items) {
     const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j);
+    });
+    const cancelButton = document.querySelector("#cancelOffer"+j)
+    cancelButton.addEventListener("click",() => {
+      cancelOffer(items[j].idItem);
+    });
+    const modifyButton = document.querySelector("#modifyOffer"+j)
+    modifyButton.addEventListener("click",() => {
+      console.log("buttonClicked");
+      const idOffer= document.querySelector("#receptionIdOffer"+j);
+
+      modifyOffer(idOffer);
     });
     const photoSrc = document.querySelector("#receptionImage" + j);
     if (items[j]["photo"] === null) {
@@ -65,11 +85,12 @@ function openItemModal(item, j) {
       </div>
     `
   const photoSrc = document.querySelector("#receptionImage" + j);
-  if (items[j]["photo"] === null) {
-    photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  } else {
-    photoSrc.src = items[j]["photo"];
-  }
+
+//   // if (items[j]["photo"] === null) {
+//   //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+//   // } else {
+//   photoSrc.src = items[j]["photo"];
+// //}
 }
 
 export {displayItems}

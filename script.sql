@@ -278,8 +278,12 @@ WHERE m.id_member = 10
   AND a.id_address = m.address;
 
 
-SELECT * FROM pae.interests;
-UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
+SELECT * FROM pae.offers;
+UPDATE pae.members SET state='pending' WHERE id_member = 7;
 
                                                                 INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
 
+
+
+UPDATE  pae.items SET item_condition= 'published' WHERE id_item=7;
+UPDATE pae.items SET item_condition= 'cancelled' WHERE id_item=7

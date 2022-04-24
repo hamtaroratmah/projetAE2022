@@ -103,7 +103,6 @@ public class OfferUCCImpl implements OfferUCC {
   public boolean cancel(int idItem) {
     boolean cancelled = false;
     try {
-      System.out.println("ok1");
       dalServices.startTransaction();
       if (idItem >= 100) {
         throw new FatalException("id incorrect");
@@ -112,6 +111,8 @@ public class OfferUCCImpl implements OfferUCC {
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
+      System.out.println("ok1");
+
       cancelled = offerDao.cancel(idItem);
 
       dalServices.commitTransaction();
