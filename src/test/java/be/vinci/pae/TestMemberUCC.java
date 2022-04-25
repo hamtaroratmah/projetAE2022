@@ -46,6 +46,7 @@ public class TestMemberUCC {
 
   @BeforeEach
   void initEach() {
+    Mockito.reset(memberDao);
     member.setUsername("username");
     member.setPassword("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
     member.setLastName("lastName");
@@ -145,13 +146,6 @@ public class TestMemberUCC {
     Mockito.when(newMember.getCallNumber()).thenReturn("+32454948595");
     Mockito.when(newMember.getIdMember()).thenReturn(1);
     Mockito.when(newMember.getState()).thenReturn("confirm");
-    //    newMember.setUsername("newUsername");
-    //    newMember.setPassword("newPassword");
-    //    newMember.setLastName("newLastName");
-    //    newMember.setFirstName("newFirstName");
-    //    newMember.setCallNumber("+32454948595");
-    //    newMember.setIdMember(1);
-    //    newMember.setState("confirm");
     Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
     return newMember;
   }
@@ -242,6 +236,16 @@ public class TestMemberUCC {
     Mockito.when(memberDao.confirmRegistration(member.getUsername(), false))
         .thenReturn(newMember);
     assertEquals(newMember, memberUCC.confirmRegistration(member.getUsername(), false));
+  }
+
+  @DisplayName("Test confirmRegistration memberDao throw exception")
+  @Test
+  public void testConfirmRegistrationMemberDaoThrowException() {
+    Mockito.when(memberDao.confirmRegistration(member.getUsername(), true))
+        .thenThrow(FatalException.class);
+
+    assertThrows(FatalException.class,
+        () -> memberUCC.confirmRegistration(member.getUsername(), true));
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
