@@ -21,6 +21,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Locale;
 
 @Path("/members")
 public class MemberResource {
@@ -157,10 +158,11 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO denyRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    String reason_for_conn_refusal = json.get("reason_for_conn_refusal").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username));
+    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username,reason_for_conn_refusal));
   }
 
   /**

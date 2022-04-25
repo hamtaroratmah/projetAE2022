@@ -202,13 +202,16 @@ public class MemberDaoImpl implements MemberDao {
    * deny a registration.
    *
    * @param username user ton deny
+   * @param reason_for_conn_refusal reason of the refusal
    * @return returns the member DTO
    */
-  public MemberDTO denyRegistration(String username) {
+  public MemberDTO denyRegistration(String username, String reason_for_conn_refusal) {
     MemberDTO member;
-    String query = "UPDATE pae.members SET state='denied' WHERE username=? RETURNING *";
+    String query = "UPDATE pae.members SET state='denied' reason_for_conn_refusal =?"
+            + "WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, username);
+      ps.setString(1, reason_for_conn_refusal);
+      ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           member = createMemberInstance(rs);

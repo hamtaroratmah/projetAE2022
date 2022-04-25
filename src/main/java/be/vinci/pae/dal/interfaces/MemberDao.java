@@ -25,7 +25,7 @@ public interface MemberDao {
 
   ArrayList<MemberDTO> listUsersByState(String state);
 
-  MemberDTO denyRegistration(String username);
+  MemberDTO denyRegistration(String username, String reason_for_conn_refusal);
 
   void register(MemberDTO member, AddressDTO address);
 

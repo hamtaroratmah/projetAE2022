@@ -31,7 +31,7 @@ public interface MemberUCC {
 
   ArrayList<MemberDTO> listPendingUsers();
 
-  MemberDTO denyRegistration(String username);
+  MemberDTO denyRegistration(String username, String reason_for_conn_refusal);
 
   MemberDTO register(MemberDTO member, AddressDTO address);
 
