@@ -10,7 +10,6 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import org.glassfish.hk2.api.ServiceLocator;
@@ -134,11 +133,11 @@ public class TestMemberUCC {
     assertNull(memberUCC.getOne(member.getIdMember()));
   }
 
-  @DisplayName("Test getOne negative id")
+  @DisplayName("Test getOne memberDao throws exception")
   @Test
-  public void testGetOneNegativeId() {
-    member.setIdMember(-1);
-    assertThrows(BadRequestException.class, () -> memberUCC.getOne(member.getIdMember()));
+  public void testGetOneMemberDaoThrowsException() {
+    Mockito.when(memberDao.getMember(member.getIdMember())).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -283,9 +282,33 @@ public class TestMemberUCC {
   @DisplayName("test denyRegistration memberDao throws exception")
   @Test
   void testDenyRegistrationMemberDaoThrowsException() {
-    Member newMember = initNewMemberDenyRegistration(member.getUsername());
     Mockito.when(memberDao.denyRegistration(member.getUsername())).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.denyRegistration(member.getUsername()));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("Test getOneByUsername valid id")
+  @Test
+  public void testGetOneByUsernameValidId() {
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
+    assertEquals(member, memberUCC.getOneByUsername(member.getUsername()));
+  }
+
+  @DisplayName("Test getOneByUsername nonexistent id")
+  @Test
+  public void testGetOneByUsernameNonexistentId() {
+    member.setIdMember(10);
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(null);
+    assertNull(memberUCC.getOneByUsername(member.getUsername()));
+  }
+
+  @DisplayName("Test getOneByUsername memberDao throws exception")
+  @Test
+  public void testGetOneByUsernameMemberDaoThrowsException() {
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
+        .thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.getOneByUsername(member.getUsername()));
   }
 
 }

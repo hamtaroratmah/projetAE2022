@@ -66,9 +66,9 @@ public class MemberImpl implements Member {
 
   @Override
   public void setIdMember(Integer idMember) {
-    //    if (idMember <= 0) {
-    //      throw new IllegalArgumentException();
-    //    }
+    if (idMember <= 0) {
+      throw new IllegalArgumentException();
+    }
     this.idMember = idMember;
   }
 

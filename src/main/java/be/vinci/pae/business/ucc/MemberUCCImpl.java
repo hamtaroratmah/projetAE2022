@@ -129,6 +129,35 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
+  public Object getOneByUsername(String username) {
+    try {
+      dalServices.startTransaction();
+      MemberDTO member = memberDao.getMemberByUsername(username);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  @Override
+  public MemberDTO register(MemberDTO member, AddressDTO address) {
+    try {
+      dalServices.startTransaction();
+      Member memberBiz = (Member) member;
+      String hashPass = memberBiz.hashPassword(member.getPassword());
+      member.setPassword(hashPass);
+      memberDao.register(member, address);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  @Override
   public ArrayList<MemberDTO> listPendingUsers() {
     try {
       dalServices.startTransaction();
@@ -154,33 +183,4 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
-
-  @Override
-  public MemberDTO register(MemberDTO member, AddressDTO address) {
-    try {
-      dalServices.startTransaction();
-      Member memberBiz = (Member) member;
-      String hashPass = memberBiz.hashPassword(member.getPassword());
-      member.setPassword(hashPass);
-      memberDao.register(member, address);
-      dalServices.commitTransaction();
-      return member;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
-
-  @Override
-  public Object getOneByUsername(String username) {
-    try {
-      dalServices.startTransaction();
-      MemberDTO member = memberDao.getMemberByUsername(username);
-      dalServices.commitTransaction();
-      return member;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
 }
