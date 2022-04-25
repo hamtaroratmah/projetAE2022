@@ -138,13 +138,20 @@ public class TestMemberUCC {
 
   private Member initNewMemberUpdate() {
     Member newMember = Mockito.mock(Member.class);
-    newMember.setUsername("newUsername");
-    newMember.setPassword("newPassword");
-    newMember.setLastName("newLastName");
-    newMember.setFirstName("newFirstName");
-    newMember.setCallNumber("+32454948595");
-    newMember.setIdMember(1);
-    newMember.setState("confirm");
+    Mockito.when(newMember.getUsername()).thenReturn("newUsername");
+    Mockito.when(newMember.getPassword()).thenReturn("newPassword");
+    Mockito.when(newMember.getLastName()).thenReturn("newLastName");
+    Mockito.when(newMember.getFirstName()).thenReturn("newFirstName");
+    Mockito.when(newMember.getCallNumber()).thenReturn("+32454948595");
+    Mockito.when(newMember.getIdMember()).thenReturn(1);
+    Mockito.when(newMember.getState()).thenReturn("confirm");
+    //    newMember.setUsername("newUsername");
+    //    newMember.setPassword("newPassword");
+    //    newMember.setLastName("newLastName");
+    //    newMember.setFirstName("newFirstName");
+    //    newMember.setCallNumber("+32454948595");
+    //    newMember.setIdMember(1);
+    //    newMember.setState("confirm");
     Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
     return newMember;
   }
@@ -211,7 +218,7 @@ public class TestMemberUCC {
 
   ///////////////////////////////////////////////////////////////////////////////////
 
-  private Member initNewMemberConfirmRegistration() {
+  private Member initNewMemberConfirmRegistration(String username, boolean admin) {
     Member newMember = Mockito.mock(Member.class);
     newMember.setUsername("newUsername");
     newMember.setAdmin(true);
@@ -219,13 +226,22 @@ public class TestMemberUCC {
     return newMember;
   }
 
-  @DisplayName("Test confirmRegistration good username and admin")
+  @DisplayName("Test confirmRegistration good username admin")
   @Test
   public void testConfirmRegistrationGoodUsernameAdmin() {
-    Member newMember = initNewMemberConfirmRegistration();
+    Member newMember = initNewMemberConfirmRegistration(member.getUsername(), true);
     Mockito.when(memberDao.confirmRegistration(member.getUsername(), true))
         .thenReturn(newMember);
     assertEquals(newMember, memberUCC.confirmRegistration(member.getUsername(), true));
+  }
+
+  @DisplayName("Test confirmRegistration good username non admin")
+  @Test
+  public void testConfirmRegistrationGoodUsernameNonAdmin() {
+    Member newMember = initNewMemberConfirmRegistration(member.getUsername(), false);
+    Mockito.when(memberDao.confirmRegistration(member.getUsername(), false))
+        .thenReturn(newMember);
+    assertEquals(newMember, memberUCC.confirmRegistration(member.getUsername(), false));
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
