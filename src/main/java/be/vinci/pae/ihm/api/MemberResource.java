@@ -128,7 +128,7 @@ public class MemberResource {
   /**
    * confirm a registration.
    *
-   * @param json the json
+   * @param json the
    * @return the member confirmed.
    */
   @PUT
@@ -184,6 +184,6 @@ public class MemberResource {
   @Path("listDenied")
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listDeniedUsers() {
-    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listPendingUsers());
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listDeniedUsers());
   }
 }
