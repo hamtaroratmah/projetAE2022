@@ -106,7 +106,7 @@ async function createItem(e) {
 
   async function likeItem(idItem,idMember){
 
-
+    console.log(idItem," + ", idMember);
       const request = {
         method: "POST",
         body: JSON.stringify(
