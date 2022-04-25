@@ -190,5 +190,6 @@ public class TestMemberUCC {
             memberUCC.updateMember(member, newMember).getLastName())
     );
   }
+  
 
 }
