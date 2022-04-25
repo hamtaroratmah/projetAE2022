@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@Path("/offer")
+@Path("/offers")
 public class OfferRessource {
 
   @Inject
@@ -105,10 +105,11 @@ public class OfferRessource {
   @Path("/interests")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
     int idMember = json.get("idMember").asInt();
-
+    System.out.println(idItem + "+ " + idMember);
     if (idItem < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
