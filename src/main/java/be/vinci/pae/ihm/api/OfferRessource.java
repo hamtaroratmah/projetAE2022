@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@Path("/offer")
+@Path("/offers")
 public class OfferRessource {
 
   @Inject

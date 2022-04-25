@@ -4,6 +4,7 @@ let idOfferItem;
 function displayItems(items) {
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
+  let page = document.querySelector("#page");
   if (items.length === 0) {
     receptionPage.innerHTML = `
       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
@@ -28,14 +29,14 @@ function displayItems(items) {
     }
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
-        <img src="" alt="" class="receptionImage" id="receptionImage${i}">
-          <p id="receptionDescription">${item.description}</p>
-          <p id="receptionOfferingMember">${item["offeringMember"].username}</p>
-          <p id="receptionType">${item["type"].type}</p>
-          <p id="receptionDate">${item["offer"].dateOffer}</p>
-          <p id="receptionItemCondition">${item.itemCondition}</p>
-          <p id="receptionAvailabilities">${item.availabilities}</p>
-          <p id="receptionIdOffer">${item["offer"].idOffer}</p>
+        <img src="" alt="" class="receptionImage${i}" id="receptionImage${i}">
+          <p id="receptionDescription${i}">${item.description}</p>
+          <p id="receptionOfferingMember${i}">${item["offeringMember"].username}</p>
+          <p id="receptionType${i}">${item["type"].type}</p>
+          <p id="receptionDate${i}">${item["offer"].dateOffer}</p>
+          <p id="receptionItemCondition${i}">${item.itemCondition}</p>
+          <p id="receptionAvailabilities${i}">${item.availabilities}</p>
+          <p id="receptionIdOffer${i}" class="displayNone">${item["offer"].idOffer}</p>
           <p class="modalItemInfo"></p>
           <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
           <button>Annuler l'offre</button>
@@ -47,7 +48,10 @@ function displayItems(items) {
       
       `;
 
+
+
   }
+  page+=receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {
@@ -60,7 +64,7 @@ function displayItems(items) {
     const modifyButton = document.querySelector("#modifyOffer"+j)
     modifyButton.addEventListener("click",() => {
       console.log("buttonClicked");
-      const idOffer= document.querySelector("#receptionIdOffer"+j);
+      const idOffer= document.querySelector("#receptionIdOffer"+j).innerHTML;
 
       modifyOffer(idOffer);
     });

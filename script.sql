@@ -278,7 +278,7 @@ WHERE m.id_member = 10
   AND a.id_address = m.address;
 
 
-SELECT * FROM pae.offers;
+SELECT * FROM pae.items;
 UPDATE pae.members SET state='pending' WHERE id_member = 7;
 
                                                                 INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;

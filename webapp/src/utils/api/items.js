@@ -98,21 +98,22 @@ async function modifyOfferFunction(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/offer/modify", request);
+    const response = await fetch("/api/offers/modify", request);
     console.log(response);
     console.log(request);
     if (!response.ok) {
       if (response.status === 403) {
-        error.innerHTML = "Impossible to create a new item";
+        error.innerHTML = "Impossible to modify this item";
       }
     } else {
-      error.innerHTML = "";
+      error.innerHTML = "erreur";
     }
     await Navbar();
     Redirect("/");
   } catch (e) {
     console.error("CreatePage::error ", e);
   }
+
 }
 
 
@@ -156,7 +157,9 @@ async function createItem(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/offer/createOffer", request);
+    const response = await fetch("/api/offers/createOffer", request);
+    console.log(request);
+    console.log(response);
     if (!response.ok) {
       if (response.status === 403) {
         error.innerHTML = "Impossible to create a new item";
@@ -165,7 +168,7 @@ async function createItem(e) {
       error.innerHTML = "";
     }
     await Navbar();
-    Redirect("/");
+    //Redirect("/");
   } catch (e) {
     console.error("CreatePage::error ", e);
   }
@@ -193,7 +196,7 @@ async function createItem(e) {
       }
     };
     try {
-      const response = await fetch("/api/offer/cancel",request);
+      const response = await fetch("/api/offers/cancel",request);
       console.log(request);
       console.log(response);
       if (!response.ok) {
@@ -207,7 +210,7 @@ async function createItem(e) {
       }
       console.log("ok")
       await Navbar();
-      Redirect("/");
+      //Redirect("/");
     } catch (e) {
       cosole.error("CreatePage::error ", e);
 

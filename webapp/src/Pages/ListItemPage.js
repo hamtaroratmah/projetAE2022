@@ -46,19 +46,19 @@ const ListItemPage = async () => {
   const dateSelect = document.querySelector("#selectItemDate");
   const itemConditionSelect = document.querySelector("#selectItemCondition");
 
-  typeSelect.addEventListener("change", async () => {
-    let items = await getOrderedItems(typeSelect.name, typeSelect.value);
-    displayItems(items);
-  });
-  dateSelect.addEventListener("change", async () => {
-    let items = await getOrderedItems(dateSelect.name, dateSelect.value);
-    displayItems(items);
-  });
-  itemConditionSelect.addEventListener("change", async () => {
-    let items = await getOrderedItems(itemConditionSelect.name,
-        itemConditionSelect.value);
-    displayItems(items);
-  });
+  // typeSelect.addEventListener("change", async () => {
+  //   let items = await getOrderedItems(typeSelect.name, typeSelect.value);
+  //   displayItems(items);
+  // });
+  // dateSelect.addEventListener("change", async () => {
+  //   let items = await getOrderedItems(dateSelect.name, dateSelect.value);
+  //   displayItems(items);
+  // });
+  // itemConditionSelect.addEventListener("change", async () => {
+  //   let items = await getOrderedItems(itemConditionSelect.name,
+  //       itemConditionSelect.value);
+  //   displayItems(items);
+  // });
 
 }
 
