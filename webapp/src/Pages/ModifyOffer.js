@@ -17,7 +17,6 @@ const createDiv = `
 `;
 
 function ModifyOffer() {
-  console.log("redirected");
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;

@@ -55,9 +55,7 @@ async function getOrderedItems(sortingParam, order) {
 }
 
 async function modifyOfferFunction(e) {
-  console.log(idOfferParam)
-  console.log(idOffer);
-  idOffer=idOfferParam
+
   console.log(idOffer);
   e.preventDefault();
   //todo
@@ -82,6 +80,7 @@ async function modifyOfferFunction(e) {
     } else if (!availabilities) {
       error.innerHTML = "Enter your availabilities";
     }
+
     const request = {
       method: "POST",
       body: JSON.stringify(
@@ -106,9 +105,12 @@ async function modifyOfferFunction(e) {
         error.innerHTML = "Impossible to modify this item";
       }
     } else {
-      error.innerHTML = "erreur";
+      error.innerHTML = "";
+
+
     }
     await Navbar();
+
     Redirect("/");
   } catch (e) {
     console.error("CreatePage::error ", e);
@@ -168,16 +170,16 @@ async function createItem(e) {
       error.innerHTML = "";
     }
     await Navbar();
-    //Redirect("/");
+    Redirect("/");
   } catch (e) {
     console.error("CreatePage::error ", e);
   }
 }
 
-  async function modifyOffer(idOffer){
+  async function modifyOffer(idOfferParam){
     console.log("ok");
-    console.log(idOffer);
-
+    console.log(idOfferParam);
+    idOffer=idOfferParam;
 
     Redirect("/modifyOffer");
   }
@@ -210,6 +212,7 @@ async function createItem(e) {
       }
       console.log("ok")
       await Navbar();
+      window.location.reload();
       //Redirect("/");
     } catch (e) {
       cosole.error("CreatePage::error ", e);
@@ -217,6 +220,7 @@ async function createItem(e) {
     }
 
   }
-export {getItemUnordered, getOrderedItems, createItem, cancelOffer, modifyOfferFunction, modifyOffer};
+export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
+  modifyOfferFunction, modifyOffer};
 
 

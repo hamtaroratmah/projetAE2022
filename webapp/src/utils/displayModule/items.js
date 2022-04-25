@@ -65,7 +65,7 @@ function displayItems(items) {
     modifyButton.addEventListener("click",() => {
       console.log("buttonClicked");
       const idOffer= document.querySelector("#receptionIdOffer"+j).innerHTML;
-
+      console.log(idOffer);
       modifyOffer(idOffer);
     });
     const photoSrc = document.querySelector("#receptionImage" + j);
