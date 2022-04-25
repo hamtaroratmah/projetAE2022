@@ -136,15 +136,15 @@ public class TestMemberUCC {
 
   ///////////////////////////////////////////////////////////////////////////////////
 
-  private Member initNewMember() {
+  private Member initNewMemberUpdate() {
     Member newMember = Mockito.mock(Member.class);
-    Mockito.when(newMember.getUsername()).thenReturn("newUsername");
-    Mockito.when(newMember.getPassword()).thenReturn("newPassword");
-    Mockito.when(newMember.getLastName()).thenReturn("newLastName");
-    Mockito.when(newMember.getFirstName()).thenReturn("newFirstName");
-    Mockito.when(newMember.getCallNumber()).thenReturn("+32454948595");
-    Mockito.when(newMember.getIdMember()).thenReturn(1);
-    Mockito.when(newMember.getState()).thenReturn("confirm");
+    newMember.setUsername("newUsername");
+    newMember.setPassword("newPassword");
+    newMember.setLastName("newLastName");
+    newMember.setFirstName("newFirstName");
+    newMember.setCallNumber("+32454948595");
+    newMember.setIdMember(1);
+    newMember.setState("confirm");
     Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
     return newMember;
   }
@@ -152,7 +152,7 @@ public class TestMemberUCC {
   @DisplayName("Test update existent member")
   @Test
   public void testUpdateExistentMember() {
-    Member newMember = initNewMember();
+    Member newMember = initNewMemberUpdate();
     Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertAll(
         () -> assertEquals(newMember.getUsername(),
@@ -171,7 +171,7 @@ public class TestMemberUCC {
   @DisplayName("Test update member sql exception")
   @Test
   public void testUpdateMemberSqlException() {
-    Member newMember = initNewMember();
+    Member newMember = initNewMemberUpdate();
     Mockito.when(memberDao.updateMember(member, newMember)).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.updateMember(member, newMember));
   }
@@ -179,7 +179,7 @@ public class TestMemberUCC {
   @DisplayName("test Update Existent Member But Only Username Changed")
   @Test
   public void testUpdateExistentMemberButOnlyUsernameChanged() {
-    Member newMember = initNewMember();
+    Member newMember = initNewMemberUpdate();
     Mockito.when(newMember.getPassword())
         .thenReturn("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
     Mockito.when(newMember.getLastName()).thenReturn("lastName");
@@ -208,5 +208,27 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
     assertEquals(member.getState(), memberUCC.getState(member.getUsername()));
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  private Member initNewMemberConfirmRegistration() {
+    Member newMember = Mockito.mock(Member.class);
+    newMember.setUsername("newUsername");
+    newMember.setAdmin(true);
+    Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
+    return newMember;
+  }
+
+  @DisplayName("Test confirmRegistration good username and admin")
+  @Test
+  public void testConfirmRegistrationGoodUsernameAdmin() {
+    Member newMember = initNewMemberConfirmRegistration();
+    Mockito.when(memberDao.confirmRegistration(member.getUsername(), true))
+        .thenReturn(newMember);
+    assertEquals(newMember, memberUCC.confirmRegistration(member.getUsername(), true));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
 
 }
