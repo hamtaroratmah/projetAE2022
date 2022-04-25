@@ -143,11 +143,11 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public int likeAnItem(JsonNode json) {
-    int offerId;
-    int memberId;
-    memberId = json.get("memberId").asInt();
-    offerId = json.get("offerId").asInt();
-    return itemUcc.likeAnItem(offerId, memberId);
+    int idItem;
+    int idMember;
+    idMember = json.get("idMember").asInt();
+    idItem = json.get("idItem").asInt();
+    return itemUcc.likeAnItem(idItem, idMember);
   }
 
 

@@ -1,6 +1,9 @@
-import {reformateDate} from "../utils";
+import {getToken, reformateDate} from "../utils";
+import {likeItem} from "../api/items";
+import {getMember} from "../api/member";
 
 function displayItems(items) {
+  const member = getMember(getToken());
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
   if (items.length === 0) {
@@ -34,6 +37,10 @@ function displayItems(items) {
           <p id="receptionDate">${item["offer"].dateOffer}</p>
           <p id="receptionItemCondition">${item.itemCondition}</p>
           <p id="receptionAvailabilities">${item.availabilities}</p>
+          <div  class="modalItemInfo receptionItems" id="likeItem${i}">
+          <button>Aimer l'offre</button>
+          </div>
+
           <p class="modalItemInfo"></p>
       </div>
       `;
@@ -44,14 +51,21 @@ function displayItems(items) {
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j);
     });
-    const photoSrc = document.querySelector("#receptionImage" + j);
-    if (items[j]["photo"] === null) {
-      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    } else {
-      photoSrc.src = items[j]["photo"];
-    }
+    const likeButton = document.querySelector("#likeItem" + j);
+    itemDiv.addEventListener("click", () => {
+      console.log(member.id);
+      likeItem(items[j].idItem,member.id);
+    });
+    // const photoSrc = document.querySelector("#receptionImage" + j);
+    // if (items[j]["photo"] === null) {
+    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+    // } else {
+    //   photoSrc.src = items[j]["photo"];
+    // }
   }
 }
+
+
 
 function openItemModal(item, j) {
   const modal = document.querySelector("modal");
@@ -64,12 +78,14 @@ function openItemModal(item, j) {
           <p class="modalItemInfo"></p>
       </div>
     `
-  const photoSrc = document.querySelector("#receptionImage" + j);
-  if (items[j]["photo"] === null) {
-    photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  } else {
-    photoSrc.src = items[j]["photo"];
-  }
+  // const photoSrc = document.querySelector("#receptionImage" + j);
+  // if (items[j]["photo"] === null) {
+  //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+  // } else {
+  //   photoSrc.src = items[j]["photo"];
+  // }
 }
+
+
 
 export {displayItems}
