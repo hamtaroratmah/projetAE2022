@@ -25,6 +25,7 @@ public class AddressDaoImpl implements AddressDao {
   // get an addresse by his id
   @Override
   public AddressDTO getAddress(int id) {
+    System.out.println(id);
     AddressDTO address;
     PreparedStatement query;
     try {

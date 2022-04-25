@@ -8,7 +8,9 @@ import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
+import be.vinci.pae.utils.Log;
 import jakarta.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OfferUCCImpl implements OfferUCC {
@@ -96,4 +98,92 @@ public class OfferUCCImpl implements OfferUCC {
     }
 
   }
+
+  @Override
+  public boolean cancel(int idItem) {
+    boolean cancelled = false;
+    try {
+      System.out.println("ok1");
+      dalServices.startTransaction();
+      if (idItem >= 100) {
+        throw new FatalException("id incorrect");
+      }
+
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      cancelled = offerDao.cancel(idItem);
+
+      dalServices.commitTransaction();
+      return cancelled;
+    } catch (Exception e) {
+      System.out.println("on passe ds le catch");
+      Log log = null;
+      try {
+        log = new Log("log.txt");
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+      log.logger.warning(e.getMessage());
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+
+  /**
+   * modify an offer.
+   *
+   * @return the new item modified
+   */
+  public ItemDTO modify(int idOffer, String type, String photo, String description,
+      String availabilities) {
+
+    try {
+      dalServices.startTransaction();
+      System.out.println("ok2");
+
+      if (idOffer < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      int idItem = offerDao.getIdItem(idOffer);
+
+      ItemDTO item = itemDao.modify(idItem, type, photo, description, availabilities);
+      dalServices.commitTransaction();
+
+      return item;
+    } catch (Exception e) {
+      System.out.println("ko1");
+
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  /**
+   * create an offer.
+   */
+  public boolean offer(int idOffer, int idMember) {
+    boolean given;
+    try {
+      System.out.println("ok2");
+
+      dalServices.startTransaction();
+      int idItem = offerDao.getIdItem(idOffer);
+
+      if (idItem < 1) {
+        throw new FatalException("L'id de l'objet doit être supérieur à 0.");
+      }
+      given = itemDao.offer(idItem, idMember);
+      dalServices.commitTransaction();
+
+    } catch (Exception e) {
+      System.out.println("ko1");
+
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+    return given;
+  }
+
 }

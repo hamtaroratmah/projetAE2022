@@ -5,7 +5,9 @@ import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
+import be.vinci.pae.utils.Log;
 import jakarta.inject.Inject;
+import java.io.IOException;
 import java.util.List;
 
 public class ItemUCCImpl implements ItemUCC {
@@ -72,6 +74,7 @@ public class ItemUCCImpl implements ItemUCC {
    */
   @Override
   public int likeAnItem(int offerId, int memberId) {
+
     try {
       dalServices.startTransaction();
       int interests = itemDao.likeAnItem(offerId, memberId);
@@ -79,6 +82,7 @@ public class ItemUCCImpl implements ItemUCC {
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
+
       e.printStackTrace();
     }
     return -1;
@@ -92,13 +96,15 @@ public class ItemUCCImpl implements ItemUCC {
    * @params itemId
    */
   @Override
-  public int cancelAnOffer(int itemId) {
+  public int cancelAnOffer(int itemId) throws IOException {
     try {
       dalServices.startTransaction();
       int returned = itemDao.cancelAnOffer(itemId);
       dalServices.commitTransaction();
       return returned;
     } catch (Exception e) {
+      Log log = new Log("log.txt");
+      log.logger.warning("id inexistant");
       dalServices.rollbackTransaction();
       e.printStackTrace();
     }

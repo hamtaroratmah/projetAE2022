@@ -53,8 +53,8 @@ public class ItemDaoImpl implements ItemDao {
       queryString = "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
           + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
           + "FROM pae.items it,pae.types ty,pae.offers of "
-          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
-          + "ORDER BY " + sortingParam + " " + order;
+          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item " + "ORDER BY "
+          + sortingParam + " " + order;
     }
 
     try (PreparedStatement query = services.getPreparedStatement(queryString)) {
@@ -90,8 +90,8 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int likeAnItem(int itemId, int idMember) {
-    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
-        + " RETURNING id_interest";
+    String query =
+        "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)" + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
@@ -110,14 +110,12 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int cancelAnOffer(int itemId) {
-    String query =
-        "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
+    String query = "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, itemId);
       try (ResultSet rs = ps.executeQuery()) {
         return 1;
         //todo
-
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -140,6 +138,25 @@ public class ItemDaoImpl implements ItemDao {
       throw new FatalException(e.getMessage());
     }
     return items;
+  }
+
+  @Override
+  public boolean offer(int idItem, int idOffer) {
+    String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=?"
+        + " RETURNING id_member ";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idItem);
+      ps.setInt(2, idOffer);
+      ps.executeQuery();
+      System.out.println(ps);
+
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return true;
+
   }
 
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
@@ -175,11 +192,10 @@ public class ItemDaoImpl implements ItemDao {
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
 
-    ItemDTO item;
+    ItemDTO item = null;
     String query = "INSERT  INTO pae.items "
-        + "(type,photo, description, availabilities, item_condition,id_offering_member) "
-        + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING id_item,type,photo,description,availabilities,"
+        + "(id_type,photo, description, availabilities, item_condition,id_offering_member) "
+        + " VALUES(?,?,?,?,?,?) " + "RETURNING id_item,id_type,photo,description,availabilities,"
         + "item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());
@@ -199,7 +215,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return null;
+    return item;
 
   }
 
@@ -238,6 +254,42 @@ public class ItemDaoImpl implements ItemDao {
     }
     return -1;
 
+  }
+
+  @Override
+  public ItemDTO modify(int idItem, String type, String photo, String description,
+      String availabilities) {
+    int idType = typeExisting(type);
+    ItemDTO item = null;
+    System.out.println("ok1");
+
+    String query =
+        "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
+            + "RETURNING id_item,id_type,photo,description,availabilities,"
+            + "item_condition,id_offering_member";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idType);
+      ps.setString(2, photo);
+      ps.setString(3, description);
+      ps.setString(4, availabilities);
+      ps.setInt(5, idItem);
+      System.out.println(ps);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          item = createItemInstance(rs);
+          System.out.println("ici" + item.getIdItem());
+          System.out.println("on passe par ici");
+
+        }
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return item;
   }
 
 

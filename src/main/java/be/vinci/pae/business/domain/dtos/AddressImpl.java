@@ -2,6 +2,7 @@ package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.utils.Views;
+import be.vinci.pae.utils.Views.Public;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -19,7 +20,7 @@ public class AddressImpl implements AddressDTO {
   private Integer postcode;
   @JsonView(Views.Public.class)
   private String city;
-  @JsonView(Views.Public.class)
+  @JsonView(Public.class)
   private String unitNumber;
 
   public AddressImpl() {
@@ -78,6 +79,7 @@ public class AddressImpl implements AddressDTO {
   public String getUnitNumber() {
     return unitNumber;
   }
+
 
   @Override
   public void setUnitNumber(String unitNumber) {

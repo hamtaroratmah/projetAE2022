@@ -2,8 +2,8 @@
 import "./stylesheets/main.css";
 import {Router} from "./Router";
 import Navbar from "./Components/Navbar";
-import {getToken, verifyToken} from "./utils/functions/token";
-
+import {getToken} from "./utils/utils";
+import {verifyToken} from "./utils/api/member";
 
 getToken() ? verifyToken() : console.log("Aucun token à vérifier");
 Navbar();
