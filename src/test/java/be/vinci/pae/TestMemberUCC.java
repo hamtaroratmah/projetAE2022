@@ -44,16 +44,22 @@ public class TestMemberUCC {
     dalServices = locator.getService(DalServices.class);
   }
 
+  private Member initMember() {
+    Member initMember = (Member) domainFactory.getMember();
+    initMember.setUsername("username");
+    initMember.setPassword("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
+    initMember.setLastName("lastName");
+    initMember.setFirstName("firstName");
+    initMember.setCallNumber("0000");
+    initMember.setIdMember(1);
+    initMember.setState("valid");
+    return initMember;
+  }
+
   @BeforeEach
   void initEach() {
     Mockito.reset(memberDao);
-    member.setUsername("username");
-    member.setPassword("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
-    member.setLastName("lastName");
-    member.setFirstName("firstName");
-    member.setCallNumber("0000");
-    member.setIdMember(1);
-    member.setState("confirm");
+    member = initMember();
     Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
@@ -139,13 +145,14 @@ public class TestMemberUCC {
 
   private Member initNewMemberUpdate() {
     Member newMember = Mockito.mock(Member.class);
-    Mockito.when(newMember.getUsername()).thenReturn("newUsername");
-    Mockito.when(newMember.getPassword()).thenReturn("newPassword");
-    Mockito.when(newMember.getLastName()).thenReturn("newLastName");
-    Mockito.when(newMember.getFirstName()).thenReturn("newFirstName");
-    Mockito.when(newMember.getCallNumber()).thenReturn("+32454948595");
-    Mockito.when(newMember.getIdMember()).thenReturn(1);
-    Mockito.when(newMember.getState()).thenReturn("confirm");
+    Member init = initMember();
+    Mockito.when(newMember.getUsername()).thenReturn(init.getUsername());
+    Mockito.when(newMember.getPassword()).thenReturn(init.getPassword());
+    Mockito.when(newMember.getLastName()).thenReturn(init.getLastName());
+    Mockito.when(newMember.getFirstName()).thenReturn(init.getFirstName());
+    Mockito.when(newMember.getCallNumber()).thenReturn(init.getCallNumber());
+    Mockito.when(newMember.getIdMember()).thenReturn(init.getIdMember());
+    Mockito.when(newMember.getState()).thenReturn(init.getState());
     Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
     return newMember;
   }
@@ -214,8 +221,15 @@ public class TestMemberUCC {
 
   private Member initNewMemberConfirmRegistration(String username, boolean admin) {
     Member newMember = Mockito.mock(Member.class);
-    newMember.setUsername("newUsername");
-    newMember.setAdmin(true);
+    Member init = initMember();
+    Mockito.when(newMember.getUsername()).thenReturn(username);
+    Mockito.when(newMember.getPassword()).thenReturn(init.getPassword());
+    Mockito.when(newMember.getLastName()).thenReturn(init.getLastName());
+    Mockito.when(newMember.getFirstName()).thenReturn(init.getFirstName());
+    Mockito.when(newMember.getCallNumber()).thenReturn(init.getCallNumber());
+    Mockito.when(newMember.getIdMember()).thenReturn(init.getIdMember());
+    Mockito.when(newMember.getState()).thenReturn("valid");
+    Mockito.when(newMember.isAdmin()).thenReturn(admin);
     Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
     return newMember;
   }
@@ -250,5 +264,20 @@ public class TestMemberUCC {
 
   ///////////////////////////////////////////////////////////////////////////////////
 
+  private Member initNewMemberDenyRegistration(String username) {
+    Member newMember = Mockito.mock(Member.class);
+    newMember.setUsername(username);
+    newMember.setState("denied");
+    Mockito.when(memberDao.getMemberByUsername(newMember.getUsername())).thenReturn(newMember);
+    return newMember;
+  }
+
+  @DisplayName("test denyRegistration existing username")
+  @Test
+  void testDenyRegistrationExistingUsername() {
+    Member newMember = initNewMemberDenyRegistration(member.getUsername());
+    Mockito.when(memberDao.denyRegistration(member.getUsername())).thenReturn(newMember);
+    assertEquals(newMember, memberUCC.denyRegistration(member.getUsername()));
+  }
 
 }
