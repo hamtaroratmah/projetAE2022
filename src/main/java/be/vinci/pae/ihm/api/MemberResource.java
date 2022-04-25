@@ -21,7 +21,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Locale;
 
 @Path("/members")
 public class MemberResource {

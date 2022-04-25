@@ -26,12 +26,11 @@ public interface MemberUCC {
 
   ArrayList<MemberDTO> listUsersByState(String state);
 
-
   ArrayList<MemberDTO> listDeniedUsers();
 
   ArrayList<MemberDTO> listPendingUsers();
 
-  MemberDTO denyRegistration(String username, String reason_for_conn_refusal);
+  MemberDTO denyRegistration(String username, String reasonForConnRefusal);
 
   MemberDTO register(MemberDTO member, AddressDTO address);
 
