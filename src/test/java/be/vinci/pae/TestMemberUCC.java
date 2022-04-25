@@ -46,7 +46,7 @@ public class TestMemberUCC {
   @BeforeEach
   void initEach() {
     member.setUsername("username");
-    member.setPassword("password");
+    member.setPassword("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
     member.setLastName("lastName");
     member.setFirstName("firstName");
     member.setCallNumber("0000");
@@ -172,7 +172,8 @@ public class TestMemberUCC {
   @Test
   public void testUpdateExistentMemberButOnlyUsernameChanged() {
     Member newMember = initNewMember();
-    Mockito.when(newMember.getPassword()).thenReturn("password");
+    Mockito.when(newMember.getPassword())
+        .thenReturn("$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW");
     Mockito.when(newMember.getLastName()).thenReturn("lastName");
     Mockito.when(newMember.getFirstName()).thenReturn("firstName");
     Mockito.when(newMember.getCallNumber()).thenReturn("0000");
@@ -190,6 +191,6 @@ public class TestMemberUCC {
             memberUCC.updateMember(member, newMember).getLastName())
     );
   }
-  
+
 
 }
