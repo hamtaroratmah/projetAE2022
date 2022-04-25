@@ -2,6 +2,13 @@ import {reformateDate} from "../utils";
 import {cancelOffer, modifyOffer} from "../api/items";
 let idOfferItem;
 function displayItems(items) {
+import {getToken, reformateDate} from "../utils";
+import {likeItem} from "../api/items";
+import {getMember} from "../api/member";
+
+async function displayItems(items) {
+  const member = await getMember(getToken());
+
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
@@ -37,6 +44,10 @@ function displayItems(items) {
           <p id="receptionItemCondition${i}">${item.itemCondition}</p>
           <p id="receptionAvailabilities${i}">${item.availabilities}</p>
           <p id="receptionIdOffer${i}" class="displayNone">${item["offer"].idOffer}</p>
+          <div  class="modalItemInfo receptionItems" id="likeItem${i}">
+          <button>Aimer l'offre</button>
+          </div>
+
           <p class="modalItemInfo"></p>
           <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
           <button>Annuler l'offre</button>
@@ -57,6 +68,7 @@ function displayItems(items) {
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j);
     });
+<<<<<<< webapp/src/utils/displayModule/items.js
     const cancelButton = document.querySelector("#cancelOffer"+j)
     cancelButton.addEventListener("click",() => {
       cancelOffer(items[j].idItem);
@@ -74,8 +86,24 @@ function displayItems(items) {
     } else {
       photoSrc.src = items[j]["photo"];
     }
+=======
+    const likeButton = document.querySelector("#likeItem" + j);
+    likeButton.addEventListener("click", () => {
+      console.log(member.idMember);
+
+      likeItem(items[j].idItem, member.idMember);
+    });
+    // const photoSrc = document.querySelector("#receptionImage" + j);
+    // if (items[j]["photo"] === null) {
+    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+    // } else {
+    //   photoSrc.src = items[j]["photo"];
+    // }
+>>>>>>> webapp/src/utils/displayModule/items.js
   }
 }
+
+
 
 function openItemModal(item, j) {
   const modal = document.querySelector("modal");
@@ -88,6 +116,7 @@ function openItemModal(item, j) {
           <p class="modalItemInfo"></p>
       </div>
     `
+<<<<<<< webapp/src/utils/displayModule/items.js
   const photoSrc = document.querySelector("#receptionImage" + j);
 
 //   // if (items[j]["photo"] === null) {
@@ -95,6 +124,16 @@ function openItemModal(item, j) {
 //   // } else {
 //   photoSrc.src = items[j]["photo"];
 // //}
+=======
+  // const photoSrc = document.querySelector("#receptionImage" + j);
+  // if (items[j]["photo"] === null) {
+  //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+  // } else {
+  //   photoSrc.src = items[j]["photo"];
+  // }
+>>>>>>> webapp/src/utils/displayModule/items.js
 }
+
+
 
 export {displayItems}

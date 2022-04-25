@@ -53,8 +53,8 @@ public class ItemDaoImpl implements ItemDao {
       queryString = "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
           + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
           + "FROM pae.items it,pae.types ty,pae.offers of "
-          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
-          + "ORDER BY " + sortingParam + " " + order;
+          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item " + "ORDER BY "
+          + sortingParam + " " + order;
     }
 
     try (PreparedStatement query = services.getPreparedStatement(queryString)) {
@@ -90,8 +90,8 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int likeAnItem(int itemId, int idMember) {
-    String query = "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)"
-        + " RETURNING id_interest";
+    String query =
+        "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)" + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
@@ -110,8 +110,7 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int cancelAnOffer(int itemId) {
-    String query =
-        "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
+    String query = "UPDATE pae.items SET item_condition='cancelled' WHERE id_item=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, itemId);
       try (ResultSet rs = ps.executeQuery()) {
@@ -143,7 +142,8 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public boolean offer(int idItem, int idOffer) {
-    String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=? RETURNING id_member ";
+    String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=?"
+        + " RETURNING id_member ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
@@ -195,8 +195,7 @@ public class ItemDaoImpl implements ItemDao {
     ItemDTO item = null;
     String query = "INSERT  INTO pae.items "
         + "(id_type,photo, description, availabilities, item_condition,id_offering_member) "
-        + " VALUES(?,?,?,?,?,?) "
-        + "RETURNING id_item,id_type,photo,description,availabilities,"
+        + " VALUES(?,?,?,?,?,?) " + "RETURNING id_item,id_type,photo,description,availabilities,"
         + "item_condition,id_offering_member";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, newItem.getType().getIdType());

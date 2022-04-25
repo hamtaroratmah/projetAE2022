@@ -8,6 +8,7 @@ import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.OfferUCC;
+import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -104,10 +105,11 @@ public class OfferRessource {
   @Path("/interests")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
     int idMember = json.get("idMember").asInt();
-
+    System.out.println(idItem + "+ " + idMember);
     if (idItem < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
@@ -123,6 +125,7 @@ public class OfferRessource {
   @Path("/cancel")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
   public boolean cancel(JsonNode json) {
     int idItem = json.get("idItem").asInt();
 

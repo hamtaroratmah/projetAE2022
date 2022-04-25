@@ -99,7 +99,6 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * update a member.
    *
-   * @param oldMember,newMember
    * @return the new member modified
    */
   public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
