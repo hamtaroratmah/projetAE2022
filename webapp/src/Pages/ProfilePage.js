@@ -1,4 +1,4 @@
-import {getMember, updateMember} from "../utils/functions/member";
+import {getMember} from "../utils/functions/member";
 import {getToken} from "../utils/functions/token";
 
 let page = `

@@ -128,7 +128,7 @@ public class MemberResource {
   /**
    * confirm a registration.
    *
-   * @param json the json
+   * @param json the
    * @return the member confirmed.
    */
   @PUT

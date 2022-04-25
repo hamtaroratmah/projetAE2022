@@ -85,8 +85,8 @@ function displayInscriptions(inscriptions) {
           </form>
           </div>
             <div class="receptionInscriptionChild2">
-             <form id="denyForm${i}">
-                <input type="submit" value="X">
+             <form id="denyForm">
+                <input id = "deny${i}" type="submit" value="X">
                 </form>
             </div>
         </div>
@@ -98,6 +98,12 @@ function displayInscriptions(inscriptions) {
         buttonConfirm.addEventListener("click",async (e) => {
             e.preventDefault();
             await confirmInscription(inscriptions[i].username,false);
+        })
+        // Deny inscription
+        const buttonDeny = document.getElementById("deny"+i);
+        buttonConfirm.addEventListener("click",async (e) => {
+            e.preventDefault();
+            await denyInscription(inscriptions[i].username);
         })
   }
 }
