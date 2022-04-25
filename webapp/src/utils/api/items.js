@@ -102,7 +102,48 @@ async function createItem(e) {
   } catch (e) {
     console.error("CreatePage::error ", e);
   }
-
 }
 
-export {getItemUnordered, getOrderedItems, createItem};
+  async function likeItem(idItem,idMember){
+
+    console.log(idItem," + ", idMember);
+      const request = {
+        method: "POST",
+        body: JSON.stringify(
+            {
+              idItem: idItem,
+              idMember:idMember,
+            }
+        ),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      try {
+        const response = await fetch("/api/items/like",request);
+        console.log(request);
+        console.log(response);
+        if (!response.ok) {
+          if (response.status === 403) {
+            "imposssible to cancel this offer"
+          } else {
+            error.innerHTML = "errorrr";
+
+          }
+
+        }
+        console.log("ok")
+        await Navbar();
+        Redirect("/");
+      } catch (e) {
+        cosole.error("likeItem::error ", e);
+
+      }
+
+    }
+
+
+
+
+
+export {getItemUnordered, getOrderedItems, createItem,likeItem};
