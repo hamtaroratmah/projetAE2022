@@ -110,7 +110,7 @@ public class TestMemberUCC {
         () -> memberUCC.login(member.getUsername(), member.getPassword()));
   }
 
-///////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////
 
   @DisplayName("Test getOne valid id")
   @Test
@@ -134,7 +134,7 @@ public class TestMemberUCC {
     assertThrows(BadRequestException.class, () -> memberUCC.getOne(member.getIdMember()));
   }
 
-///////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////
 
   private Member initNewMember() {
     Member newMember = Mockito.mock(Member.class);
@@ -200,5 +200,13 @@ public class TestMemberUCC {
     );
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("Test getState")
+  @Test
+  public void testGetState() {
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
+    assertEquals(member.getState(), memberUCC.getState(member.getUsername()));
+  }
 
 }
