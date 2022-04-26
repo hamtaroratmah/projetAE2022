@@ -159,6 +159,7 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
+
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();

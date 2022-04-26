@@ -23,4 +23,5 @@ public interface ItemUCC {
   int cancelAnOffer(int itemId) throws IOException;
 
   ItemDTO createItem(ItemDTO item);
+
 }
