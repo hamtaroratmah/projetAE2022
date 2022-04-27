@@ -8,11 +8,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public interface RatingDTO {
 
+  Integer getRatingId();
+
   Integer getRating();
 
   String getComment();
 
   MemberDTO getMember();
+
+  void setRatingId(Integer ratingId);
 
   void setRating(Integer rating);
 

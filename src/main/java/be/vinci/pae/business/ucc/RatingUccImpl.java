@@ -14,16 +14,18 @@ public class RatingUccImpl implements RatingUcc {
 
   @Override
   public RatingDTO rateAnItem(int itemId, int memberId, int stars, String comment) {
+    RatingDTO rating = null;
     try {
+      System.out.println("ok");
+
       dalServices.startTransaction();
-      RatingDTO rating = ratingDao.rateAnItem(itemId, memberId, stars, comment);
+      rating = ratingDao.rateAnItem(itemId, memberId, stars, comment);
       dalServices.commitTransaction();
-      return rating;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       e.printStackTrace();
     }
-    return null;
+    return rating;
   }
 
 }

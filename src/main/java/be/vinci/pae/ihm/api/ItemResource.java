@@ -182,9 +182,11 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public RatingDTO rateAnItem(JsonNode json) throws IOException {
+    System.out.println("ok0");
+
     int itemId = json.get("itemId").asInt();
     int memberId = json.get("memberId").asInt();
-    int stars = json.get("starts").asInt();
+    int stars = json.get("stars").asInt();
     String comment = json.get("comment").asText();
 
     return ratingUcc.rateAnItem(itemId, memberId, stars, comment);
