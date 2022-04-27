@@ -11,4 +11,7 @@ public interface DomainFactory {
   OfferDTO getOffer();
 
   AddressDTO getAddress();
+
+  RatingDTO getRating();
+
 }
