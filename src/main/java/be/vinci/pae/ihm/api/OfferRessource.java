@@ -60,8 +60,6 @@ public class OfferRessource {
     int idType = itemUcc.typeExisting(type.getType());
     //si le type n existe pas , le creer
     if (idType == -1) {
-      System.out.print("ko1");
-
       idType = itemUcc.createType(json.get("type").asText());
     }
     System.out.print("ok2");
@@ -151,7 +149,6 @@ public class OfferRessource {
     if (idOffer < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    System.out.println("ok1");
     return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
   }
 

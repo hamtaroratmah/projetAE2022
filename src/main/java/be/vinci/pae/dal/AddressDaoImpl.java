@@ -55,7 +55,7 @@ public class AddressDaoImpl implements AddressDao {
       queryAddress.setInt(2, address.getBuildingNumber());
       queryAddress.setInt(3, address.getPostcode());
       queryAddress.setString(4, address.getCity());
-      queryAddress.setInt(5, address.getUnitNumber());
+      queryAddress.setString(5, address.getUnitNumber());
       ResultSet rs = queryAddress.executeQuery();
       if (rs.next()) {
         idAddress = rs.getInt(1);
@@ -79,7 +79,7 @@ public class AddressDaoImpl implements AddressDao {
     try (PreparedStatement query = services.getPreparedStatement(stringQuery)) {
       query.setString(1, newAddress.getStreet());
       query.setString(2, newAddress.getCity());
-      query.setInt(3, newAddress.getUnitNumber());
+      query.setString(3, newAddress.getUnitNumber());
       query.setInt(4, newAddress.getBuildingNumber());
       query.setInt(5, newAddress.getPostcode());
       query.setInt(6, oldAddress.getIdAddress());
@@ -96,12 +96,12 @@ public class AddressDaoImpl implements AddressDao {
     if (!resultSetAdress.next()) {
       throw new WebApplicationException("Address not found");
     }
-    address.setIdAddress(resultSetAdress.getInt("id_address"));
-    address.setStreet(resultSetAdress.getString("street"));
-    address.setBuildingNumber(resultSetAdress.getInt("building_number"));
-    address.setPostcode(resultSetAdress.getInt("postcode"));
-    address.setCity(resultSetAdress.getString("city"));
-    address.setUnitNumber(resultSetAdress.getInt("unit_number"));
+    address.setIdAddress(resultSetAdress.getInt(1));
+    address.setStreet(resultSetAdress.getString(2));
+    address.setBuildingNumber(resultSetAdress.getInt(3));
+    address.setPostcode(resultSetAdress.getInt(4));
+    address.setCity(resultSetAdress.getString(5));
+    address.setUnitNumber(resultSetAdress.getString(6));
     resultSetAdress.close();
     return address;
   }

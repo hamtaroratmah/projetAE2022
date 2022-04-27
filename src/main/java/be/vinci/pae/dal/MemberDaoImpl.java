@@ -85,7 +85,7 @@ public class MemberDaoImpl implements MemberDao {
       queryAddress.setInt(2, member.getAddress().getBuildingNumber());
       queryAddress.setInt(3, member.getAddress().getPostcode());
       queryAddress.setString(4, member.getAddress().getCity());
-      queryAddress.setInt(5, member.getAddress().getUnitNumber());
+      queryAddress.setString(5, member.getAddress().getUnitNumber());
 
       queryAddress.executeQuery();
 
@@ -194,7 +194,6 @@ public class MemberDaoImpl implements MemberDao {
     MemberDTO member;
     String query =
         "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
-    System.out.println(query);
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
@@ -280,19 +279,19 @@ public class MemberDaoImpl implements MemberDao {
     if (!resultSetMember.next()) {
       return null;
     }
-    member.setIdMember(resultSetMember.getInt("id_member"));
-    member.setPassword(resultSetMember.getString("password"));
-    member.setUsername(resultSetMember.getString("username"));
-    member.setLastName(resultSetMember.getString("last_name"));
-    member.setFirstName(resultSetMember.getString("first_name"));
-    member.setCallNumber(resultSetMember.getString("call_number"));
-    member.setAdmin(resultSetMember.getBoolean("isadmin"));
-    member.setReasonForConnRefusal(resultSetMember.getString("reason_for_conn_refusal"));
-    member.setState(resultSetMember.getString("state"));
-    member.setCountObjectNotCollected(resultSetMember.getInt("count_object_not_collected"));
-    member.setCountObjectGiven(resultSetMember.getInt("count_object_given"));
-    member.setCountObjectGot(resultSetMember.getInt("count_object_got"));
-    member.setAddress(addressDao.getAddress(resultSetMember.getInt("address")));
+    member.setIdMember(resultSetMember.getInt(1));
+    member.setPassword(resultSetMember.getString(2));
+    member.setUsername(resultSetMember.getString(3));
+    member.setLastName(resultSetMember.getString(4));
+    member.setFirstName(resultSetMember.getString(5));
+    member.setCallNumber(resultSetMember.getString(6));
+    member.setAdmin(resultSetMember.getBoolean(7));
+    member.setReasonForConnRefusal(resultSetMember.getString(8));
+    member.setState(resultSetMember.getString(9));
+    member.setCountObjectNotCollected(resultSetMember.getInt(10));
+    member.setCountObjectGiven(resultSetMember.getInt(11));
+    member.setCountObjectGot(resultSetMember.getInt(12));
+    member.setAddress(addressDao.getAddress(resultSetMember.getInt(13)));
     resultSetMember.close();
     return member;
   }
