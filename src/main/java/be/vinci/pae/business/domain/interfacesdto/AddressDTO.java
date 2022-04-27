@@ -28,6 +28,6 @@ public interface AddressDTO {
 
   String getUnitNumber();
 
-
   void setUnitNumber(String unitNumber);
+
 }

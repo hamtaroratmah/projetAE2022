@@ -262,7 +262,6 @@ public class ItemDaoImpl implements ItemDao {
       String availabilities) {
     int idType = typeExisting(type);
     ItemDTO item = null;
-    System.out.println("ok1");
 
     String query =
         "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
@@ -275,12 +274,15 @@ public class ItemDaoImpl implements ItemDao {
       ps.setString(3, description);
       ps.setString(4, availabilities);
       ps.setInt(5, idItem);
-      System.out.println(ps);
 
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
+
           item = createItemInstance(rs);
+<<<<<<< HEAD
           
+=======
+>>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
 
         }
       }

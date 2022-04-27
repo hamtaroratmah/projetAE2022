@@ -52,8 +52,6 @@ public class OfferUCCImpl implements OfferUCC {
     try {
       dalServices.startTransaction();
       ItemDTO newItem = itemDao.createItem(item);
-      System.out.println("id : " + newItem.getIdItem());
-
       OfferDTO offerDTO = offerDao.createOffer(newItem);
       dalServices.commitTransaction();
       return offerDTO;
@@ -141,7 +139,6 @@ public class OfferUCCImpl implements OfferUCC {
 
     try {
       dalServices.startTransaction();
-      System.out.println("ok2");
 
       if (idOffer < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
@@ -153,7 +150,6 @@ public class OfferUCCImpl implements OfferUCC {
 
       return item;
     } catch (Exception e) {
-      System.out.println("ko1");
 
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
