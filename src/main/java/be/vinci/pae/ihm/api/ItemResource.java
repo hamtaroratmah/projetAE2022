@@ -3,8 +3,10 @@ package be.vinci.pae.ihm.api;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.business.ucc.RatingUcc;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -30,6 +32,8 @@ public class ItemResource {
   ItemUCC itemUcc;
   @Inject
   DomainFactory domainFactory;
+  @Inject
+  RatingUcc ratingUcc;
 
   /**
    * Get offered items from databased sorted by date_offer or type.
@@ -167,6 +171,28 @@ public class ItemResource {
     itemId = json.get("itemId").asInt();
     return itemUcc.cancelAnOffer(itemId);
   }
+
+  /**
+   * rate an item.
+   *
+   * @param json the json
+   * @return 1 if ok, -1 if ko.
+   */
+  @POST
+  @Path("rate")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public RatingDTO rateAnItem(JsonNode json) throws IOException {
+    System.out.println("ok0");
+
+    int itemId = json.get("itemId").asInt();
+    int memberId = json.get("memberId").asInt();
+    int stars = json.get("stars").asInt();
+    String comment = json.get("comment").asText();
+
+    return ratingUcc.rateAnItem(itemId, memberId, stars, comment);
+  }
+
 
 }
 

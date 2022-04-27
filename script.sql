@@ -278,7 +278,8 @@ WHERE m.id_member = 10
   AND a.id_address = m.address;
 
 
-SELECT * FROM pae.items;
+SELECT * FROM pae.ratings;
+UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
 
 
 
