@@ -57,6 +57,7 @@ public class ItemResource {
   @Path("/getLastOfferedItemsNonConnected")
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
+    System.out.println("ok");
     List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
     if (list.size() >= 4) {
       return list.subList(0, 2);
