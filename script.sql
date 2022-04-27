@@ -282,7 +282,6 @@ WHERE m.id_member = 10
 SELECT * FROM pae.members;
 UPDATE pae.members SET state='valid' WHERE id_member = 1
 
-                                                                INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
 
 
 
