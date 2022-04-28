@@ -76,7 +76,7 @@ function displayInscriptions(inscriptions) {
         // Deny inscription
         buttonDeny.addEventListener("click",async (e) => {
             e.preventDefault();
-            await denyInscription(inscriptions[i].username);
+            await denyInscription(inscriptions[i].username,"il est pas cool");
         })
     }
 }
