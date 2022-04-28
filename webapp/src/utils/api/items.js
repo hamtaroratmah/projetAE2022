@@ -12,7 +12,7 @@ async function getItemUnordered() {
     }
   };
   let items = [];
-  await fetch("/api/item/getLastOfferedItemsNonConnected", request)
+  await fetch("/api/items/getLastOfferedItemsNonConnected", request)
   .then(response => response.json())
   .then((commits) => {
     for (let i = 0; i < commits.length; i++) {
@@ -35,7 +35,7 @@ async function getOrderedItems(sortingParam, order) {
     }
   };
   await fetch(
-      "/api/item/getItemSortedBy/?sortingParam=" + sortingParam + "&order="
+      "/api/items/getItemSortedBy/?sortingParam=" + sortingParam + "&order="
       + order,
       request)
   .then(response => response.json())
@@ -91,7 +91,7 @@ async function createItem(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/offer/createOffer", request);
+    const response = await fetch("/api/offers/createOffer", request);
     if (!response.ok) {
       if (response.status === 403) {
         errorLogin.innerHTML = "Impossible to create a new item";

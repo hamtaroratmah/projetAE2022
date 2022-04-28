@@ -113,7 +113,7 @@ async function denyInscription(username) {
   await fetch("/api/members/deny", request)
 }
 
-async function updateMember(member) {
+async function updateMember(member, confirmPassword) {
   const request = {
     method: "PUT",
     headers: {
@@ -134,7 +134,8 @@ async function updateMember(member) {
           buildingNumber: member.address.buildingNumber,
           postcode: member.address.postcode,
           city: member.address.city,
-          unitNumber: member.address.unitNumber
+          unitNumber: member.address.unitNumber,
+          confirmPassword: confirmPassword
         }
     )
   };

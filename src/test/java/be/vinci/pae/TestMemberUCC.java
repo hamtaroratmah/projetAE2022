@@ -12,6 +12,7 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
+import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMember(member.getIdMember())).thenReturn(null);
     assertNull(memberUCC.getOne(member.getIdMember()));
   }
-  
+
   @DisplayName("Test getOne memberDao throws exception")
   @Test
   public void testGetOneMemberDaoThrowsException() {
@@ -166,24 +167,16 @@ public class TestMemberUCC {
     Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertAll(
         () -> assertEquals(newMember.getUsername(),
-            memberUCC.updateMember(member, newMember).getUsername()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getUsername()),
         () -> assertEquals(newMember.getPassword(),
-            memberUCC.updateMember(member, newMember).getPassword()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getPassword()),
         () -> assertEquals(newMember.getCallNumber(),
-            memberUCC.updateMember(member, newMember).getCallNumber()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getCallNumber()),
         () -> assertEquals(newMember.getFirstName(),
-            memberUCC.updateMember(member, newMember).getFirstName()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getFirstName()),
         () -> assertEquals(newMember.getLastName(),
-            memberUCC.updateMember(member, newMember).getLastName())
+            memberUCC.updateMember(member, newMember, member.getPassword()).getLastName())
     );
-  }
-
-  @DisplayName("Test update member sql exception")
-  @Test
-  public void testUpdateMemberSqlException() {
-    Member newMember = initNewMemberUpdate();
-    Mockito.when(memberDao.updateMember(member, newMember)).thenThrow(FatalException.class);
-    assertThrows(FatalException.class, () -> memberUCC.updateMember(member, newMember));
   }
 
   @DisplayName("test Update Existent Member But Only Username Changed")
@@ -198,15 +191,15 @@ public class TestMemberUCC {
     Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertAll(
         () -> assertEquals(newMember.getUsername(),
-            memberUCC.updateMember(member, newMember).getUsername()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getUsername()),
         () -> assertEquals(member.getPassword(),
-            memberUCC.updateMember(member, newMember).getPassword()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getPassword()),
         () -> assertEquals(member.getCallNumber(),
-            memberUCC.updateMember(member, newMember).getCallNumber()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getCallNumber()),
         () -> assertEquals(member.getFirstName(),
-            memberUCC.updateMember(member, newMember).getFirstName()),
+            memberUCC.updateMember(member, newMember, member.getPassword()).getFirstName()),
         () -> assertEquals(member.getLastName(),
-            memberUCC.updateMember(member, newMember).getLastName())
+            memberUCC.updateMember(member, newMember, member.getPassword()).getLastName())
     );
   }
 
@@ -216,7 +209,25 @@ public class TestMemberUCC {
     Member newMember = initNewMemberUpdate();
     Mockito.when(newMember.getPassword()).thenReturn("newPassword");
     Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
-    assertEquals(newMember.getPassword(), memberUCC.updateMember(member, newMember).getPassword());
+    assertEquals(newMember.getPassword(),
+        memberUCC.updateMember(member, newMember, newMember.getPassword()).getPassword());
+  }
+
+  @DisplayName("Test update member sql exception")
+  @Test
+  public void testUpdateMemberSqlException() {
+    Member newMember = initNewMemberUpdate();
+    Mockito.when(memberDao.updateMember(member, newMember)).thenThrow(FatalException.class);
+    assertThrows(FatalException.class,
+        () -> memberUCC.updateMember(member, newMember, member.getPassword()));
+  }
+
+  @DisplayName("Test update member passwords not the same")
+  @Test
+  public void testUpdateMemberPasswordsNotTheSame() {
+    Member newMember = initNewMemberUpdate();
+    assertThrows(BadRequestException.class,
+        () -> memberUCC.updateMember(member, newMember, "not same password"));
   }
 
   ///////////////////////////////////////////////////////////////////////////////////

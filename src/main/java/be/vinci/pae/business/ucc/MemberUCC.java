@@ -22,8 +22,8 @@ public interface MemberUCC {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
-  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
-  
+  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember, String confirmPasswod);
+
 
   ArrayList<MemberDTO> listDeniedUsers();
 
