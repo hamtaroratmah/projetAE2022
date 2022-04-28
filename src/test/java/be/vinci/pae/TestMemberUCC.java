@@ -43,6 +43,13 @@ public class TestMemberUCC {
     dalServices = locator.getService(DalServices.class);
   }
 
+  @BeforeEach
+  void initEach() {
+    Mockito.reset(memberDao);
+    member = initMember();
+    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
+  }
+
   private Member initMember() {
     Member initMember = (Member) domainFactory.getMember();
     initMember.setUsername("username");
@@ -53,13 +60,6 @@ public class TestMemberUCC {
     initMember.setIdMember(1);
     initMember.setState("valid");
     return initMember;
-  }
-
-  @BeforeEach
-  void initEach() {
-    Mockito.reset(memberDao);
-    member = initMember();
-    Mockito.when(memberDao.getMemberByUsername(member.getUsername())).thenReturn(member);
   }
 
   @DisplayName("Test Login Password and username good")
@@ -318,6 +318,17 @@ public class TestMemberUCC {
     Mockito.when(memberDao.getMemberByUsername(member.getUsername()))
         .thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.getOneByUsername(member.getUsername()));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("Test register")
+  @Test
+  public void testRegister() {
+    Mockito.when(adaptativeMember.hashPassword(member.getPassword()))
+        .thenReturn(member.getPassword());
+    assertEquals(adaptativeMember,
+        memberUCC.register(adaptativeMember, domainFactory.getAddress()));
   }
 
 }
