@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.exceptions.LoginException;
+import java.util.ArrayList;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeAll;
@@ -331,4 +334,31 @@ public class TestMemberUCC {
         memberUCC.register(adaptativeMember, domainFactory.getAddress()));
   }
 
+  @DisplayName("Test register dao throws exception")
+  @Test
+  public void testRegisterDaoThrowsException() {
+    AddressDTO address = domainFactory.getAddress();
+    Mockito.when(memberDao.register(member, address))
+        .thenThrow(FatalException.class);
+    assertThrows(FatalException.class,
+        () -> memberUCC.register(member, address));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("test listPendingUsers")
+  @Test
+  public void testListPendingUsers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    list.add(member);
+    Mockito.when(memberDao.listUsersByState("pending")).thenReturn(list);
+    assertEquals(list, memberUCC.listPendingUsers());
+  }
+
+  @DisplayName("test listPendingUsers dao throws exception")
+  @Test
+  public void testListPendingUsersDaoThrowsException() {
+    Mockito.when(memberDao.listUsersByState("pending")).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.listPendingUsers());
+  }
 }

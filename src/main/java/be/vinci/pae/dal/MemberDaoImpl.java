@@ -104,7 +104,7 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param member to insert
    */
-  public void register(MemberDTO member, AddressDTO address) {
+  public boolean register(MemberDTO member, AddressDTO address) {
     PreparedStatement queryMember;
     try {
       queryMember = services.getPreparedStatement(
@@ -124,6 +124,8 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(8, member.getState());
 
       queryMember.executeUpdate();
+
+      return true;
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }

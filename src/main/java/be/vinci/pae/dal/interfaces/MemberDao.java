@@ -27,7 +27,7 @@ public interface MemberDao {
 
   MemberDTO denyRegistration(String username);
 
-  void register(MemberDTO member, AddressDTO address);
+  boolean register(MemberDTO member, AddressDTO address);
 
   MemberDTO createMemberInstance(ResultSet resultSet) throws SQLException;
 }
