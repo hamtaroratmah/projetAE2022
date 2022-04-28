@@ -125,10 +125,46 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public ArrayList<MemberDTO> listUsersByState(String state) {
+//<<<<<<< HEAD
+//  public ArrayList<MemberDTO> listUsersByState(String state) {
+//    try {
+//      dalServices.startTransaction();
+//      ArrayList<MemberDTO> list = memberDao.listUsersByState(state);
+//=======
+  public Object getOneByUsername(String username) {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState(state);
+      MemberDTO member = memberDao.getMemberByUsername(username);
+//>>>>>>> e747ef4c0fb4a97832721b21997d94dfe1d76fbf
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  @Override
+  public MemberDTO register(MemberDTO member, AddressDTO address) {
+    try {
+      dalServices.startTransaction();
+      Member memberBiz = (Member) member;
+      String hashPass = memberBiz.hashPassword(member.getPassword());
+      member.setPassword(hashPass);
+      memberDao.register(member, address);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  @Override
+  public ArrayList<MemberDTO> listPendingUsers() {
+    try {
+      dalServices.startTransaction();
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
@@ -150,49 +186,4 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
-  @Override
-  public ArrayList<MemberDTO> listPendingUsers() {
-    try {
-      dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState("pending");
-      dalServices.commitTransaction();
-      return list;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
-
-
-  @Override
-  public MemberDTO register(MemberDTO member, AddressDTO address) {
-    try {
-      dalServices.startTransaction();
-      if (getOneByUsername(member.getUsername()) != null) {
-        throw new IllegalArgumentException("L'utilisateur existe déjà !");
-      }
-      Member memberBiz = (Member) member;
-      String hashPass = memberBiz.hashPassword(member.getPassword());
-      member.setPassword(hashPass);
-      memberDao.register(member, address);
-      dalServices.commitTransaction();
-      return member;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
-
-  @Override
-  public Object getOneByUsername(String username) {
-    try {
-      dalServices.startTransaction();
-      MemberDTO member = memberDao.getMemberByUsername(username);
-      dalServices.commitTransaction();
-      return member;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
 }
