@@ -22,9 +22,7 @@ public interface MemberUCC {
 
   MemberDTO confirmRegistration(String username, boolean isAdmin);
 
-  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember);
-
-  ArrayList<MemberDTO> listUsersByState(String state);
+  MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember, String confirmPasswod);
 
 
   ArrayList<MemberDTO> listDeniedUsers();

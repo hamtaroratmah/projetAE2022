@@ -56,10 +56,11 @@ public class MemberResource {
   public MemberDTO updateMember(@Context ContainerRequestContext requestContext,
       JsonNode json) {
     MemberDTO oldMember = (MemberDTO) requestContext.getProperty("user");
+    String confirmPassword = json.get("confirmPassword").asText();
     if (!checkNullOrBlank(json)) {
       throw new BadRequestException("Il manque certains champs");
     }
-    return memberUCC.updateMember(oldMember, createMember(json));
+    return memberUCC.updateMember(oldMember, createMember(json), confirmPassword);
   }
 
   private MemberDTO createMember(JsonNode json) {
@@ -84,7 +85,6 @@ public class MemberResource {
 
   private boolean checkNullOrBlank(JsonNode json) {
     return json.hasNonNull("idMember")
-        && json.hasNonNull("password")
         && json.hasNonNull("username")
         && json.hasNonNull("lastName")
         && json.hasNonNull("firstName")

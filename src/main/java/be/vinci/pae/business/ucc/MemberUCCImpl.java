@@ -6,7 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.exceptions.FatalException;
+import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.LoginException;
 import jakarta.inject.Inject;
 import java.util.ArrayList;
@@ -40,10 +40,15 @@ public class MemberUCCImpl implements MemberUCC {
   /**
    * update profile.
    */
-  public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember) {
+  public MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember, String confirmPassword) {
     try {
       dalServices.startTransaction();
-      if (newMember.getPassword().length() < 60) {
+      if (newMember.getPassword() == null) {
+        newMember.setPassword(oldMember.getPassword());
+      } else if (!newMember.getPassword().equals(confirmPassword)) {
+        throw new BadRequestException("Les deux mots de passes ne sont pas identiques");
+      }
+      if (!newMember.getPassword().equals(oldMember.getPassword())) {
         Member memberBiz = (Member) domainFactory.getMember();
         newMember.setPassword(memberBiz.hashPassword(newMember.getPassword()));
       }
@@ -52,7 +57,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -87,7 +92,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new LoginException(e.getMessage());
+      throw e;
     }
   }
 
@@ -106,7 +111,7 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -119,34 +124,37 @@ public class MemberUCCImpl implements MemberUCC {
       return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
 
   }
 
   @Override
-  public ArrayList<MemberDTO> listUsersByState(String state) {
+  public Object getOneByUsername(String username) {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState(state);
+      MemberDTO member = memberDao.getMemberByUsername(username);
       dalServices.commitTransaction();
-      return list;
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
   @Override
-  public ArrayList<MemberDTO> listDeniedUsers() {
+  public MemberDTO register(MemberDTO member, AddressDTO address) {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState("denied");
+      Member memberBiz = (Member) member;
+      String hashPass = memberBiz.hashPassword(member.getPassword());
+      member.setPassword(hashPass);
+      memberDao.register(member, address);
       dalServices.commitTransaction();
-      return list;
+      return member;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -159,40 +167,21 @@ public class MemberUCCImpl implements MemberUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
-    }
-  }
-
-
-  @Override
-  public MemberDTO register(MemberDTO member, AddressDTO address) {
-    try {
-      dalServices.startTransaction();
-      if (getOneByUsername(member.getUsername()) != null) {
-        throw new IllegalArgumentException("L'utilisateur existe déjà !");
-      }
-      Member memberBiz = (Member) member;
-      String hashPass = memberBiz.hashPassword(member.getPassword());
-      member.setPassword(hashPass);
-      memberDao.register(member, address);
-      dalServices.commitTransaction();
-      return member;
-    } catch (Exception e) {
-      dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
   @Override
-  public Object getOneByUsername(String username) {
+  public ArrayList<MemberDTO> listDeniedUsers() {
     try {
       dalServices.startTransaction();
-      MemberDTO member = memberDao.getMemberByUsername(username);
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("denied");
       dalServices.commitTransaction();
-      return member;
+      return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
+
 }

@@ -89,7 +89,7 @@ async function createItem(e) {
         "Content-Type": "application/json"
       }
     };
-    const response = await fetch("/api/offer/createOffer", request);
+    const response = await fetch("/api/offers/createOffer", request);
     if (!response.ok) {
       if (response.status === 403) {
         error.innerHTML = "Impossible to create a new item";
