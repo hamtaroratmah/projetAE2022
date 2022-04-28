@@ -213,6 +213,14 @@ public class TestMemberUCC {
         memberUCC.updateMember(member, newMember, newMember.getPassword()).getPassword());
   }
 
+  @DisplayName("Test update password is null")
+  @Test
+  public void testUpdatePasswordIsNull() {
+    Member newMember = initNewMemberUpdate();
+    Mockito.when(newMember.getPassword()).thenReturn(null);
+    assertEquals(newMember, memberUCC.updateMember(member, newMember, null));
+  }
+
   @DisplayName("Test update member sql exception")
   @Test
   public void testUpdateMemberSqlException() {
