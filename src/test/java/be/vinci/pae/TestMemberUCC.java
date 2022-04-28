@@ -207,6 +207,15 @@ public class TestMemberUCC {
     );
   }
 
+  @DisplayName("Test update password member")
+  @Test
+  public void testUpdatePasswordMember() {
+    Member newMember = initNewMemberUpdate();
+    Mockito.when(newMember.getPassword()).thenReturn("newPassword");
+    Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
+    assertEquals(newMember.getPassword(), memberUCC.updateMember(member, newMember).getPassword());
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////
 
   @DisplayName("Test getState")
