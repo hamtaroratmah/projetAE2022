@@ -216,8 +216,10 @@ public class TestMemberUCC {
   @DisplayName("Test update password is null")
   @Test
   public void testUpdatePasswordIsNull() {
-    Member newMember = initNewMemberUpdate();
-    Mockito.when(newMember.getPassword()).thenReturn(null);
+    Member newMember = (Member) domainFactory.getMember();
+    newMember.setUsername("bonsoir");
+    newMember.setPassword(null);
+    Mockito.when(memberDao.updateMember(member, newMember)).thenReturn(newMember);
     assertEquals(newMember, memberUCC.updateMember(member, newMember, null));
   }
 
