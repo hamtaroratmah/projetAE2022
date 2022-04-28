@@ -361,4 +361,22 @@ public class TestMemberUCC {
     Mockito.when(memberDao.listUsersByState("pending")).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.listPendingUsers());
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("test ListDeniedUsers")
+  @Test
+  public void testListDeniedUsers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    list.add(member);
+    Mockito.when(memberDao.listUsersByState("denied")).thenReturn(list);
+    assertEquals(list, memberUCC.listDeniedUsers());
+  }
+
+  @DisplayName("test listDeniedUsers dao throws exception")
+  @Test
+  public void testListDeniedUsersDaoThrowsException() {
+    Mockito.when(memberDao.listUsersByState("denied")).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.listDeniedUsers());
+  }
 }
