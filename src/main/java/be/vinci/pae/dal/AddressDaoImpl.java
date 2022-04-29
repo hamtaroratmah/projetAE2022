@@ -97,21 +97,12 @@ public class AddressDaoImpl implements AddressDao {
     if (!resultSetAdress.next()) {
       throw new WebApplicationException("Address not found");
     }
-<<<<<<< HEAD
     address.setIdAddress(resultSetAdress.getInt("id_address"));
     address.setStreet(resultSetAdress.getString("street"));
     address.setBuildingNumber(resultSetAdress.getInt("building_number"));
     address.setPostcode(resultSetAdress.getInt("postcode"));
     address.setCity(resultSetAdress.getString("city"));
     address.setUnitNumber(resultSetAdress.getString("unit_number"));
-=======
-    address.setIdAddress(resultSetAdress.getInt(1));
-    address.setStreet(resultSetAdress.getString(2));
-    address.setBuildingNumber(resultSetAdress.getInt(3));
-    address.setPostcode(resultSetAdress.getInt(4));
-    address.setCity(resultSetAdress.getString(5));
-    address.setUnitNumber(resultSetAdress.getString(6));
->>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
     resultSetAdress.close();
     return address;
   }
