@@ -45,7 +45,7 @@ const ListItemPage = async () => {
   const typeSelect = document.querySelector("#selectItemType");
   const dateSelect = document.querySelector("#selectItemDate");
   const itemConditionSelect = document.querySelector("#selectItemCondition");
-
+  console.log(typeSelect);
   typeSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(typeSelect.name, typeSelect.value);
     displayItems(items);

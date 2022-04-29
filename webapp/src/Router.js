@@ -6,6 +6,7 @@ import NewItem from "./Pages/NewItemPage";
 import ListInscriptions from "./Pages/ListInscriptions";
 import register from "./Pages/register";
 import ProfilePage from "./Pages/ProfilePage";
+import ModifyOffer from "./Pages/ModifyOffer";
 
 // Configure your routes here
 const routes = {
@@ -17,6 +18,7 @@ const routes = {
   "/listItem": ListItemPage,
   "/newItem": NewItem,
   "/profile": ProfilePage,
+  "/modifyOffer": ModifyOffer,
 };
 
 /**
