@@ -5,8 +5,8 @@ function displayInscriptions(inscriptions) {
     for (let i = 0; i < inscriptions.length; i++) {
         if (inscriptions[i].state === "pending") {
             listInscriptionsPage.innerHTML += `
-        <div id="inscriptionPending" class="receptionInscriptionParent">
-          <div class="receptionInscriptionChild1">
+        <div id="inscriptionPending" class="receptionInscriptionPending">
+          <div class="receptionConfirmForm">
           <form id="confirmForm">
             <div class="receptionInscriptionGrandChild">
               <p>
@@ -26,17 +26,19 @@ function displayInscriptions(inscriptions) {
             </div>
           </form>
           </div>
-            <div class="receptionInscriptionChild2">
+            <div class="receptionRefusalForm">
              <form id="denyForm">
-                <input id="deny${i}" type="submit" value="X">
+                <label>Raison(s) du refus : </label>
+                <input class="inputDeny" id="reasonRefusal${i}" type="text">
+                <input class="inputDeny" id="deny${i}" type="submit" value="X">
                 </form>
             </div>
         </div>
       `;
         } else {
             listInscriptionsPage.innerHTML += `
-        <div id="inscriptionPending" class="receptionInscriptionParent">
-          <div class="receptionInscriptionChild1">
+        <div id="inscriptionPending" class="receptionInscriptionDenied">
+          <div class="receptionConfirmForm">
           <form id="confirmForm">
             <div class="receptionInscriptionGrandChild">
               <p>
@@ -66,7 +68,8 @@ function displayInscriptions(inscriptions) {
         const isAdmin = document.getElementById("isAdmin"+i);
         const buttonConfirm = document.getElementById("confirm"+i);
         const buttonDeny = document.getElementById("deny"+i);
-
+        const reasonForRefusal = document.getElementById("reasonRefusal"+i).value;
+        console.log(reasonForRefusal)
         // Confirm inscription
         buttonConfirm.addEventListener("click",async (e) => {
             e.preventDefault();
@@ -76,7 +79,7 @@ function displayInscriptions(inscriptions) {
         // Deny inscription
         buttonDeny.addEventListener("click",async (e) => {
             e.preventDefault();
-            await denyInscription(inscriptions[i].username,"il est pas cool");
+            await denyInscription(inscriptions[i].username,reasonForRefusal);
         })
     }
 }
