@@ -279,10 +279,7 @@ public class ItemDaoImpl implements ItemDao {
         if (rs.next()) {
 
           item = createItemInstance(rs);
-<<<<<<< HEAD
-          
-=======
->>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
+
 
         }
       }

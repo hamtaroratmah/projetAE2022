@@ -220,8 +220,6 @@ async function createItem(e) {
     }
 
   }
-export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
-  modifyOfferFunction, modifyOffer};
 
 
   async function likeItem(idItem,idMember){
@@ -262,8 +260,9 @@ export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
 
     }
 
+export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
+  modifyOfferFunction, modifyOffer, likeItem};
 
 
 
 
-export {getItemUnordered, getOrderedItems, createItem,likeItem};

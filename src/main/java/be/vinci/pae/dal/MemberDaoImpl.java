@@ -182,12 +182,9 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
-<<<<<<< HEAD
-    String query = "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
-=======
+
     String query =
         "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
->>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
