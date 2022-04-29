@@ -28,6 +28,13 @@ public class ItemUCCImpl implements ItemUCC {
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
+      Log log = null;
+      try {
+        log = new Log("log.txt");
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+      log.logger.warning(e.getMessage());
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
     }

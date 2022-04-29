@@ -8,6 +8,7 @@ import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.OfferUCC;
+import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -20,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@Path("/offer")
+@Path("/offers")
 public class OfferRessource {
 
   @Inject
@@ -60,7 +61,10 @@ public class OfferRessource {
     int idType = itemUcc.typeExisting(type.getType());
     //si le type n existe pas , le creer
     if (idType == -1) {
+<<<<<<< HEAD
       System.out.print("ko1");
+=======
+>>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
       idType = itemUcc.createType(json.get("type").asText());
     }
     System.out.print("ok2");
@@ -104,10 +108,11 @@ public class OfferRessource {
   @Path("/interests")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
     int idMember = json.get("idMember").asInt();
-
+    System.out.println(idItem + "+ " + idMember);
     if (idItem < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
@@ -123,6 +128,7 @@ public class OfferRessource {
   @Path("/cancel")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
   public boolean cancel(JsonNode json) {
     int idItem = json.get("idItem").asInt();
 
@@ -150,7 +156,6 @@ public class OfferRessource {
     if (idOffer < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    System.out.println("ok1");
     return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
   }
 

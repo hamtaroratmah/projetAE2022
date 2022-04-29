@@ -25,4 +25,5 @@ public interface ItemDao {
 
   boolean offer(int idOffer, int idItem);
 
+
 }
