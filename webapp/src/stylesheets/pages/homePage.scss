@@ -1,0 +1,21 @@
+@import "../modules/variables";
+@import "../modules/mixins";
+
+#receptionPage {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-template-rows: repeat(auto-fill, 400px);
+  grid-gap: 3vw;
+  justify-content: center;
+}
+
+.receptionItems {
+  border-radius: 20px;
+  background-color: $gold;
+}
+
+.receptionImage {
+  @include centerElementBlock;
+  margin-bottom: 20px;
+}
