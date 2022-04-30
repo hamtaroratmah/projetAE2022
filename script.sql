@@ -276,19 +276,3 @@ FROm pae.members m,
      pae.addresses a
 WHERE m.id_member = 10
   AND a.id_address = m.address;
-
-<<<<<<< HEAD
-
-SELECT * FROM pae.members;
-UPDATE pae.members SET state='valid' WHERE id_member = 1
-
-
-
-
-    =======
-                                                       UPDATE  pae.items SET  id_type=4, photo='null',description= 'description',availabilities= 'uniquement ajd' WHERE id_item=1RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member
-UPDATE  pae.items SET  id_type=4, photo='null',description= 'description',availabilities= 'uniquement ajd' WHERE id_item=1RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member
-
-
-SELECT id_member, password, username, last_name, first_name, call_number, isadmin, reason_for_conn_refusal, state, count_object_not_collected, count_object_given, count_object_got, address FROM pae.members WHERE id_member = 8
-    >>>>>>> 16708c1016b14e1d79ead9e4bb148c51e41374b2
