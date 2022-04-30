@@ -24,12 +24,11 @@ public interface MemberUCC {
 
   MemberDTO updateMember(MemberDTO oldMember, MemberDTO newMember, String confirmPasswod);
 
-
   ArrayList<MemberDTO> listDeniedUsers();
 
   ArrayList<MemberDTO> listPendingUsers();
 
-  MemberDTO denyRegistration(String username);
+  MemberDTO denyRegistration(String username, String reasonForConnRefusal);
 
   MemberDTO register(MemberDTO member, AddressDTO address);
 

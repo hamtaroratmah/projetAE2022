@@ -94,16 +94,16 @@ async function confirmInscription(username, isAdmin) {
       "Content-Type": "application/json"
     }
   };
-  console.log(request)
   await fetch("/api/members/confirm", request)
 }
 
-async function denyInscription(username) {
+async function denyInscription(username,reasonForConnRefusal) {
   const request = {
     method: "PUT",
     body: JSON.stringify(
         {
           username: username,
+          reasonForConnRefusal: reasonForConnRefusal
         }
     ),
     headers: {

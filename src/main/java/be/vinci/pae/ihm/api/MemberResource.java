@@ -157,10 +157,11 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO denyRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    String reasonForConnRefusal = json.get("reasonForConnRefusal").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username));
+    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username,reasonForConnRefusal));
   }
 
   /**

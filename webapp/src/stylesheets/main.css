@@ -65,7 +65,14 @@ img {
   margin: 50px auto;
 }
 
-.receptionInscriptionParent {
+.receptionInscriptionPending {
+  border: 1px solid black;
+  width: 1200px;
+  height: 130px;
+  margin: auto;
+  text-align: center;
+}
+.receptionInscriptionDenied {
   border: 1px solid black;
   width: 1200px;
   height: 100px;
@@ -73,17 +80,18 @@ img {
   text-align: center;
 }
 
-.receptionInscriptionChild1 {
+.receptionConfirmForm {
   width: 1000px;
   padding: 10px;
   vertical-align: middle;
   display: inline-block;
 }
-.receptionInscriptionChild2 {
-  width: 100px;
+.receptionRefusalForm {
+  width: 500px;
   padding: 10px;
   vertical-align: middle;
-  display: inline-block;
+  margin : auto;
+  clear: both;
 }
 .receptionInscriptionGrandChild {
   width: 200px;
@@ -93,4 +101,8 @@ img {
 }
 .listInscriptionsButton {
   margin: 50px auto;
+}
+
+.inputDeny{
+  display:inline-block;
 }

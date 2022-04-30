@@ -116,10 +116,10 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public MemberDTO denyRegistration(String username) {
+  public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
     try {
       dalServices.startTransaction();
-      MemberDTO member = memberDao.denyRegistration(username);
+      MemberDTO member = memberDao.denyRegistration(username,reasonForConnRefusal);
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
