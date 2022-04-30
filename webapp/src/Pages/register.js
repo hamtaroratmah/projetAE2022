@@ -8,7 +8,7 @@ const registerDiv = `
                     <h1 class="registerText">Donnamis</h1>
                     <div id="errorRegister"></div>
                     <input class="inputForm fields" type="text" id="username" placeholder="Pseudo">
-                    <input class="inputForm fields" type="text" id="password" placeholder="Mot de passe">  
+                    <input class="inputForm fields" type="password" id="password" placeholder="Mot de passe">  
                     <input class="inputForm fields" type="text" id="lastName" placeholder="Nom">
                     <input class="inputForm fields" type="text" id="firstName" placeholder="Prénom">
                     <input class="inputForm fields" type="text" id="street" placeholder="Rue">

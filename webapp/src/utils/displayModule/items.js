@@ -1,6 +1,6 @@
-import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/items";
+import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
-import {getMember} from "../api/member";
+import {getMember} from "../api/memberApi";
 
 async function displayItems(items, receptionPage) {
   let item, offer;
@@ -52,7 +52,6 @@ async function displayItems(items, receptionPage) {
       </div>
       
       `;
-
   }
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
@@ -96,7 +95,11 @@ function openItemModal(item, j) {
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
           <p class="modalItemInfo"></p>
-          <button id="rateItem${j}">
+          <h2>Evaluer un objet</h2>
+          <input id="ratingComment" type="text" placeholder="Commentaire">
+          <p>Entrer une note entre 1 et 5 compris</p>
+          <input id="ratingStars" type="text">
+          <button id="rateItem${j}">Soumettre évaluation</button>
       </div>
     `
   const photoSrc = document.querySelector("#receptionImage" + j);
@@ -104,8 +107,8 @@ function openItemModal(item, j) {
   rateButton.addEventListener("click", async () => {
     const member = await getMember(getToken());
     const idItem = item.idItem;
-    const comment = "";
-    const stars = "";
+    const comment = document.querySelector("#ratingComment").value;
+    const stars = document.querySelector("#ratingStars").value;
     const memberId = member.idMember;
     await rateItem(idItem, memberId, stars, comment);
 

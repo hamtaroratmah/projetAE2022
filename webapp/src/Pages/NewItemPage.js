@@ -1,4 +1,4 @@
-import {createItem} from "../utils/api/items";
+import {createItem} from "../utils/api/itemsApi";
 import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";
 

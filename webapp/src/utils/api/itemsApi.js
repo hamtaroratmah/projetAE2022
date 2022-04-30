@@ -1,5 +1,5 @@
 import {getToken} from "../utils";
-import {getMember} from "./member";
+import {getMember} from "./memberApi";
 import Navbar from "../../Components/Navbar";
 import {Redirect} from "../../Router";
 
@@ -178,6 +178,7 @@ async function modifyOffer(idOfferParam) {
 }
 
 async function cancelOffer(idItem) {
+  console.log("cancel offer " + idItem)
 
   const request = {
     method: "POST",
@@ -187,7 +188,8 @@ async function cancelOffer(idItem) {
         }
     ),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": getToken()
     }
   };
   try {
@@ -257,7 +259,7 @@ async function rateItem(idItem, idMember, stars, comment) {
     body: JSON.stringify(
         {
           itemId: idItem,
-          idMember: idMember,
+          memberId: idMember,
           stars: stars,
           comment: comment
         }

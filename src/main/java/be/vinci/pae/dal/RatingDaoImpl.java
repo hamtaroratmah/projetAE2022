@@ -26,10 +26,8 @@ public class RatingDaoImpl implements RatingDao {
 
 
   public RatingDTO rateAnItem(int itemId, int memberId, int stars, String comment) {
-    System.out.println("ok");
-
-    String query = "INSERT INTO pae.ratings( rating, comment,id_recipient_member ) VALUES(?,?,?) RETURNING *;";
-
+    String query = "INSERT INTO pae.ratings( rating, comment,id_recipient_member ) VALUES(?,?,?) "
+        + "RETURNING *;";
     RatingDTO rating = null;
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, stars);
@@ -41,15 +39,11 @@ public class RatingDaoImpl implements RatingDao {
           rating = createRatingInstance(rs);
           query = "UPDATE pae.items set rating= ? WHERE id_item=? RETURNING id_item";
           try (PreparedStatement pss = services.getPreparedStatement(query)) {
-
             pss.setInt(1, rs.getInt(1));
             pss.setInt(2, itemId);
             rs.close();
             pss.executeQuery();
-
           }
-
-
         }
       }
 

@@ -1,5 +1,5 @@
 import {getToken} from "../utils/utils";
-import {getMember} from "../utils/api/member";
+import {getMember} from "../utils/api/memberApi";
 
 const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");

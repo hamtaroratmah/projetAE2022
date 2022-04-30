@@ -1,9 +1,9 @@
-import {confirmInscription} from "../api/member";
+import {confirmInscription} from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
-    const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
-    for (let i = 0; i < inscriptions.length; i++) {
-        listInscriptionsPage.innerHTML += `
+  const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
+  for (let i = 0; i < inscriptions.length; i++) {
+    listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionParent">
           <div class="receptionInscriptionChild1">
           <form id="confirmForm">
@@ -32,18 +32,18 @@ function displayInscriptions(inscriptions) {
             </div>
         </div>
       `;
-    }
+  }
 
-    for (let i = 0; i < inscriptions.length; i++) {
-        // Confirm inscription
-        const isAdmin = document.getElementById("isAdmin"+i);
-        const buttonConfirm = document.getElementById("confirm"+i);
+  for (let i = 0; i < inscriptions.length; i++) {
+    // Confirm inscription
+    const isAdmin = document.getElementById("isAdmin" + i);
+    const buttonConfirm = document.getElementById("confirm" + i);
 
-        buttonConfirm.addEventListener("click",async (e) => {
-            e.preventDefault();
-            await confirmInscription(inscriptions[i].username,isAdmin.checked);
-        })
-    }
+    buttonConfirm.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await confirmInscription(inscriptions[i].username, isAdmin.checked);
+    })
+  }
 }
 
 export {displayInscriptions};

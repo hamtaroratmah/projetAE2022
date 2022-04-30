@@ -1,4 +1,4 @@
-import {getMember, updateMember} from "../utils/api/member";
+import {getMember, updateMember} from "../utils/api/memberApi";
 import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";
 

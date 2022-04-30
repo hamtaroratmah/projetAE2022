@@ -142,7 +142,6 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(4, member.getFirstName());
       queryMember.setInt(5, addressDao.insertAddress(address));
       queryMember.setString(6, member.getCallNumber());
-      System.out.println(queryMember);
       queryMember.executeUpdate();
 
       return true;

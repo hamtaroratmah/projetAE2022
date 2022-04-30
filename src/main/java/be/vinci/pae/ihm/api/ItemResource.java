@@ -48,6 +48,9 @@ public class ItemResource {
       @DefaultValue("ASC")
       @QueryParam("order") String order) {
     return itemUcc.getItemSortedBy(sortingParam, order);
+//    return itemUcc.getItemSortedBy(sortingParam, order).stream()
+//        .filter(x -> !x.getItemCondition().equals("cancelled")).collect(
+//            Collectors.toList());
   }
 
   /**
@@ -57,10 +60,11 @@ public class ItemResource {
   @Path("/getLastOfferedItemsNonConnected")
   @Produces(MediaType.APPLICATION_JSON)
   public List<ItemDTO> getLastOfferedItemsNonConnected() {
-    System.out.println("ok");
     List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
     if (list.size() >= 4) {
       return list.subList(0, 2);
+//      return list.stream().filter(x -> x.getItemCondition().equals("cancelled"))
+//          .collect(Collectors.toList()).subList(0, 2);
     }
     return list;
   }
@@ -183,8 +187,6 @@ public class ItemResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public RatingDTO rateAnItem(JsonNode json) throws IOException {
-    System.out.println("ok0");
-
     int itemId = json.get("itemId").asInt();
     int memberId = json.get("memberId").asInt();
     int stars = json.get("stars").asInt();
