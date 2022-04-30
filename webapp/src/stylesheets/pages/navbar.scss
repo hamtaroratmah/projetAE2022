@@ -1,0 +1,30 @@
+@import "../modules/variables";
+@import "../modules/mixins";
+
+#navbar {
+  display: flex;
+  position: sticky;
+  width: 100%;
+  background-color: $gold;
+  height: clamp(50px, 10vh, 100px);
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2%;
+  padding: 0 5%;
+
+  button {
+    background-color: $purple;
+    border: none;
+    border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    margin: 0 5px;
+    text-overflow: ellipsis;
+  }
+}
+
+#navbarTitle {
+  flex: 1;
+  font-size: $titleSize;
+  font-weight: bold;
+}

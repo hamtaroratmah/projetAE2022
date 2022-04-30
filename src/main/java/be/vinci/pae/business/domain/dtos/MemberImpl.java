@@ -1,24 +1,47 @@
 package be.vinci.pae.business.domain.dtos;
 
 import static org.mindrot.jbcrypt.BCrypt.checkpw;
+import static org.mindrot.jbcrypt.BCrypt.gensalt;
+import static org.mindrot.jbcrypt.BCrypt.hashpw;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
-import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
+import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.utils.Views;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonView;
+import java.util.Objects;
 
-public class MemberImpl implements MemberDTO, Member {
+@JsonInclude(Include.NON_NULL)
+// ignore all null fields in order to avoid sending props not linked to a JSON view
+public class MemberImpl implements Member {
 
-  private int idMember;
+  @JsonView(Views.Public.class)
+  private Integer idMember;
+  @JsonView(Views.Internal.class)
   private String password;
+  @JsonView(Views.Public.class)
   private String username;
+  @JsonView(Views.Public.class)
   private String lastName;
+  @JsonView(Views.Public.class)
   private String firstName;
+  @JsonView(Views.Public.class)
   private String callNumber;
+  @JsonView(Views.Public.class)
   private String reasonForConnRefusal;
+  @JsonView(Views.Public.class)
   private String state;
-  private boolean isAdmin;
-  private int countObjectNotCollected;
-  private int countObjectGiven;
-  private int countObjectGot = 0;
+  @JsonView(Views.Public.class)
+  private Boolean isAdmin;
+  @JsonView(Views.Public.class)
+  private Integer countObjectNotCollected;
+  @JsonView(Views.Public.class)
+  private Integer countObjectGiven;
+  @JsonView(Views.Public.class)
+  private Integer countObjectGot = 0;
+  @JsonView(Views.Public.class)
+  private AddressDTO address;
 
   /**
    * Empty constructor.
@@ -32,13 +55,20 @@ public class MemberImpl implements MemberDTO, Member {
     return checkpw(password, this.password);
   }
 
+  public String hashPassword(String password) {
+    return hashpw(password, gensalt());
+  }
+
   @Override
-  public int getIdMember() {
+  public Integer getIdMember() {
     return idMember;
   }
 
   @Override
-  public void setIdMember(int idMember) {
+  public void setIdMember(Integer idMember) {
+    if (idMember <= 0) {
+      throw new IllegalArgumentException();
+    }
     this.idMember = idMember;
   }
 
@@ -59,6 +89,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setUsername(String username) {
+    if (username == null) {
+      throw new IllegalArgumentException();
+    }
     this.username = username;
   }
 
@@ -69,6 +102,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setLastName(String lastName) {
+    if (lastName == null) {
+      throw new IllegalArgumentException();
+    }
     this.lastName = lastName;
   }
 
@@ -79,6 +115,9 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setFirstName(String firstName) {
+    if (firstName == null) {
+      throw new IllegalArgumentException();
+    }
     this.firstName = firstName;
   }
 
@@ -89,7 +128,11 @@ public class MemberImpl implements MemberDTO, Member {
 
   @Override
   public void setCallNumber(String callNumber) {
-    this.callNumber = callNumber;
+    if (callNumber != null && callNumber.isBlank()) {
+      this.callNumber = "null";
+    } else {
+      this.callNumber = callNumber;
+    }
   }
 
   @Override
@@ -113,43 +156,51 @@ public class MemberImpl implements MemberDTO, Member {
   }
 
   @Override
-  public boolean isAdmin() {
+  public Boolean isAdmin() {
     return isAdmin;
   }
 
   @Override
-  public void setAdmin(boolean admin) {
+  public void setAdmin(Boolean admin) {
     isAdmin = admin;
   }
 
   @Override
-  public int getCountObjectNotCollected() {
+  public Integer getCountObjectNotCollected() {
     return countObjectNotCollected;
   }
 
   @Override
-  public void setCountObjectNotCollected(int countObjectNotCollected) {
+  public void setCountObjectNotCollected(Integer countObjectNotCollected) {
     this.countObjectNotCollected = countObjectNotCollected;
   }
 
   @Override
-  public int getCountObjectGiven() {
+  public Integer getCountObjectGiven() {
     return countObjectGiven;
   }
 
   @Override
-  public void setCountObjectGiven(int countObjectGiven) {
+  public void setCountObjectGiven(Integer countObjectGiven) {
     this.countObjectGiven = countObjectGiven;
   }
 
   @Override
-  public int getCountObjectGot() {
+  public Integer getCountObjectGot() {
     return countObjectGot;
   }
 
   @Override
-  public void setCountObjectGot(int countObjectGot) {
+  public void setCountObjectGot(Integer countObjectGot) {
     this.countObjectGot = countObjectGot;
+  }
+
+  public AddressDTO getAddress() {
+    return address;
+  }
+
+  public void setAddress(AddressDTO address) {
+    this.address = address;
   }
 
   @Override
@@ -169,4 +220,31 @@ public class MemberImpl implements MemberDTO, Member {
         + '}';
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof MemberImpl)) {
+      return false;
+    }
+    MemberImpl member = (MemberImpl) o;
+    return getIdMember().equals(member.getIdMember()) && getPassword().equals(member.getPassword())
+        && getUsername().equals(member.getUsername()) && getLastName().equals(member.getLastName())
+        && getFirstName().equals(member.getFirstName()) && getCallNumber().equals(
+        member.getCallNumber()) && getReasonForConnRefusal()
+        .equals(member.getReasonForConnRefusal())
+        && getState().equals(member.getState()) && isAdmin.equals(member.isAdmin)
+        && getCountObjectNotCollected().equals(member.getCountObjectNotCollected())
+        && getCountObjectGiven().equals(member.getCountObjectGiven()) && getCountObjectGot()
+        .equals(member.getCountObjectGot()) && getAddress().equals(member.getAddress());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getIdMember(), getPassword(), getUsername(), getLastName(), getFirstName(),
+        getCallNumber(), getReasonForConnRefusal(), getState(), isAdmin,
+        getCountObjectNotCollected(),
+        getCountObjectGiven(), getCountObjectGot(), getAddress());
+  }
 }

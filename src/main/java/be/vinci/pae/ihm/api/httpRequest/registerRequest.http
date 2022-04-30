@@ -1,0 +1,15 @@
+###
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+  "username":"TEST",
+  "password":"password",
+  "firstName": "masm",
+  "lastName": "edfede",
+  "street": "Rue de la trouille",
+  "buildingNumber": 8,
+  "unitNumber": 12,
+  "postcode":1235,
+  "city": "mashala Land"
+}

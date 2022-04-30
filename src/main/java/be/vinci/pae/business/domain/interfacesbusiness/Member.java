@@ -6,4 +6,5 @@ public interface Member extends MemberDTO {
 
   boolean checkPassword(String password);
 
+  String hashPassword(String password);
 }

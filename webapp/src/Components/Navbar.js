@@ -1,31 +1,59 @@
-/**
- * Render the Navbar which is styled by using Bootstrap
- * Each item in the Navbar is tightly coupled with the Router configuration :
- * - the URI associated to a page shall be given in the attribute "data-uri" of the Navbar
- * - the router will show the Page associated to this URI when the user click on a nav-link
- */
+import {getToken} from "../utils/utils";
+import {getMember} from "../utils/api/memberApi";
 
-const Navbar = () => {
+const Navbar = async () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
-  let navbar = `
+  if (window.location.pathname === "/login") {
+    //todo FIXBUG navbar displayed in login page
+    if (navbarWrapper.classList.contains("displayNone")) {
+      console.log("bonsoir")
+      window.location.reload();
+    }
+    navbarWrapper.classList.add("displayNone");
+  } else {
+    navbarWrapper.classList.remove("displayNone");
+  }
+  navbarWrapper.innerHTML = `
     <nav id="navbar">
-       <p id="navbarTitle">Donnamis</p>
-       <button id="OfferNavbarButton">Offrir un objet</button>
-       <button id="profileNavbarButton" data-uri="/login">
+<!--       <p id="navbarTitle">Donnamis</p>-->
+<!--       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en -->
+<!--            attentes/refusées</button>-->
+<!--       <button id="registerButton" data-uri="/register">s'inscrire</button>-->
+<!--       <button id="profileNavbarButton" data-uri="/login">-->
+<!--       <button id="logoutButton" data-uri="/logout">deconnexion</button>-->
+<!--       <button id="logoutButton" data-uri="/listItem">Voir tout les objets</button>-->
+<!--       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>-->
+<!--       <p id="userIdentifier"></p>-->
+       <p id="navbarTitle" data-uri="/">Donnamis</p>
+       <button id="profileNavbarButton" data-uri="/login"></button>
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
+      <!--todo à ajouter dans le menu fait pour l'admin-->
+       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en 
+            attendes/refusées</button>
+       <button id="registerButton" data-uri="/register">s'inscrire</button>
+       <button id="seeAllObjectButton" data-uri="/listItem">Voir tout les objets</button>
+       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
     </nav>
   `;
-
-  navbarWrapper.innerHTML = navbar;
-
-  let isConnected = window.localStorage.length !== 0;
-
+  let token = getToken();
+  let isConnected = token !== null;
   const profileButton = document.querySelector("#profileNavbarButton");
   if (!isConnected) {
     profileButton.innerText = "Connexion"
+    const logout = document.querySelector("#logoutButton");
+    logout.classList += " displayNone";
+    const seeAllObjectButton = document.querySelector("#seeAllObjectButton");
+    seeAllObjectButton.classList += " displayNone";
+    const newItemButton = document.querySelector("#newItemButton");
+    newItemButton.classList += " displayNone";
+    const seeListInscriptionsButton = document.querySelector(
+        "#seeListInscriptionsButton");
+    seeListInscriptionsButton.classList += " displayNone";
   } else {
     profileButton.innerText = "Connecté"
-    profileButton.setAttribute("data-uri", "/");
+    profileButton.setAttribute("data-uri", "/profile");
+    let member = await getMember(token);
+    profileButton.innerText = member.username;
   }
 
 };

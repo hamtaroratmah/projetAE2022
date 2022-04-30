@@ -1,13 +1,31 @@
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/Login";
 import Logout from "./Pages/Logout";
+import ListItemPage from "./Pages/ListItemPage";
+import NewItem from "./Pages/NewItemPage";
+import ListInscriptions from "./Pages/ListInscriptions";
+import register from "./Pages/register";
+import ProfilePage from "./Pages/ProfilePage";
+import ModifyOffer from "./Pages/ModifyOffer";
 
 // Configure your routes here
 const routes = {
   "/": HomePage,
+  "/register": register,
   "/login": LoginPage,
   "/logout": Logout,
+  "/listInscriptions": ListInscriptions,
+  "/listItem": ListItemPage,
+  "/newItem": NewItem,
+  "/profile": ProfilePage,
+  "/modifyOffer": ModifyOffer,
 };
+
+const unloggedRoutes = {
+  "/": HomePage,
+  "/register": register,
+  "/login": LoginPage,
+}
 
 /**
  * Deal with call and auto-render of Functional Components following click events
@@ -29,7 +47,7 @@ const Router = () => {
       window.history.pushState({}, uri, window.location.origin + uri);
       /* render the requested component
       NB : for the components that include JS, we want to assure that the JS included
-      is not runned when the JS file is charged by the browser
+      is not ran when the JS file is charged by the browser
       therefore, those components have to be either a function or a class*/
       const componentToRender = routes[uri];
       if (routes[uri]) {
@@ -41,7 +59,7 @@ const Router = () => {
   });
 
   /* Route the right component when the page is loaded / refreshed */
-  window.addEventListener("load", (e) => {
+  window.addEventListener("load", (/*e*/) => {
     const componentToRender = routes[window.location.pathname];
     if (!componentToRender) {
       throw Error(
