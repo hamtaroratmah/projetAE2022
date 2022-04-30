@@ -1,5 +1,5 @@
 import {getToken} from "../utils/utils";
-import {getItemUnordered, getOrderedItems} from "../utils/api/items";
+import {getItemUnordered, getOrderedItems} from "../utils/api/itemsApi";
 import {displayItems} from "../utils/displayModule/items";
 
 const receptionDiv = `
@@ -51,12 +51,11 @@ const HomePage = async () => {
     sortedDiv.style = "display: none;"
     items = await getItemUnordered()
   }
-  displayItems(items);
+  await displayItems(items, pageDiv);
 
   const typeSelect = document.querySelector("#selectItemType");
   const dateSelect = document.querySelector("#selectItemDate");
   const itemConditionSelect = document.querySelector("#selectItemCondition");
-
   typeSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(typeSelect.name, typeSelect.value);
     displayItems(items);

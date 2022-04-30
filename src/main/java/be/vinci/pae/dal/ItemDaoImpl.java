@@ -148,9 +148,6 @@ public class ItemDaoImpl implements ItemDao {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
       ps.executeQuery();
-      System.out.println(ps);
-
-
     } catch (SQLException e) {
       e.printStackTrace();
     }

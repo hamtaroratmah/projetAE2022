@@ -21,6 +21,12 @@ const routes = {
   "/modifyOffer": ModifyOffer,
 };
 
+const unloggedRoutes = {
+  "/": HomePage,
+  "/register": register,
+  "/login": LoginPage,
+}
+
 /**
  * Deal with call and auto-render of Functional Components following click events
  * on Navbar, Load / Refresh operations, Browser history operation (back or next) or redirections.

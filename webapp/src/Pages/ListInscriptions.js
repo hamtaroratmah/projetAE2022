@@ -1,5 +1,7 @@
-import {getListInscriptions} from "../utils/api/member";
+import {getListInscriptions} from "../utils/api/memberApi";
 import {displayInscriptions} from "../utils/displayModule/members";
+import {getToken} from "../utils/utils";
+import {Redirect} from "../Router";
 
 const listInscriptionsDiv = `
         <div id="listInscriptionsPage">
@@ -7,6 +9,11 @@ const listInscriptionsDiv = `
 `;
 
 const ListInscriptionsPage = async () => {
+
+  if (!getToken()) {
+    Redirect("/");
+    window.location.reload();
+  }
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = listInscriptionsDiv;

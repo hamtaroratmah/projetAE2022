@@ -1,10 +1,10 @@
-import {confirmInscription, denyInscription} from "../api/member";
+import {confirmInscription, denyInscription} from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
-    const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
-    for (let i = 0; i < inscriptions.length; i++) {
-        if (inscriptions[i].state === "pending") {
-            listInscriptionsPage.innerHTML += `
+  const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
+  for (let i = 0; i < inscriptions.length; i++) {
+    if (inscriptions[i].state === "pending") {
+      listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionPending">
           <div class="receptionConfirmForm">
           <form id="confirmForm">
@@ -35,8 +35,8 @@ function displayInscriptions(inscriptions) {
             </div>
         </div>
       `;
-        } else {
-            listInscriptionsPage.innerHTML += `
+    } else {
+      listInscriptionsPage.innerHTML += `
         <div id="inscriptionPending" class="receptionInscriptionDenied">
           <div class="receptionConfirmForm">
           <form id="confirmForm">
@@ -60,28 +60,29 @@ function displayInscriptions(inscriptions) {
           </div>
         </div>
         `;
-        }
     }
+  }
 
-    for (let i = 0; i < inscriptions.length; i++) {
+  for (let i = 0; i < inscriptions.length; i++) {
 
-        const isAdmin = document.getElementById("isAdmin"+i);
-        const buttonConfirm = document.getElementById("confirm"+i);
-        const buttonDeny = document.getElementById("deny"+i);
-        const reasonForRefusal = document.getElementById("reasonRefusal"+i).value;
-        console.log(reasonForRefusal)
-        // Confirm inscription
-        buttonConfirm.addEventListener("click",async (e) => {
-            e.preventDefault();
-            await confirmInscription(inscriptions[i].username,isAdmin.checked);
-        })
+    const isAdmin = document.getElementById("isAdmin" + i);
+    const buttonConfirm = document.getElementById("confirm" + i);
+    const buttonDeny = document.getElementById("deny" + i);
+    const reasonForRefusal = document.getElementById("reasonRefusal" + i).value;
+    console.log(reasonForRefusal)
+    // Confirm inscription
+    buttonConfirm.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await confirmInscription(inscriptions[i].username, isAdmin.checked);
+    })
 
-        // Deny inscription
-        buttonDeny.addEventListener("click",async (e) => {
-            e.preventDefault();
-            await denyInscription(inscriptions[i].username,reasonForRefusal);
-        })
-    }
+    // Deny inscription
+    buttonDeny.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await denyInscription(inscriptions[i].username, reasonForRefusal);
+    })
+  }
+
 }
 
 export {displayInscriptions};

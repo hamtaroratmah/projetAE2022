@@ -133,7 +133,7 @@ public class MemberDaoImpl implements MemberDao {
     try {
       queryMember = services.getPreparedStatement("INSERT INTO pae.members"
           + "(password, username, last_name, first_name, address, call_number, "
-          + " reason_for_conn_refusal, state) " + "VALUES (?,?,?,?,?,?,?,pending);"
+          + " state) " + "VALUES (?,?,?,?,?,?,'pending');"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -142,8 +142,6 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(4, member.getFirstName());
       queryMember.setInt(5, addressDao.insertAddress(address));
       queryMember.setString(6, member.getCallNumber());
-      queryMember.setString(7, member.getReasonForConnRefusal());
-      queryMember.setString(8, member.getState());
       queryMember.executeUpdate();
 
       return true;

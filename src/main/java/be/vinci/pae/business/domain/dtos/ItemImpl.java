@@ -90,9 +90,6 @@ public class ItemImpl implements ItemDTO {
 
   @Override
   public void setAvailabilities(String availabilities) {
-    if (availabilities == null || availabilities.isBlank()) {
-      throw new IllegalArgumentException();
-    }
     this.availabilities = availabilities;
   }
 

@@ -281,6 +281,10 @@ FROm pae.members m,
 WHERE m.id_member = 10
   AND a.id_address = m.address;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ratingObject
 SELECT *
 FROM pae.members;
 UPDATE pae.members
@@ -303,6 +307,7 @@ SET id_type=4,
     availabilities= 'uniquement ajd'
 WHERE id_item = 1
 RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+<<<<<<< HEAD
 
 
 SELECT id_member,
@@ -322,3 +327,45 @@ FROM pae.members m,
      pae.addresses a
 WHERE id_member = 8
   AND a.id_address = m.address;
+=======
+
+
+SELECT id_member,
+       password,
+       username,
+       last_name,
+       first_name,
+       call_number,
+       isadmin,
+       reason_for_conn_refusal,
+       state,
+       count_object_not_collected,
+       count_object_given,
+       count_object_got,
+       address
+FROM pae.members
+WHERE id_member = 8;
+
+SELECT it.id_item,
+       it.id_type,
+       it.description,
+       it.availabilities,
+       it.item_condition,
+       it.photo,
+       it.rating,
+       it.id_offering_member,
+       ty.type,
+       of.id_offer
+FROM pae.items it,
+     pae.types ty,
+     pae.offers of
+WHERE it.id_type = ty.id_type
+  AND of.id_item = it.id_item
+ORDER BY of.date_offer DESC;
+
+INSERT INTO pae.members(password, username, last_name, first_name, address, call_number, state)
+VALUES ('$2a$10$aNv421iUMyYC/24Z5xk.YOiXQCc9QCGxzRlwJ02Cw73Y34Mj87W92', 'nouveaupseudo', 'nom',
+        'prenom', 12, NULL, pending)
+
+
+>>>>>>> ratingObject
