@@ -8,9 +8,7 @@ import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.exceptions.BadRequestException;
 import be.vinci.pae.exceptions.LoginException;
-import be.vinci.pae.utils.Log;
 import jakarta.inject.Inject;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MemberUCCImpl implements MemberUCC {
@@ -93,13 +91,6 @@ public class MemberUCCImpl implements MemberUCC {
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
-      Log log = null;
-      try {
-        log = new Log("log.txt");
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
-      log.logger.warning(e.getMessage());
       dalServices.rollbackTransaction();
       throw e;
     }
