@@ -1,8 +1,8 @@
 import {Redirect} from "../Router";
-import Navbar from "../Components/Navbar";
 
 const registerDiv = `
         <div id="registerPage">
+        <p id="pendingMessage"></p>
             <div id="registerContainer">
                 <form id="registerForm" class="loginRegisterContainer">
                     <h1 class="registerText">Donnamis</h1>
@@ -104,7 +104,6 @@ async function register(e) {
         "Content-Type": "application/json"
       }
     };
-    console.log(request);
     const response = await fetch("/api/auths/register", request);
 
     const token = await response.json();
@@ -115,9 +114,9 @@ async function register(e) {
     } else {
       window.sessionStorage.setItem("user", JSON.stringify(token));
     }
-
-    await Navbar();
-    Redirect("/");
+    let message = document.querySelector("#pendingMessage");
+    message.innerHTML = `L'inscription s'est bien passée, 
+    attendez qu'un administrateur approuve votre inscription`;
   } catch (e) {
     console.error("RegisterPage::error ", e);
   }

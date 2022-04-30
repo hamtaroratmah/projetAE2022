@@ -61,6 +61,7 @@ public class ItemDaoImpl implements ItemDao {
       if (isCondition) {
         query.setString(1, order);
       }
+      System.out.println(query);
       list = getItemFromDataBase(query);
     } catch (SQLException e) {
       e.printStackTrace();

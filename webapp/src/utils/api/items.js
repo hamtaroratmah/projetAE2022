@@ -4,7 +4,8 @@ import Navbar from "../../Components/Navbar";
 import {Redirect} from "../../Router";
 
 const error = document.querySelector("#errorText");
-let idOffer=-1;
+let idOffer = -1;
+
 async function getItemUnordered() {
   let request = {
     method: "GET",
@@ -26,8 +27,6 @@ async function getItemUnordered() {
   );
   return items;
 }
-
-
 
 async function getOrderedItems(sortingParam, order) {
   let items = [];
@@ -85,7 +84,7 @@ async function modifyOfferFunction(e) {
       method: "POST",
       body: JSON.stringify(
           {
-            idOffer:idOffer,
+            idOffer: idOffer,
             type: type,
             photo: photo,
             description: description,
@@ -107,7 +106,6 @@ async function modifyOfferFunction(e) {
     } else {
       error.innerHTML = "";
 
-
     }
     await Navbar();
 
@@ -117,9 +115,6 @@ async function modifyOfferFunction(e) {
   }
 
 }
-
-
-
 
 async function createItem(e) {
   e.preventDefault();
@@ -174,94 +169,123 @@ async function createItem(e) {
   }
 }
 
-  async function modifyOffer(idOfferParam){
-    console.log("ok");
-    console.log(idOfferParam);
-    idOffer=idOfferParam;
+async function modifyOffer(idOfferParam) {
+  console.log("ok");
+  console.log(idOfferParam);
+  idOffer = idOfferParam;
 
-    Redirect("/modifyOffer");
-  }
-  async function cancelOffer(idItem) {
+  Redirect("/modifyOffer");
+}
 
+async function cancelOffer(idItem) {
 
-    const request = {
-      method: "POST",
-      body: JSON.stringify(
-          {
-            idItem: idItem
-          }
-      ),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    try {
-      const response = await fetch("/api/offers/cancel",request);
-      console.log(request);
-      console.log(response);
-      if (!response.ok) {
-        if (response.status === 403) {
-          "imposssible to cancel this offer"
-        } else {
+  const request = {
+    method: "POST",
+    body: JSON.stringify(
+        {
+          idItem: idItem
+        }
+    ),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const response = await fetch("/api/offers/cancel", request);
+    console.log(request);
+    console.log(response);
+    if (!response.ok) {
+      if (response.status === 403) {
+        "imposssible to cancel this offer"
+      } else {
         error.innerHTML = "error404";
 
       }
 
-      }
-      console.log("ok")
-      await Navbar();
-      window.location.reload();
-      //Redirect("/");
-    } catch (e) {
-      cosole.error("CreatePage::error ", e);
-
     }
+    console.log("ok")
+    await Navbar();
+    window.location.reload();
+    //Redirect("/");
+  } catch (e) {
+    console.error("CreatePage::error ", e);
 
   }
-export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
-  modifyOfferFunction, modifyOffer};
 
+}
 
-  async function likeItem(idItem,idMember){
+async function likeItem(idItem, idMember) {
 
-    console.log(idItem," + ", idMember);
-      const request = {
-        method: "POST",
-        body: JSON.stringify(
-            {
-              idItem: idItem,
-              idMember:idMember,
-            }
-        ),
-        headers: {
-          "Content-Type": "application/json"
+  console.log(idItem, " + ", idMember);
+  const request = {
+    method: "POST",
+    body: JSON.stringify(
+        {
+          idItem: idItem,
+          idMember: idMember,
         }
-      };
-      try {
-        const response = await fetch("/api/items/like",request);
-        console.log(request);
-        console.log(response);
-        if (!response.ok) {
-          if (response.status === 403) {
-            "imposssible to cancel this offer"
-          } else {
-            error.innerHTML = "errorrr";
-
-          }
-
-        }
-        console.log("ok")
-        await Navbar();
-        Redirect("/");
-      } catch (e) {
-        cosole.error("likeItem::error ", e);
+    ),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const response = await fetch("/api/items/like", request);
+    console.log(request);
+    console.log(response);
+    if (!response.ok) {
+      if (response.status === 403) {
+        "imposssible to cancel this offer"
+      } else {
+        error.innerHTML = "errorrr";
 
       }
 
     }
+    console.log("ok")
+    await Navbar();
+    Redirect("/");
+  } catch (e) {
+    console.error("likeItem::error ", e);
 
+  }
+}
 
+async function rateItem(idItem, idMember, stars, comment) {
+  const request = {
+    method: "POST",
+    body: JSON.stringify(
+        {
+          itemId: idItem,
+          idMember: idMember,
+          stars: stars,
+          comment: comment
+        }
+    ),
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  try {
+    const response = await fetch("/api/items/rate", request);
+    if (!response.ok) {
+      if (response.status === 403) {
+        "imposssible to rate this offer"
+      } else {
+        error.innerHTML = "errorrr";
 
+      }
 
+    }
+    await Navbar();
+    Redirect("/");
+  } catch (e) {
+    console.error("rateItem::error ", e);
 
-export {getItemUnordered, getOrderedItems, createItem,likeItem};
+  }
+}
+
+export {
+  getItemUnordered, getOrderedItems, createItem, cancelOffer,
+  modifyOfferFunction, modifyOffer, rateItem, likeItem
+};

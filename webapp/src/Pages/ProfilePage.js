@@ -1,5 +1,6 @@
 import {getMember, updateMember} from "../utils/api/member";
 import {getToken} from "../utils/utils";
+import {Redirect} from "../Router";
 
 let page = `
   <div id="profilePage">
@@ -8,6 +9,11 @@ let page = `
 `;
 
 const ProfilePage = async () => {
+
+  if (!getToken()) {
+    Redirect("/");
+    window.location.reload();
+  }
   const main = document.querySelector("#page");
   main.innerHTML = page;
   const profile = document.querySelector("#profilePage");

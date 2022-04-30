@@ -1,6 +1,7 @@
 import {getToken} from "../utils/utils";
 import {getItemUnordered, getOrderedItems} from "../utils/api/items";
 import {displayItems} from "../utils/displayModule/items";
+import {Redirect} from "../Router";
 
 const receptionDiv = `
   <button id="typeSortedButtonASC" class="sortedButton">Type ASC</button>
@@ -20,6 +21,11 @@ const receptionDiv = `
   </div>
 `
 const ListItemPage = async () => {
+
+  if (!getToken()) {
+    Redirect("/");
+    window.location.reload();
+  }
 
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion

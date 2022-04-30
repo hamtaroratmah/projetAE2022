@@ -1,4 +1,6 @@
 import {createItem} from "../utils/api/items";
+import {getToken} from "../utils/utils";
+import {Redirect} from "../Router";
 
 const createDiv = `
         <div id="newItemPage">
@@ -17,6 +19,11 @@ const createDiv = `
 `;
 
 function NewItem() {
+
+  if (!getToken()) {
+    Redirect("/");
+    window.location.reload();
+  }
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
