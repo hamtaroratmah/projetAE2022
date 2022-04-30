@@ -25,15 +25,14 @@ const Navbar = async () => {
 <!--       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>-->
 <!--       <p id="userIdentifier"></p>-->
        <p id="navbarTitle" data-uri="/">Donnamis</p>
-       <button id="OfferNavbarButton">Offrir un objet</button>
        <button id="profileNavbarButton" data-uri="/login"></button>
        <button id="logoutButton" data-uri="/logout">deconnexion</button>
       <!--todo à ajouter dans le menu fait pour l'admin-->
-<!--       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en -->
-<!--            attendes/refusées</button>-->
-<!--       <button id="registerButton" data-uri="/register">s'inscrire</button>-->
-<!--       <button id="logoutButton" data-uri="/listItem">Voir tout les objets</button>-->
-<!--       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>-->
+       <button id="seeListInscriptionsButton" data-uri="/listInscriptions"> Voir les inscriptions en 
+            attendes/refusées</button>
+       <button id="registerButton" data-uri="/register">s'inscrire</button>
+       <button id="seeAllObjectButton" data-uri="/listItem">Voir tout les objets</button>
+       <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
     </nav>
   `;
   let token = getToken();
@@ -43,6 +42,13 @@ const Navbar = async () => {
     profileButton.innerText = "Connexion"
     const logout = document.querySelector("#logoutButton");
     logout.classList += " displayNone";
+    const seeAllObjectButton = document.querySelector("#seeAllObjectButton");
+    seeAllObjectButton.classList += " displayNone";
+    const newItemButton = document.querySelector("#newItemButton");
+    newItemButton.classList += " displayNone";
+    const seeListInscriptionsButton = document.querySelector(
+        "#seeListInscriptionsButton");
+    seeListInscriptionsButton.classList += " displayNone";
   } else {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/profile");

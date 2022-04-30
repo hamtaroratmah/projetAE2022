@@ -16,7 +16,6 @@ const registerDiv = `
                      <input class="inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
                      <input class="inputForm fields" type="text" id="postcode" placeholder="code postal">
                      <input class="inputForm fields" type="text" id="city" placeholder="ville">
-                    <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="S'inscrire">
                 </form>
             </div>
@@ -105,15 +104,7 @@ async function register(e) {
       }
     };
     const response = await fetch("/api/auths/register", request);
-
-    const token = await response.json();
-
-    const rememberBox = document.getElementById("rememberCheckBox");
-    if (rememberBox.checked) {
-      window.localStorage.setItem("user", JSON.stringify(token));
-    } else {
-      window.sessionStorage.setItem("user", JSON.stringify(token));
-    }
+    
     let message = document.querySelector("#pendingMessage");
     message.innerHTML = `L'inscription s'est bien passée, 
     attendez qu'un administrateur approuve votre inscription`;
