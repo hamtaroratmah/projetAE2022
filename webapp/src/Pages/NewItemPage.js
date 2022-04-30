@@ -1,6 +1,6 @@
 import {createItem} from "../utils/api/itemsApi";
-import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";
+import {getToken} from "../utils/utils";
 
 const createDiv = `
         <div id="newItemPage">
