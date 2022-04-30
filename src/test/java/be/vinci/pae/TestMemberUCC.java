@@ -308,15 +308,16 @@ public class TestMemberUCC {
   @Test
   void testDenyRegistrationExistingUsername() {
     Member newMember = initNewMemberDenyRegistration(member.getUsername());
-    Mockito.when(memberDao.denyRegistration(member.getUsername())).thenReturn(newMember);
-    assertEquals(newMember, memberUCC.denyRegistration(member.getUsername()));
+    Mockito.when(memberDao.denyRegistration(member.getUsername(), "")).thenReturn(newMember);
+    assertEquals(newMember, memberUCC.denyRegistration(member.getUsername(), ""));
   }
 
   @DisplayName("test denyRegistration memberDao throws exception")
   @Test
   void testDenyRegistrationMemberDaoThrowsException() {
-    Mockito.when(memberDao.denyRegistration(member.getUsername())).thenThrow(FatalException.class);
-    assertThrows(FatalException.class, () -> memberUCC.denyRegistration(member.getUsername()));
+    Mockito.when(memberDao.denyRegistration(member.getUsername(), ""))
+        .thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.denyRegistration(member.getUsername(), ""));
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
