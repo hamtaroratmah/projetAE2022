@@ -160,7 +160,8 @@ public class OfferDaoImpl implements OfferDao {
 
     boolean cancelled = false;
     System.out.println("ok2");
-    String query = "UPDATE pae.items SET item_condition= 'cancelled' WHERE id_item=? RETURNING id_item ";
+    String query = "UPDATE pae.items SET item_condition= 'cancelled' WHERE id_item=? "
+        + "RETURNING id_item ";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);

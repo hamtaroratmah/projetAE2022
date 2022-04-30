@@ -24,11 +24,14 @@ public class RatingDaoImpl implements RatingDao {
   @Inject
   MemberDao memberDao;
 
-
+  /**
+   * Insert new rating in database.
+   */
   public RatingDTO rateAnItem(int itemId, int memberId, int stars, String comment) {
     System.out.println("ok");
 
-    String query = "INSERT INTO pae.ratings( rating, comment,id_recipient_member ) VALUES(?,?,?) RETURNING *;";
+    String query = "INSERT INTO pae.ratings( rating, comment,id_recipient_member ) VALUES(?,?,?) "
+        + "RETURNING *;";
 
     RatingDTO rating = null;
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
