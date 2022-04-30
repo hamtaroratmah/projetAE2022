@@ -24,7 +24,9 @@ public class RatingDaoImpl implements RatingDao {
   @Inject
   MemberDao memberDao;
 
-
+  /**
+   * Insert new rating in database.
+   */
   public RatingDTO rateAnItem(int itemId, int memberId, int stars, String comment) {
     String query = "INSERT INTO pae.ratings( rating, comment,id_recipient_member ) VALUES(?,?,?) "
         + "RETURNING *;";

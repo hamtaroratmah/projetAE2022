@@ -48,9 +48,6 @@ public class ItemResource {
       @DefaultValue("ASC")
       @QueryParam("order") String order) {
     return itemUcc.getItemSortedBy(sortingParam, order);
-//    return itemUcc.getItemSortedBy(sortingParam, order).stream()
-//        .filter(x -> !x.getItemCondition().equals("cancelled")).collect(
-//            Collectors.toList());
   }
 
   /**
@@ -63,8 +60,6 @@ public class ItemResource {
     List<ItemDTO> list = itemUcc.getItemSortedBy("date_offer", "DESC");
     if (list.size() >= 4) {
       return list.subList(0, 2);
-//      return list.stream().filter(x -> x.getItemCondition().equals("cancelled"))
-//          .collect(Collectors.toList()).subList(0, 2);
     }
     return list;
   }
@@ -126,6 +121,7 @@ public class ItemResource {
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = itemUcc.typeExisting(type.getType());
+    String description = json.get("description").asText();
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
@@ -133,7 +129,7 @@ public class ItemResource {
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
     item.setType(type);
-    item.setDescription(json.get("description").asText());
+    item.setDescription(description);
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("itemCondition").asText());
     item.setOfferingMember(offeringMember);
