@@ -81,6 +81,36 @@ async function getListInscriptions() {
   return inscriptions;
 }
 
+// get the list of inscriptions
+async function getListMembers() {
+  const request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  let members = [];
+
+  // fill inscriptions [] with inscriptions pending
+  await fetch("/api/members/listMembers", request)
+  .then(response => response.json())
+  .then((commits) => {
+    for (let i = 0; i < commits.length; i++) {
+      members.push(commits[i]);
+    }
+
+  })
+  .catch(() =>
+      error.innerHTML = "Une erreur est survenue"
+          + " durant la récupération des membres"
+  )
+
+
+
+  return members;
+}
+
 async function confirmInscription(username, isAdmin) {
   const request = {
     method: "PUT",
@@ -155,5 +185,6 @@ export {
   verifyToken,
   confirmInscription,
   denyInscription,
-  updateMember
+  updateMember,
+   getListMembers
 };

@@ -176,6 +176,18 @@ public class MemberResource {
   }
 
   /**
+   * get list of pending members.
+   *
+   * @return the list
+   */
+  @GET
+  @Path("listMembers")
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> listMembers() {
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listMembers());
+  }
+
+  /**
    * get the list of denied members.
    *
    * @return the list

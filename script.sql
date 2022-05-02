@@ -368,4 +368,4 @@ ORDER BY of.date_offer DESC;
 
     UPDATE pae.members SET precluded='true' WHERE id_member=2 RETURNING precluded;
 
-SELECT * FROM pae.members;
+SELECT * FROM pae.members WHERE state='valid';
