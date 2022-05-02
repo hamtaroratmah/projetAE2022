@@ -95,15 +95,22 @@ function openItemModal(item, j) {
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
           <p class="modalItemInfo"></p>
-          <h2>Evaluer un objet</h2>
-          <input id="ratingComment" type="text" placeholder="Commentaire">
-          <p>Entrer une note entre 1 et 5 compris</p>
-          <input id="ratingStars" type="text">
-          <button id="rateItem${j}">Soumettre évaluation</button>
+          <div class="" id="ratingDiv">
+            <h2>Evaluer un objet</h2>
+            <input id="ratingComment" type="text" placeholder="Commentaire">
+            <p>Entrer une note entre 1 et 5 compris</p>
+            <input id="ratingStars" type="text">
+            <button id="rateItem${j}">Soumettre évaluation</button>
+          </div>
+          
       </div>
     `
   const photoSrc = document.querySelector("#receptionImage" + j);
-  const rateButton = document.querySelector("#rateItem" + j)
+  const ratingDiv = document.querySelector("#ratingDiv");
+  const rateButton = document.querySelector("#rateItem" + j);
+  if (!getToken()) {
+    ratingDiv.className += " displayNone";
+  }
   rateButton.addEventListener("click", async () => {
     const member = await getMember(getToken());
     const idItem = item.idItem;
