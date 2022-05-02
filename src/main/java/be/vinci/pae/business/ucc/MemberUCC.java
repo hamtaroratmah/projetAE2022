@@ -33,4 +33,6 @@ public interface MemberUCC {
   MemberDTO register(MemberDTO member, AddressDTO address);
 
   Object getOneByUsername(String username);
+
+  boolean preclude(int idMember);
 }

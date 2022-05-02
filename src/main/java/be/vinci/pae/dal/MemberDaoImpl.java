@@ -201,14 +201,14 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * deny a registration.
    *
-   * @param username user ton deny
+   * @param username             user ton deny
    * @param reasonForConnRefusal reason of the refusal
    * @return returns the member DTO
    */
   public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
     MemberDTO member;
     String query = "UPDATE pae.members SET state='denied', reason_for_conn_refusal =?"
-            + "WHERE username=? RETURNING *";
+        + "WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, reasonForConnRefusal);
       ps.setString(2, username);
@@ -222,6 +222,29 @@ public class MemberDaoImpl implements MemberDao {
       throw new FatalException(e.getMessage());
     }
     return null;
+  }
+
+  /**
+   * deny a registration.
+   *
+   * @param idMember user to preclude
+   * @return returns the precluded champ
+   */
+  public boolean preclude(int idMember) {
+    String query = "UPDATE pae.members SET precluded='true'"
+        + "WHERE id_member=? RETURNING precluded";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idMember);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          boolean precluded = rs.getBoolean(1);
+          return precluded;
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return false;
   }
 
   /**

@@ -25,7 +25,8 @@ CREATE TABLE pae.members
     state                      VARCHAR(10),
     count_object_not_collected INTEGER DEFAULT (0),
     count_object_given         INTEGER DEFAULT (0),
-    count_object_got           INTEGER DEFAULT (0)
+    count_object_got           INTEGER DEFAULT (0),
+    precluded                   bool DEFAULT FALSE
 );
 
 CREATE TABLE pae.types
@@ -281,10 +282,7 @@ FROm pae.members m,
 WHERE m.id_member = 10
   AND a.id_address = m.address;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ratingObject
 SELECT *
 FROM pae.members;
 UPDATE pae.members
@@ -363,9 +361,11 @@ WHERE it.id_type = ty.id_type
   AND of.id_item = it.id_item
 ORDER BY of.date_offer DESC;
 
-INSERT INTO pae.members(password, username, last_name, first_name, address, call_number, state)
-VALUES ('$2a$10$aNv421iUMyYC/24Z5xk.YOiXQCc9QCGxzRlwJ02Cw73Y34Mj87W92', 'nouveaupseudo', 'nom',
-        'prenom', 12, NULL, pending)
+-- INSERT INTO pae.members(password, username, last_name, first_name, address, call_number, state)
+-- VALUES ('$2a$10$aNv421iUMyYC/24Z5xk.YOiXQCc9QCGxzRlwJ02Cw73Y34Mj87W92', 'nouveaupseudo', 'nom',
+--         'prenom', 12, NULL, pending)
 
 
->>>>>>> ratingObject
+    UPDATE pae.members SET precluded='true' WHERE id_member=2 RETURNING precluded;
+
+SELECT * FROM pae.members;
