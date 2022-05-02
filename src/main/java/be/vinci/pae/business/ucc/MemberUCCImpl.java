@@ -198,4 +198,18 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
+  @Override
+  public boolean unpreclude(int idMember) {
+    try {
+      dalServices.startTransaction();
+      boolean precluded = memberDao.unpreclude(idMember);
+      dalServices.commitTransaction();
+      return precluded;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+
+    }
+  }
+
 }

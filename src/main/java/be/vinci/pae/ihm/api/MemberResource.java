@@ -201,4 +201,19 @@ public class MemberResource {
     return memberUCC.preclude(idMember);
   }
 
+  /**
+   * get the list of denied members.
+   *
+   * @return the list
+   */
+  @POST
+  @Path("unpreclude")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean unpreclude(JsonNode json) {
+    int idMember = json.get("idMember").asInt();
+    return memberUCC.unpreclude(idMember);
+  }
+
+
 }

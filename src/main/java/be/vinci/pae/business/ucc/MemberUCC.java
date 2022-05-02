@@ -35,4 +35,6 @@ public interface MemberUCC {
   Object getOneByUsername(String username);
 
   boolean preclude(int idMember);
+
+  boolean unpreclude(int idMember);
 }

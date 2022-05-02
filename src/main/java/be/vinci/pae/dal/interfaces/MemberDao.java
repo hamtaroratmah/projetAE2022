@@ -34,4 +34,7 @@ public interface MemberDao {
   MemberDTO createMemberInstance(ResultSet resultSet) throws SQLException;
 
   boolean preclude(int idMember);
+
+  boolean unpreclude(int idMember);
+
 }
