@@ -228,6 +228,52 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   /**
+   * deny a registration.
+   *
+   * @param idMember user to preclude
+   * @return returns the precluded champ
+   */
+  public boolean preclude(int idMember) {
+    String query = "UPDATE pae.members SET precluded='true'"
+        + "WHERE id_member=? RETURNING precluded";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idMember);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          boolean precluded = rs.getBoolean(1);
+          return precluded;
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return false;
+  }
+
+  /**
+   * deny a registration.
+   *
+   * @param idMember user to preclude
+   * @return returns the precluded champ
+   */
+  public boolean unpreclude(int idMember) {
+    String query = "UPDATE pae.members SET precluded='false'"
+        + "WHERE id_member=? RETURNING precluded";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idMember);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          boolean precluded = rs.getBoolean(1);
+          return precluded;
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return true;
+  }
+
+  /**
    * create a member instance used in methods confirm and deny.
    *
    * @param resultSetMember to execute this query

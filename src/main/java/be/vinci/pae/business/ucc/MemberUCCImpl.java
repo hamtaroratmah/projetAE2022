@@ -119,7 +119,7 @@ public class MemberUCCImpl implements MemberUCC {
   public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
     try {
       dalServices.startTransaction();
-      MemberDTO member = memberDao.denyRegistration(username,reasonForConnRefusal);
+      MemberDTO member = memberDao.denyRegistration(username, reasonForConnRefusal);
       dalServices.commitTransaction();
       return member;
     } catch (Exception e) {
@@ -172,6 +172,20 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
+  public ArrayList<MemberDTO> listMembers() {
+    try {
+      dalServices.startTransaction();
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("valid");
+      dalServices.commitTransaction();
+      return list;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    }
+  }
+
+
+  @Override
   public ArrayList<MemberDTO> listDeniedUsers() {
     try {
       dalServices.startTransaction();
@@ -181,6 +195,34 @@ public class MemberUCCImpl implements MemberUCC {
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw e;
+    }
+  }
+
+  @Override
+  public boolean preclude(int idMember) {
+    try {
+      dalServices.startTransaction();
+      boolean precluded = memberDao.preclude(idMember);
+      dalServices.commitTransaction();
+      return precluded;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+
+    }
+  }
+
+  @Override
+  public boolean unpreclude(int idMember) {
+    try {
+      dalServices.startTransaction();
+      boolean precluded = memberDao.unpreclude(idMember);
+      dalServices.commitTransaction();
+      return precluded;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+
     }
   }
 

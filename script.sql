@@ -25,7 +25,8 @@ CREATE TABLE pae.members
     state                      VARCHAR(10),
     count_object_not_collected INTEGER DEFAULT (0),
     count_object_given         INTEGER DEFAULT (0),
-    count_object_got           INTEGER DEFAULT (0)
+    count_object_got           INTEGER DEFAULT (0),
+    precluded                  bool    DEFAULT FALSE
 );
 
 CREATE TABLE pae.types
@@ -282,22 +283,9 @@ INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (11, 3, '16-05-2022');
 values (11, 1, '16-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (1, 9, 'Lundi de 16h à 17h', 'Pâquerettes dans pots rustiques', 'assigned');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('21-04-2022', 12);
-INSERT INTO pae.interests (id_item, id_member, date_delivery)
-values (12, 3, '16-05-2022');
-
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 9, 'Lundi de 16h à 17h', 'Pots en grès pour petites plantes', 'published');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('21-04-2022', 13);
-
+---------------------------------------------------------------------------------------------------
+-------------------------------Insert demo finish here
+---------------------------------------------------------------------------------------------------
 -- INSERT FAKE MEMBERS
 --
 -- INSERT INTO pae.addresses

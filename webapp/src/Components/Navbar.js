@@ -33,6 +33,7 @@ const Navbar = async () => {
        <button id="registerButton" data-uri="/register">s'inscrire</button>
        <button id="seeAllObjectButton" data-uri="/listItem">Voir tout les objets</button>
        <button id="newItemButton" data-uri="/newItem">creer un nouvel objet</button>
+       <button id="listMembers" data-uri="/listMembers"> Lister tous les membres </button>
     </nav>
   `;
   let token = getToken();
@@ -49,6 +50,8 @@ const Navbar = async () => {
     const seeListInscriptionsButton = document.querySelector(
         "#seeListInscriptionsButton");
     seeListInscriptionsButton.classList += " displayNone";
+    const listMembersButton= document.querySelector("#listMembers");
+    listMembersButton.classList+=" displayNone";
   } else {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/profile");

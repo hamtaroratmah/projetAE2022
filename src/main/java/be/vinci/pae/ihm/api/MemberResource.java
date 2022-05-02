@@ -160,7 +160,7 @@ public class MemberResource {
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username,reasonForConnRefusal));
+    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username, reasonForConnRefusal));
   }
 
   /**
@@ -176,6 +176,18 @@ public class MemberResource {
   }
 
   /**
+   * get list of pending members.
+   *
+   * @return the list
+   */
+  @GET
+  @Path("listMembers")
+  @Produces(MediaType.APPLICATION_JSON)
+  public ArrayList<MemberDTO> listMembers() {
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listMembers());
+  }
+
+  /**
    * get the list of denied members.
    *
    * @return the list
@@ -186,4 +198,34 @@ public class MemberResource {
   public ArrayList<MemberDTO> listDeniedUsers() {
     return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listDeniedUsers());
   }
+
+  /**
+   * get the list of denied members.
+   *
+   * @return the list
+   */
+  @POST
+  @Path("preclude")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean preclude(JsonNode json) {
+    int idMember = json.get("idMember").asInt();
+    return memberUCC.preclude(idMember);
+  }
+
+  /**
+   * get the list of denied members.
+   *
+   * @return the list
+   */
+  @POST
+  @Path("unpreclude")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean unpreclude(JsonNode json) {
+    int idMember = json.get("idMember").asInt();
+    return memberUCC.unpreclude(idMember);
+  }
+
+
 }

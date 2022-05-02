@@ -68,7 +68,7 @@ function displayInscriptions(inscriptions) {
     const isAdmin = document.getElementById("isAdmin" + i);
     const buttonConfirm = document.getElementById("confirm" + i);
     const buttonDeny = document.getElementById("deny" + i);
-    const reasonForRefusal = document.getElementById("reasonRefusal" + i).value;
+    const reasonForRefusal = document.getElementById("reasonRefusal" + i);
     console.log(reasonForRefusal)
     // Confirm inscription
     buttonConfirm.addEventListener("click", async (e) => {
@@ -85,4 +85,52 @@ function displayInscriptions(inscriptions) {
 
 }
 
-export {displayInscriptions};
+
+
+function displayMembers(members) {
+  const listMembersPage = document.querySelector("#listMembersPage");
+  for (let i = 0; i < members.length; i++) {
+    if (members[i].state === "valid") {
+      listMembersPage.innerHTML += `
+        <div id="inscriptionValid" class="receptionInscriptionPending">
+          <div class="receptionValidForm">
+          <form id="validForm">
+            <div class="receptionValidGrandChild">
+              <p>
+                ${members[i].username}
+                ${members[i].lastName} 
+                ${members[i].firstName}
+              </p>
+            </div>
+            <div class="receptionValidGrandChild">
+                state : ${members[i].state}
+            </div>
+             
+            <div class="receptionValidGrandChild">
+                <input id ="preclude${i}" type="submit" value="Empecher le membre">
+            </div>
+          </form>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  for (let i = 0; i < members.length; i++) {
+
+    const isAdmin = document.getElementById("isAdmin" + i);
+    const buttonPreclude = document.getElementById("preclude" + i);
+    const buttonDeny = document.getElementById("deny" + i);
+    const reasonForRefusal = document.getElementById("reasonRefusal" + i);
+    buttonPreclude.addEventListener("click" ,function(){
+      console.log("clicked");
+    });
+
+
+
+  }
+
+}
+
+
+export {displayInscriptions,displayMembers};
