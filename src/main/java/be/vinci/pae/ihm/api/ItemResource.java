@@ -20,15 +20,12 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 @Path("/items")
 public class ItemResource {
@@ -174,13 +171,19 @@ public class ItemResource {
     return itemUcc.cancelAnOffer(itemId);
   }
 
+  /**
+   * cancel an offer.
+   *
+   * @param file file as InputStream
+   * @param fileDisposition informations of the file
+   * @return build
+   */
   @POST
   @Path("/upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   public Response uploadFile(@FormDataParam("file") InputStream file,
                              @FormDataParam("file") FormDataContentDisposition fileDisposition) {
     String fileName = UUID.randomUUID().toString();
-   // Files.copy(file, Paths.get(fileName));
     return Response.ok().build();
   }
 
