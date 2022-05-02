@@ -60,7 +60,26 @@ export async function preclude(idMember){
 
 
 }
+export async function unpreclude(idMember){
+  const request={
+    method:"POST",
+    body: JSON.stringify(
+        {
+          idMember: idMember
 
+        }
+    ),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  console.log(request);
+  await fetch("/api/members/unpreclude", request)
+
+
+
+
+}
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {
