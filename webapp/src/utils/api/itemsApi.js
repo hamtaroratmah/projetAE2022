@@ -213,6 +213,35 @@ async function cancelOffer(idItem) {
     console.error("CreatePage::error ", e);
 
   }
+<<<<<<< HEAD:webapp/src/utils/api/items.js
+
+
+  async function likeItem(idItem,idMember){
+
+    console.log(idItem," + ", idMember);
+      const request = {
+        method: "POST",
+        body: JSON.stringify(
+            {
+              idItem: idItem,
+              idMember:idMember,
+            }
+        ),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      try {
+        const response = await fetch("/api/items/like",request);
+        console.log(request);
+        console.log(response);
+        if (!response.ok) {
+          if (response.status === 403) {
+            "imposssible to cancel this offer"
+          } else {
+            error.innerHTML = "errorrr";
+=======
+>>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
 
 }
 
@@ -250,6 +279,10 @@ async function likeItem(idItem, idMember) {
   } catch (e) {
     console.error("likeItem::error ", e);
 
+<<<<<<< HEAD:webapp/src/utils/api/items.js
+export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
+  modifyOfferFunction, modifyOffer, likeItem};
+=======
   }
 }
 
@@ -275,6 +308,7 @@ async function rateItem(idItem, idMember, stars, comment) {
         "imposssible to rate this offer"
       } else {
         error.innerHTML = "errorrr";
+>>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
 
       }
 
@@ -287,7 +321,10 @@ async function rateItem(idItem, idMember, stars, comment) {
   }
 }
 
+<<<<<<< HEAD:webapp/src/utils/api/items.js
+=======
 export {
   getItemUnordered, getOrderedItems, createItem, cancelOffer,
   modifyOfferFunction, modifyOffer, rateItem, likeItem
 };
+>>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
