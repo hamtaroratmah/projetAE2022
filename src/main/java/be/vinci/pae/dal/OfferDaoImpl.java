@@ -86,7 +86,6 @@ public class OfferDaoImpl implements OfferDao {
 
   @Override
   public ArrayList<MemberDTO> interests(int idItem, int idMember) {
-    System.out.println("ok");
     ArrayList<Integer> listId = new ArrayList<>();
     String query = "SELECT * FROM pae.interests WHERE id_item=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
@@ -140,7 +139,6 @@ public class OfferDaoImpl implements OfferDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    System.out.println(id);
     return id;
   }
 
@@ -159,13 +157,12 @@ public class OfferDaoImpl implements OfferDao {
   public boolean cancel(int idItem) {
 
     boolean cancelled = false;
-    System.out.println("ok2");
-    String query = "UPDATE pae.items SET item_condition= 'cancelled' WHERE id_item=? RETURNING id_item ";
+    String query = "UPDATE pae.items SET item_condition= 'cancelled' WHERE id_item=? "
+        + "RETURNING id_item ";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       cancelled = true;
-      System.out.println(ps);
       ps.executeQuery();
     } catch (SQLException e) {
       e.printStackTrace();

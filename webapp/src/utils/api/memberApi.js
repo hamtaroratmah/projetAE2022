@@ -94,16 +94,16 @@ async function confirmInscription(username, isAdmin) {
       "Content-Type": "application/json"
     }
   };
-  console.log(request)
   await fetch("/api/members/confirm", request)
 }
 
-async function denyInscription(username) {
+async function denyInscription(username,reasonForConnRefusal) {
   const request = {
     method: "PUT",
     body: JSON.stringify(
         {
           username: username,
+          reasonForConnRefusal: reasonForConnRefusal
         }
     ),
     headers: {
@@ -113,7 +113,7 @@ async function denyInscription(username) {
   await fetch("/api/members/deny", request)
 }
 
-async function updateMember(member) {
+async function updateMember(member, confirmPassword) {
   const request = {
     method: "PUT",
     headers: {
@@ -134,7 +134,8 @@ async function updateMember(member) {
           buildingNumber: member.address.buildingNumber,
           postcode: member.address.postcode,
           city: member.address.city,
-          unitNumber: member.address.unitNumber
+          unitNumber: member.address.unitNumber,
+          confirmPassword: confirmPassword
         }
     )
   };

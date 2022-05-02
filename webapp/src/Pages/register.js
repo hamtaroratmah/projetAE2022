@@ -1,14 +1,14 @@
 import {Redirect} from "../Router";
-import Navbar from "../Components/Navbar";
 
 const registerDiv = `
         <div id="registerPage">
+        <p id="pendingMessage"></p>
             <div id="registerContainer">
                 <form id="registerForm" class="loginRegisterContainer">
                     <h1 class="registerText">Donnamis</h1>
                     <div id="errorRegister"></div>
                     <input class="inputForm fields" type="text" id="username" placeholder="Pseudo">
-                    <input class="inputForm fields" type="text" id="password" placeholder="Mot de passe">  
+                    <input class="inputForm fields" type="password" id="password" placeholder="Mot de passe">  
                     <input class="inputForm fields" type="text" id="lastName" placeholder="Nom">
                     <input class="inputForm fields" type="text" id="firstName" placeholder="Prénom">
                     <input class="inputForm fields" type="text" id="street" placeholder="Rue">
@@ -16,7 +16,6 @@ const registerDiv = `
                      <input class="inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
                      <input class="inputForm fields" type="text" id="postcode" placeholder="code postal">
                      <input class="inputForm fields" type="text" id="city" placeholder="ville">
-                    <label><input type="checkbox" name="rememberMe" id="rememberCheckBox" class="inputForm">Se souvenir de moi</label>
                     <input class="inputForm submitButton" type="submit" value="S'inscrire">
                 </form>
             </div>
@@ -104,20 +103,11 @@ async function register(e) {
         "Content-Type": "application/json"
       }
     };
-    console.log(request);
     const response = await fetch("/api/auths/register", request);
-
-    const token = await response.json();
-
-    const rememberBox = document.getElementById("rememberCheckBox");
-    if (rememberBox.checked) {
-      window.localStorage.setItem("user", JSON.stringify(token));
-    } else {
-      window.sessionStorage.setItem("user", JSON.stringify(token));
-    }
-
-    await Navbar();
-    Redirect("/");
+    
+    let message = document.querySelector("#pendingMessage");
+    message.innerHTML = `L'inscription s'est bien passée, 
+    attendez qu'un administrateur approuve votre inscription`;
   } catch (e) {
     console.error("RegisterPage::error ", e);
   }

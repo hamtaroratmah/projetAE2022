@@ -128,12 +128,12 @@ public class MemberDaoImpl implements MemberDao {
    *
    * @param member to insert
    */
-  public void register(MemberDTO member, AddressDTO address) {
+  public boolean register(MemberDTO member, AddressDTO address) {
     PreparedStatement queryMember;
     try {
       queryMember = services.getPreparedStatement("INSERT INTO pae.members"
           + "(password, username, last_name, first_name, address, call_number, "
-          + " reason_for_conn_refusal, state) " + "VALUES (?,?,?,?,?,?,?,pending);"
+          + " state) " + "VALUES (?,?,?,?,?,?,'pending');"
 
       );
       queryMember.setString(1, member.getPassword());
@@ -142,9 +142,9 @@ public class MemberDaoImpl implements MemberDao {
       queryMember.setString(4, member.getFirstName());
       queryMember.setInt(5, addressDao.insertAddress(address));
       queryMember.setString(6, member.getCallNumber());
-      queryMember.setString(7, member.getReasonForConnRefusal());
-      queryMember.setString(8, member.getState());
       queryMember.executeUpdate();
+
+      return true;
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
@@ -185,6 +185,7 @@ public class MemberDaoImpl implements MemberDao {
 
     String query =
         "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
+
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
@@ -203,14 +204,17 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * deny a registration.
    *
-   * @param username user ton deny
+   * @param username             user ton deny
+   * @param reasonForConnRefusal reason of the refusal
    * @return returns the member DTO
    */
-  public MemberDTO denyRegistration(String username) {
+  public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
     MemberDTO member;
-    String query = "UPDATE pae.members SET state='denied' WHERE username=? RETURNING *";
+    String query = "UPDATE pae.members SET state='denied', reason_for_conn_refusal =?"
+        + "WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, username);
+      ps.setString(1, reasonForConnRefusal);
+      ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           member = createMemberInstance(rs);

@@ -1,21 +1,20 @@
-body {
-  background-color: #B5CED7;
-  margin: 0;
-  padding: 0;
-}
-
-#errorText {
-  background-color: white;
-  color: red;
-  font-size: 3em;
+.loginText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(20px, 20vh, 100px);
+  font-size: 4rem;
 }
 
 #loginContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #E5BE10;
   display: flex;
-  height: 50vh;
-  width: 20vw;
-  margin: 20vh auto;
+  height: clamp(300px, 40vh, 600px);
+  width: clamp(200px, 20vw, 500px);
   border-radius: 20px;
 }
 
@@ -27,70 +26,97 @@ body {
   border-radius: 10px;
   border: none;
 }
-
 .fields:focus {
   outline: none;
 }
 
 #loginText {
-  margin: 5% 25%;
-  font-size: 2.5vw;
-  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #labelRememberCheckBox {
-  margin: 0 30%;
-  width: 40%;
+  display: block;
+  margin: 0 auto;
+  margin: 10px auto;
+  width: fit-content;
 }
 
 #loginSubmitButton {
+  display: block;
+  margin: 0 auto;
   border-radius: 40px;
   border: none;
   width: 50%;
   height: 40px;
-  margin: auto 25%;
 }
 
-/*# sourceMappingURL=main.css.map */
-img {
+#navbar {
+  display: flex;
+  position: sticky;
+  width: 100%;
+  background-color: #E5BE10;
+  height: clamp(50px, 10vh, 100px);
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2%;
+  padding: 0 5%;
+}
+#navbar button {
+  background-color: #9381FF;
+  border: none;
+  border-radius: 20px;
+  height: 30px;
   width: 100px;
-  height: 100px;
+  margin: 0 5px;
+  text-overflow: ellipsis;
+}
+
+#navbarTitle {
+  flex: 1;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#receptionPage {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-template-rows: repeat(auto-fill, 400px);
+  grid-gap: 3vw;
+  justify-content: center;
 }
 
 .receptionItems {
-  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #E5BE10;
 }
 
-.sortedButton {
-  margin: 50px auto;
+.receptionImage {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
-.receptionInscriptionParent {
-  border: 1px solid black;
-  width: 1200px;
-  height: 100px;
-  margin: auto;
-  text-align: center;
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.receptionInscriptionChild1 {
-  width: 1000px;
-  padding: 10px;
-  vertical-align: middle;
-  display: inline-block;
+body {
+  background-color: #B5CED7;
+  height: 100%;
 }
-.receptionInscriptionChild2 {
-  width: 100px;
-  padding: 10px;
-  vertical-align: middle;
-  display: inline-block;
-}
-.receptionInscriptionGrandChild {
+
+img {
   width: 200px;
-  padding: 10px;
-  vertical-align: middle;
-  display: inline-block;
+  height: 200px;
 }
-.listInscriptionsButton {
-  margin: 50px auto;
+
+.displayNone {
+  display: none;
 }
+
+/*# sourceMappingURL=main.css.map */

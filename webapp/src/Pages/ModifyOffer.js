@@ -1,4 +1,6 @@
-import {modifyOfferFunction} from "../utils/api/items";
+import {modifyOfferFunction} from "../utils/api/itemsApi";
+import {getToken} from "../utils/utils";
+import {Redirect} from "../Router";
 
 const createDiv = `
         <div id="modifyOfferPage">
@@ -17,6 +19,11 @@ const createDiv = `
 `;
 
 function ModifyOffer() {
+
+  if (!getToken()) {
+    Redirect("/");
+    window.location.reload();
+  }
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;

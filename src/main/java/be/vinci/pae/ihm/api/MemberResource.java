@@ -56,10 +56,11 @@ public class MemberResource {
   public MemberDTO updateMember(@Context ContainerRequestContext requestContext,
       JsonNode json) {
     MemberDTO oldMember = (MemberDTO) requestContext.getProperty("user");
+    String confirmPassword = json.get("confirmPassword").asText();
     if (!checkNullOrBlank(json)) {
       throw new BadRequestException("Il manque certains champs");
     }
-    return memberUCC.updateMember(oldMember, createMember(json));
+    return memberUCC.updateMember(oldMember, createMember(json), confirmPassword);
   }
 
   private MemberDTO createMember(JsonNode json) {
@@ -84,7 +85,6 @@ public class MemberResource {
 
   private boolean checkNullOrBlank(JsonNode json) {
     return json.hasNonNull("idMember")
-        && json.hasNonNull("password")
         && json.hasNonNull("username")
         && json.hasNonNull("lastName")
         && json.hasNonNull("firstName")
@@ -136,7 +136,6 @@ public class MemberResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO confirmRegistration(JsonNode json) {
-    System.out.println("CONFIRMATION");
     String username = json.get("username").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
@@ -157,10 +156,11 @@ public class MemberResource {
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO denyRegistration(JsonNode json) {
     String username = json.get("username").asText().toLowerCase();
+    String reasonForConnRefusal = json.get("reasonForConnRefusal").asText().toLowerCase();
     if (username.isBlank()) {
       throw new WebApplicationException("Veuillez entrer un nom d'utilisateur");
     }
-    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username));
+    return jsonDB.filterPublicJsonView(memberUCC.denyRegistration(username,reasonForConnRefusal));
   }
 
   /**

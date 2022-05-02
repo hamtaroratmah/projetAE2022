@@ -61,10 +61,12 @@ public class OfferRessource {
     int idType = itemUcc.typeExisting(type.getType());
     //si le type n existe pas , le creer
     if (idType == -1) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f
       idType = itemUcc.createType(json.get("type").asText());
     }
-    System.out.print("ok2");
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
     item.setType(type);
@@ -109,7 +111,6 @@ public class OfferRessource {
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
     int idMember = json.get("idMember").asInt();
-    System.out.println(idItem + "+ " + idMember);
     if (idItem < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
@@ -172,7 +173,6 @@ public class OfferRessource {
     if (idOffer < 1 || idMember < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    System.out.println("ok1");
     return offerUCC.offer(idOffer, idMember);
   }
 
