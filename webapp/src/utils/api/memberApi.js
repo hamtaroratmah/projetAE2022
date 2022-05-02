@@ -40,6 +40,27 @@ async function getMember(token) {
   return await response.json();
 }
 
+export async function preclude(idMember){
+  const request={
+    method:"POST",
+    body: JSON.stringify(
+        {
+          idMember: idMember
+
+        }
+    ),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  console.log(request);
+  await fetch("/api/members/preclude", request)
+
+
+
+
+}
+
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {

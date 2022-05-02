@@ -1,4 +1,4 @@
-import {confirmInscription, denyInscription} from "../api/memberApi";
+import {confirmInscription, denyInscription, preclude} from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -122,8 +122,10 @@ function displayMembers(members) {
     const buttonPreclude = document.getElementById("preclude" + i);
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-    buttonPreclude.addEventListener("click" ,function(){
-      console.log("clicked");
+    buttonPreclude.addEventListener("click" ,async (e) => {
+      e.preventDefault();
+      console.log(members[i].idMember);
+      await preclude(members[i].idMember);
     });
 
 
