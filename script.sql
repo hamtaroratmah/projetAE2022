@@ -73,37 +73,6 @@ CREATE TABLE pae.interests
     came          bool DEFAULT FALSE
 );
 
--- INSERT FAKE MEMBERS
-
-INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
-VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 15);
-
-INSERT INTO pae.members
-(password, username, last_name, first_name, address, call_number, isadmin,
- reason_for_conn_refusal, state)
-VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
-        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
-
-INSERT INTO pae.members
-(password, username, last_name, first_name, address, call_number, isadmin,
- reason_for_conn_refusal, state)
-VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'quentin',
-        'Garwig', 'Quentin', 1, '0489789546', true, default, 'valid');
-
-INSERT INTO pae.members
-(password, username, last_name, first_name, address, call_number, isadmin,
- reason_for_conn_refusal, state)
-VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'stal',
-        'Bouillon', 'Guillaume', 1, '0489789546', true, default, 'valid');
-
-INSERT INTO pae.members
-(password, username, last_name, first_name, address, call_number, isadmin,
- reason_for_conn_refusal, state)
-VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
-        'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
-
-
 --Insert demo's types
 INSERT INTO pae.types (type)
 VALUES ('Accessoires pour animaux domestiques');
@@ -147,6 +116,18 @@ INSERT INTO pae.addresses
     (street, building_number, postcode, city)
 VALUES ('Haut-Vinâve', 13, 4845, 'Jalhay');
 
+INSERT INTO pae.addresses
+    (street, building_number, postcode, city)
+VALUES ('Rue de Verviers', 47, 4000, 'Liège');
+
+INSERT INTO pae.addresses
+    (street, building_number, postcode, city, unit_number)
+VALUES ('Rue du salpêtré', 789, 1040, 'Bruxelles', 'bis');
+
+INSERT INTO pae.addresses
+    (street, building_number, postcode, city, unit_number)
+VALUES ('Rue des Minières', 45, 4800, 'Verviers', 'Ter');
+
 
 --Insert demo's users
 /*
@@ -154,14 +135,13 @@ mdp = Mdpuser.1
 mdp2= Rad;293 uniquement pour le dernier membre
 */
 INSERT INTO pae.members
-(password, username, last_name, first_name, address,
- reason_for_conn_refusal, state)
-VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'caro',
-        'Line', 'Caroline', 1, 'Il faudra patienter un jour ou deux.', 'denied');
-INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
+VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'caro',
+        'Line', 'Caroline', 1, 'valid');
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, reason_for_conn_refusal, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'achil',
-        'Ile', 'Achille', 2, 'valid');
+        'Ile', 'Achille', 2, 'L application n est pas encore ouverte à tous', 'denied');
 INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
@@ -170,6 +150,23 @@ INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, isadmin)
 VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
         'Lehmann', 'Brigitte', 4, 'valid', true);
+--TODO ajouter le bon mot de passe
+INSERT INTO pae.members
+    (password, username, last_name, first_name, address, state)
+VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'theo',
+        'Ile', 'Théophile', 2, 'valid');
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, state, reason_for_conn_refusal)
+VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'emi',
+        'Ile', 'Emile', 5, 'denied', 'L application n est pas encore ouverte à tous.');
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, state, reason_for_conn_refusal)
+VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'cora',
+        'Line', 'Cora', 6, 'denied', 'L application n est pas encore ouverte à tous.');
+INSERT INTO pae.members
+    (password, username, last_name, first_name, address, state)
+VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'charline',
+        'Line', 'Charles', 7, 'pending');
 
 -- Insert demo's items
 INSERT INTO pae.items
@@ -198,174 +195,33 @@ INSERT INTO pae.offers
     (date_offer, id_item)
 VALUES ('25-03-2022', 3);
 
---Queries for the demo
-SELECT id_member, username, isadmin, reason_for_conn_refusal, state
-FROM pae.members;
 
-Select it.id_item, it.description, ty.type, it.item_condition, of.date_offer
-From pae.items it,
-     pae.types ty,
-     pae.offers of
-Where it.id_type = ty.id_type
-  And it.id_item = of.id_item
-ORDER BY of.date_offer Desc;
-
-select me.first_name, it.description
-from pae.items it,
-     pae.members me
-order by me.first_name, it.description;
-
-SELECT *
-FROM pae.items;
-SELECT *
-FROM pae.members;
-
-
-
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, ' ', 'objet test 2', 'lubdi et mardi', 'published', 2)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-
-
-INSERT INTO pae.offers (date_offer, id_item)
-VALUES ('2022-04-07 +02', 1)
-RETURNING id_offer, date_offer, id_item;
-
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-
-SELECT *
-FROM pae.members;
-
-SELECT *
-FROM pae.interests
-WHERE id_item = 1;
-
-SELECT id_member,
-       password,
-       username,
-       last_name,
-       first_name,
-       call_number,
-       isadmin,
-       reason_for_conn_refusal,
-       state,
-       count_object_not_collected,
-       count_object_given,
-       count_object_got,
-       address
-FROM pae.members
-WHERE id_member = 3;
-
-UPDATE pae.members
-SET password    = '$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW',
-    username    = 'quentin659',
-    last_name   = 'Garwig',
-    first_name  = 'Quentin',
-    call_number = 'null'
-WHERE id_member = 2;
-
-SELECT *
-FROM pae.interests
-WHERE id_item = 1;
-
-SELECT *
-FROM pae.members
-WHERE state = 'denied';
-SELECT *
-FROm pae.members m,
-     pae.addresses a
-WHERE m.id_member = 10
-  AND a.id_address = m.address;
-
-<<<<<<< HEAD
-=======
-
->>>>>>> ratingObject
-SELECT *
-FROM pae.members;
-UPDATE pae.members
-SET state='valid'
-WHERE id_member = 1;
-
-
-
-UPDATE pae.items
-SET id_type=4,
-    photo='null',
-    description= 'description',
-    availabilities= 'uniquement ajd'
-WHERE id_item = 1
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-UPDATE pae.items
-SET id_type=4,
-    photo='null',
-    description= 'description',
-    availabilities= 'uniquement ajd'
-WHERE id_item = 1
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-<<<<<<< HEAD
-
-
-SELECT id_member,
-       password,
-       username,
-       last_name,
-       first_name,
-       call_number,
-       isadmin,
-       reason_for_conn_refusal,
-       state,
-       count_object_not_collected,
-       count_object_given,
-       count_object_got,
-       address
-FROM pae.members m,
-     pae.addresses a
-WHERE id_member = 8
-  AND a.id_address = m.address;
-=======
-
-
-SELECT id_member,
-       password,
-       username,
-       last_name,
-       first_name,
-       call_number,
-       isadmin,
-       reason_for_conn_refusal,
-       state,
-       count_object_not_collected,
-       count_object_given,
-       count_object_got,
-       address
-FROM pae.members
-WHERE id_member = 8;
-
-SELECT it.id_item,
-       it.id_type,
-       it.description,
-       it.availabilities,
-       it.item_condition,
-       it.photo,
-       it.rating,
-       it.id_offering_member,
-       ty.type,
-       of.id_offer
-FROM pae.items it,
-     pae.types ty,
-     pae.offers of
-WHERE it.id_type = ty.id_type
-  AND of.id_item = it.id_item
-ORDER BY of.date_offer DESC;
-
-INSERT INTO pae.members(password, username, last_name, first_name, address, call_number, state)
-VALUES ('$2a$10$aNv421iUMyYC/24Z5xk.YOiXQCc9QCGxzRlwJ02Cw73Y34Mj87W92', 'nouveaupseudo', 'nom',
-        'prenom', 12, NULL, pending)
-
-
->>>>>>> ratingObject
+-- INSERT FAKE MEMBERS
+--
+-- INSERT INTO pae.addresses
+--     (street, building_number, postcode, city, unit_number)
+-- VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 15);
+--
+-- INSERT INTO pae.members
+-- (password, username, last_name, first_name, address, call_number, isadmin,
+--  reason_for_conn_refusal, state)
+-- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
+--         'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
+--
+-- INSERT INTO pae.members
+-- (password, username, last_name, first_name, address, call_number, isadmin,
+--  reason_for_conn_refusal, state)
+-- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'quentin',
+--         'Garwig', 'Quentin', 1, '0489789546', true, default, 'valid');
+--
+-- INSERT INTO pae.members
+-- (password, username, last_name, first_name, address, call_number, isadmin,
+--  reason_for_conn_refusal, state)
+-- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'stal',
+--         'Bouillon', 'Guillaume', 1, '0489789546', true, default, 'valid');
+--
+-- INSERT INTO pae.members
+-- (password, username, last_name, first_name, address, call_number, isadmin,
+--  reason_for_conn_refusal, state)
+-- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
+--         'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
