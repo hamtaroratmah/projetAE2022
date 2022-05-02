@@ -1,6 +1,6 @@
 import {getToken} from "../utils/utils";
 import {getItemUnordered, getOrderedItems} from "../utils/api/items";
-import {displayItems} from "../utils/displayModule/items";
+import {displayItems, displayPhoto} from "../utils/displayModule/items";
 
 const receptionDiv = `
   <div id="sortingDiv">
@@ -23,14 +23,14 @@ const receptionDiv = `
       <option value="canceled">Annulé</option>
     </select>
   </div>
-
-  <div id="receptionPage">
     
+  <div id="receptionPage">
+   
   </div>
 `
 
 const HomePage = async () => {
-
+  displayPhoto()
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion
   if (window.sessionStorage.getItem("justLogged") === true.toString()) {

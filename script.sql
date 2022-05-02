@@ -46,7 +46,7 @@ CREATE TABLE pae.items
 (
     id_item            SERIAL PRIMARY KEY,
     id_type            INTEGER REFERENCES pae.types (id_type),
-    photo              VARCHAR(100),
+    photo              VARCHAR(500),
     description        VARCHAR(300),
     availabilities     VARCHAR(300),
     item_condition     VARCHAR(10),

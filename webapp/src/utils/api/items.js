@@ -2,6 +2,7 @@ import {getToken} from "../utils";
 import {getMember} from "./member";
 import Navbar from "../../Components/Navbar";
 import {Redirect} from "../../Router";
+import {displayPhoto} from "../displayModule/items";
 
 const error = document.querySelector("#errorText");
 
@@ -59,12 +60,12 @@ async function createItem(e) {
   const description = document.getElementById("description").value;
   const availabilities = document.getElementById("availabilities").value;
   let member = await getMember(getToken());
-
   // if(window.localStorage.getItem("user"))
   // idMember = window.localStorage.getItem("user") !== null
   //     || window.sessionStorage.getItem("user") !== null;
   //Verify the user entered all informations toto create an item
   // and show an error message if not
+
   try {
     if (!type) {
       error.innerHTML = "Choose a type";
@@ -74,6 +75,7 @@ async function createItem(e) {
     } else if (!availabilities) {
       error.innerHTML = "Enter your availabilities";
     }
+
     const request = {
       method: "POST",
       body: JSON.stringify(

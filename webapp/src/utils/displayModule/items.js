@@ -89,5 +89,4 @@ function openItemModal(item, j) {
 }
 
 
-
 export {displayItems}
