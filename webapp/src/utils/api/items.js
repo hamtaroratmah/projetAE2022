@@ -2,7 +2,6 @@ import {getToken} from "../utils";
 import {getMember} from "./member";
 import Navbar from "../../Components/Navbar";
 import {Redirect} from "../../Router";
-import {displayPhoto} from "../displayModule/items";
 
 const error = document.querySelector("#errorText");
 
@@ -56,7 +55,7 @@ async function getOrderedItems(sortingParam, order) {
 async function createItem(e) {
   e.preventDefault();
   const type = document.getElementById("type").value;
-  const photo = document.getElementById("photo").value;
+  const photo = document.getElementById("photoInput").value;
   const description = document.getElementById("description").value;
   const availabilities = document.getElementById("availabilities").value;
   let member = await getMember(getToken());
@@ -74,6 +73,8 @@ async function createItem(e) {
 
     } else if (!availabilities) {
       error.innerHTML = "Enter your availabilities";
+    } else if (!fileInput){
+      error.innerHTML = "Enter a photo";
     }
 
     const request = {
@@ -138,14 +139,14 @@ async function createItem(e) {
         await Navbar();
         Redirect("/");
       } catch (e) {
-        cosole.error("likeItem::error ", e);
+        console.error("likeItem::error ", e);
 
       }
 
     }
 
+    async function UploadImage(){
 
+    }
 
-
-
-export {getItemUnordered, getOrderedItems, createItem,likeItem};
+export {getItemUnordered, getOrderedItems, createItem,likeItem,UploadImage};
