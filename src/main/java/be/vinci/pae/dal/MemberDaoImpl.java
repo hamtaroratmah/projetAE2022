@@ -182,7 +182,10 @@ public class MemberDaoImpl implements MemberDao {
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
     MemberDTO member;
-    String query = "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
+
+    String query =
+        "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
+
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
@@ -201,14 +204,14 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * deny a registration.
    *
-   * @param username user ton deny
+   * @param username             user ton deny
    * @param reasonForConnRefusal reason of the refusal
    * @return returns the member DTO
    */
   public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
     MemberDTO member;
     String query = "UPDATE pae.members SET state='denied', reason_for_conn_refusal =?"
-            + "WHERE username=? RETURNING *";
+        + "WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, reasonForConnRefusal);
       ps.setString(2, username);
