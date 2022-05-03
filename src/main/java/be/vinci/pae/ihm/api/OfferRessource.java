@@ -61,10 +61,7 @@ public class OfferRessource {
     int idType = itemUcc.typeExisting(type.getType());
     //si le type n existe pas , le creer
     if (idType == -1) {
-<<<<<<< HEAD
 
-=======
->>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f
       idType = itemUcc.createType(json.get("type").asText());
     }
     ItemDTO item = domainFactory.getItem();

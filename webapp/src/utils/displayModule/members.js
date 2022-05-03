@@ -1,4 +1,9 @@
-import {confirmInscription, denyInscription} from "../api/memberApi";
+import {
+  confirmInscription,
+  denyInscription,
+  preclude,
+  unpreclude
+} from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -108,6 +113,8 @@ function displayMembers(members) {
              
             <div class="receptionValidGrandChild">
                 <input id ="preclude${i}" type="submit" value="Empecher le membre">
+                <input id ="unpreclude${i}" type="submit" value="Ne plus empecher le membre">
+                
             </div>
           </form>
           </div>
@@ -120,12 +127,19 @@ function displayMembers(members) {
 
     const isAdmin = document.getElementById("isAdmin" + i);
     const buttonPreclude = document.getElementById("preclude" + i);
+    const buttonUnpreclude = document.getElementById("unpreclude" + i);
+
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-    buttonPreclude.addEventListener("click" ,function(){
-      console.log("clicked");
+    buttonPreclude.addEventListener("click" ,async (e) => {
+      e.preventDefault();
+      console.log(members[i].idMember);
+      await preclude(members[i].idMember);
     });
-
+    buttonUnpreclude.addEventListener("click" ,async (e) => {
+      e.preventDefault();
+      await unpreclude(members[i].idMember);
+    });
 
 
   }
