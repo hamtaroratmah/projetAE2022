@@ -102,19 +102,19 @@ VALUES ('Vêtements');
 
 --Insert demo's adresses TODO escape simple quote
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue de l Eglise', 11, 4987, 'Stoumont', 'B1');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue de Renkin', 7, 4800, 'Verviers', '7');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue Haute Folie', 6, 4800, 'Verviers', 'A103');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city)
+(street, building_number, postcode, city)
 VALUES ('Haut-Vinâve', 13, 4845, 'Jalhay');
 
 INSERT INTO pae.addresses
@@ -144,7 +144,7 @@ INSERT INTO pae.members
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'achil',
         'Ile', 'Achille', 2, 'L application n est pas encore ouverte à tous', 'denied');
 INSERT INTO pae.members
-    (password, username, last_name, first_name, address, state)
+(password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
         'Ile', 'Basile', 3, 'valid');
 INSERT INTO pae.members
