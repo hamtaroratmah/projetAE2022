@@ -36,10 +36,11 @@ public class MemberResource {
    */
   @GET
   @Path("/")
+  @Authorize
   @Produces(MediaType.APPLICATION_JSON)
   public MemberDTO getMember(@Context ContainerRequestContext requestContext) {
-    System.out.println(requestContext);
     MemberDTO member = (MemberDTO) requestContext.getProperty("user");
+    System.out.println(member);
     if (member == null) {
       throw new WebApplicationException("token required", Response.Status.BAD_REQUEST);
     }
