@@ -116,19 +116,19 @@ public class ItemResource {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
     MemberDTO offeringMember = domainFactory.getMember();
-    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
-    type.setType(typeText);
+    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     int idType = itemUcc.typeExisting(type.getType());
+    type.setType(typeText);
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
     }
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
-    item.setType(type);
     String description = json.get("description").asText();
+    item.setType(type);
     item.setDescription(description);
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("itemCondition").asText());
