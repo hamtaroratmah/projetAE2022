@@ -33,6 +33,8 @@ async function getMember(token) {
     }
   };
   const response = await fetch(`/api/members/`, request);
+  console.log(token);
+  // console.log(request);
   if (!response.ok) {
     const error = document.getElementById("errorText");
     error.innerText = `Error while fetching username`;
@@ -206,6 +208,7 @@ async function updateMember(member, confirmPassword) {
           city: member.address.city,
           unitNumber: member.address.unitNumber,
           confirmPassword: confirmPassword
+
         }
     )
   };

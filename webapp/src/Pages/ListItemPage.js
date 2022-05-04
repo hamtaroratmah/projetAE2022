@@ -1,5 +1,5 @@
 import {getToken} from "../utils/utils";
-import {getItemUnordered, getOrderedItems} from "../utils/api/itemsApi";
+import {getItemUnordered, getOrderedItems} from "../utils/api/items";
 import {displayItems} from "../utils/displayModule/items";
 import {Redirect} from "../Router";
 
@@ -48,10 +48,10 @@ const ListItemPage = async () => {
   }
   displayItems(items);
 
-  const typeSelect = document.querySelector("#selectItemType");
-  const dateSelect = document.querySelector("#selectItemDate");
-  const itemConditionSelect = document.querySelector("#selectItemCondition");
-  console.log(typeSelect);
+  // const typeSelect = document.querySelector("#selectItemType");
+  // const dateSelect = document.querySelector("#selectItemDate");
+  // const itemConditionSelect = document.querySelector("#selectItemCondition");
+  // console.log(typeSelect);
   typeSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(typeSelect.name, typeSelect.value);
     displayItems(items);

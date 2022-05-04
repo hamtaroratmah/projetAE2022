@@ -1,5 +1,5 @@
 import {getToken} from "../utils/utils";
-import {getItemUnordered, getOrderedItems} from "../utils/api/itemsApi";
+import {getItemUnordered, getOrderedItems} from "../utils/api/items";
 import {displayItems} from "../utils/displayModule/items";
 
 const receptionDiv = `

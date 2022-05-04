@@ -288,30 +288,30 @@ values (11, 1, '16-05-2022');
 ---------------------------------------------------------------------------------------------------
 -- INSERT FAKE MEMBERS
 --
--- INSERT INTO pae.addresses
---     (street, building_number, postcode, city, unit_number)
--- VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 15);
---
--- INSERT INTO pae.members
--- (password, username, last_name, first_name, address, call_number, isadmin,
---  reason_for_conn_refusal, state)
--- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
---         'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
---
--- INSERT INTO pae.members
--- (password, username, last_name, first_name, address, call_number, isadmin,
---  reason_for_conn_refusal, state)
--- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'quentin',
---         'Garwig', 'Quentin', 1, '0489789546', true, default, 'valid');
---
--- INSERT INTO pae.members
--- (password, username, last_name, first_name, address, call_number, isadmin,
---  reason_for_conn_refusal, state)
--- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'stal',
---         'Bouillon', 'Guillaume', 1, '0489789546', true, default, 'valid');
---
--- INSERT INTO pae.members
--- (password, username, last_name, first_name, address, call_number, isadmin,
---  reason_for_conn_refusal, state)
--- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
---         'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
+INSERT INTO pae.addresses
+    (street, building_number, postcode, city, unit_number)
+VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 15);
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'souli',
+        'Gharroudi', 'Soulaymane', 1, '0489789546', true, default, 'pending');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'quentin',
+        'Garwig', 'Quentin', 1, '0489789546', true, default, 'valid');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'stal',
+        'Bouillon', 'Guillaume', 1, '0489789546', true, default, 'valid');
+
+INSERT INTO pae.members
+(password, username, last_name, first_name, address, call_number, isadmin,
+ reason_for_conn_refusal, state)
+VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
+        'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');

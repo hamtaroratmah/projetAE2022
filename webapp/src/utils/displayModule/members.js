@@ -3,7 +3,7 @@ import {
   denyInscription,
   preclude,
   unpreclude
-} from "../api/memberApi";
+} from "../api/member";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -120,6 +120,7 @@ function displayMembers(members) {
           </div>
         </div>
       `;
+
     }
   }
 
