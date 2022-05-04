@@ -435,4 +435,30 @@ public class TestMemberUCC {
     assertThrows(FatalException.class, () -> memberUCC.unpreclude(member.getIdMember()));
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("test listMembers")
+  @Test
+  public void testListMembers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    list.add(member);
+    Mockito.when(memberDao.listUsersByState("valid")).thenReturn(list);
+    assertEquals(list, memberUCC.listMembers());
+  }
+
+  @DisplayName("test listMembers empty")
+  @Test
+  public void testListMembersEmpty() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    Mockito.when(memberDao.listUsersByState("valid")).thenReturn(list);
+    assertEquals(list, memberUCC.listMembers());
+  }
+
+  @DisplayName("test listMembers dao throws exception")
+  @Test
+  public void testListMembersDaoThrowsException() {
+    Mockito.when(memberDao.listUsersByState("valid")).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.listMembers());
+  }
+
 }
