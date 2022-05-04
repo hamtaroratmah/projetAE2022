@@ -121,7 +121,6 @@ public class ItemResource {
     String typeText = json.get("type").asText();
     type.setType(typeText);
     int idType = itemUcc.typeExisting(type.getType());
-    String description = json.get("description").asText();
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
@@ -129,6 +128,7 @@ public class ItemResource {
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
     item.setType(type);
+    String description = json.get("description").asText();
     item.setDescription(description);
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("itemCondition").asText());
