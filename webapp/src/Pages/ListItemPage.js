@@ -46,7 +46,7 @@ const ListItemPage = async () => {
     sortedDiv.style = "display: none;"
     items = await getItemUnordered()
   }
-  displayItems(items);
+  await displayItems(items);
 
   const typeSelect = document.querySelector("#selectItemType");
   const dateSelect = document.querySelector("#selectItemDate");
@@ -54,16 +54,16 @@ const ListItemPage = async () => {
   console.log(typeSelect);
   typeSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(typeSelect.name, typeSelect.value);
-    displayItems(items);
+    await displayItems(items);
   });
   dateSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(dateSelect.name, dateSelect.value);
-    displayItems(items);
+    await displayItems(items);
   });
   itemConditionSelect.addEventListener("change", async () => {
     let items = await getOrderedItems(itemConditionSelect.name,
         itemConditionSelect.value);
-    displayItems(items);
+    await displayItems(items);
   });
 
 }

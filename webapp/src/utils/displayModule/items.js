@@ -19,9 +19,9 @@ import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
 import {getMember} from "../api/memberApi";
 
-async function displayItems(items, receptionPage) {
+async function displayItems(items) {
   let item, offer;
-  // const receptionPage = document.querySelector("#receptionPage");
+  const receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
   if (items.length === 0) {
     receptionPage.innerHTML = `
