@@ -1,4 +1,4 @@
-import {getListInscriptions} from "../utils/api/memberApi";
+import {getListInscriptions} from "../utils/api/member";
 import {displayInscriptions} from "../utils/displayModule/members";
 import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";

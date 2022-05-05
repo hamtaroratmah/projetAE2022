@@ -1,4 +1,4 @@
-import {getListMembers} from "../utils/api/memberApi";
+import {getListMembers} from "../utils/api/member";
 import {
   displayInscriptions,
   displayMembers

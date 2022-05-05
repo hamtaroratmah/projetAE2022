@@ -1,4 +1,4 @@
-import {modifyOfferFunction} from "../utils/api/itemsApi";
+import {modifyOfferFunction} from "../utils/api/items";
 import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";
 

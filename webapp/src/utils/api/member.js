@@ -33,6 +33,8 @@ async function getMember(token) {
     }
   };
   const response = await fetch(`/api/members/`, request);
+  console.log(token);
+  // console.log(request);
   if (!response.ok) {
     const error = document.getElementById("errorText");
     error.innerText = `Error while fetching username`;
@@ -40,9 +42,9 @@ async function getMember(token) {
   return await response.json();
 }
 
-export async function preclude(idMember){
-  const request={
-    method:"POST",
+export async function preclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -56,13 +58,11 @@ export async function preclude(idMember){
   console.log(request);
   await fetch("/api/members/preclude", request)
 
-
-
-
 }
-export async function unpreclude(idMember){
-  const request={
-    method:"POST",
+
+export async function unpreclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -76,10 +76,8 @@ export async function unpreclude(idMember){
   console.log(request);
   await fetch("/api/members/unpreclude", request)
 
-
-
-
 }
+
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {
@@ -146,8 +144,6 @@ async function getListMembers() {
           + " durant la récupération des membres"
   )
 
-
-
   return members;
 }
 
@@ -167,7 +163,7 @@ async function confirmInscription(username, isAdmin) {
   await fetch("/api/members/confirm", request)
 }
 
-async function denyInscription(username,reasonForConnRefusal) {
+async function denyInscription(username, reasonForConnRefusal) {
   const request = {
     method: "PUT",
     body: JSON.stringify(
@@ -206,6 +202,7 @@ async function updateMember(member, confirmPassword) {
           city: member.address.city,
           unitNumber: member.address.unitNumber,
           confirmPassword: confirmPassword
+
         }
     )
   };
@@ -226,5 +223,5 @@ export {
   confirmInscription,
   denyInscription,
   updateMember,
-   getListMembers
+  getListMembers
 };
