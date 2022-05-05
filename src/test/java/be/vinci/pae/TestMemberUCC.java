@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
@@ -401,4 +402,63 @@ public class TestMemberUCC {
     Mockito.when(memberDao.listUsersByState("denied")).thenThrow(FatalException.class);
     assertThrows(FatalException.class, () -> memberUCC.listDeniedUsers());
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("Test preclude user")
+  @Test
+  public void testPrecludeUser() {
+    Mockito.when(memberDao.preclude(member.getIdMember())).thenReturn(true);
+    assertTrue(memberUCC.preclude(member.getIdMember()));
+  }
+
+  @DisplayName("Test preclude dao throws exception")
+  @Test
+  public void testPrecludeDaoThrowsException() {
+    Mockito.when(memberDao.preclude(member.getIdMember())).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.preclude(member.getIdMember()));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("Test unpreclude user true")
+  @Test
+  public void testUnprecludeUserTrue() {
+    Mockito.when(memberDao.unpreclude(member.getIdMember())).thenReturn(true);
+    assertTrue(memberUCC.unpreclude(member.getIdMember()));
+  }
+
+  @DisplayName("Test unpreclude dao throws exception")
+  @Test
+  public void testUnprecludeDaoThrowsException() {
+    Mockito.when(memberDao.unpreclude(member.getIdMember())).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.unpreclude(member.getIdMember()));
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  @DisplayName("test listMembers")
+  @Test
+  public void testListMembers() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    list.add(member);
+    Mockito.when(memberDao.listUsersByState("valid")).thenReturn(list);
+    assertEquals(list, memberUCC.listMembers());
+  }
+
+  @DisplayName("test listMembers empty")
+  @Test
+  public void testListMembersEmpty() {
+    ArrayList<MemberDTO> list = new ArrayList<>();
+    Mockito.when(memberDao.listUsersByState("valid")).thenReturn(list);
+    assertEquals(list, memberUCC.listMembers());
+  }
+
+  @DisplayName("test listMembers dao throws exception")
+  @Test
+  public void testListMembersDaoThrowsException() {
+    Mockito.when(memberDao.listUsersByState("valid")).thenThrow(FatalException.class);
+    assertThrows(FatalException.class, () -> memberUCC.listMembers());
+  }
+
 }
