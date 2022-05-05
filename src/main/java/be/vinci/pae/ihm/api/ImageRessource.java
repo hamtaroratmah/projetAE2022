@@ -1,7 +1,6 @@
 package be.vinci.pae.ihm.api;
 
 import be.vinci.pae.business.ucc.ItemUCC;
-import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.utils.Config;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -17,7 +16,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Path("/images")
 public class ImageRessource {
