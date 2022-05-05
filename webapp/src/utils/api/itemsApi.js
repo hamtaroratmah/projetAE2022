@@ -8,10 +8,8 @@ let idOffer = -1;
 
 async function getItemUnordered() {
   let request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
+    method: "GET", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
     }
   };
   let items = [];
@@ -22,34 +20,29 @@ async function getItemUnordered() {
       items.push(commits[i]);
     }
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue durant la récupération des objets"
-  );
+  .catch(
+      () => error.innerHTML = "Une erreur est survenue durant la récupération des objets");
   return items;
 }
 
 async function getOrderedItems(sortingParam, order) {
   let items = [];
   const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
+    method: "GET", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
     }
   };
   await fetch(
       "/api/items/getItemSortedBy/?sortingParam=" + sortingParam + "&order="
-      + order,
-      request)
+      + order, request)
   .then(response => response.json())
   .then((commits) => {
     for (let i = 0; i < commits.length; i++) {
       items.push(commits[i]);
     }
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue durant la récupération des objets"
-  );
+  .catch(
+      () => error.innerHTML = "Une erreur est survenue durant la récupération des objets");
   return items;
 }
 
@@ -81,18 +74,14 @@ async function modifyOfferFunction(e) {
     }
 
     const request = {
-      method: "POST",
-      body: JSON.stringify(
-          {
-            idOffer: idOffer,
-            type: type,
-            photo: photo,
-            description: description,
-            availabilities: availabilities,
-            idOfferingMember: member.idMember,
-          }
-      ),
-      headers: {
+      method: "POST", body: JSON.stringify({
+        idOffer: idOffer,
+        type: type,
+        photo: photo,
+        description: description,
+        availabilities: availabilities,
+        idOfferingMember: member.idMember,
+      }), headers: {
         "Content-Type": "application/json"
       }
     };
@@ -139,18 +128,14 @@ async function createItem(e) {
       error.innerHTML = "Enter your availabilities";
     }
     const request = {
-      method: "POST",
-      body: JSON.stringify(
-          {
-            type: type,
-            photo: photo,
-            description: description,
-            availabilities: availabilities,
-            idOfferingMember: member.idMember,
+      method: "POST", body: JSON.stringify({
+        type: type,
+        photo: photo,
+        description: description,
+        availabilities: availabilities,
+        idOfferingMember: member.idMember,
 
-          }
-      ),
-      headers: {
+      }), headers: {
         "Content-Type": "application/json"
       }
     };
@@ -181,15 +166,10 @@ async function cancelOffer(idItem) {
   console.log("cancel offer " + idItem)
 
   const request = {
-    method: "POST",
-    body: JSON.stringify(
-        {
-          idItem: idItem
-        }
-    ),
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
+    method: "POST", body: JSON.stringify({
+      idItem: idItem
+    }), headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
     }
   };
   try {
@@ -213,50 +193,14 @@ async function cancelOffer(idItem) {
     console.error("CreatePage::error ", e);
 
   }
-<<<<<<< HEAD:webapp/src/utils/api/items.js
-
-
-  async function likeItem(idItem,idMember){
-
-    console.log(idItem," + ", idMember);
-      const request = {
-        method: "POST",
-        body: JSON.stringify(
-            {
-              idItem: idItem,
-              idMember:idMember,
-            }
-        ),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-      try {
-        const response = await fetch("/api/items/like",request);
-        console.log(request);
-        console.log(response);
-        if (!response.ok) {
-          if (response.status === 403) {
-            "imposssible to cancel this offer"
-          } else {
-            error.innerHTML = "errorrr";
-=======
->>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
-
 }
 
 async function likeItem(idItem, idMember) {
-
   console.log(idItem, " + ", idMember);
   const request = {
-    method: "POST",
-    body: JSON.stringify(
-        {
-          idItem: idItem,
-          idMember: idMember,
-        }
-    ),
-    headers: {
+    method: "POST", body: JSON.stringify({
+      idItem: idItem, idMember: idMember,
+    }), headers: {
       "Content-Type": "application/json"
     }
   };
@@ -278,26 +222,14 @@ async function likeItem(idItem, idMember) {
     Redirect("/");
   } catch (e) {
     console.error("likeItem::error ", e);
-
-<<<<<<< HEAD:webapp/src/utils/api/items.js
-export {getItemUnordered, getOrderedItems, createItem, cancelOffer,
-  modifyOfferFunction, modifyOffer, likeItem};
-=======
   }
 }
 
 async function rateItem(idItem, idMember, stars, comment) {
   const request = {
-    method: "POST",
-    body: JSON.stringify(
-        {
-          itemId: idItem,
-          memberId: idMember,
-          stars: stars,
-          comment: comment
-        }
-    ),
-    headers: {
+    method: "POST", body: JSON.stringify({
+      itemId: idItem, memberId: idMember, stars: stars, comment: comment
+    }), headers: {
       "Content-type": "application/json"
     }
   };
@@ -308,7 +240,6 @@ async function rateItem(idItem, idMember, stars, comment) {
         "imposssible to rate this offer"
       } else {
         error.innerHTML = "errorrr";
->>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
 
       }
 
@@ -321,10 +252,13 @@ async function rateItem(idItem, idMember, stars, comment) {
   }
 }
 
-<<<<<<< HEAD:webapp/src/utils/api/items.js
-=======
 export {
-  getItemUnordered, getOrderedItems, createItem, cancelOffer,
-  modifyOfferFunction, modifyOffer, rateItem, likeItem
+  getItemUnordered,
+  getOrderedItems,
+  createItem,
+  cancelOffer,
+  modifyOfferFunction,
+  modifyOffer,
+  rateItem,
+  likeItem
 };
->>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f:webapp/src/utils/api/itemsApi.js
