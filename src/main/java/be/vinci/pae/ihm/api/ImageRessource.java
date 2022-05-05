@@ -31,7 +31,7 @@ public class ImageRessource {
    * @return build
    */
   @POST
-  @Path("/upload{id}")
+  @Path("/upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   public void uploadFile(@FormDataParam("file") InputStream file, @PathParam("id") int idItem,
                              @FormDataParam("file") FormDataContentDisposition fileDisposition) throws IOException {
@@ -45,7 +45,7 @@ public class ImageRessource {
     // save/copy the file ion the folder (OneDrive)
     Files.copy(file, Paths.get(insertPath));
     // save the file(fileNameUUID + extension, id item) in the db, to get it back after
-    ItemUCC.insertPhoto(fileNameUUID + "." + fileExtension,idItem);
+    //ItemUCC.insertPhoto(fileNameUUID + "." + fileExtension,idItem);
     // send a message after the event : uplaod a file (logger)
     System.out.print("file save");
   }
