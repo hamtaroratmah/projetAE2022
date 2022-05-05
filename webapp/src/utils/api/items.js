@@ -55,7 +55,7 @@ async function getOrderedItems(sortingParam, order) {
 async function createItem(e) {
   e.preventDefault();
   const type = document.getElementById("type").value;
-  const photo = document.getElementById("photoInput").value;
+  const inputFile = document.getElementById("photoInput");
   const description = document.getElementById("description").value;
   const availabilities = document.getElementById("availabilities").value;
   let member = await getMember(getToken());
@@ -73,16 +73,15 @@ async function createItem(e) {
 
     } else if (!availabilities) {
       error.innerHTML = "Enter your availabilities";
-    } else if (!photo){
+    } else if (!inputFile){
       error.innerHTML = "Enter a photo";
     }
-
     const request = {
       method: "POST",
       body: JSON.stringify(
           {
             type: type,
-            photo: photo,
+            photo: "",
             description: description,
             availabilities: availabilities,
             idOfferingMember: member.idMember,
@@ -92,6 +91,15 @@ async function createItem(e) {
         "Content-Type": "application/json"
       }
     };
+
+    const formData = new FormData();
+    formData.append('file', inputFile.files[0]);
+    console.log(inputFile.files[0]);
+    const options = {
+      method: 'POST',
+      body: formData
+    };
+    // fetch createOffer
     const response = await fetch("/api/offer/createOffer", request);
     if (!response.ok) {
       if (response.status === 403) {
@@ -100,6 +108,10 @@ async function createItem(e) {
     } else {
       error.innerHTML = "";
     }
+    // fetch photo
+    fetch('images/upload', options
+    ).catch((error) => ("Something went wrong!", error));
+
     await Navbar();
     Redirect("/");
   } catch (e) {

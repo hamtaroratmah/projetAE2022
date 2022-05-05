@@ -41,7 +41,6 @@ async function displayItems(items) {
           <div  class="modalItemInfo receptionItems" id="likeItem${i}">
           <button>Aimer l'offre</button>
           </div>
-
           <p class="modalItemInfo"></p>
       </div>
       `;

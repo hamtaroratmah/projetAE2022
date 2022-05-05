@@ -24,7 +24,6 @@ function NewItem() {
   pageDiv.innerHTML = createDiv;
   const inputFile = document.getElementById("photoInput");
   const formData = new FormData();
-
   formData.append('file', inputFile.files[0]);
   console.log(inputFile.files[0]);
   const options = {
