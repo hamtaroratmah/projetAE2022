@@ -30,7 +30,6 @@ const receptionDiv = `
 `
 
 const HomePage = async () => {
-  displayPhoto()
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion
   if (window.sessionStorage.getItem("justLogged") === true.toString()) {

@@ -73,7 +73,7 @@ async function createItem(e) {
 
     } else if (!availabilities) {
       error.innerHTML = "Enter your availabilities";
-    } else if (!fileInput){
+    } else if (!photo){
       error.innerHTML = "Enter a photo";
     }
 

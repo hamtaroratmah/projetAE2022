@@ -1,6 +1,8 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.exceptions.BadRequestException;
@@ -153,7 +155,17 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-
+  public ItemDTO insertPhoto(String fileName,int idItem) {
+    try {
+      dalServices.startTransaction();
+      ItemDTO item = itemDao.insertPhoto(fileName, idItem);
+      dalServices.commitTransaction();
+      return item;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
 }
 
 

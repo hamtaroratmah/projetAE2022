@@ -169,24 +169,5 @@ public class ItemResource {
     itemId = json.get("itemId").asInt();
     return itemUcc.cancelAnOffer(itemId);
   }
-
-  /**
-   * cancel an offer.
-   *
-   * @param file file as InputStream
-   * @param fileDisposition informations of the file
-   * @return build
-   */
-  @POST
-  @Path("/upload")
-  @Consumes(MediaType.MULTIPART_FORM_DATA)
-  public Response uploadFile(@FormDataParam("file") InputStream file,
-                             @FormDataParam("file") FormDataContentDisposition fileDisposition) {
-    return Response.ok().build();
-  }
-
-
-
-
 }
 

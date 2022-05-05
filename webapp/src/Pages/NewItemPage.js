@@ -22,19 +22,17 @@ function NewItem() {
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
-
-  // PHOTO
   const inputFile = document.getElementById("photoInput");
   const formData = new FormData();
-  console.log(inputFile.files[0]);
+
   formData.append('file', inputFile.files[0]);
+  console.log(inputFile.files[0]);
   const options = {
     method: 'POST',
     body: formData
   };
-  fetch('items/upload', options
+  fetch('images/upload', options
   ).catch((error) => ("Something went wrong!", error));
-  // END PHOTO
 
   const form = document.getElementById("newItemForm");
   form.addEventListener("submit", createItem);

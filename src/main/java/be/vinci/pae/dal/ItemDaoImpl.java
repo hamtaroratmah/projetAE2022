@@ -307,5 +307,18 @@ public class ItemDaoImpl implements ItemDao {
     rs.close();
     return item;
   }
+
+  public ItemDTO insertPhoto(String fileName, int idItem){
+    String query =
+            "UPDATE  pae.items SET photo=? WHERE id_item=?" ;
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, fileName);
+      ps.setInt(2,idItem);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 }
 

@@ -25,4 +25,6 @@ public interface ItemDao {
 
   boolean offer(int idOffer, int idItem);
 
+ItemDTO insertPhoto(String fileName, int idItem);
+
 }
