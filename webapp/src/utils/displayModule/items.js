@@ -70,7 +70,7 @@ async function displayItems(items, receptionPage) {
       modifyOffer(idOffer);
     });
     const photoSrc = document.querySelector("#receptionImage" + j);
-    if (items[j]["photo"] === null) {
+    if (items[j]["photo"] === undefined) {
       photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
     } else {
       photoSrc.src = items[j]["photo"];
@@ -119,12 +119,6 @@ function openItemModal(item, j) {
   } else {
     photoSrc.src = item["photo"];
   }
-  // const photoSrc = document.querySelector("#receptionImage" + j);
-  // if (items[j]["photo"] === null) {
-  //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  // } else {
-  //   photoSrc.src = items[j]["photo"];
-  // }
 }
 
 export {displayItems}

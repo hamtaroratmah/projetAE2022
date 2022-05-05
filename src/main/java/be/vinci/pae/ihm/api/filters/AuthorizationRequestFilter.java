@@ -31,7 +31,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
   @Override
   public void filter(ContainerRequestContext requestContext) {
     String token = requestContext.getHeaderString("Authorization");
-    System.out.println(token);
     if (token == null) {
       throw new TokenDecodingException("A token is needed to access this resource");
     }
@@ -48,6 +47,5 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
     }
     requestContext.setProperty("user",
         memberUCC.getOne(decodedToken.getClaim("id_member").asInt()));
-    System.out.println(memberUCC.getOne(decodedToken.getClaim("id_member").asInt()));
   }
 }
