@@ -319,5 +319,5 @@ SELECT * FROM pae.items WHERE id_item=11;
 
 UPDATE pae.interests   SET isrecipient=true,  WHERE id_item = 1 AND id_member=1;
 
-SELECT * FROM pae.members
+SELECT * FROM pae.items
 

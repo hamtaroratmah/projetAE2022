@@ -135,7 +135,7 @@ public class OfferUCCImpl implements OfferUCC {
    *
    * @return the new item modified
    */
-  public ItemDTO modify(int idOffer, String type, String photo, String description,
+  public ItemDTO modify(int idOffer, int type, String photo, String description,
       String availabilities) {
 
     try {

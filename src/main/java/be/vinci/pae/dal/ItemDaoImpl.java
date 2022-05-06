@@ -262,9 +262,9 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public ItemDTO modify(int idItem, String type, String photo, String description,
+  public ItemDTO modify(int idItem, int type, String photo, String description,
       String availabilities) {
-    int idType = typeExisting(type);
+
     ItemDTO item = null;
 
     String query =
@@ -273,7 +273,7 @@ public class ItemDaoImpl implements ItemDao {
             + "item_condition,id_offering_member";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setInt(1, idType);
+      ps.setInt(1,type );
       ps.setString(2, photo);
       ps.setString(3, description);
       ps.setString(4, availabilities);
