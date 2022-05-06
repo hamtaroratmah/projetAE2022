@@ -13,7 +13,7 @@ public interface OfferDao {
 
   boolean isLiked(int idItem, int idMember);
 
-  ArrayList<MemberDTO> interests(int idItem, int idMember);
+  ArrayList<MemberDTO> interests(int idItem);
 
   int getIdItem(int idOffer);
 

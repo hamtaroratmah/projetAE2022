@@ -27,6 +27,7 @@ const error = document.querySelector("#errorText");
 async function getMember(token) {
   const request = {
     method: "GET",
+
     headers: {
       "Content-Type": "application/json",
       "Authorization": token

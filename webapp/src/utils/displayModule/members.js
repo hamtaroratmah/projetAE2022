@@ -122,29 +122,51 @@ function displayMembers(members) {
       `;
     }
   }
+}
 
-  for (let i = 0; i < members.length; i++) {
+  function displayInterests(members) {
+    const listInterestsPage = document.querySelector("#modal");
+    for (let i = 0; i < members.length; i++) {
 
-    const isAdmin = document.getElementById("isAdmin" + i);
-    const buttonPreclude = document.getElementById("preclude" + i);
-    const buttonUnpreclude = document.getElementById("unpreclude" + i);
+      listInterestsPage.innerHTML += `
+        <div id="interests" class="receptionInterests">
+          <div class="receptionInterests">
+          <form id="interestsForm">
+            <div class="receptionValidGrandChild">
+              <p>
+                ${members[i].username}
+                ${members[i].lastName} 
+                ${members[i].firstName}
+              </p>
+            </div>
+            
+             
+            <div class="receptionValidGrandChild">
+                <input id ="give${i}" type="submit" value="donner a ce membre">
+                
+            </div>
+          </form>
+          </div>
+        </div>
+      `;
 
-    const buttonDeny = document.getElementById("deny" + i);
-    const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-    buttonPreclude.addEventListener("click" ,async (e) => {
-      e.preventDefault();
-      console.log(members[i].idMember);
-      await preclude(members[i].idMember);
-    });
-    buttonUnpreclude.addEventListener("click" ,async (e) => {
-      e.preventDefault();
-      await unpreclude(members[i].idMember);
-    });
+    }
 
+    for (let i = 0; i < members.length; i++) {
+
+       const buttonGive = document.getElementById("give" + i);
+
+       buttonGive.addEventListener("click", async (e) => {
+        e.preventDefault();
+        console.log(members[i].idMember);
+         console.log(" give clicked");
+        //await preclude(members[i].idMember);
+      });
+
+
+    }
 
   }
 
-}
 
-
-export {displayInscriptions,displayMembers};
+export {displayInscriptions,displayMembers, displayInterests};

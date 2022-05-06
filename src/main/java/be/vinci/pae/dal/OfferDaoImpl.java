@@ -85,7 +85,7 @@ public class OfferDaoImpl implements OfferDao {
   }
 
   @Override
-  public ArrayList<MemberDTO> interests(int idItem, int idMember) {
+  public ArrayList<MemberDTO> interests(int idItem) {
     ArrayList<Integer> listId = new ArrayList<>();
     String query = "SELECT * FROM pae.interests WHERE id_item=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
