@@ -4,6 +4,7 @@ import {
   preclude,
   unpreclude
 } from "../api/memberApi";
+import {giveItem} from "../api/itemsApi";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -122,10 +123,31 @@ function displayMembers(members) {
       `;
     }
   }
+  for (let i = 0; i < members.length; i++) {
+
+    const buttonPreclude = document.getElementById("preclude" + i);
+
+    buttonPreclude.addEventListener("click", async (e) => {
+      e.preventDefault();
+      console.log(members[i].idMember);
+      await preclude(members[i].idMember);
+    });
+    const buttonUnpreclude = document.getElementById("unpreclude" + i);
+
+    buttonUnpreclude.addEventListener("click", async (e) => {
+      e.preventDefault();
+      console.log(members[i].idMember);
+      await unpreclude(members[i].idMember);
+    });
+
+
+  }
 }
 
   function displayInterests(members) {
     const listInterestsPage = document.querySelector("#modal");
+    let idOffer= window.localStorage.getItem("item");
+    console.log(idOffer);
     for (let i = 0; i < members.length; i++) {
 
       listInterestsPage.innerHTML += `
@@ -160,7 +182,7 @@ function displayMembers(members) {
         e.preventDefault();
         console.log(members[i].idMember);
          console.log(" give clicked");
-        //await preclude(members[i].idMember);
+        await giveItem(idOffer,members[i].idMember);
       });
 
 

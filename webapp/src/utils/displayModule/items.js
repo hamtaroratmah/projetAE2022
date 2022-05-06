@@ -57,6 +57,8 @@ async function displayItems(items) {
       
       `;
   }
+  const member = await getMember(getToken());
+
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
@@ -100,6 +102,8 @@ async function openItemModal(item, j) {
   const member = await getMember(getToken());
   const idItem = item.idItem;
   let interests = await getInterests(idItem);
+  window.localStorage.setItem("item",  item["offer"].idOffer);
+
   let nbreInterests= interests.length;
   console.log(nbreInterests);
 

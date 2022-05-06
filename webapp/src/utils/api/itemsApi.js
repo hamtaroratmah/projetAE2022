@@ -285,6 +285,36 @@ async function rateItem(idItem, idMember, stars, comment) {
     console.error("rateItem::error ", e);
 
   }
+
+
+}
+async function giveItem(idOffer, idMember) {
+  const request = {
+    method: "POST", body: JSON.stringify({
+      idOffer: idOffer, idMember: idMember,
+    }), headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const response = await fetch("/api/offers/offer", request);
+    console.log(request);
+    console.log(response);
+    if (!response.ok) {
+      if (response.status === 403) {
+        "imposssible to cancel this offer"
+      } else {
+        error.innerHTML = "errorrr";
+
+      }
+
+    }
+    console.log("ok")
+    await Navbar();
+    Redirect("/");
+  } catch (e) {
+    console.error("giveOffer::error ", e);
+  }
 }
 
 export {
@@ -296,5 +326,5 @@ export {
   modifyOffer,
   rateItem,
   likeItem,
-    getInterests
+    getInterests,giveItem
 };
