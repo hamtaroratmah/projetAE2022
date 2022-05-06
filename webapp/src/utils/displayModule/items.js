@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // <<<<<<< HEAD
 // import {cancelOffer, modifyOffer} from "../api/items";
 // import {getToken, reformateDate} from "../utils";
@@ -15,17 +16,23 @@
 //     if (items.length === 0) {
 //       receptionPage.innerHTML = `
 // =======
-import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/itemsApi";
+=======
 import {getToken, reformateDate} from "../utils";
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
+import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/itemsApi";
 import {getMember} from "../api/memberApi";
 
 async function displayItems(items) {
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
+  receptionPage = document.querySelector("#receptionPage");
   if (items.length === 0) {
     receptionPage.innerHTML = `
+<<<<<<< HEAD
 <!--&gt;>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f-->
+=======
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
     `;
   }
@@ -103,12 +110,15 @@ async function displayItems(items) {
 
       likeItem(items[j].idItem, member.idMember);
     });
+<<<<<<< HEAD
     // const photoSrc = document.querySelector("#receptionImage" + j);
     // if (items[j]["photo"] === null) {
     //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
     // } else {
     //   photoSrc.src = items[j]["photo"];
     // }
+=======
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   }
 }
 
@@ -130,8 +140,12 @@ function openItemModal(item, j) {
           </div>
 
       </div>
+<<<<<<< HEAD
     `
 
+=======
+    `;
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   const photoSrc = document.querySelector("#receptionImage" + j);
   const ratingDiv = document.querySelector("#ratingDiv");
   const rateButton = document.querySelector("#rateItem" + j);
@@ -148,12 +162,22 @@ function openItemModal(item, j) {
 
   });
   if (!item["photo"]) {
+<<<<<<< HEAD
     console.log("pas de photo")
+=======
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
     photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
   } else {
     console.log("photo")
     photoSrc.src = item["photo"];
   }
+<<<<<<< HEAD
 }
 
 export {displayItems}
+=======
+
+}
+
+export {displayItems}
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077

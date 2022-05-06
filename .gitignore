@@ -78,6 +78,7 @@ local.properties
 # Log file
 *.log
 *.log.*
+log.*
 
 # BlueJ files
 *.ctxt
@@ -108,5 +109,3 @@ webapp/node_modules
 webapp/package-lock.json
 *.properties
 
-#logger
-log.*

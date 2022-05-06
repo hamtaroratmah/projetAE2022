@@ -1,8 +1,12 @@
 import {
   confirmInscription,
   denyInscription,
+<<<<<<< HEAD
   preclude,
   unpreclude
+=======
+  precludMember
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
 } from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
@@ -74,29 +78,32 @@ function displayInscriptions(inscriptions) {
     const buttonConfirm = document.getElementById("confirm" + i);
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-    console.log(reasonForRefusal)
     // Confirm inscription
     buttonConfirm.addEventListener("click", async (e) => {
       e.preventDefault();
       await confirmInscription(inscriptions[i].username, isAdmin.checked);
+      window.location.reload();
     })
 
     // Deny inscription
     buttonDeny.addEventListener("click", async (e) => {
       e.preventDefault();
-      await denyInscription(inscriptions[i].username, reasonForRefusal);
+      await denyInscription(inscriptions[i].username, reasonForRefusal.value);
+      console.log(reasonForRefusal.value)
     })
   }
 
 }
 
-
-
 function displayMembers(members) {
   const listMembersPage = document.querySelector("#listMembersPage");
   for (let i = 0; i < members.length; i++) {
-    if (members[i].state === "valid") {
-      listMembersPage.innerHTML += `
+    console.log("is precluded ? ")
+    console.log(members[i].isPrecluded)
+    if (members[i].isPrecluded) {
+      members[i].state = "precluded";
+    }
+    listMembersPage.innerHTML += `
         <div id="inscriptionValid" class="receptionInscriptionPending">
           <div class="receptionValidForm">
           <form id="validForm">
@@ -120,17 +127,16 @@ function displayMembers(members) {
           </div>
         </div>
       `;
-    }
   }
 
   for (let i = 0; i < members.length; i++) {
 
-    const isAdmin = document.getElementById("isAdmin" + i);
     const buttonPreclude = document.getElementById("preclude" + i);
     const buttonUnpreclude = document.getElementById("unpreclude" + i);
 
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
+<<<<<<< HEAD
     buttonPreclude.addEventListener("click" ,async (e) => {
       e.preventDefault();
       console.log(members[i].idMember);
@@ -142,9 +148,15 @@ function displayMembers(members) {
     });
 
 
+=======
+    buttonPreclude.addEventListener("click", async function () {
+      await precludMember(members[i].idMember)
+      window.location.reload()
+    });
+
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   }
 
 }
 
-
-export {displayInscriptions,displayMembers};
+export {displayInscriptions, displayMembers};

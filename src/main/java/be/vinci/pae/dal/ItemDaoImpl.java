@@ -274,9 +274,7 @@ public class ItemDaoImpl implements ItemDao {
 
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-
           item = createItemInstance(rs);
-
         }
       }
 

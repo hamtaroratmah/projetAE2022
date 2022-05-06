@@ -2,10 +2,8 @@ import {getToken} from "../utils";
 
 const verifyToken = async () => {
   const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
+    method: "GET", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
     }
   };
   const response = await fetch("/api/members/", request);
@@ -26,10 +24,8 @@ const error = document.querySelector("#errorText");
 
 async function getMember(token) {
   const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
+    method: "GET", headers: {
+      "Content-Type": "application/json", "Authorization": token
     }
   };
   const response = await fetch(`/api/members/`, request);
@@ -83,8 +79,7 @@ export async function unpreclude(idMember){
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {
-    method: "GET",
-    headers: {
+    method: "GET", headers: {
       "Content-Type": "application/json"
     }
   };
@@ -100,10 +95,8 @@ async function getListInscriptions() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des inscriptions"
-  );
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des inscriptions");
 
   // fill inscriptions [] with inscriptions denied
   await fetch("/api/members/listDenied", request)
@@ -114,18 +107,14 @@ async function getListInscriptions() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des inscriptions"
-  );
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des inscriptions");
   return inscriptions;
 }
 
-// get the list of inscriptions
 async function getListMembers() {
   const request = {
-    method: "GET",
-    headers: {
+    method: "GET", headers: {
       "Content-Type": "application/json"
     }
   };
@@ -141,42 +130,28 @@ async function getListMembers() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des membres"
-  )
-
-
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des membres")
 
   return members;
 }
 
 async function confirmInscription(username, isAdmin) {
   const request = {
-    method: "PUT",
-    body: JSON.stringify(
-        {
-          username: username,
-          isAdmin: isAdmin
-        }
-    ),
-    headers: {
+    method: "PUT", body: JSON.stringify({
+      username: username, isAdmin: isAdmin
+    }), headers: {
       "Content-Type": "application/json"
     }
   };
   await fetch("/api/members/confirm", request)
 }
 
-async function denyInscription(username,reasonForConnRefusal) {
+async function denyInscription(username, reasonForConnRefusal) {
   const request = {
-    method: "PUT",
-    body: JSON.stringify(
-        {
-          username: username,
-          reasonForConnRefusal: reasonForConnRefusal
-        }
-    ),
-    headers: {
+    method: "PUT", body: JSON.stringify({
+      username: username, reasonForConnRefusal: reasonForConnRefusal
+    }), headers: {
       "Content-Type": "application/json"
     }
   };
@@ -185,29 +160,24 @@ async function denyInscription(username,reasonForConnRefusal) {
 
 async function updateMember(member, confirmPassword) {
   const request = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
-    },
-    body: JSON.stringify(
-        {
-          idMember: member.idMember,
-          password: member.password,
-          username: member.username,
-          lastName: member.lastName,
-          firstName: member.firstName,
-          callNumber: member.callNumber,
-          state: member.state,
-          idAddress: member.address.idAddress,
-          street: member.address.street,
-          buildingNumber: member.address.buildingNumber,
-          postcode: member.address.postcode,
-          city: member.address.city,
-          unitNumber: member.address.unitNumber,
-          confirmPassword: confirmPassword
-        }
-    )
+    method: "PUT", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
+    }, body: JSON.stringify({
+      idMember: member.idMember,
+      password: member.password,
+      username: member.username,
+      lastName: member.lastName,
+      firstName: member.firstName,
+      callNumber: member.callNumber,
+      state: member.state,
+      idAddress: member.address.idAddress,
+      street: member.address.street,
+      buildingNumber: member.address.buildingNumber,
+      postcode: member.address.postcode,
+      city: member.address.city,
+      unitNumber: member.address.unitNumber,
+      confirmPassword: confirmPassword
+    })
   };
   const response = await fetch("/api/members/updateMember", request);
   if (!response.ok) {
@@ -219,6 +189,17 @@ async function updateMember(member, confirmPassword) {
   return await response.json();
 }
 
+async function precludMember(idMember) {
+  const request = {
+    method: "PUT", body: JSON.stringify({
+      idMember: idMember,
+    }), headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  await fetch("/api/members/preclude", request)
+}
+
 export {
   getMember,
   getListInscriptions,
@@ -226,5 +207,6 @@ export {
   confirmInscription,
   denyInscription,
   updateMember,
-   getListMembers
+  getListMembers,
+  precludMember
 };

@@ -163,8 +163,7 @@ async function modifyOffer(idOfferParam) {
 }
 
 async function cancelOffer(idItem) {
-  console.log("cancel offer " + idItem)
-
+  console.log("cancel offer " + idItem);
   const request = {
     method: "POST", body: JSON.stringify({
       idItem: idItem
@@ -213,17 +212,50 @@ async function likeItem(idItem, idMember) {
         "imposssible to cancel this offer"
       } else {
         error.innerHTML = "errorrr";
-
       }
-
     }
-    console.log("ok")
-    await Navbar();
-    Redirect("/");
   } catch (e) {
+<<<<<<< HEAD
     console.error("likeItem::error ", e);
+=======
+    console.log(e);
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   }
 }
+
+// async function likeItem(idItem, idMember) {
+//
+//   console.log(idItem, " + ", idMember);
+//   const request = {
+//     method: "POST",
+//     body: JSON.stringify(
+//         {
+//           idItem: idItem,
+//           idMember: idMember,
+//         }
+//     ),
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   };
+//   try {
+//     const response = await fetch("/api/items/like", request);
+//     console.log(request);
+//     console.log(response);
+//     if (!response.ok) {
+//       if (response.status === 403) {
+//         "imposssible to cancel this offer"
+//       } else {
+//         error.innerHTML = "errorrr";
+//       }
+//     }
+//     console.log("ok")
+//     await Navbar();
+//     Redirect("/");
+//   } catch (e) {
+//     console.error("likeItem::error ", e);
+//   }
+// }
 
 async function rateItem(idItem, idMember, stars, comment) {
   const request = {
@@ -240,15 +272,16 @@ async function rateItem(idItem, idMember, stars, comment) {
         "imposssible to rate this offer"
       } else {
         error.innerHTML = "errorrr";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
       }
-
     }
     await Navbar();
     Redirect("/");
   } catch (e) {
     console.error("rateItem::error ", e);
-
   }
 }
 
@@ -262,3 +295,7 @@ export {
   rateItem,
   likeItem
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
