@@ -1,23 +1,8 @@
-// <<<<<<< HEAD
-// import {cancelOffer, modifyOffer} from "../api/items";
-// import {getToken, reformateDate} from "../utils";
-// import {likeItem} from "../api/items";
-// import {getMember} from "../api/member";
-//
-// function displayItems(items) {
-//
-//   async function displayItems(items) {
-//     const member = await getMember(getToken());
-//
-//     let item, offer;
-//     const receptionPage = document.querySelector("#receptionPage");
-//     let page = document.querySelector("#page");
-//     if (items.length === 0) {
-//       receptionPage.innerHTML = `
-// =======
-import {cancelOffer, likeItem, modifyOffer, rateItem} from "../api/itemsApi";
+
+import {cancelOffer, likeItem, modifyOffer, rateItem, getInterests} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
 import {getMember} from "../api/memberApi";
+import {displayInterests} from "./members";
 
 async function displayItems(items) {
   let item, offer;
@@ -25,8 +10,7 @@ async function displayItems(items) {
   let page = document.querySelector("#page");
   if (items.length === 0) {
     receptionPage.innerHTML = `
-<!--&gt;>>>>>> f24bee0657b2417bf5dda675eb490476c76fa94f-->
-      <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
+       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
     `;
   }
   for (let i = 0; i < items.length; i++) {
@@ -73,6 +57,8 @@ async function displayItems(items) {
       
       `;
   }
+  const member = await getMember(getToken());
+
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
@@ -112,7 +98,20 @@ async function displayItems(items) {
   }
 }
 
-function openItemModal(item, j) {
+async function openItemModal(item, j) {
+  const member = await getMember(getToken());
+  const idItem = item.idItem;
+  let interests = await getInterests(idItem);
+  window.localStorage.setItem("item",  item["offer"].idOffer);
+
+  let nbreInterests= interests.length;
+  console.log(nbreInterests);
+
+  const listInterestsDiv = `
+        <div id="listInterestsPage">
+        </div>
+`;
+
   const modal = document.querySelector("#modal");
   modal.innerHTML = `
       <div>
@@ -120,6 +119,7 @@ function openItemModal(item, j) {
           <p class="receptionDescription">${item.description}</p>
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
+          <p class="interests"> Nombre d'interets : ${nbreInterests}</p>
           <p class="modalItemInfo"></p>
           <div class="" id="ratingDiv">
             <h2>Evaluer un objet</h2>
@@ -139,21 +139,26 @@ function openItemModal(item, j) {
     ratingDiv.className += " displayNone";
   }
   rateButton.addEventListener("click", async () => {
-    const member = await getMember(getToken());
-    const idItem = item.idItem;
+    console.log(member);
     const comment = document.querySelector("#ratingComment").value;
     const stars = document.querySelector("#ratingStars").value;
     const memberId = member.idMember;
+    console.log("hello");
+
     await rateItem(idItem, memberId, stars, comment);
 
+
   });
-  if (!item["photo"]) {
-    console.log("pas de photo")
-    photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  } else {
-    console.log("photo")
-    photoSrc.src = item["photo"];
-  }
+
+  displayInterests(interests);
+
+  // if (!item["photo"]) {
+  //   console.log("pas de photo")
+  //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+  // } else {
+  //   console.log("photo")
+  //   photoSrc.src = item["photo"];
+  // }
 }
 
 export {displayItems}

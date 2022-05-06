@@ -315,3 +315,5 @@ values (11, 1, '16-05-2022');
 --  reason_for_conn_refusal, state)
 -- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
 --         'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
+SELECT * FROM pae.items;
+

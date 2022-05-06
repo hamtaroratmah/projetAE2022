@@ -13,7 +13,7 @@ public interface OfferUCC {
 
   boolean isLiked(int idItem, int idMember);
 
-  ArrayList<MemberDTO> interests(int idItem, int idMember);
+  ArrayList<MemberDTO> interests(int idItem);
 
   boolean cancel(int idItem);
 

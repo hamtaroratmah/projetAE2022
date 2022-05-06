@@ -46,6 +46,41 @@ async function getOrderedItems(sortingParam, order) {
   return items;
 }
 
+// get the list of interests
+async function getInterests(idItem) {
+  const request = {
+    method: "POST",
+    body: JSON.stringify(
+        {
+          idItem: idItem
+        }
+    ),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getToken()
+    }
+  };
+
+  let members = [];
+  console.log(request);
+  // fill inscriptions [] with inscriptions pending
+  await fetch("/api/offers/interests", request)
+  .then(response => response.json())
+  .then((commits) => {
+    for (let i = 0; i < commits.length; i++) {
+      members.push(commits[i]);
+    }
+
+  })
+  .catch(() =>
+      error.innerHTML = "Une erreur est survenue"
+          + " durant la récupération des membres"
+  )
+
+  return members;
+}
+
+
 async function modifyOfferFunction(e) {
 
   console.log(idOffer);
@@ -250,6 +285,36 @@ async function rateItem(idItem, idMember, stars, comment) {
     console.error("rateItem::error ", e);
 
   }
+
+
+}
+async function giveItem(idOffer, idMember) {
+  const request = {
+    method: "POST", body: JSON.stringify({
+      idOffer: idOffer, idMember: idMember,
+    }), headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const response = await fetch("/api/offers/offer", request);
+    console.log(request);
+    console.log(response);
+    if (!response.ok) {
+      if (response.status === 403) {
+        "imposssible to cancel this offer"
+      } else {
+        error.innerHTML = "errorrr";
+
+      }
+
+    }
+    console.log("ok")
+    await Navbar();
+    Redirect("/");
+  } catch (e) {
+    console.error("giveOffer::error ", e);
+  }
 }
 
 export {
@@ -260,5 +325,6 @@ export {
   modifyOfferFunction,
   modifyOffer,
   rateItem,
-  likeItem
+  likeItem,
+    getInterests,giveItem
 };

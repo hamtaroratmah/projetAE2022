@@ -107,11 +107,10 @@ public class OfferRessource {
   @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
-    int idMember = json.get("idMember").asInt();
-    if (idItem < 1 || idMember < 1) {
+    if (idItem < 1  ) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    return offerUCC.interests(idItem, idMember);
+    return offerUCC.interests(idItem);
   }
 
   /**
