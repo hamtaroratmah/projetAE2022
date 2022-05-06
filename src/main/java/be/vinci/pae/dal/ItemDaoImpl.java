@@ -148,6 +148,14 @@ public class ItemDaoImpl implements ItemDao {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
       ps.executeQuery();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    try (PreparedStatement pss = services.getPreparedStatement(query)) {
+      pss.setInt(1, idItem);
+      pss.executeQuery();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -156,8 +164,7 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
-
-  private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
+    private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();
     while (resultSet.next()) {

@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.business.ucc.OfferUCC;
 import be.vinci.pae.business.ucc.RatingUcc;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,6 +31,8 @@ public class ItemResource {
 
   @Inject
   ItemUCC itemUcc;
+  @Inject
+  OfferUCC offerUCC;
   @Inject
   DomainFactory domainFactory;
   @Inject
@@ -152,6 +155,9 @@ public class ItemResource {
     int idMember;
     idMember = json.get("idMember").asInt();
     idItem = json.get("idItem").asInt();
+    if(offerUCC.isLiked(idItem,idMember))
+      throw new WebApplicationException("L'objet est deja aimé par ce membre");
+
     return itemUcc.likeAnItem(idItem, idMember);
   }
 

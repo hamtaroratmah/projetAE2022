@@ -315,5 +315,9 @@ values (11, 1, '16-05-2022');
 --  reason_for_conn_refusal, state)
 -- VALUES ('$2a$12$LkYpSJKgVUVn4NcuLddd7eZHm28tRQXTjqVQkTUgLYEP1mlPPRCRW', 'max',
 --         'Lecocq', 'Maxime', 1, '0489789546', true, default, 'valid');
-SELECT * FROM pae.items;
+SELECT * FROM pae.items WHERE id_item=11;
+
+UPDATE pae.interests   SET isrecipient=true,  WHERE id_item = 1 AND id_member=1;
+
+SELECT * FROM pae.members
 
