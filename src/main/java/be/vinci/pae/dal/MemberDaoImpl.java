@@ -190,24 +190,23 @@ public class MemberDaoImpl implements MemberDao {
    * @return returns the member DTO
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
-    MemberDTO member;
+    MemberDTO member = null;
 
     String query =
         "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
-
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           member = createMemberInstance(rs);
-          return member;
         }
+        System.out.println("confirm done");
+        return member;
       }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    return null;
   }
 
   /**

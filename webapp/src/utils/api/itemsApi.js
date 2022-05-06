@@ -215,11 +215,7 @@ async function likeItem(idItem, idMember) {
       }
     }
   } catch (e) {
-<<<<<<< HEAD
     console.error("likeItem::error ", e);
-=======
-    console.log(e);
->>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   }
 }
 
@@ -272,10 +268,6 @@ async function rateItem(idItem, idMember, stars, comment) {
         "imposssible to rate this offer"
       } else {
         error.innerHTML = "errorrr";
-<<<<<<< HEAD
-
-=======
->>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
       }
     }
     await Navbar();
@@ -295,7 +287,3 @@ export {
   rateItem,
   likeItem
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077

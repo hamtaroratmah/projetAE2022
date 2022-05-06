@@ -1,12 +1,9 @@
 import {
   confirmInscription,
   denyInscription,
-<<<<<<< HEAD
   preclude,
+  precludMember,
   unpreclude
-=======
-  precludMember
->>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
 } from "../api/memberApi";
 
 function displayInscriptions(inscriptions) {
@@ -71,9 +68,7 @@ function displayInscriptions(inscriptions) {
         `;
     }
   }
-
   for (let i = 0; i < inscriptions.length; i++) {
-
     const isAdmin = document.getElementById("isAdmin" + i);
     const buttonConfirm = document.getElementById("confirm" + i);
     const buttonDeny = document.getElementById("deny" + i);
@@ -86,11 +81,17 @@ function displayInscriptions(inscriptions) {
     })
 
     // Deny inscription
-    buttonDeny.addEventListener("click", async (e) => {
-      e.preventDefault();
-      await denyInscription(inscriptions[i].username, reasonForRefusal.value);
-      console.log(reasonForRefusal.value)
-    })
+    //Try catch pour pouvoir boucler sur toute la liste de membre même s'ils sont déjà refusé
+    try {
+      buttonDeny.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await denyInscription(inscriptions[i].username, reasonForRefusal.value);
+        console.log(reasonForRefusal.value)
+      })
+    } catch (e) {
+
+    }
+
   }
 
 }
@@ -136,25 +137,21 @@ function displayMembers(members) {
 
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-<<<<<<< HEAD
-    buttonPreclude.addEventListener("click" ,async (e) => {
+    buttonPreclude.addEventListener("click", async (e) => {
       e.preventDefault();
       console.log(members[i].idMember);
       await preclude(members[i].idMember);
     });
-    buttonUnpreclude.addEventListener("click" ,async (e) => {
+    buttonUnpreclude.addEventListener("click", async (e) => {
       e.preventDefault();
       await unpreclude(members[i].idMember);
     });
 
-
-=======
     buttonPreclude.addEventListener("click", async function () {
       await precludMember(members[i].idMember)
       window.location.reload()
     });
 
->>>>>>> 8bbbbe3f1e857e659a00d5a5b76504863d5d9077
   }
 
 }

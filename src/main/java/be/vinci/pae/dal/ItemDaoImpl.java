@@ -281,7 +281,6 @@ public class ItemDaoImpl implements ItemDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return item;
   }
 
