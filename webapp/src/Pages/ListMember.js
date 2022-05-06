@@ -1,8 +1,5 @@
 import {getListMembers} from "../utils/api/memberApi";
-import {
-  displayInscriptions,
-  displayMembers
-} from "../utils/displayModule/members";
+import {displayMembers} from "../utils/displayModule/members";
 import {getToken} from "../utils/utils";
 import {Redirect} from "../Router";
 
@@ -22,9 +19,6 @@ const listMembersDiv = async () => {
   pageDiv.innerHTML = listMemberDiv;
 
   let members = await getListMembers();
-
-  // display inscriptions denied and pending
-  console.log(members)
   displayMembers(members)
 }
 
