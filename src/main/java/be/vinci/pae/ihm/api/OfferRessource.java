@@ -64,8 +64,8 @@ public class OfferRessource {
       idType = itemUcc.createType(json.get("type").asText());
     }
     ItemDTO item = domainFactory.getItem();
-    type.setIdType(idType);
     item.setType(type);
+    type.setIdType(idType);
     String description = json.get("description").asText();
     description = description.replaceAll("[;&amp;|`]*", "");
     item.setDescription(description);
@@ -106,11 +106,10 @@ public class OfferRessource {
   @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
-    int idMember = json.get("idMember").asInt();
-    if (idItem < 1 || idMember < 1) {
+    if (idItem < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    return offerUCC.interests(idItem, idMember);
+    return offerUCC.interests(idItem);
   }
 
   /**
@@ -142,15 +141,25 @@ public class OfferRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO modify(JsonNode json) {
+    TypeDTO type = domainFactory.getType();
     int idOffer = json.get("idOffer").asInt();
-    String type = json.get("type").asText();
+    String typeText = json.get("type").asText();
+
+    type.setType(typeText);
+    int idType = itemUcc.typeExisting(type.getType());
+    //si le type n existe pas , le creer
+    if (idType == -1) {
+
+      idType = itemUcc.createType(json.get("type").asText());
+    }
+
     String photo = json.get("photo").asText();
     String description = json.get("description").asText();
     String avalaibilities = json.get("availabilities").asText();
     if (idOffer < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
-    return offerUCC.modify(idOffer, type, photo, description, avalaibilities);
+    return offerUCC.modify(idOffer, idType, photo, description, avalaibilities);
   }
 
   /**

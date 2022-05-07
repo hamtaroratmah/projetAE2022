@@ -19,11 +19,12 @@ public interface ItemDao {
 
   int createType(String type);
 
-  ItemDTO modify(int idItem, String type, String photo, String description, String availabilities);
+  ItemDTO modify(int idItem, int type, String photo, String description, String availabilities);
 
   int likeAnItem(int itemId, int memberId);
 
   boolean offer(int idOffer, int idItem);
 
+  void insertPhoto(String fileName, int idItem);
 
 }

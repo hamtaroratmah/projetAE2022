@@ -1,5 +1,13 @@
-import {cancelOffer, likeItem, modifyOffer} from "../api/itemsApi";
+import {displayInterests} from "./members";
+import {
+  cancelOffer,
+  getInterests,
+  modifyOffer,
+  rateItem
+} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
+import {getMember} from "../api/memberApi";
+import {likeItem} from "../api/items";
 
 async function displayItems(items) {
   let item, offer;
@@ -30,7 +38,7 @@ async function displayItems(items) {
     }
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
-        <img src="" alt="" class="receptionImage${i}" id="receptionImage${i}">
+        <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
           <p id="receptionDescription${i}">${item.description}</p>
           <p id="receptionOfferingMember${i}">${item["offeringMember"].username}</p>
           <p id="receptionType${i}">${item["type"].type}</p>
@@ -55,6 +63,8 @@ async function displayItems(items) {
       
       `;
   }
+  const member = await getMember(getToken());
+
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
@@ -88,7 +98,20 @@ async function displayItems(items) {
   }
 }
 
-function openItemModal(item, j) {
+async function openItemModal(item, j) {
+  const member = await getMember(getToken());
+  const idItem = item.idItem;
+  let interests = await getInterests(idItem);
+  window.localStorage.setItem("item", item["offer"].idOffer);
+
+  let nbreInterests = interests.length;
+  console.log(nbreInterests);
+
+  const listInterestsDiv = `
+        <div id="listInterestsPage">
+        </div>
+`;
+
   const modal = document.querySelector("#modal");
   modal.innerHTML = `
       <div>
@@ -96,6 +119,7 @@ function openItemModal(item, j) {
           <p class="receptionDescription">${item.description}</p>
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
+          <p class="interests"> Nombre d'interets : ${nbreInterests}</p>
           <p class="modalItemInfo"></p>
           <div class="" id="ratingDiv">
             <h2>Evaluer un objet</h2>
@@ -114,11 +138,12 @@ function openItemModal(item, j) {
     ratingDiv.className += " displayNone";
   }
   rateButton.addEventListener("click", async () => {
-    const member = await getMember(getToken());
-    const idItem = item.idItem;
+    console.log(member);
     const comment = document.querySelector("#ratingComment").value;
     const stars = document.querySelector("#ratingStars").value;
     const memberId = member.idMember;
+    console.log("hello");
+
     await rateItem(idItem, memberId, stars, comment);
 
   });
@@ -128,6 +153,7 @@ function openItemModal(item, j) {
     console.log("photo")
     photoSrc.src = item["photo"];
   }
+  displayInterests(interests);
 }
 
 export {displayItems}

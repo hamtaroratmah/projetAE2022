@@ -109,3 +109,11 @@ webapp/node_modules
 webapp/package-lock.json
 *.properties
 
+<<<<<<< HEAD
+=======
+#logger
+log.*
+
+#folder
+photos
+>>>>>>> dd718146d8e2f331fb65de7ed93dfc9a8c47a665

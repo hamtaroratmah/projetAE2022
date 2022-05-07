@@ -23,14 +23,13 @@ const receptionDiv = `
       <option value="canceled">Annulé</option>
     </select>
   </div>
-
-  <div id="receptionPage">
     
+  <div id="receptionPage">
+   
   </div>
 `
 
 const HomePage = async () => {
-
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion
   if (window.sessionStorage.getItem("justLogged") === true.toString()) {

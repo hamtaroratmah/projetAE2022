@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.business.ucc.OfferUCC;
 import be.vinci.pae.business.ucc.RatingUcc;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,6 +31,8 @@ public class ItemResource {
 
   @Inject
   ItemUCC itemUcc;
+  @Inject
+  OfferUCC offerUCC;
   @Inject
   DomainFactory domainFactory;
   @Inject
@@ -105,17 +108,18 @@ public class ItemResource {
   public ItemDTO createItem(JsonNode json) throws SQLException {
 
     if (!json.hasNonNull("type")
-        || !json.hasNonNull("description")
-        || !json.hasNonNull(
-        "availabilities")
-        || !json.hasNonNull("itemCondition")
-        || !json.hasNonNull("idOfferingMember")) {
+            || !json.hasNonNull("description")
+            || !json.hasNonNull(
+            "availabilities")
+            || !json.hasNonNull("itemCondition")
+            || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("idOfferingMember").asInt() < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
     MemberDTO offeringMember = domainFactory.getMember();
+    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
     offeringMember.setIdMember(json.get("idOfferingMember").asInt());
@@ -127,15 +131,16 @@ public class ItemResource {
     }
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
-    String description = json.get("description").asText();
+    //String description = json.get("description").asText();
     item.setType(type);
-    item.setDescription(description);
+    item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("itemCondition").asText());
     item.setOfferingMember(offeringMember);
 
     return itemUcc.createItem(item);
   }
+
 
   /**
    * like an item.
@@ -152,6 +157,10 @@ public class ItemResource {
     int idMember;
     idMember = json.get("idMember").asInt();
     idItem = json.get("idItem").asInt();
+    if (offerUCC.isLiked(idItem, idMember)) {
+      throw new WebApplicationException("L'objet est deja aimé par ce membre");
+    }
+
     return itemUcc.likeAnItem(idItem, idMember);
   }
 

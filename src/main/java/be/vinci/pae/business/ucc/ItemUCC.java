@@ -24,4 +24,5 @@ public interface ItemUCC {
 
   ItemDTO createItem(ItemDTO item);
 
+  void insertPhoto(String fileName, int idItem);
 }

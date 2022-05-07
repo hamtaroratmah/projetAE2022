@@ -15,7 +15,6 @@ const verifyToken = async () => {
       console.log(err)
     })
   } else {
-    let member = await response.json()
     console.log("token valid <3")
   }
 }
@@ -24,8 +23,10 @@ const error = document.querySelector("#errorText");
 
 async function getMember(token) {
   const request = {
-    method: "GET", headers: {
-      "Content-Type": "application/json", "Authorization": token
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token
     }
   };
   const response = await fetch(`/api/members/`, request);
@@ -36,9 +37,9 @@ async function getMember(token) {
   return await response.json();
 }
 
-export async function preclude(idMember){
-  const request={
-    method:"POST",
+export async function preclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -52,13 +53,11 @@ export async function preclude(idMember){
   console.log(request);
   await fetch("/api/members/preclude", request)
 
-
-
-
 }
-export async function unpreclude(idMember){
-  const request={
-    method:"POST",
+
+export async function unpreclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -72,10 +71,8 @@ export async function unpreclude(idMember){
   console.log(request);
   await fetch("/api/members/unpreclude", request)
 
-
-
-
 }
+
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {
