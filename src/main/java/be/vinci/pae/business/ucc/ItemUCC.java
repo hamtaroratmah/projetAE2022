@@ -14,9 +14,7 @@ public interface ItemUCC {
 
   int typeExisting(String type);
 
-
   int createType(String type);
-
 
   int likeAnItem(int offerId, int memberId);
 
@@ -24,5 +22,5 @@ public interface ItemUCC {
 
   ItemDTO createItem(ItemDTO item);
 
-  static ItemDTO insertPhoto(String fileName, int idItem);
+  void insertPhoto(String fileName, int idItem);
 }

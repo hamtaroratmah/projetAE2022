@@ -92,13 +92,6 @@ async function createItem(e) {
       }
     };
 
-    const formData = new FormData();
-    formData.append('file', inputFile.files[0]);
-    console.log(inputFile.files[0]);
-    const options = {
-      method: 'POST',
-      body: formData
-    };
     // fetch createOffer
     const response = await fetch("/api/offer/createOffer", request);
     if (!response.ok) {
@@ -108,10 +101,17 @@ async function createItem(e) {
     } else {
       error.innerHTML = "";
     }
-    // fetch photo
-    fetch('images/upload', options
-    ).catch((error) => ("Something went wrong!", error));
+    let item = await response.json()
 
+    const formData = new FormData();
+    formData.append('file', inputFile.files[0]);
+    console.log(inputFile.files[0]);
+    const options = {
+      method: 'POST',
+      body: formData
+    };
+    // fetch photo
+    fetch("/api/images/upload"+item.idItem, options).catch((error) => ("Something went wrong!", error));
     await Navbar();
     Redirect("/");
   } catch (e) {
@@ -156,9 +156,16 @@ async function createItem(e) {
       }
 
     }
-
-    async function UploadImage(){
-
-    }
-
-export {getItemUnordered, getOrderedItems, createItem,likeItem,UploadImage};
+async function getPhotoPath(photoName) {
+  const request = {
+    method: "GET",
+  };
+  const response = await fetch(`/api/images/`+photoName, request);
+  if (!response.ok) {
+    error.innerText = `Error while fetching username`;
+  }
+  let photo = await response.json();
+  console.log(photo)
+  return photo
+}
+export {getItemUnordered, getOrderedItems, createItem,likeItem, getPhotoPath};

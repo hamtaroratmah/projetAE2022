@@ -171,32 +171,7 @@ INSERT INTO pae.members
 VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
         'Lehmann', 'Brigitte', 4, 'valid', true);
 
--- Insert demo's items
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (3, 3, 'Mardi de 17h à 22h', 'Décoration de Noël de couleur rouge', 'given', null);
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir', 'given',
-        null);
-
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', null);
-
---Insert demo's offers
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('21-03-2022', 1);
-
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('25-03-2022', 2);
-
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('25-03-2022', 3);
 
 --Queries for the demo
 SELECT id_member, username, isadmin, reason_for_conn_refusal, state
@@ -221,24 +196,11 @@ SELECT *
 FROM pae.members;
 
 
-
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, ' ', 'objet test 2', 'lubdi et mardi', 'published', 2)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-
-
-INSERT INTO pae.offers (date_offer, id_item)
-VALUES ('2022-04-07 +02', 1)
-RETURNING id_offer, date_offer, id_item;
-
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-
 SELECT *
 FROM pae.members;
+
+SELECT *
+FROM pae.items;
 
 SELECT *
 FROM pae.interests

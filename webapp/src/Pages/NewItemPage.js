@@ -16,23 +16,12 @@ const createDiv = `
         </div>
 `;
 
-
-
 function NewItem() {
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
   const inputFile = document.getElementById("photoInput");
   const formData = new FormData();
-  formData.append('file', inputFile.files[0]);
-  console.log(inputFile.files[0]);
-  const options = {
-    method: 'POST',
-    body: formData
-  };
-  fetch('images/upload', options
-  ).catch((error) => ("Something went wrong!", error));
-
   const form = document.getElementById("newItemForm");
   form.addEventListener("submit", createItem);
 }

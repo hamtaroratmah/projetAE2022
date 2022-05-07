@@ -155,12 +155,12 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-  public ItemDTO insertPhoto(String fileName,int idItem) {
+  public void insertPhoto(String fileName,int idItem) {
     try {
+      System.out.print("Passer par là : ItemUcc");
       dalServices.startTransaction();
-      ItemDTO item = itemDao.insertPhoto(fileName, idItem);
+      itemDao.insertPhoto(fileName, idItem);
       dalServices.commitTransaction();
-      return item;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
