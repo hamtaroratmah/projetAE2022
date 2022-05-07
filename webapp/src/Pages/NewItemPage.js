@@ -20,8 +20,6 @@ function NewItem() {
 
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = createDiv;
-  const inputFile = document.getElementById("photoInput");
-  const formData = new FormData();
   const form = document.getElementById("newItemForm");
   form.addEventListener("submit", createItem);
 }
