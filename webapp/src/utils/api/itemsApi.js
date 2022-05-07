@@ -244,8 +244,8 @@ async function likeItem(idItem, idMember) {
     console.log(request);
     console.log(response);
     if (!response.ok) {
-      if (response.status === 403) {
-        "imposssible to cancel this offer"
+      if (response.status === 500) {
+        error.innerHTML="Vous avez deja aime cette offre"
       } else {
         error.innerHTML = "errorrr";
 

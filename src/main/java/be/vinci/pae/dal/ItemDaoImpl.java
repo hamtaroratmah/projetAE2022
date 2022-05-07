@@ -148,6 +148,14 @@ public class ItemDaoImpl implements ItemDao {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
       ps.executeQuery();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    try (PreparedStatement pss = services.getPreparedStatement(query)) {
+      pss.setInt(1, idItem);
+      pss.executeQuery();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -155,7 +163,6 @@ public class ItemDaoImpl implements ItemDao {
     return true;
 
   }
-
 
   private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
@@ -255,9 +262,9 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public ItemDTO modify(int idItem, String type, String photo, String description,
+  public ItemDTO modify(int idItem, int type, String photo, String description,
       String availabilities) {
-    int idType = typeExisting(type);
+
     ItemDTO item = null;
 
     String query =
@@ -266,7 +273,7 @@ public class ItemDaoImpl implements ItemDao {
             + "item_condition,id_offering_member";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setInt(1, idType);
+      ps.setInt(1, type);
       ps.setString(2, photo);
       ps.setString(3, description);
       ps.setString(4, availabilities);
