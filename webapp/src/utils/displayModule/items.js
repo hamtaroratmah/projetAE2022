@@ -1,12 +1,10 @@
 
 import {cancelOffer, likeItem, modifyOffer, rateItem, getInterests} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
-import {likeItem} from "../api/items";
-import {getMember} from "../api/member";
+import {getMember} from "../api/memberApi";
+import {displayInterests} from "./members";
 
 async function displayItems(items) {
-  const member = await getMember(getToken());
-
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
@@ -32,7 +30,6 @@ async function displayItems(items) {
       availabilities: items[i].availabilities,
       offer: offer
     }
-
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
         <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
@@ -60,7 +57,7 @@ async function displayItems(items) {
       
       `;
   }
-  //const member = await getMember(getToken());
+  const member = await getMember(getToken());
 
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
@@ -163,6 +160,5 @@ async function openItemModal(item, j) {
   //   photoSrc.src = item["photo"];
   // }
 }
-
 
 export {displayItems}
