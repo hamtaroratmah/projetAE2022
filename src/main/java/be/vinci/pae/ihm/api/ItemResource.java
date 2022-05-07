@@ -108,11 +108,11 @@ public class ItemResource {
   public ItemDTO createItem(JsonNode json) throws SQLException {
 
     if (!json.hasNonNull("type")
-        || !json.hasNonNull("description")
-        || !json.hasNonNull(
-        "availabilities")
-        || !json.hasNonNull("itemCondition")
-        || !json.hasNonNull("idOfferingMember")) {
+            || !json.hasNonNull("description")
+            || !json.hasNonNull(
+            "availabilities")
+            || !json.hasNonNull("itemCondition")
+            || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("idOfferingMember").asInt() < 1) {
@@ -131,7 +131,7 @@ public class ItemResource {
     }
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
-    String description = json.get("description").asText();
+    //String description = json.get("description").asText();
     item.setType(type);
     item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
@@ -140,6 +140,7 @@ public class ItemResource {
 
     return itemUcc.createItem(item);
   }
+
 
   /**
    * like an item.

@@ -88,7 +88,6 @@ public class ItemUCCImpl implements ItemUCC {
     return -1;
   }
 
-
   /**
    * Cancel an offer.
    *
@@ -152,6 +151,7 @@ public class ItemUCCImpl implements ItemUCC {
     }
     return -1;
   }
+
   /**
    * put the name's photo in his item.
    *
