@@ -156,16 +156,4 @@ async function createItem(e) {
       }
 
     }
-async function getPhotoPath(photoName) {
-  const request = {
-    method: "GET",
-  };
-  const response = await fetch(`/api/images/`+photoName, request);
-  if (!response.ok) {
-    error.innerText = `Error while fetching username`;
-  }
-  let photo = await response.json();
-  console.log(photo)
-  return photo
-}
-export {getItemUnordered, getOrderedItems, createItem,likeItem, getPhotoPath};
+export {getItemUnordered, getOrderedItems, createItem,likeItem};

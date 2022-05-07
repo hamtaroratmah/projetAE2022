@@ -1,5 +1,5 @@
 import {getToken, reformateDate} from "../utils";
-import {getPhotoPath, likeItem} from "../api/items";
+import {likeItem} from "../api/items";
 import {getMember} from "../api/member";
 
 async function displayItems(items) {
@@ -30,18 +30,9 @@ async function displayItems(items) {
       offer: offer
     }
 
-    //const photo = await getPhotoPath(item.photo)
-    //console.log(photo)
-    const request = {
-      method: "GET",
-    };
-    const photo = await fetch("/api/images/"+item.photo,request);
-    //console.log(await photo.text())
-    console.log(item.photo)
-
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
-        <img src="${ await photo.text()}" alt="" class="receptionImage" id="receptionImage${i}">
+        <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
           <p id="receptionDescription${i}">${item.description}</p>
           <p id="receptionOfferingMember${i}">${item["offeringMember"].username}</p>
           <p id="receptionType${i}">${item["type"].type}</p>

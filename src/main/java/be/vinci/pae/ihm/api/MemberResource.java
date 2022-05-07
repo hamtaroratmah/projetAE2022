@@ -6,7 +6,6 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.MemberUCC;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import be.vinci.pae.utils.Json;
-import be.vinci.pae.utils.Log;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;

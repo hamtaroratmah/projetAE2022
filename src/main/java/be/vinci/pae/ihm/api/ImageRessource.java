@@ -9,6 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -51,10 +52,11 @@ public class ImageRessource {
 
   @GET
   @Path("/{photo}")
-  public String getPhotoPath(@PathParam("photo") String photoName){
-    System.out.print("\nPasser par laaaaa : photoPath");
+  public File getPhotoPath(@PathParam("photo") String photoName){
+    //System.out.print("\nPasser par laaaaa : photoPath");
     String path =  Config.getProperty("PhotoPath");
-    System.out.print(path + "\\" + photoName);
-    return path + "\\" + photoName;
+    File file = new File(path+ "\\" + photoName);
+    //System.out.print(path + "\\" + photoName);
+    return file;
   }
 }
