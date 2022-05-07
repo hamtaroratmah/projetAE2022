@@ -155,8 +155,9 @@ public class ItemResource {
     int idMember;
     idMember = json.get("idMember").asInt();
     idItem = json.get("idItem").asInt();
-    if(offerUCC.isLiked(idItem,idMember))
+    if (offerUCC.isLiked(idItem, idMember)) {
       throw new WebApplicationException("L'objet est deja aimé par ce membre");
+    }
 
     return itemUcc.likeAnItem(idItem, idMember);
   }

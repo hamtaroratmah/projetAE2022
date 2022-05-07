@@ -164,7 +164,7 @@ public class ItemDaoImpl implements ItemDao {
 
   }
 
-    private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
+  private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
     List<ItemDTO> items = new ArrayList<>();
     ResultSet resultSet = query.executeQuery();
     while (resultSet.next()) {
@@ -273,7 +273,7 @@ public class ItemDaoImpl implements ItemDao {
             + "item_condition,id_offering_member";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setInt(1,type );
+      ps.setInt(1, type);
       ps.setString(2, photo);
       ps.setString(3, description);
       ps.setString(4, availabilities);

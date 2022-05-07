@@ -18,7 +18,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -108,7 +107,7 @@ public class OfferRessource {
   @Authorize
   public ArrayList<MemberDTO> interests(JsonNode json) {
     int idItem = json.get("idItem").asInt();
-    if (idItem < 1  ) {
+    if (idItem < 1) {
       throw new WebApplicationException("L'id ne peut être négatif");
     }
     return offerUCC.interests(idItem);
@@ -143,7 +142,7 @@ public class OfferRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ItemDTO modify(JsonNode json) {
-    TypeDTO type=domainFactory.getType();
+    TypeDTO type = domainFactory.getType();
     int idOffer = json.get("idOffer").asInt();
     String typeText = json.get("type").asText();
 
@@ -154,7 +153,6 @@ public class OfferRessource {
 
       idType = itemUcc.createType(json.get("type").asText());
     }
-
 
     String photo = json.get("photo").asText();
     String description = json.get("description").asText();
