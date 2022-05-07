@@ -76,7 +76,7 @@ CREATE TABLE pae.interests
 -- INSERT FAKE MEMBERS
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue de la loi', 16, 1000, 'Bruxelles', 15);
 
 INSERT INTO pae.members
@@ -132,19 +132,19 @@ VALUES ('Vêtements');
 
 --Insert demo's adresses TODO escape simple quote
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue de l Eglise', 11, 4987, 'Stoumont', 'B1');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue de Renkin', 7, 4800, 'Verviers', '7');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city, unit_number)
+(street, building_number, postcode, city, unit_number)
 VALUES ('Rue Haute Folie', 6, 4800, 'Verviers', 'A103');
 
 INSERT INTO pae.addresses
-    (street, building_number, postcode, city)
+(street, building_number, postcode, city)
 VALUES ('Haut-Vinâve', 13, 4845, 'Jalhay');
 
 
@@ -159,11 +159,11 @@ INSERT INTO pae.members
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'caro',
         'Line', 'Caroline', 1, 'Il faudra patienter un jour ou deux.', 'denied');
 INSERT INTO pae.members
-    (password, username, last_name, first_name, address, state)
+(password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'achil',
         'Ile', 'Achille', 2, 'valid');
 INSERT INTO pae.members
-    (password, username, last_name, first_name, address, state)
+(password, username, last_name, first_name, address, state)
 VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
         'Ile', 'Basile', 3, 'valid');
 INSERT INTO pae.members
@@ -171,7 +171,32 @@ INSERT INTO pae.members
 VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
         'Lehmann', 'Brigitte', 4, 'valid', true);
 
+-- Insert demo's items
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
+VALUES (3, 3, 'Mardi de 17h à 22h', 'Décoration de Noël de couleur rouge', 'given', 'christmas-1869533_640.png');
 
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
+VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir', 'given',
+        'dog-4118585_640.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition, photo)
+VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', 'BureauEcolier-7.JPG');
+
+--Insert demo's offers
+INSERT INTO pae.offers
+(date_offer, id_item)
+VALUES ('21-03-2022', 1);
+
+INSERT INTO pae.offers
+(date_offer, id_item)
+VALUES ('25-03-2022', 2);
+
+INSERT INTO pae.offers
+(date_offer, id_item)
+VALUES ('25-03-2022', 3);
 
 --Queries for the demo
 SELECT id_member, username, isadmin, reason_for_conn_refusal, state
@@ -195,6 +220,22 @@ FROM pae.items;
 SELECT *
 FROM pae.members;
 
+
+
+INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+                       id_offering_member)
+VALUES (4, ' ', 'objet test 2', 'lubdi et mardi', 'published', 2)
+RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+
+
+INSERT INTO pae.offers (date_offer, id_item)
+VALUES ('2022-04-07 +02', 1)
+RETURNING id_offer, date_offer, id_item;
+
+INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+                       id_offering_member)
+VALUES (4, NULL, 'objet test 2', 'lundi et mardi', 'published', 2)
+RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
 
 SELECT *
 FROM pae.members;
@@ -243,5 +284,4 @@ WHERE m.id_member = 10
 SELECT * FROM pae.interests;
 UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
 
-                                                                INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
-
+INSERT  INTO pae.items (id_type,photo, description, availabilities, item_condition,id_offering_member) VALUES(4,'','','','',4) RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
