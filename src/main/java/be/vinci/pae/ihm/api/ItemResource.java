@@ -6,6 +6,8 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.business.ucc.OfferUCC;
+import be.vinci.pae.business.ucc.RatingUcc;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -123,7 +125,6 @@ public class ItemResource {
     offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     int idType = itemUcc.typeExisting(type.getType());
     type.setType(typeText);
-    int idType = itemUcc.typeExisting(type.getType());
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());

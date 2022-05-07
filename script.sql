@@ -171,50 +171,125 @@ VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'charlin
 
 -- Insert demo's items
 INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (3, 3, 'Mardi de 17h à 22h', 'Décoration de Noël de couleur rouge', 'given', 'christmas-1869533_640.png');
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (3, 3, 'Mardi de 17h à 22h', 'Décorations de Noël de couleur rouge',
+        'canceled','christmas-1869533_640.png');
 
 INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir', 'given',
-        'dog-4118585_640.jpg');
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir',
+        'published','dog-4118585_640.jpg');
 
 INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition, photo)
-VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'given', 'BureauEcolier-7.JPG');
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'interestShown','BureauEcolier-7.JPG');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 7, 'Tous les matins avant 11h30',
+        'Brouette à deux roue à l avant. Améliore la stabilité et ne fatigue pas le dos',
+        'interestShown','wheelbarrows-4566619_640.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition)
+VALUES (5, 7, 'Tous les matins avant 11h30',
+        'Scie sur perche Gardena',
+        'published');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 8, 'Tous les matins avant 11h30','Table jardin et deux chaises en bois','published',
+        '3dd3a99b-1a59-4f66-9123-a2f9438aeac6.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 8, 'Lundi de 18h à 20h','Table bistro','published','table-bistro-a07ea384-d9ee-4f6f-9d4b-e0a8c69c0cac.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (1, 8, 'Samedi en journée', 'Table bistro ancienne de couleur bleue', 'interestShown',
+        'table-bistro-carree-bleue-1912de3b-6c28-401b-a3e9-aaf539dbed01.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 4, 'Lundi de 18h à 20h', 'Tableau noir pour enfant', 'assigned',
+        'tableau-a00c6153-95aa-4eb1-82d4-cb33b9fcec57.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 3, 'Lundi de 18h30 à 20h', 'Cadre cottage naïf', 'interestShown','cadre-cottage-1178704_640.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (5, 4, 'Lundi de 18h30 à 20h', 'Tasse de couleur claire rose & mauve', 'interestShown','tasse-garden-5037113_640.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (1, 9, 'Lundi de 16h à 17h', 'Pâquerettes dans pots rustiques', 'assigned','pots-daisy-181905_640.jpg');
+
+INSERT INTO pae.items
+(id_offering_member, id_type, availabilities, description, item_condition,photo)
+VALUES (1, 9, 'Lundi de 16h à 17h', 'Pots en grès pour petites plantes', 'published','pots-plants-6520443_640.jpg');
 
 --Insert demo's offers
 INSERT INTO pae.offers
 (date_offer, id_item)
 VALUES ('21-03-2022', 1);
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (3, 3, 'Lundi de 18h à 22h', 'Cadre représentant un chien noir sur un fond noir',
-        'published');
 INSERT INTO pae.offers
 (date_offer, id_item)
 VALUES ('25-03-2022', 2);
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (4, 8, 'Tous les jours de 15h à 18h', 'Ancien bureau d écolier', 'interestShown');
 INSERT INTO pae.offers
 (date_offer, id_item)
 VALUES ('25-03-2022', 3);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('28-03-2022', 4);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('28-03-2022', 5);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('29-03-2022', 6);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('29-03-2022', 7);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('30-03-2022', 8);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('14-04-2022', 9);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('21-04-2022', 10);
+
+INSERT INTO pae.offers
+    (date_offer, id_item)
+VALUES ('21-04-2022', 11);
+
+INSERT INTO pae.offers
+(date_offer, id_item)
+VALUES ('21-04-2022', 12);
+
+INSERT INTO pae.offers
+(date_offer, id_item)
+VALUES ('21-04-2022', 13);
+
+-- Insert demo's interests
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (3, 5, '16-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (3, 3, '17-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 7, 'Tous les matins avant 11h30',
-        'Brouette à deux roue à l avant. Améliore la stabilité et ne fatigue pas le dos',
-        'interestShown');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('28-03-2022', 4);
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (4, 4, '09-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
@@ -222,60 +297,14 @@ values (4, 3, '09-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (4, 1, '09-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 7, 'Tous les matins avant 11h30',
-        'Scie sur perche Gardena',
-        'published');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('28-03-2022', 5);
-
-
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 8, 'Tous les matins avant 11h30',
-        'Table jardin et deux chaises en bois',
-        'published');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('29-03-2022', 6);
-
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 8, 'Lundi de 18h à 20h',
-        'Table bistro',
-        'published');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('29-03-2022', 7);
-
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (1, 8, 'Samedi en journée', 'Table bistro ancienne de couleur bleue', 'interestShown');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('30-03-2022', 8);
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (8, 5, '14-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (8, 4, '14-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 4, 'Lundi de 18h à 20h', 'Tableau noir pour enfant', 'assigned');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('14-04-2022', 9);
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (9, 1, '16-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 3, 'Lundi de 18h30 à 20h', 'Cadre cottage naïf', 'interestShown');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('21-04-2022', 10);
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (10, 4, '09-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
@@ -283,16 +312,14 @@ values (10, 3, '09-05-2022');
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (10, 1, '09-05-2022');
 
-INSERT INTO pae.items
-(id_offering_member, id_type, availabilities, description, item_condition)
-VALUES (5, 4, 'Lundi de 18h30 à 20h', 'Tasse de couleur claire rose & mauve', 'interestShown');
-INSERT INTO pae.offers
-    (date_offer, id_item)
-VALUES ('21-04-2022', 11);
 INSERT INTO pae.interests (id_item, id_member, date_delivery)
 values (11, 3, '16-05-2022');
 values (11, 1, '16-05-2022');
 
+INSERT INTO pae.interests (id_item, id_member, date_delivery)
+values (12, 3, '16-05-2022');
+
+-- Others queries
 SELECT id_member,
        password,
        username,
@@ -320,6 +347,11 @@ FROm pae.members m,
 WHERE m.id_member = 10
   AND a.id_address = m.address;
 
+SELECT * FROM pae.members;
+
+SELECT * FROM pae.items;
+
+SELECT * FROM pae.types;
 
 SELECT * FROM pae.interests;
 UPDATE pae.interests SET isrecipient=true WHERE id_item = 5 AND id_member=1;
