@@ -57,6 +57,7 @@ function displayInscriptions(inscriptions) {
             <div class="receptionInscriptionGrandChild">
                 state : ${inscriptions[i].state}
             </div>
+            <p id="reasonConnRefusal">raison de refus : ${inscriptions[i].reasonForConnRefusal}</p>
             <div class="receptionInscriptionGrandChild">
                 <input type="checkbox" id="isAdmin${i}" name="isAdmin${i}">
             </div>
@@ -88,6 +89,7 @@ function displayInscriptions(inscriptions) {
         e.preventDefault();
         await denyInscription(inscriptions[i].username, reasonForRefusal.value);
         console.log(reasonForRefusal.value)
+        window.location.reload();
       })
     } catch (e) {
 
