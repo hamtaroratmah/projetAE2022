@@ -177,7 +177,6 @@ public class MemberUCCImpl implements MemberUCC {
       dalServices.startTransaction();
       ArrayList<MemberDTO> list = memberDao.listUsersByState("");
       dalServices.commitTransaction();
-      System.out.println(list);
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
