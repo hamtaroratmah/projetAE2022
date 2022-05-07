@@ -131,7 +131,7 @@ public class ItemResource {
     }
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
-    //String description = json.get("description").asText();
+    String description = json.get("description").asText();
     item.setType(type);
     item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
