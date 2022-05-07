@@ -1,16 +1,18 @@
 
 import {cancelOffer, likeItem, modifyOffer, rateItem, getInterests} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
-import {getMember} from "../api/memberApi";
-import {displayInterests} from "./members";
+import {likeItem} from "../api/items";
+import {getMember} from "../api/member";
 
 async function displayItems(items) {
+  const member = await getMember(getToken());
+
   let item, offer;
   const receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
   if (items.length === 0) {
     receptionPage.innerHTML = `
-       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
+      <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
     `;
   }
   for (let i = 0; i < items.length; i++) {
@@ -32,7 +34,7 @@ async function displayItems(items) {
     }
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
-        <img src="" alt="" class="receptionImage${i}" id="receptionImage${i}">
+        <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
           <p id="receptionDescription${i}">${item.description}</p>
           <p id="receptionOfferingMember${i}">${item["offeringMember"].username}</p>
           <p id="receptionType${i}">${item["type"].type}</p>
@@ -59,7 +61,7 @@ async function displayItems(items) {
   }
   const member = await getMember(getToken());
 
-  page += receptionPage;
+  }
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {

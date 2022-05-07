@@ -309,5 +309,27 @@ public class ItemDaoImpl implements ItemDao {
     rs.close();
     return item;
   }
+
+  /**
+   * Update the photo of the item, put the uuid file name.
+   *
+   * @param fileName name of the file (uuid + extension)
+   * @param idItem id of the item
+   */
+  @Override
+  public void insertPhoto(String fileName, int idItem) {
+    System.out.print("Passer par là : ItemDao");
+    String query =
+            "UPDATE  pae.items SET photo=? WHERE id_item=?"
+            + "RETURNING id_item";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, fileName);
+      ps.setInt(2,idItem);
+      ps.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }
 

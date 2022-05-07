@@ -110,3 +110,6 @@ webapp/package-lock.json
 
 #logger
 log.*
+
+#folder
+photos

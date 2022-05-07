@@ -65,8 +65,8 @@ public class OfferRessource {
       idType = itemUcc.createType(json.get("type").asText());
     }
     ItemDTO item = domainFactory.getItem();
-    type.setIdType(idType);
     item.setType(type);
+    type.setIdType(idType);
     String description = json.get("description").asText();
     description = description.replaceAll("[;&amp;|`]*", "");
     item.setDescription(description);
