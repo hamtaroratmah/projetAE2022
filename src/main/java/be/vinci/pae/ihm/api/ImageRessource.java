@@ -3,18 +3,22 @@ package be.vinci.pae.ihm.api;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.utils.Config;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.core.MediaType;
 import org.apache.commons.io.FilenameUtils;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 
 @Path("/images")
 public class ImageRessource {
