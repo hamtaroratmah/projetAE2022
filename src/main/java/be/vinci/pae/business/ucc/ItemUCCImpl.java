@@ -152,7 +152,13 @@ public class ItemUCCImpl implements ItemUCC {
     }
     return -1;
   }
-
+  /**
+   * put the name's photo in his item.
+   *
+   * @param fileName name of the file
+   * @param idItem id of the item
+   */
+  @Override
   public void insertPhoto(String fileName,int idItem) {
     try {
       System.out.print("Passer par là : ItemUcc");

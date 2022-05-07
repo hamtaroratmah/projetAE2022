@@ -308,6 +308,13 @@ public class ItemDaoImpl implements ItemDao {
     return item;
   }
 
+  /**
+   * Update the photo of the item, put the uuid file name.
+   *
+   * @param fileName name of the file (uuid + extension)
+   * @param idItem id of the item
+   */
+  @Override
   public void insertPhoto(String fileName, int idItem) {
     System.out.print("Passer par là : ItemDao");
     String query =
