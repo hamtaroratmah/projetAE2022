@@ -2,12 +2,12 @@ import {displayInterests} from "./members";
 import {
   cancelOffer,
   getInterests,
+  likeItem,
   modifyOffer,
   rateItem
 } from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
 import {getMember} from "../api/memberApi";
-import {likeItem} from "../api/items";
 
 async function displayItems(items) {
   let item, offer;
@@ -36,6 +36,9 @@ async function displayItems(items) {
       availabilities: items[i].availabilities,
       offer: offer
     }
+    if (!item.photo) {
+      item.photo = "mario.png";
+    }
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
         <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
@@ -46,21 +49,20 @@ async function displayItems(items) {
           <p id="receptionItemCondition${i}">${item.itemCondition}</p>
           <p id="receptionAvailabilities${i}">${item.availabilities}</p>
           <p id="receptionIdOffer${i}" class="displayNone">${item["offer"].idOffer}</p>
-          <div  class="modalItemInfo receptionItems" id="likeItem${i}">
+        <div  class="modalItemInfo receptionItems" id="likeItem${i}">
           <button>Aimer l'offre</button>
-          </div>
+        </div>
 
-          <p class="modalItemInfo"></p>
-          <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
+        <p class="modalItemInfo"></p>
+        <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
           <button>Annuler l'offre</button>
-          </div>
-          <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
+        </div>
+        <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
           <button>Modifier l'offre</button>
-          <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
+        <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
           <button>Evaluer l'offre</button>
-          </div>
+        </div>
       </div>
-      
       `;
   }
   const member = await getMember(getToken());
@@ -83,12 +85,12 @@ async function displayItems(items) {
       console.log(idOffer);
       modifyOffer(idOffer);
     });
-    const photoSrc = document.querySelector("#receptionImage" + j);
-    if (!items[j]["photo"]) {
-      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    } else {
-      photoSrc.src = items[j]["photo"];
-    }
+    // const photoSrc = document.querySelector("#receptionImage" + j);
+    // if (!items[j]["photo"]) {
+    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+    // } else {
+    //   photoSrc.src = items[j]["photo"];
+    // }
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
       console.log(member.idMember);

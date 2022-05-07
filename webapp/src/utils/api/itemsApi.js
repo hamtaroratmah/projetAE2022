@@ -29,7 +29,8 @@ async function getOrderedItems(sortingParam, order) {
   let items = [];
   const request = {
     method: "GET", headers: {
-      "Content-Type": "application/json", "Authorization": getToken()
+      "Content-Type": "application/json",
+      "Authorization": getToken()
     }
   };
   await fetch(
@@ -46,7 +47,6 @@ async function getOrderedItems(sortingParam, order) {
   return items;
 }
 
-// get the list of interests
 async function getInterests(idItem) {
   const request = {
     method: "POST",
@@ -79,7 +79,6 @@ async function getInterests(idItem) {
 
   return members;
 }
-
 
 async function modifyOfferFunction(e) {
 
@@ -244,7 +243,7 @@ async function likeItem(idItem, idMember) {
     console.log(response);
     if (!response.ok) {
       if (response.status === 500) {
-        error.innerHTML="Vous avez deja aime cette offre"
+        error.innerHTML = "Vous avez deja aime cette offre"
       } else {
         error.innerHTML = "errorrr";
       }
@@ -253,40 +252,6 @@ async function likeItem(idItem, idMember) {
     console.error("likeItem::error ", e);
   }
 }
-
-// async function likeItem(idItem, idMember) {
-//
-//   console.log(idItem, " + ", idMember);
-//   const request = {
-//     method: "POST",
-//     body: JSON.stringify(
-//         {
-//           idItem: idItem,
-//           idMember: idMember,
-//         }
-//     ),
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   };
-//   try {
-//     const response = await fetch("/api/items/like", request);
-//     console.log(request);
-//     console.log(response);
-//     if (!response.ok) {
-//       if (response.status === 403) {
-//         "imposssible to cancel this offer"
-//       } else {
-//         error.innerHTML = "errorrr";
-//       }
-//     }
-//     console.log("ok")
-//     await Navbar();
-//     Redirect("/");
-//   } catch (e) {
-//     console.error("likeItem::error ", e);
-//   }
-// }
 
 async function rateItem(idItem, idMember, stars, comment) {
   const request = {
@@ -311,8 +276,8 @@ async function rateItem(idItem, idMember, stars, comment) {
     console.error("rateItem::error ", e);
   }
 
-
 }
+
 async function giveItem(idOffer, idMember) {
   const request = {
     method: "POST", body: JSON.stringify({
@@ -351,5 +316,5 @@ export {
   modifyOffer,
   rateItem,
   likeItem,
-    getInterests,giveItem
+  getInterests, giveItem
 };
