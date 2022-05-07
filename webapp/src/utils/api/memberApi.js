@@ -186,17 +186,6 @@ async function updateMember(member, confirmPassword) {
   return await response.json();
 }
 
-async function precludMember(idMember) {
-  const request = {
-    method: "PUT", body: JSON.stringify({
-      idMember: idMember,
-    }), headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  await fetch("/api/members/preclude", request)
-}
-
 export {
   getMember,
   getListInscriptions,
@@ -204,6 +193,5 @@ export {
   confirmInscription,
   denyInscription,
   updateMember,
-  getListMembers,
-  precludMember
+  getListMembers
 };

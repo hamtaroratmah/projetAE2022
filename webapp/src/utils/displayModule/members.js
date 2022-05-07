@@ -2,7 +2,6 @@ import {
   confirmInscription,
   denyInscription,
   preclude,
-  precludMember,
   unpreclude
 } from "../api/memberApi";
 import {giveItem} from "../api/itemsApi";
@@ -149,11 +148,12 @@ function displayMembers(members) {
       e.preventDefault();
       console.log(members[i].idMember);
       await unpreclude(members[i].idMember);
+      window.location.reload();
     });
 
     buttonPreclude.addEventListener("click", async function () {
-      await precludMember(members[i].idMember)
-      window.location.reload()
+      await preclude(members[i].idMember)
+      window.location.reload();
     });
 
   }
