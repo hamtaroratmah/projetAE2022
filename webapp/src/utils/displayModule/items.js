@@ -1,7 +1,7 @@
 import {displayInterests} from "./members";
 import {
   cancelOffer,
-  getInterests,
+  getInterests, getListInterests,
   likeItem,
   modifyOffer,
   rateItem
@@ -103,10 +103,12 @@ async function displayItems(items) {
 async function openItemModal(item, j) {
   const member = await getMember(getToken());
   const idItem = item.idItem;
-  let interests = await getInterests(idItem);
+  //let interests = await getInterests(idItem);
+  let listInterests = await getListInterests(idItem);
+  console.log(listInterests);
   window.localStorage.setItem("item", item["offer"].idOffer);
 
-  let nbreInterests = interests.length;
+  let nbreInterests = listInterests.length;
   console.log(nbreInterests);
 
   const listInterestsDiv = `
@@ -117,7 +119,7 @@ async function openItemModal(item, j) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = `
       <div>
-        <img src="" alt="" class="receptionImage" id="modalReceptionImage${j}">
+        <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="modalReceptionImage${j}">
           <p class="receptionDescription">${item.description}</p>
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
@@ -130,8 +132,8 @@ async function openItemModal(item, j) {
             <input id="ratingStars" type="text">
             <button id="rateItem${j}">Soumettre évaluation</button>
           </div>
-
       </div>
+      <br>
     `;
   const photoSrc = document.querySelector("#receptionImage" + j);
   const ratingDiv = document.querySelector("#ratingDiv");
@@ -155,7 +157,7 @@ async function openItemModal(item, j) {
     console.log("photo")
     photoSrc.src = item["photo"];
   }
-  displayInterests(interests);
+  displayInterests(listInterests);
 }
 
 export {displayItems}

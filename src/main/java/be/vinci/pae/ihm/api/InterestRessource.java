@@ -15,9 +15,6 @@ public class InterestRessource {
 
   @Inject
   InterestUCC interestUcc;
-  @Inject
-  InterestDTO interestDTO;
-
 
   /**
    * Get a specified item according to its id.

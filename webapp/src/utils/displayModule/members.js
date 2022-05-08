@@ -4,7 +4,7 @@ import {
   preclude,
   unpreclude
 } from "../api/memberApi";
-import {giveItem} from "../api/itemsApi";
+import {came, giveItem} from "../api/itemsApi";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -149,24 +149,31 @@ function displayMembers(members) {
   }
 }
 
-function displayInterests(members) {
+function displayInterests(interests) {
   const listInterestsPage = document.querySelector("#modal");
   let idOffer = window.localStorage.getItem("item");
-  for (let i = 0; i < members.length; i++) {
+  let recever = false
 
-    listInterestsPage.innerHTML += `
+  for (let i = 0; i < interests.length; i++) {
+    if (interests[i].isRecipient === true){
+      recever = true;
+    }
+  }
+
+  if (recever === false) {
+    for (let i = 0; i < interests.length; i++) {
+
+      listInterestsPage.innerHTML += `
         <div id="interests" class="receptionInterests">
           <div class="receptionInterests">
           <form id="interestsForm">
             <div class="receptionValidGrandChild">
               <p>
-                ${members[i].username}
-                ${members[i].lastName} 
-                ${members[i].firstName}
+                ${interests[i].member.username}
+                ${interests[i].member.lastName} 
+                ${interests[i].member.firstName}
               </p>
             </div>
-            
-             
             <div class="receptionValidGrandChild">
                 <input id ="give${i}" type="submit" value="donner a ce membre">
                 
@@ -174,19 +181,52 @@ function displayInterests(members) {
           </form>
           </div>
         </div>
+        <br>
       `;
-
+    }
+  } else{
+    for (let i = 0; i < interests.length; i++) {
+      if (interests[i].isRecipient === true){
+        listInterestsPage.innerHTML += `
+        <div id="interests" class="receptionInterests">
+          <div class="receptionInterests">
+          <form id="interestsForm">
+            <div class="receptionValidGrandChild">
+              <p>La personne que vous avez choisi comme receveur est : 
+                ${interests[i].member.username}
+                ${interests[i].member.lastName} 
+                ${interests[i].member.firstName}
+              </p>
+            </div>
+             
+            <div class="receptionValidGrandChild">
+            <br>
+            <p>Est-il venue chercher son objet ? </p>
+                <input id ="came${i}" type="submit" value="Oui">
+                 <input id ="NotCame${i}" type="submit" value="Non">      
+            </div>
+          </form>
+          </div>
+        </div>
+        <br>
+      `;
+      }
+    }
   }
-
-  for (let i = 0; i < members.length; i++) {
+  for (let i = 0; i < interests.length; i++) {
 
     const buttonGive = document.getElementById("give" + i);
+    const buttonCame = document.getElementById("came" + i);
+    //const buttonNotCame = document.getElementById("NotCame" + i);
 
     buttonGive.addEventListener("click", async (e) => {
       e.preventDefault();
-      await giveItem(idOffer, members[i].idMember);
+      await giveItem(idOffer, interests[i].idMember);
     });
-
+    buttonCame.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await came(interests[i].interestId, interests[i].item.idItem);
+    });
   }
 
 }
