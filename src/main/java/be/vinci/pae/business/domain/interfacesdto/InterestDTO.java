@@ -2,7 +2,7 @@ package be.vinci.pae.business.domain.interfacesdto;
 
 public interface InterestDTO {
 
-  Integer getId_interest();
+  Integer getInterestId();
 
   ItemDTO getItem();
 
@@ -10,11 +10,11 @@ public interface InterestDTO {
 
   boolean isRecipient();
 
-  String getDate_delivery();
+  String getDateDelivery();
 
   boolean isCame();
 
-  void setId_interest(Integer id_interest);
+  void setInterestId(Integer interestId);
 
   void setItem(ItemDTO item);
 
@@ -22,7 +22,7 @@ public interface InterestDTO {
 
   void setRecipient(boolean recipient);
 
-  void setDate_delivery(String date_delivery);
+  void setDateDelivery(String dateDelivery);
 
   void setCame(boolean came);
 }

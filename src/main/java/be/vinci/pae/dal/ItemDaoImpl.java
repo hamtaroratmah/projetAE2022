@@ -340,7 +340,15 @@ public class ItemDaoImpl implements ItemDao {
     }
   }
 
-  public boolean came(int interestId, int itemId){
+  /**
+   * set came in true and set the item's condition in "given".
+   *
+   * @param interestId id interest
+   * @param itemId   id of the item
+   * @return true if ok
+   */
+  @Override
+  public boolean came(int interestId, int itemId) {
     String query =
             "UPDATE  pae.interests SET came=true WHERE id_interest=?"
                     + "RETURNING id_member";

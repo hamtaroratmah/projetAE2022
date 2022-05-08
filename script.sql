@@ -365,6 +365,9 @@ SELECT *
 FROM pae.members;
 
 SELECT *
+FROM pae.interests;
+
+SELECT *
 FROM pae.items;
 
 SELECT *

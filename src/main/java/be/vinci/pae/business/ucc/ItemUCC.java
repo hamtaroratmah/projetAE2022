@@ -1,8 +1,5 @@
 package be.vinci.pae.business.ucc;
-
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
-import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-
 import java.io.IOException;
 import java.util.List;
 
