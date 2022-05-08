@@ -69,6 +69,10 @@ async function displayItems(items) {
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
+    if (items[j].itemCondition === "cancelled") {
+      itemDiv.className += " displayNone";
+      continue;
+    }
     itemDiv.addEventListener("click", () => {
       openItemModal(items[j], j, member);
     });
@@ -78,17 +82,14 @@ async function displayItems(items) {
     });
     const modifyButton = document.querySelector("#modifyOffer" + j)
     modifyButton.addEventListener("click", () => {
-      console.log("buttonClicked");
       const idOffer = document.querySelector(
           "#receptionIdOffer" + j).innerHTML;
-      console.log(idOffer);
       modifyOffer(idOffer);
     });
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
       likeItem(items[j].idItem, member.idMember);
     });
-    console.log(items[j])
     if (member.idMember === items[j].offeringMember.idMember) {
       likeButton.className += " displayNone";
       (document.querySelector("#rateOffer" + j)).className += " displayNone";
@@ -105,7 +106,6 @@ async function openItemModal(item, j, member) {
   window.localStorage.setItem("item", item["offer"].idOffer);
 
   let nbreInterests = interests.length;
-  console.log(nbreInterests);
 
   const listInterestsDiv = `
         <div id="listInterestsPage">
@@ -144,11 +144,9 @@ async function openItemModal(item, j, member) {
       ratingDiv.className += " displayNone";
     }
     rateButton.addEventListener("click", async () => {
-      console.log(member);
       const comment = document.querySelector("#ratingComment").value;
       const stars = document.querySelector("#ratingStars").value;
       const memberId = member.idMember;
-      console.log("hello");
 
       await rateItem(idItem, memberId, stars, comment);
 

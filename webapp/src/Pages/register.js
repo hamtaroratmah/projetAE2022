@@ -7,16 +7,16 @@ const registerDiv = `
                 <form id="registerForm" class="loginRegisterContainer">
                     <h1 class="registerText">Donnamis</h1>
                     <div id="errorRegister"></div>
-                    <input class="inputForm fields" type="text" id="username" placeholder="Pseudo">
-                    <input class="inputForm fields" type="password" id="password" placeholder="Mot de passe">  
-                    <input class="inputForm fields" type="text" id="lastName" placeholder="Nom">
-                    <input class="inputForm fields" type="text" id="firstName" placeholder="Prénom">
-                    <input class="inputForm fields" type="text" id="street" placeholder="Rue">
-                    <input class="inputForm fields" type="text" id="buildingNumber" placeholder="Numéro de batiment">
-                     <input class="inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
-                     <input class="inputForm fields" type="text" id="postcode" placeholder="code postal">
-                     <input class="inputForm fields" type="text" id="city" placeholder="ville">
-                    <input class="inputForm submitButton" type="submit" value="S'inscrire">
+                    <input class="registerField inputForm fields" type="text" id="username" placeholder="Pseudo">
+                    <input class="registerField inputForm fields" type="password" id="password" placeholder="Mot de passe">  
+                    <input class="registerField inputForm fields" type="text" id="lastName" placeholder="Nom">
+                    <input class="registerField inputForm fields" type="text" id="firstName" placeholder="Prénom">
+                    <input class="registerField inputForm fields" type="text" id="street" placeholder="Rue">
+                    <input class="registerField inputForm fields" type="text" id="buildingNumber" placeholder="Numéro de batiment">
+                     <input class="registerField inputForm fields" type="text" id="unitNumber" placeholder="numéro de boîte">
+                     <input class="registerField inputForm fields" type="text" id="postcode" placeholder="code postal">
+                     <input class="registerField inputForm fields" type="text" id="city" placeholder="ville">
+                    <input class="registerField inputForm submitButton" type="submit" value="S'inscrire">
                 </form>
             </div>
         </div>
@@ -109,6 +109,7 @@ async function register(e) {
     message.innerHTML = `L'inscription s'est bien passée, 
     attendez qu'un administrateur approuve votre inscription`;
   } catch (e) {
+    (document.querySelector("#errorText")).innerHTML = e;
     console.error("RegisterPage::error ", e);
   }
 }

@@ -146,8 +146,10 @@ public class ItemDaoImpl implements ItemDao {
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
-      ps.executeQuery();
-
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
