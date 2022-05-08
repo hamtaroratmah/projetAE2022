@@ -61,7 +61,9 @@ async function displayItems(items) {
         <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
           <button>Evaluer l'offre</button>
         </div>
+       
       </div>
+       <p class="displayNone" id="precludedText${i}">Ce membre est momentanément empêché, vous ne recevrez donc pas votre objet tout de suite</p>
       `;
   }
   const member = await getMember(getToken());
@@ -69,7 +71,8 @@ async function displayItems(items) {
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
-    if (items[j].itemCondition === "cancelled") {
+    if (items[j].itemCondition === "cancelled" || items[j].itemCondition
+        === "given") {
       itemDiv.className += " displayNone";
       continue;
     }
@@ -96,6 +99,9 @@ async function displayItems(items) {
     } else {
       modifyButton.className += " displayNone";
       cancelButton.className += " displayNone";
+    }
+    if (items[j].offeringMember.isPrecluded) {
+      (document.querySelector("#precludedText" + j)).className = "";
     }
   }
 }
