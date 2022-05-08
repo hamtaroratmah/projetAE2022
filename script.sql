@@ -377,7 +377,7 @@ SET isrecipient= true
 WHERE id_item = 5
   AND id_member = 1;
 
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, '', '', '', '', 4)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+-- INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+--                        id_offering_member)
+-- VALUES (4, '', '', '', '', 4)
+-- RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;

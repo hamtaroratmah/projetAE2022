@@ -50,8 +50,8 @@ const Navbar = async () => {
     const seeListInscriptionsButton = document.querySelector(
         "#seeListInscriptionsButton");
     seeListInscriptionsButton.classList += " displayNone";
-    const listMembersButton= document.querySelector("#listMembers");
-    listMembersButton.classList+=" displayNone";
+    const listMembersButton = document.querySelector("#listMembers");
+    listMembersButton.classList += " displayNone";
   } else {
     profileButton.innerText = "Connecté"
     profileButton.setAttribute("data-uri", "/profile");

@@ -33,7 +33,7 @@ form.addEventListener("submit", register);
  */
 function RegisterPage() {
   if (window.localStorage.length !== 0 && window.localStorage.getItem(
-      "user").length !== 0) {
+      "user")) {
     Redirect("/");
   }
   const pageDiv = document.querySelector("#page");
@@ -104,7 +104,7 @@ async function register(e) {
       }
     };
     const response = await fetch("/api/auths/register", request);
-    
+
     let message = document.querySelector("#pendingMessage");
     message.innerHTML = `L'inscription s'est bien passée, 
     attendez qu'un administrateur approuve votre inscription`;
