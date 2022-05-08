@@ -4,21 +4,24 @@ package be.vinci.pae.ihm.api;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.ucc.InterestUcc;
 import be.vinci.pae.dal.interfaces.InterestDao;
+import be.vinci.pae.ihm.api.filters.Authorize;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+
+import java.util.ArrayList;
 
 @Path("/interests")
 public class InterestRessource {
+
   @Inject
   InterestUcc interestUcc;
-
+  @Inject
+  InterestDTO interestDTO;
 
 
   /**
@@ -36,4 +39,21 @@ public class InterestRessource {
     return interestUcc.getInterest(idInterest);
   }
 
+  /**
+   * Get all of the interests from an item according to its id.
+   *
+   * @params idItem
+   */
+  @POST
+  @Path("/listInterests")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
+  public ArrayList<InterestDTO> listInterests(JsonNode json) {
+    int idItem = json.get("idItem").asInt();
+    if (idItem < 1) {
+      throw new WebApplicationException("L'id ne peut être négatif");
+    }
+    return interestUcc.listInterests(idItem);
+  }
 }

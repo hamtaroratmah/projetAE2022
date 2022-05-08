@@ -29,7 +29,7 @@ public class ItemUCCImpl implements ItemUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 

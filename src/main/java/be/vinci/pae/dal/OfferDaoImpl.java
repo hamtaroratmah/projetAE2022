@@ -95,14 +95,10 @@ public class OfferDaoImpl implements OfferDao {
           listId.add(resultSet.getInt(3));
         }
       }
-
-
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
     return addMember(listId);
-
-
   }
 
   private ArrayList<MemberDTO> addMember(ArrayList<Integer> listId) {
@@ -122,8 +118,6 @@ public class OfferDaoImpl implements OfferDao {
       e.printStackTrace();
     }
     return list;
-
-
   }
 
   @Override

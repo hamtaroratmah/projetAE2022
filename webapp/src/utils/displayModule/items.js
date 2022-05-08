@@ -1,7 +1,7 @@
 import {displayInterests} from "./members";
 import {
   cancelOffer,
-  getInterests,
+  getInterests, getListInterests,
   likeItem,
   modifyOffer,
   rateItem
@@ -103,9 +103,10 @@ async function displayItems(items) {
 async function openItemModal(item, j) {
   const member = await getMember(getToken());
   const idItem = item.idItem;
+  let listInterets = await getListInterests(idItem);
   let interests = await getInterests(idItem);
   window.localStorage.setItem("item", item["offer"].idOffer);
-
+  console.log(listInterets);
   let nbreInterests = interests.length;
   console.log(nbreInterests);
 

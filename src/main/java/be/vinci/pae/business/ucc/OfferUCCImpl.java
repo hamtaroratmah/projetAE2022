@@ -1,6 +1,5 @@
 package be.vinci.pae.business.ucc;
 
-import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
@@ -17,9 +16,11 @@ import java.util.ArrayList;
 public class OfferUCCImpl implements OfferUCC {
 
   @Inject
-  OfferDao offerDao;
+  private OfferDao offerDao;
   @Inject
-  ItemDao itemDao;
+  private ItemDao itemDao;
+
+
   @Inject
   private DalServices dalServices;
 
@@ -158,10 +159,9 @@ public class OfferUCCImpl implements OfferUCC {
 
   /**
    * create an offer.
-   * @return
    */
-  public InterestDTO offer(int idOffer, int idMember) {
-    InterestDTO interest=null;
+  public boolean offer(int idOffer, int idMember) {
+    boolean given;
     try {
       System.out.println("ok2");
 
@@ -171,7 +171,7 @@ public class OfferUCCImpl implements OfferUCC {
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
-       interest = itemDao.offer(idItem, idMember);
+      given = itemDao.offer(idItem, idMember);
       dalServices.commitTransaction();
 
     } catch (Exception e) {
@@ -180,7 +180,7 @@ public class OfferUCCImpl implements OfferUCC {
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
     }
-    return interest;
+    return given;
   }
 
 }

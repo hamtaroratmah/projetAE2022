@@ -20,7 +20,7 @@ public interface OfferUCC {
 
   ItemDTO modify(int idOffer, int type, String photo, String description, String availabilities);
 
-  InterestDTO offer(int idOffer, int idMember);
+  boolean offer(int idOffer, int idMember);
 
 
 }

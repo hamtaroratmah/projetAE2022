@@ -172,7 +172,7 @@ public class OfferRessource {
   @Path("/offer")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public InterestDTO offer(JsonNode json) {
+  public boolean offer(JsonNode json) {
     int idOffer = json.get("idOffer").asInt();
     int idMember = json.get("idMember").asInt();
 
@@ -181,6 +181,4 @@ public class OfferRessource {
     }
     return offerUCC.offer(idOffer, idMember);
   }
-
-
 }

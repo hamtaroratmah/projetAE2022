@@ -2,7 +2,7 @@ package be.vinci.pae.business.domain.interfacesdto;
 
 public interface InterestDTO {
 
-  Integer getInterestId();
+  int getInterestId();
 
   ItemDTO getItem();
 
@@ -14,7 +14,7 @@ public interface InterestDTO {
 
   boolean isCame();
 
-  void setInterestId(Integer interestId);
+  void setInterestId(int interestId);
 
   void setItem(ItemDTO item);
 

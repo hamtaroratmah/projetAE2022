@@ -31,7 +31,6 @@ Content-Type: application/json
 ###
 GET {{baseUrl}}/members/getTheAssigned
 Content-Type: application/json
-Authorization: token
 
 {
   "interestId": 1

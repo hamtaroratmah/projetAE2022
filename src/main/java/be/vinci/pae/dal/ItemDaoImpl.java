@@ -38,7 +38,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
-    List<ItemDTO> list = null;
     boolean isCondition = false;
     if (sortingParam.equals("type") || sortingParam.equals("item_condition")) {
       sortingParam = "it." + sortingParam;
@@ -49,28 +48,27 @@ public class ItemDaoImpl implements ItemDao {
     if (sortingParam.equals("it.item_condition")) {
       isCondition = true;
       queryString = "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
-          + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
-          + "FROM pae.items it,pae.types ty,pae.offers of "
-          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
-          + "AND it.item_condition = ?";
+              + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
+              + "FROM pae.items it,pae.types ty,pae.offers of "
+              + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
+              + "AND it.item_condition = ?";
     } else {
       //language=PostgreSQL
       queryString = "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
-          + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
-          + "FROM pae.items it,pae.types ty,pae.offers of "
-          + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item " + "ORDER BY "
-          + sortingParam + " " + order + " , id_item DESC";
+              + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
+              + "FROM pae.items it,pae.types ty,pae.offers of "
+              + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item " + "ORDER BY "
+              + sortingParam + " " + order + " , id_item DESC";
     }
 
     try (PreparedStatement query = services.getPreparedStatement(queryString)) {
       if (isCondition) {
         query.setString(1, order);
       }
-      list = getItemFromDataBase(query);
+      return getItemFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
-    return list;
   }
 
   @Override
@@ -146,7 +144,7 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public InterestDTO offer(int idItem, int idOffer) {
+  public boolean offer(int idItem, int idOffer) {
     InterestDTO interest = null;
     String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=?"
         + " RETURNING id_member ";
@@ -171,7 +169,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return interest;
+    return true;
 
   }
 

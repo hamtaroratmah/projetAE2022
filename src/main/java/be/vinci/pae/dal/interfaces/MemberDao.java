@@ -1,6 +1,7 @@
 package be.vinci.pae.dal.interfaces;
 
 import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;

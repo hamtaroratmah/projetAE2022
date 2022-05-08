@@ -79,7 +79,37 @@ async function getInterests(idItem) {
 
   return members;
 }
+async function getListInterests(idItem) {
+  const request = {
+    method: "POST",
+    body: JSON.stringify(
+        {
+          idItem: idItem
+        }
+    ),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getToken()
+    }
+  };
 
+  let interest = [];
+  console.log(request);
+  // fill inscriptions [] with inscriptions pending
+  await fetch("/api/interests/listInterests", request)
+      .then(response => response.json())
+      .then((commits) => {
+        for (let i = 0; i < commits.length; i++) {
+          interest.push(commits[i]);
+        }
+
+      })
+      .catch(() =>
+          error.innerHTML = "Une erreur est survenue"
+              + " durant la récupération des membres"
+      )
+  return interest;
+}
 async function modifyOfferFunction(e) {
 
   console.log(idOffer);
@@ -396,5 +426,7 @@ export {
   modifyOffer,
   rateItem,
   likeItem,
-  getInterests, giveItem
+  getInterests,
+  giveItem,
+  getListInterests
 };

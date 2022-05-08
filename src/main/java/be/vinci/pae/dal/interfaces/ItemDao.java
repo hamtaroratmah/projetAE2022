@@ -24,7 +24,7 @@ public interface ItemDao {
 
   int likeAnItem(int itemId, int memberId);
 
-  InterestDTO offer(int idOffer, int idItem);
+  boolean offer(int idOffer, int idItem);
 
   void insertPhoto(String fileName, int idItem);
 

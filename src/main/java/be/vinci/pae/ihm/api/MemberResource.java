@@ -238,7 +238,6 @@ public class MemberResource {
    */
   @GET
   @Path("getTheAssigned")
-  @Authorize
   @Consumes(MediaType.APPLICATION_JSON)
   public MemberDTO getTheAssigned(JsonNode json) throws IOException {
     int interestId = json.get("interestId").asInt();

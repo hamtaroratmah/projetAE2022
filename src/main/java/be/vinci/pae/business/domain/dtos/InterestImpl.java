@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class InterestImpl implements InterestDTO {
 
   @JsonView(Views.Public.class)
-  private Integer interestId;
+  private int interestId;
   @JsonView(Views.Public.class)
   private ItemDTO item;
   @JsonView(Views.Public.class)
@@ -29,7 +29,7 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public Integer getInterestId() {
+  public int getInterestId() {
     return interestId;
   }
 
@@ -59,16 +59,15 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public void setInterestId(Integer interestId) {
+  public void setInterestId(int interestId) {
     this.interestId = interestId;
   }
 
-  @Override
   public void setItem(ItemDTO item) {
     this.item = item;
   }
 
-  @Override
+
   public void setMember(MemberDTO member) {
     this.member = member;
   }
