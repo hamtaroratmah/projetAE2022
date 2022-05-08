@@ -329,5 +329,26 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
   }
+
+  public boolean came(int interestId, int itemId){
+    String query =
+            "UPDATE  pae.interests SET came=true WHERE id_interest=?"
+                    + "RETURNING id_member";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, interestId);
+      ps.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    try (PreparedStatement pss = services.getPreparedStatement(query)) {
+      pss.setInt(1, itemId);
+      pss.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return true;
+  }
 }
 

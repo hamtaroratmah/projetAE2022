@@ -222,8 +222,18 @@ public class MemberUCCImpl implements MemberUCC {
     } catch (Exception e) {
       dalServices.rollbackTransaction();
       throw e;
-
     }
   }
 
+  public MemberDTO getTheAssigned(int interestId){
+    try {
+      dalServices.startTransaction();
+      MemberDTO member = memberDao.getTheAssigned(interestId);
+      dalServices.commitTransaction();
+      return member;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
+    }
+  }
 }

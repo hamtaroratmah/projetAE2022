@@ -37,4 +37,5 @@ public interface MemberDao {
 
   boolean unpreclude(int idMember);
 
+  MemberDTO getTheAssigned(int interestId);
 }

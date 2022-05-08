@@ -20,6 +20,8 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Path("/members")
@@ -229,5 +231,18 @@ public class MemberResource {
     return memberUCC.unpreclude(idMember);
   }
 
-
+  /**
+   * get the assigned to the offer
+   *
+   * @param json the json
+   * @return the member assigned to the offer
+   */
+  @GET
+  @Path("/getTheAssigned")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public MemberDTO getTheAssigned(JsonNode json) throws IOException {
+    int interestId = json.get("interestId").asInt();
+    return memberUCC.getTheAssigned(interestId);
+  }
 }

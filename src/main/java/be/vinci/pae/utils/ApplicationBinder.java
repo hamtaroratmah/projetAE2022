@@ -60,6 +60,7 @@ public class ApplicationBinder extends AbstractBinder {
     // Interest
     bind(InterestImpl.class).to(InterestDTO.class).in(Singleton.class);
 
+
     // DAL and Factory
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
