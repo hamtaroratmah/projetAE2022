@@ -4,7 +4,6 @@ import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.exceptions.BadRequestException;
-import be.vinci.pae.exceptions.FatalException;
 import be.vinci.pae.utils.Log;
 import jakarta.inject.Inject;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class ItemUCCImpl implements ItemUCC {
       return list;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -48,7 +47,7 @@ public class ItemUCCImpl implements ItemUCC {
       return item;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -62,7 +61,7 @@ public class ItemUCCImpl implements ItemUCC {
       return items;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
     }
   }
 
@@ -82,10 +81,8 @@ public class ItemUCCImpl implements ItemUCC {
       return interests;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-
-      e.printStackTrace();
+      throw e;
     }
-    return -1;
   }
 
   /**
@@ -105,9 +102,8 @@ public class ItemUCCImpl implements ItemUCC {
       Log log = new Log("log.txt");
       log.logger.warning("id inexistant");
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw e;
     }
-    return -1;
   }
 
   @Override
@@ -119,9 +115,8 @@ public class ItemUCCImpl implements ItemUCC {
       return returned;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw e;
     }
-    return null;
   }
 
   @Override
@@ -133,9 +128,8 @@ public class ItemUCCImpl implements ItemUCC {
       return typeId;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw e;
     }
-    return -1;
   }
 
   @Override
@@ -147,27 +141,38 @@ public class ItemUCCImpl implements ItemUCC {
       return typeId;
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      e.printStackTrace();
+      throw e;
     }
-    return -1;
   }
 
   /**
    * put the name's photo in his item.
    *
    * @param fileName name of the file
-   * @param idItem id of the item
+   * @param idItem   id of the item
    */
   @Override
-  public void insertPhoto(String fileName,int idItem) {
+  public void insertPhoto(String fileName, int idItem) {
     try {
-      System.out.print("Passer par là : ItemUcc");
       dalServices.startTransaction();
       itemDao.insertPhoto(fileName, idItem);
       dalServices.commitTransaction();
     } catch (Exception e) {
       dalServices.rollbackTransaction();
-      throw new FatalException(e.getMessage());
+      throw e;
+    }
+  }
+
+  @Override
+  public List<ItemDTO> getOfferingMemberItems(int idMember) {
+    try {
+      dalServices.startTransaction();
+      List<ItemDTO> items = itemDao.getOfferingMemberItems(idMember);
+      dalServices.commitTransaction();
+      return items;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw e;
     }
   }
 }
