@@ -37,6 +37,7 @@ public class MemberDaoImpl implements MemberDao {
         "SELECT id_member, password, username,"
             + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
             + " state, count_object_not_collected, count_object_given, count_object_got, address"
+            + ", precluded"
             + " FROM pae.members WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
@@ -60,6 +61,7 @@ public class MemberDaoImpl implements MemberDao {
         "SELECT id_member, password, username,"
             + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
             + " state, count_object_not_collected, count_object_given, count_object_got, address"
+            + ", precluded"
             + " FROM pae.members WHERE id_member = ? ")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
@@ -159,9 +161,17 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public ArrayList<MemberDTO> listUsersByState(String state) {
     ArrayList<MemberDTO> list = new ArrayList<>();
-    String query = "SELECT * FROM pae.members WHERE state=?";
+    String query;
+    if (state.isBlank()) {
+      query = "SELECT * FROM pae.members";
+    } else {
+      query = "SELECT * FROM pae.members WHERE state=?";
+    }
+    query += " ORDER BY username ASC";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, state);
+      if (!state.isBlank()) {
+        ps.setString(1, state);
+      }
       try (ResultSet resultSet = ps.executeQuery()) {
         while (resultSet.next()) {
           list.add(createMemberInstance(resultSet));
@@ -181,10 +191,38 @@ public class MemberDaoImpl implements MemberDao {
    * @return returns the member DTO
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
-    MemberDTO member;
-    String query = "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
+    MemberDTO member = null;
+
+    String query =
+        "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
+      ps.setString(2, username);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          member = createMemberInstance(rs);
+        }
+        System.out.println("confirm done");
+        return member;
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+  /**
+   * deny a registration.
+   *
+   * @param username             user ton deny
+   * @param reasonForConnRefusal reason of the refusal
+   * @return returns the member DTO
+   */
+  public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
+    MemberDTO member;
+    String query = "UPDATE pae.members SET state='denied', reason_for_conn_refusal =?"
+        + "WHERE username=? RETURNING *";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, reasonForConnRefusal);
       ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
@@ -201,27 +239,47 @@ public class MemberDaoImpl implements MemberDao {
   /**
    * deny a registration.
    *
-   * @param username user ton deny
-   * @param reasonForConnRefusal reason of the refusal
-   * @return returns the member DTO
+   * @param idMember user to preclude
+   * @return returns the precluded champ
    */
-  public MemberDTO denyRegistration(String username, String reasonForConnRefusal) {
-    MemberDTO member;
-    String query = "UPDATE pae.members SET state='denied', reason_for_conn_refusal =?"
-            + "WHERE username=? RETURNING *";
+  public boolean preclude(int idMember) {
+    String query = "UPDATE pae.members SET precluded='true'"
+        + "WHERE id_member=? RETURNING precluded";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, reasonForConnRefusal);
-      ps.setString(2, username);
+      ps.setInt(1, idMember);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-          member = createMemberInstance(rs);
-          return member;
+          boolean precluded = rs.getBoolean(1);
+          return precluded;
         }
       }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    return null;
+    return false;
+  }
+
+  /**
+   * deny a registration.
+   *
+   * @param idMember user to preclude
+   * @return returns the precluded champ
+   */
+  public boolean unpreclude(int idMember) {
+    String query = "UPDATE pae.members SET precluded='false'"
+        + "WHERE id_member=? RETURNING precluded";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idMember);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          boolean precluded = rs.getBoolean(1);
+          return precluded;
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+    return true;
   }
 
   /**
@@ -247,6 +305,7 @@ public class MemberDaoImpl implements MemberDao {
       member.setCountObjectNotCollected(resultSetMember.getInt(11));
       member.setCountObjectGiven(resultSetMember.getInt(12));
       member.setCountObjectGot(resultSetMember.getInt(13));
+      member.setPrecluded(resultSetMember.getBoolean("precluded"));
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -281,6 +340,7 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
     member.setAddress(addressDao.getAddress(resultSetMember.getInt(13)));
+    member.setPrecluded(resultSetMember.getBoolean("precluded"));
     resultSetMember.close();
     return member;
   }

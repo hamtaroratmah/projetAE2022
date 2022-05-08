@@ -3,6 +3,7 @@
 @import "pages/login";
 @import "pages/navbar";
 @import "pages/homePage";
+@import "pages/adminInscriptionPage";
 
 //html reset default style
 *, ::before, ::after {
@@ -23,4 +24,13 @@ img {
 
 .displayNone {
   display: none;
+}
+
+#errorText {
+  color: red;
+  font-size: 3em;
+}
+
+.fields {
+  margin: 10px;
 }

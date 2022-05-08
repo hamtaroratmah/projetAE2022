@@ -78,6 +78,7 @@ local.properties
 # Log file
 *.log
 *.log.*
+log.*
 
 # BlueJ files
 *.ctxt
@@ -107,6 +108,5 @@ target/
 webapp/node_modules
 webapp/package-lock.json
 *.properties
-
-#logger
-log.*
+#folder
+photos

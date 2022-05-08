@@ -19,8 +19,6 @@ public class OfferUCCImpl implements OfferUCC {
   private OfferDao offerDao;
   @Inject
   private ItemDao itemDao;
-
-
   @Inject
   private DalServices dalServices;
 
@@ -80,14 +78,14 @@ public class OfferUCCImpl implements OfferUCC {
   }
 
   @Override
-  public ArrayList<MemberDTO> interests(int idItem, int idMember) {
+  public ArrayList<MemberDTO> interests(int idItem) {
     try {
       dalServices.startTransaction();
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
       ArrayList<MemberDTO> list;
-      list = offerDao.interests(idItem, idMember);
+      list = offerDao.interests(idItem);
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {
@@ -135,7 +133,7 @@ public class OfferUCCImpl implements OfferUCC {
    *
    * @return the new item modified
    */
-  public ItemDTO modify(int idOffer, String type, String photo, String description,
+  public ItemDTO modify(int idOffer, int type, String photo, String description,
       String availabilities) {
 
     try {
@@ -163,24 +161,19 @@ public class OfferUCCImpl implements OfferUCC {
   public boolean offer(int idOffer, int idMember) {
     boolean given;
     try {
-      System.out.println("ok2");
-
       dalServices.startTransaction();
       int idItem = offerDao.getIdItem(idOffer);
-
       if (idItem < 1) {
         throw new FatalException("L'id de l'objet doit être supérieur à 0.");
       }
       given = itemDao.offer(idItem, idMember);
       dalServices.commitTransaction();
-
+      return given;
     } catch (Exception e) {
-      System.out.println("ko1");
-
       dalServices.rollbackTransaction();
       throw new FatalException(e.getMessage());
     }
-    return given;
+
   }
 
 }

@@ -1,4 +1,11 @@
-import {confirmInscription, denyInscription} from "../api/memberApi";
+import {
+  confirmInscription,
+  denyInscription,
+  preclude,
+  unpreclude
+} from "../api/memberApi";
+import {giveItem} from "../api/itemsApi";
+import {Redirect} from "../../Router";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -50,6 +57,7 @@ function displayInscriptions(inscriptions) {
             <div class="receptionInscriptionGrandChild">
                 state : ${inscriptions[i].state}
             </div>
+            <p id="reasonConnRefusal">raison de refus : ${inscriptions[i].reasonForConnRefusal}</p>
             <div class="receptionInscriptionGrandChild">
                 <input type="checkbox" id="isAdmin${i}" name="isAdmin${i}">
             </div>
@@ -62,27 +70,140 @@ function displayInscriptions(inscriptions) {
         `;
     }
   }
-
   for (let i = 0; i < inscriptions.length; i++) {
-
     const isAdmin = document.getElementById("isAdmin" + i);
     const buttonConfirm = document.getElementById("confirm" + i);
     const buttonDeny = document.getElementById("deny" + i);
-    const reasonForRefusal = document.getElementById("reasonRefusal" + i).value;
-    console.log(reasonForRefusal)
+    const reasonForRefusal = document.getElementById("reasonRefusal" + i);
     // Confirm inscription
     buttonConfirm.addEventListener("click", async (e) => {
       e.preventDefault();
       await confirmInscription(inscriptions[i].username, isAdmin.checked);
+      window.location.reload();
     })
 
     // Deny inscription
-    buttonDeny.addEventListener("click", async (e) => {
+    try {
+      buttonDeny.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await denyInscription(inscriptions[i].username, reasonForRefusal.value);
+        window.location.reload();
+      })
+    } catch (e) {
+      //Try catch pour pouvoir boucler sur toute la liste de membre même s'ils sont déjà refusé
+    }
+  }
+}
+
+function displayMembers(members) {
+  const listMembersPage = document.querySelector("#listMembersPage");
+  for (let i = 0; i < members.length; i++) {
+    if (members[i].isPrecluded) {
+      members[i].state = "precluded";
+    }
+    listMembersPage.innerHTML += `
+        <div id="inscriptionValid" class="receptionInscriptionPending">
+          <div class="receptionValidForm">
+          <form id="validForm">
+            <div class="receptionValidGrandChild">
+              <p>
+                ${members[i].username}
+                ${members[i].lastName} 
+                ${members[i].firstName}
+              </p>
+            </div>
+            <div class="receptionValidGrandChild">
+                state : ${members[i].state}<label class="displayNone" id="adminStar${i}">&#11088</label>
+            </div>
+             
+            <div class="receptionValidGrandChild">
+                <input id ="preclude${i}" type="submit" value="Indiquer que le membre est empêché">
+                <input id ="unpreclude${i}" type="submit" value="Indiquer que le membre n'est plus empêché">
+                <input id="seeItems${i}" type="submit" value="Voir objets offerts par le membre">
+            </div>
+          </form>
+          </div>
+        </div>
+      `;
+  }
+  for (let i = 0; i < members.length; i++) {
+    console.log(members[i])
+    if (members[i].isAdmin) {
+      (document.querySelector("#adminStar" + i)).className = "";
+    }
+    const buttonUnpreclude = document.getElementById("unpreclude" + i);
+    const buttonPreclude = document.getElementById("preclude" + i);
+    if (members[i].isPrecluded) {
+      buttonPreclude.className += " displayNone";
+    } else {
+      buttonUnpreclude.className += " displayNone";
+    }
+    buttonPreclude.addEventListener("click", async (e) => {
       e.preventDefault();
-      await denyInscription(inscriptions[i].username, reasonForRefusal);
-    })
+      await preclude(members[i].idMember);
+    });
+
+    buttonUnpreclude.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await unpreclude(members[i].idMember);
+      window.location.reload();
+    });
+
+    buttonPreclude.addEventListener("click", async function () {
+      await preclude(members[i].idMember)
+      window.location.reload();
+    });
+
+    const listOffers = document.querySelector("#seeItems" + i);
+    listOffers.addEventListener("click", function (e) {
+      e.preventDefault()
+      window.sessionStorage.setItem("idOffer", members[i].idMember)
+      Redirect("/listOffers");
+    });
+
+  }
+}
+
+function displayInterests(members) {
+  const listInterestsPage = document.querySelector("#modal");
+  let idOffer = window.localStorage.getItem("item");
+  for (let i = 0; i < members.length; i++) {
+
+    listInterestsPage.innerHTML += `
+        <div id="interests" class="receptionInterests">
+          <div class="receptionInterests">
+          <form id="interestsForm">
+            <div class="receptionValidGrandChild">
+              <p>
+                ${members[i].username}
+                ${members[i].lastName} 
+                ${members[i].firstName}
+              </p>
+            </div>
+            
+             
+            <div class="receptionValidGrandChild">
+                <input id ="give${i}" type="submit" value="donner a ce membre">
+                
+            </div>
+          </form>
+          </div>
+        </div>
+      `;
+
+  }
+
+  for (let i = 0; i < members.length; i++) {
+
+    const buttonGive = document.getElementById("give" + i);
+
+    buttonGive.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await giveItem(idOffer, members[i].idMember);
+    });
+
   }
 
 }
 
-export {displayInscriptions};
+export {displayInscriptions, displayMembers, displayInterests};

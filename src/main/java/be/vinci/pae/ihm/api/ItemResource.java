@@ -6,6 +6,7 @@ import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
+import be.vinci.pae.business.ucc.OfferUCC;
 import be.vinci.pae.business.ucc.RatingUcc;
 import be.vinci.pae.ihm.api.filters.Authorize;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,7 +23,6 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @Path("/items")
@@ -30,6 +30,8 @@ public class ItemResource {
 
   @Inject
   ItemUCC itemUcc;
+  @Inject
+  OfferUCC offerUCC;
   @Inject
   DomainFactory domainFactory;
   @Inject
@@ -102,7 +104,7 @@ public class ItemResource {
   @Path("/createItem")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ItemDTO createItem(JsonNode json) throws SQLException {
+  public ItemDTO createItem(JsonNode json) {
 
     if (!json.hasNonNull("type")
         || !json.hasNonNull("description")
@@ -119,23 +121,25 @@ public class ItemResource {
     offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     TypeDTO type = domainFactory.getType();
     String typeText = json.get("type").asText();
-    type.setType(typeText);
+    offeringMember.setIdMember(json.get("idOfferingMember").asInt());
     int idType = itemUcc.typeExisting(type.getType());
-    String description = json.get("description").asText();
+    type.setType(typeText);
     //si le type n'existe pas, le créer
     if (idType == -1) {
       idType = itemUcc.createType(json.get("type").asText());
     }
     ItemDTO item = domainFactory.getItem();
     type.setIdType(idType);
+    //String description = json.get("description").asText();
     item.setType(type);
-    item.setDescription(description);
+    item.setDescription(json.get("description").asText());
     item.setAvailabilities(json.get("availabilities").asText());
     item.setItemCondition(json.get("itemCondition").asText());
     item.setOfferingMember(offeringMember);
 
     return itemUcc.createItem(item);
   }
+
 
   /**
    * like an item.
@@ -152,6 +156,10 @@ public class ItemResource {
     int idMember;
     idMember = json.get("idMember").asInt();
     idItem = json.get("idItem").asInt();
+    if (offerUCC.isLiked(idItem, idMember)) {
+      throw new WebApplicationException("L'objet est deja aimé par ce membre");
+    }
+
     return itemUcc.likeAnItem(idItem, idMember);
   }
 
@@ -182,15 +190,23 @@ public class ItemResource {
   @Path("rate")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public RatingDTO rateAnItem(JsonNode json) throws IOException {
+  public RatingDTO rateAnItem(JsonNode json) {
     int itemId = json.get("itemId").asInt();
     int memberId = json.get("memberId").asInt();
     int stars = json.get("stars").asInt();
     String comment = json.get("comment").asText();
-
     return ratingUcc.rateAnItem(itemId, memberId, stars, comment);
   }
 
+  /**
+   * get all items offered by a member.
+   */
+  @GET
+  @Path("getOfferingMemberItem/{idMember}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ItemDTO> getOfferingMemberItems(@PathParam("idMember") int idMember) {
+    return itemUcc.getOfferingMemberItems(idMember);
+  }
 
 }
 

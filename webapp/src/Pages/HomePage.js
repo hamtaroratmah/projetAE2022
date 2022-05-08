@@ -23,14 +23,13 @@ const receptionDiv = `
       <option value="canceled">Annulé</option>
     </select>
   </div>
-
-  <div id="receptionPage">
     
+  <div id="listItems">
+   
   </div>
 `
 
 const HomePage = async () => {
-
   //Refresh la page,
   // car le token n'est pas vérifié directement lors de la connexion
   if (window.sessionStorage.getItem("justLogged") === true.toString()) {
@@ -43,7 +42,6 @@ const HomePage = async () => {
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items;
-
   if (token) {
     items = await getOrderedItems("date_offer", "DESC")
   } else {
