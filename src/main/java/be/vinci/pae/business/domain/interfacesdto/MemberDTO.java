@@ -57,4 +57,11 @@ public interface MemberDTO {
   void setAddress(AddressDTO address);
 
   AddressDTO getAddress();
+
+
+  Boolean getAdmin();
+
+  Boolean getPrecluded();
+
+  void setPrecluded(Boolean precluded);
 }

@@ -42,7 +42,6 @@ const HomePage = async () => {
   let token = getToken();
   pageDiv.innerHTML = receptionDiv;
   let items;
-
   if (token) {
     items = await getOrderedItems("date_offer", "DESC")
   } else {

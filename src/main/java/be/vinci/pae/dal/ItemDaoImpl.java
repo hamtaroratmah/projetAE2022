@@ -50,11 +50,12 @@ public class ItemDaoImpl implements ItemDao {
           + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
           + "AND it.item_condition = ?";
     } else {
+      //language=PostgreSQL
       queryString = "SELECT it.id_item,it.id_type,it.description,it.availabilities,"
           + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.id_offer "
           + "FROM pae.items it,pae.types ty,pae.offers of "
           + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item " + "ORDER BY "
-          + sortingParam + " " + order;
+          + sortingParam + " " + order + " , id_item DESC";
     }
 
     try (PreparedStatement query = services.getPreparedStatement(queryString)) {
@@ -131,7 +132,7 @@ public class ItemDaoImpl implements ItemDao {
         + "it.item_condition,it.photo,it.rating,it.id_offering_member,ty.type,of.date_offer "
         + "FROM pae.items it,pae.types ty,pae.offers of "
         + "WHERE it.id_type = ty.id_type AND of.id_item = it.id_item "
-        + "AND it.item_condition = 'given' " + "ORDER BY date_offer DESC ";
+        + "AND it.item_condition = 'given' " + "ORDER BY date_offer DESC, id_item DESC";
     try (PreparedStatement query = services.getPreparedStatement(tempQuery)) {
       items = getItemFromDataBase(query);
     } catch (SQLException e) {
@@ -281,16 +282,13 @@ public class ItemDaoImpl implements ItemDao {
 
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-
           item = createItemInstance(rs);
-
         }
       }
 
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return item;
   }
 
@@ -314,18 +312,18 @@ public class ItemDaoImpl implements ItemDao {
    * Update the photo of the item, put the uuid file name.
    *
    * @param fileName name of the file (uuid + extension)
-   * @param idItem id of the item
+   * @param idItem   id of the item
    */
   @Override
   public void insertPhoto(String fileName, int idItem) {
     System.out.print("Passer par là : ItemDao");
     String query =
-            "UPDATE  pae.items SET photo=? WHERE id_item=?"
+        "UPDATE  pae.items SET photo=? WHERE id_item=?"
             + "RETURNING id_item";
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, fileName);
-      ps.setInt(2,idItem);
+      ps.setInt(2, idItem);
       ps.executeQuery();
     } catch (SQLException e) {
       e.printStackTrace();

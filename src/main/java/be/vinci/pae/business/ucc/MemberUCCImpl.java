@@ -172,10 +172,10 @@ public class MemberUCCImpl implements MemberUCC {
   }
 
   @Override
-  public ArrayList<MemberDTO> listMembers() {
+  public ArrayList<MemberDTO> listAllMembers() {
     try {
       dalServices.startTransaction();
-      ArrayList<MemberDTO> list = memberDao.listUsersByState("valid");
+      ArrayList<MemberDTO> list = memberDao.listUsersByState("");
       dalServices.commitTransaction();
       return list;
     } catch (Exception e) {

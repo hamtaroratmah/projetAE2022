@@ -42,6 +42,9 @@ public class MemberImpl implements Member {
   private Integer countObjectGot = 0;
   @JsonView(Views.Public.class)
   private AddressDTO address;
+  @JsonView(Views.Public.class)
+  private Boolean isPrecluded;
+
 
   /**
    * Empty constructor.
@@ -201,6 +204,19 @@ public class MemberImpl implements Member {
 
   public void setAddress(AddressDTO address) {
     this.address = address;
+  }
+
+
+  public Boolean getAdmin() {
+    return isAdmin;
+  }
+
+  public Boolean getPrecluded() {
+    return isPrecluded;
+  }
+
+  public void setPrecluded(Boolean precluded) {
+    isPrecluded = precluded;
   }
 
   @Override

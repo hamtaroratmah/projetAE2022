@@ -37,6 +37,7 @@ public class MemberDaoImpl implements MemberDao {
         "SELECT id_member, password, username,"
             + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
             + " state, count_object_not_collected, count_object_given, count_object_got, address"
+            + ", precluded"
             + " FROM pae.members WHERE username = ?")) {
       query.setString(1, username);
       member = getMemberFromDataBase(query);
@@ -60,6 +61,7 @@ public class MemberDaoImpl implements MemberDao {
         "SELECT id_member, password, username,"
             + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
             + " state, count_object_not_collected, count_object_given, count_object_got, address"
+            + ", precluded"
             + " FROM pae.members WHERE id_member = ? ")) {
       query.setInt(1, id);
       member = getMemberFromDataBase(query);
@@ -159,9 +161,16 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public ArrayList<MemberDTO> listUsersByState(String state) {
     ArrayList<MemberDTO> list = new ArrayList<>();
-    String query = "SELECT * FROM pae.members WHERE state=?";
+    String query;
+    if (state.isBlank()) {
+      query = "SELECT * FROM pae.members";
+    } else {
+      query = "SELECT * FROM pae.members WHERE state=?";
+    }
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, state);
+      if (!state.isBlank()) {
+        ps.setString(1, state);
+      }
       try (ResultSet resultSet = ps.executeQuery()) {
         while (resultSet.next()) {
           list.add(createMemberInstance(resultSet));
@@ -181,24 +190,23 @@ public class MemberDaoImpl implements MemberDao {
    * @return returns the member DTO
    */
   public MemberDTO confirmRegistration(String username, boolean isAdmin) {
-    MemberDTO member;
+    MemberDTO member = null;
 
     String query =
         "UPDATE pae.members SET state='valid', isAdmin =? WHERE username=? RETURNING *";
-
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setBoolean(1, isAdmin);
       ps.setString(2, username);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           member = createMemberInstance(rs);
-          return member;
         }
+        System.out.println("confirm done");
+        return member;
       }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    return null;
   }
 
   /**
@@ -296,6 +304,7 @@ public class MemberDaoImpl implements MemberDao {
       member.setCountObjectNotCollected(resultSetMember.getInt(11));
       member.setCountObjectGiven(resultSetMember.getInt(12));
       member.setCountObjectGot(resultSetMember.getInt(13));
+      member.setPrecluded(resultSetMember.getBoolean("precluded"));
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -330,6 +339,7 @@ public class MemberDaoImpl implements MemberDao {
     member.setCountObjectGiven(resultSetMember.getInt(11));
     member.setCountObjectGot(resultSetMember.getInt(12));
     member.setAddress(addressDao.getAddress(resultSetMember.getInt(13)));
+    member.setPrecluded(resultSetMember.getBoolean("precluded"));
     resultSetMember.close();
     return member;
   }

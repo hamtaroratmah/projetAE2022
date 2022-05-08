@@ -1,16 +1,22 @@
-
-import {cancelOffer, likeItem, modifyOffer, rateItem, getInterests} from "../api/itemsApi";
+import {displayInterests} from "./members";
+import {
+  cancelOffer,
+  getInterests,
+  likeItem,
+  modifyOffer,
+  rateItem
+} from "../api/itemsApi";
 import {getToken, reformateDate} from "../utils";
 import {getMember} from "../api/memberApi";
-import {displayInterests} from "./members";
 
 async function displayItems(items) {
   let item, offer;
-  const receptionPage = document.querySelector("#receptionPage");
+  let receptionPage = document.querySelector("#receptionPage");
   let page = document.querySelector("#page");
+  receptionPage = document.querySelector("#receptionPage");
   if (items.length === 0) {
     receptionPage.innerHTML = `
-       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
+      <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
     `;
   }
   for (let i = 0; i < items.length; i++) {
@@ -30,6 +36,9 @@ async function displayItems(items) {
       availabilities: items[i].availabilities,
       offer: offer
     }
+    if (!item.photo) {
+      item.photo = "mario.png";
+    }
     receptionPage.innerHTML += `
        <div class="modalItemInfo receptionItems" id="receptionItem${i}">
         <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="receptionImage${i}">
@@ -40,21 +49,20 @@ async function displayItems(items) {
           <p id="receptionItemCondition${i}">${item.itemCondition}</p>
           <p id="receptionAvailabilities${i}">${item.availabilities}</p>
           <p id="receptionIdOffer${i}" class="displayNone">${item["offer"].idOffer}</p>
-          <div  class="modalItemInfo receptionItems" id="likeItem${i}">
+        <div  class="modalItemInfo receptionItems" id="likeItem${i}">
           <button>Aimer l'offre</button>
-          </div>
+        </div>
 
-          <p class="modalItemInfo"></p>
-          <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
+        <p class="modalItemInfo"></p>
+        <div  class="modalItemInfo receptionItems" id="cancelOffer${i}">
           <button>Annuler l'offre</button>
-          </div>
-          <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
+        </div>
+        <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
           <button>Modifier l'offre</button>
-          <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
+        <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
           <button>Evaluer l'offre</button>
-          </div>
+        </div>
       </div>
-      
       `;
   }
   const member = await getMember(getToken());
@@ -77,24 +85,18 @@ async function displayItems(items) {
       console.log(idOffer);
       modifyOffer(idOffer);
     });
-    const photoSrc = document.querySelector("#receptionImage" + j);
-    if (!items[j]["photo"]) {
-      photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    } else {
-      photoSrc.src = items[j]["photo"];
-    }
+    // const photoSrc = document.querySelector("#receptionImage" + j);
+    // if (!items[j]["photo"]) {
+    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+    // } else {
+    //   photoSrc.src = items[j]["photo"];
+    // }
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
       console.log(member.idMember);
 
       likeItem(items[j].idItem, member.idMember);
     });
-    // const photoSrc = document.querySelector("#receptionImage" + j);
-    // if (items[j]["photo"] === null) {
-    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    // } else {
-    //   photoSrc.src = items[j]["photo"];
-    // }
   }
 }
 
@@ -102,9 +104,9 @@ async function openItemModal(item, j) {
   const member = await getMember(getToken());
   const idItem = item.idItem;
   let interests = await getInterests(idItem);
-  window.localStorage.setItem("item",  item["offer"].idOffer);
+  window.localStorage.setItem("item", item["offer"].idOffer);
 
-  let nbreInterests= interests.length;
+  let nbreInterests = interests.length;
   console.log(nbreInterests);
 
   const listInterestsDiv = `
@@ -130,8 +132,7 @@ async function openItemModal(item, j) {
           </div>
 
       </div>
-    `
-
+    `;
   const photoSrc = document.querySelector("#receptionImage" + j);
   const ratingDiv = document.querySelector("#ratingDiv");
   const rateButton = document.querySelector("#rateItem" + j);
@@ -147,18 +148,14 @@ async function openItemModal(item, j) {
 
     await rateItem(idItem, memberId, stars, comment);
 
-
   });
-
+  if (!item["photo"]) {
+    photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
+  } else {
+    console.log("photo")
+    photoSrc.src = item["photo"];
+  }
   displayInterests(interests);
-
-  // if (!item["photo"]) {
-  //   console.log("pas de photo")
-  //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  // } else {
-  //   console.log("photo")
-  //   photoSrc.src = item["photo"];
-  // }
 }
 
 export {displayItems}

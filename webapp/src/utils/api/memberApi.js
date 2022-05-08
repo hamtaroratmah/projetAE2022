@@ -2,10 +2,8 @@ import {getToken} from "../utils";
 
 const verifyToken = async () => {
   const request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
+    method: "GET", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
     }
   };
   const response = await fetch("/api/members/", request);
@@ -17,7 +15,6 @@ const verifyToken = async () => {
       console.log(err)
     })
   } else {
-    let member = await response.json()
     console.log("token valid <3")
   }
 }
@@ -27,7 +24,6 @@ const error = document.querySelector("#errorText");
 async function getMember(token) {
   const request = {
     method: "GET",
-
     headers: {
       "Content-Type": "application/json",
       "Authorization": token
@@ -41,9 +37,9 @@ async function getMember(token) {
   return await response.json();
 }
 
-export async function preclude(idMember){
-  const request={
-    method:"POST",
+export async function preclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -57,13 +53,11 @@ export async function preclude(idMember){
   console.log(request);
   await fetch("/api/members/preclude", request)
 
-
-
-
 }
-export async function unpreclude(idMember){
-  const request={
-    method:"POST",
+
+export async function unpreclude(idMember) {
+  const request = {
+    method: "POST",
     body: JSON.stringify(
         {
           idMember: idMember
@@ -77,15 +71,12 @@ export async function unpreclude(idMember){
   console.log(request);
   await fetch("/api/members/unpreclude", request)
 
-
-
-
 }
+
 // get the list of inscriptions
 async function getListInscriptions() {
   const request = {
-    method: "GET",
-    headers: {
+    method: "GET", headers: {
       "Content-Type": "application/json"
     }
   };
@@ -101,10 +92,8 @@ async function getListInscriptions() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des inscriptions"
-  );
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des inscriptions");
 
   // fill inscriptions [] with inscriptions denied
   await fetch("/api/members/listDenied", request)
@@ -115,18 +104,14 @@ async function getListInscriptions() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des inscriptions"
-  );
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des inscriptions");
   return inscriptions;
 }
 
-// get the list of inscriptions
 async function getListMembers() {
   const request = {
-    method: "GET",
-    headers: {
+    method: "GET", headers: {
       "Content-Type": "application/json"
     }
   };
@@ -142,42 +127,28 @@ async function getListMembers() {
     }
 
   })
-  .catch(() =>
-      error.innerHTML = "Une erreur est survenue"
-          + " durant la récupération des membres"
-  )
-
-
+  .catch(() => error.innerHTML = "Une erreur est survenue"
+      + " durant la récupération des membres")
 
   return members;
 }
 
 async function confirmInscription(username, isAdmin) {
   const request = {
-    method: "PUT",
-    body: JSON.stringify(
-        {
-          username: username,
-          isAdmin: isAdmin
-        }
-    ),
-    headers: {
+    method: "PUT", body: JSON.stringify({
+      username: username, isAdmin: isAdmin
+    }), headers: {
       "Content-Type": "application/json"
     }
   };
   await fetch("/api/members/confirm", request)
 }
 
-async function denyInscription(username,reasonForConnRefusal) {
+async function denyInscription(username, reasonForConnRefusal) {
   const request = {
-    method: "PUT",
-    body: JSON.stringify(
-        {
-          username: username,
-          reasonForConnRefusal: reasonForConnRefusal
-        }
-    ),
-    headers: {
+    method: "PUT", body: JSON.stringify({
+      username: username, reasonForConnRefusal: reasonForConnRefusal
+    }), headers: {
       "Content-Type": "application/json"
     }
   };
@@ -186,29 +157,24 @@ async function denyInscription(username,reasonForConnRefusal) {
 
 async function updateMember(member, confirmPassword) {
   const request = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": getToken()
-    },
-    body: JSON.stringify(
-        {
-          idMember: member.idMember,
-          password: member.password,
-          username: member.username,
-          lastName: member.lastName,
-          firstName: member.firstName,
-          callNumber: member.callNumber,
-          state: member.state,
-          idAddress: member.address.idAddress,
-          street: member.address.street,
-          buildingNumber: member.address.buildingNumber,
-          postcode: member.address.postcode,
-          city: member.address.city,
-          unitNumber: member.address.unitNumber,
-          confirmPassword: confirmPassword
-        }
-    )
+    method: "PUT", headers: {
+      "Content-Type": "application/json", "Authorization": getToken()
+    }, body: JSON.stringify({
+      idMember: member.idMember,
+      password: member.password,
+      username: member.username,
+      lastName: member.lastName,
+      firstName: member.firstName,
+      callNumber: member.callNumber,
+      state: member.state,
+      idAddress: member.address.idAddress,
+      street: member.address.street,
+      buildingNumber: member.address.buildingNumber,
+      postcode: member.address.postcode,
+      city: member.address.city,
+      unitNumber: member.address.unitNumber,
+      confirmPassword: confirmPassword
+    })
   };
   const response = await fetch("/api/members/updateMember", request);
   if (!response.ok) {
@@ -227,5 +193,5 @@ export {
   confirmInscription,
   denyInscription,
   updateMember,
-   getListMembers
+  getListMembers
 };

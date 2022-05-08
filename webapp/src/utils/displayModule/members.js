@@ -56,6 +56,7 @@ function displayInscriptions(inscriptions) {
             <div class="receptionInscriptionGrandChild">
                 state : ${inscriptions[i].state}
             </div>
+            <p id="reasonConnRefusal">raison de refus : ${inscriptions[i].reasonForConnRefusal}</p>
             <div class="receptionInscriptionGrandChild">
                 <input type="checkbox" id="isAdmin${i}" name="isAdmin${i}">
             </div>
@@ -68,36 +69,38 @@ function displayInscriptions(inscriptions) {
         `;
     }
   }
-
   for (let i = 0; i < inscriptions.length; i++) {
-
     const isAdmin = document.getElementById("isAdmin" + i);
     const buttonConfirm = document.getElementById("confirm" + i);
     const buttonDeny = document.getElementById("deny" + i);
     const reasonForRefusal = document.getElementById("reasonRefusal" + i);
-    console.log(reasonForRefusal)
     // Confirm inscription
     buttonConfirm.addEventListener("click", async (e) => {
       e.preventDefault();
       await confirmInscription(inscriptions[i].username, isAdmin.checked);
+      window.location.reload();
     })
 
     // Deny inscription
-    buttonDeny.addEventListener("click", async (e) => {
-      e.preventDefault();
-      await denyInscription(inscriptions[i].username, reasonForRefusal);
-    })
+    try {
+      buttonDeny.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await denyInscription(inscriptions[i].username, reasonForRefusal.value);
+        window.location.reload();
+      })
+    } catch (e) {
+      //Try catch pour pouvoir boucler sur toute la liste de membre même s'ils sont déjà refusé
+    }
   }
-
 }
-
-
 
 function displayMembers(members) {
   const listMembersPage = document.querySelector("#listMembersPage");
   for (let i = 0; i < members.length; i++) {
-    if (members[i].state === "valid") {
-      listMembersPage.innerHTML += `
+    if (members[i].isPrecluded) {
+      members[i].state = "precluded";
+    }
+    listMembersPage.innerHTML += `
         <div id="inscriptionValid" class="receptionInscriptionPending">
           <div class="receptionValidForm">
           <form id="validForm">
@@ -121,36 +124,37 @@ function displayMembers(members) {
           </div>
         </div>
       `;
-    }
   }
   for (let i = 0; i < members.length; i++) {
 
     const buttonPreclude = document.getElementById("preclude" + i);
-
     buttonPreclude.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log(members[i].idMember);
       await preclude(members[i].idMember);
     });
+
     const buttonUnpreclude = document.getElementById("unpreclude" + i);
 
     buttonUnpreclude.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log(members[i].idMember);
       await unpreclude(members[i].idMember);
+      window.location.reload();
     });
 
+    buttonPreclude.addEventListener("click", async function () {
+      await preclude(members[i].idMember)
+      window.location.reload();
+    });
 
   }
 }
 
-  function displayInterests(members) {
-    const listInterestsPage = document.querySelector("#modal");
-    let idOffer= window.localStorage.getItem("item");
-    console.log(idOffer);
-    for (let i = 0; i < members.length; i++) {
+function displayInterests(members) {
+  const listInterestsPage = document.querySelector("#modal");
+  let idOffer = window.localStorage.getItem("item");
+  for (let i = 0; i < members.length; i++) {
 
-      listInterestsPage.innerHTML += `
+    listInterestsPage.innerHTML += `
         <div id="interests" class="receptionInterests">
           <div class="receptionInterests">
           <form id="interestsForm">
@@ -172,23 +176,19 @@ function displayMembers(members) {
         </div>
       `;
 
-    }
+  }
 
-    for (let i = 0; i < members.length; i++) {
+  for (let i = 0; i < members.length; i++) {
 
-       const buttonGive = document.getElementById("give" + i);
+    const buttonGive = document.getElementById("give" + i);
 
-       buttonGive.addEventListener("click", async (e) => {
-        e.preventDefault();
-        console.log(members[i].idMember);
-         console.log(" give clicked");
-        await giveItem(idOffer,members[i].idMember);
-      });
-
-
-    }
+    buttonGive.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await giveItem(idOffer, members[i].idMember);
+    });
 
   }
 
+}
 
-export {displayInscriptions,displayMembers, displayInterests};
+export {displayInscriptions, displayMembers, displayInterests};

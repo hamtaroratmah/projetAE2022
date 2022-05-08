@@ -186,7 +186,7 @@ public class MemberResource {
   @Path("listMembers")
   @Produces(MediaType.APPLICATION_JSON)
   public ArrayList<MemberDTO> listMembers() {
-    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listMembers());
+    return (ArrayList<MemberDTO>) jsonDB.filterPublicJsonViewAsList(memberUCC.listAllMembers());
   }
 
   /**

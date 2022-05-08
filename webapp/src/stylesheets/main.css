@@ -99,6 +99,44 @@
   margin-bottom: 20px;
 }
 
+.receptionInscriptionPending {
+  border: 1px solid black;
+  width: 1200px;
+  height: 130px;
+  margin: auto;
+  text-align: center;
+}
+
+.receptionInscriptionDenied {
+  border: 1px solid black;
+  width: 1200px;
+  height: 100px;
+  margin: auto;
+  text-align: center;
+}
+
+.receptionConfirmForm {
+  width: 1000px;
+  padding: 10px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.receptionRefusalForm {
+  width: 500px;
+  padding: 10px;
+  vertical-align: middle;
+  margin: auto;
+  clear: both;
+}
+
+.receptionInscriptionGrandChild {
+  width: 200px;
+  padding: 10px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 *, ::before, ::after {
   box-sizing: border-box;
   margin: 0;
