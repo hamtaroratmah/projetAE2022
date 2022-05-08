@@ -149,24 +149,24 @@ VALUES ('$2a$10$AZhMoyNJDcAD7oGnsm.x4.eCJUDNIn6EPk96T/FtZHC8rgL9sDT/W', 'bazz',
         'Ile', 'Basile', 3, 'valid');
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, isadmin)
-VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'bri',
+VALUES ('$2a$10$KlU8y9chMAVU0DWRtNllL.n.AyKZ.ECHYKy0SKrCXsEZBko2pRagW', 'bri',
         'Lehmann', 'Brigitte', 4, 'valid', true);
 --TODO ajouter le bon mot de passe
 INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
-VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'theo',
+VALUES ('$2a$10$v29HlojRxRy/b4yqumqy4e9u6OgPIsXL5Gd0YoHdHG.NscL1BfOJy', 'theo',
         'Ile', 'Théophile', 2, 'valid');
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, reason_for_conn_refusal)
-VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'emi',
+VALUES ('$2a$10$pk7yI8xr4WH0.lJBjJlhJ.4g5X0VCuqVpqCoeJamgvSLv0xWBR4/.', 'emi',
         'Ile', 'Emile', 5, 'denied', 'L application n est pas encore ouverte à tous.');
 INSERT INTO pae.members
 (password, username, last_name, first_name, address, state, reason_for_conn_refusal)
-VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'cora',
+VALUES ('$2a$10$Dec1kcj3zlF/jjCQTVrBQObLnh6HutK27GsBFSiFfYLZaV6APIwkG', 'cora',
         'Line', 'Cora', 6, 'denied', 'L application n est pas encore ouverte à tous.');
 INSERT INTO pae.members
     (password, username, last_name, first_name, address, state)
-VALUES ('$2a$10$9ugYnsv6ogSKOZp4CCO/H.LETYInU4PX9ve63bm4wqZGGR45VO/ia', 'charline',
+VALUES ('$2a$10$Kyc2bCyeA92EBwr8oaAmF.ZXLkMKvcxCYLniGxJ9m7uNGG7mN6DdO', 'charline',
         'Line', 'Charles', 7, 'pending');
 
 -- Insert demo's items
@@ -377,8 +377,10 @@ SET isrecipient= true
 WHERE id_item = 5
   AND id_member = 1;
 
-INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
-                       id_offering_member)
-VALUES (4, '', '', '', '', 4)
-RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+-- INSERT INTO pae.items (id_type, photo, description, availabilities, item_condition,
+--                        id_offering_member)
+-- VALUES (4, '', '', '', '', 4)
+-- RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+
 SELECT * FROM pae.interests;
+

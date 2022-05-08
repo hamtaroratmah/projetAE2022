@@ -167,6 +167,7 @@ public class MemberDaoImpl implements MemberDao {
     } else {
       query = "SELECT * FROM pae.members WHERE state=?";
     }
+    query += " ORDER BY username ASC";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       if (!state.isBlank()) {
         ps.setString(1, state);

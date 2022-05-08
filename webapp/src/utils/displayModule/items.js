@@ -61,7 +61,9 @@ async function displayItems(items) {
         <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
           <button>Evaluer l'offre</button>
         </div>
+       
       </div>
+       <p class="displayNone" id="precludedText${i}">Ce membre est momentanément empêché, vous ne recevrez donc pas votre objet tout de suite</p>
       `;
   }
   const member = await getMember(getToken());
@@ -69,8 +71,13 @@ async function displayItems(items) {
   page += receptionPage;
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
+    if (items[j].itemCondition === "cancelled" || items[j].itemCondition
+        === "given") {
+      itemDiv.className += " displayNone";
+      continue;
+    }
     itemDiv.addEventListener("click", () => {
-      openItemModal(items[j], j);
+      openItemModal(items[j], j, member);
     });
     const cancelButton = document.querySelector("#cancelOffer" + j)
     cancelButton.addEventListener("click", () => {
@@ -78,29 +85,33 @@ async function displayItems(items) {
     });
     const modifyButton = document.querySelector("#modifyOffer" + j)
     modifyButton.addEventListener("click", () => {
-      console.log("buttonClicked");
       const idOffer = document.querySelector(
           "#receptionIdOffer" + j).innerHTML;
-      console.log(idOffer);
       modifyOffer(idOffer);
     });
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
-      console.log(member.idMember);
-
       likeItem(items[j].idItem, member.idMember);
     });
+    if (member.idMember === items[j].offeringMember.idMember) {
+      likeButton.className += " displayNone";
+      (document.querySelector("#rateOffer" + j)).className += " displayNone";
+    } else {
+      modifyButton.className += " displayNone";
+      cancelButton.className += " displayNone";
+    }
+    if (items[j].offeringMember.isPrecluded) {
+      (document.querySelector("#precludedText" + j)).className = "";
+    }
   }
 }
 
-async function openItemModal(item, j) {
-  const member = await getMember(getToken());
+async function openItemModal(item, j, member) {
   const idItem = item.idItem;
   let interests = await getInterests(idItem);
   window.localStorage.setItem("item", item["offer"].idOffer);
 
   let nbreInterests = interests.length;
-  console.log(nbreInterests);
 
   const listInterestsDiv = `
         <div id="listInterestsPage">
@@ -131,20 +142,23 @@ async function openItemModal(item, j) {
       </div>
     `;
   const ratingDiv = document.querySelector("#ratingDiv");
-  const rateButton = document.querySelector("#rateItem" + j);
-  if (!getToken()) {
+  if (item.offeringMember.idMember === member.idMember) {
     ratingDiv.className += " displayNone";
+  } else {
+    const rateButton = document.querySelector("#rateItem" + j);
+    if (!getToken()) {
+      ratingDiv.className += " displayNone";
+    }
+    rateButton.addEventListener("click", async () => {
+      const comment = document.querySelector("#ratingComment").value;
+      const stars = document.querySelector("#ratingStars").value;
+      const memberId = member.idMember;
+
+      await rateItem(idItem, memberId, stars, comment);
+
+    });
   }
-  rateButton.addEventListener("click", async () => {
-    console.log(member);
-    const comment = document.querySelector("#ratingComment").value;
-    const stars = document.querySelector("#ratingStars").value;
-    const memberId = member.idMember;
-    console.log("hello");
 
-    await rateItem(idItem, memberId, stars, comment);
-
-  });
   displayInterests(interests);
 }
 
