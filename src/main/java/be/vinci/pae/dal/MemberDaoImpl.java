@@ -312,6 +312,28 @@ public class MemberDaoImpl implements MemberDao {
 
   }
 
+  /**
+   * get the assigned member to a offer
+   *
+   * @param interestId id member like a item
+   * @return return the member liking a item
+   */
+  public MemberDTO getTheAssigned(int interestId){
+    MemberDTO member;
+    try (PreparedStatement query = services.getPreparedStatement(
+            "SELECT id_member, password, username,"
+                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
+                    + " state, count_object_not_collected, count_object_given, count_object_got, address"
+                    + ", precluded"
+                    + " FROM pae.members ME, pae.interests IN"
+                    + "WHERE IN.id_interest = ? AND IN.id_member = ME.id_member ")) {
+      query.setInt(1, interestId);
+      member = getMemberFromDataBase(query);
+      return member;
+    } catch (SQLException e) {
+      throw new FatalException("Problème en db getMember");
+    }
+  }
 
   /**
    * Avoid duplicate code if we want to get a user from the dataBase.
@@ -342,22 +364,5 @@ public class MemberDaoImpl implements MemberDao {
     member.setPrecluded(resultSetMember.getBoolean("precluded"));
     resultSetMember.close();
     return member;
-  }
-
-  public MemberDTO getTheAssigned(int interestId){
-    MemberDTO member;
-    try (PreparedStatement query = services.getPreparedStatement(
-            "SELECT id_member, password, username,"
-                    + " last_name, first_name, call_number, isadmin, reason_for_conn_refusal,"
-                    + " state, count_object_not_collected, count_object_given, count_object_got, address"
-                    + ", precluded"
-                    + " FROM pae.members ME, pae.interests IN"
-                    + "WHERE IN.id_interest = ? AND IN.id_member = ME.id_member ")) {
-      query.setInt(1, interestId);
-      member = getMemberFromDataBase(query);
-      return member;
-    } catch (SQLException e) {
-      throw new FatalException("Problème en db getMember");
-    }
   }
 }

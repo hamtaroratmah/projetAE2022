@@ -1,0 +1,8 @@
+###
+POST {{baseUrl}}/items/came
+Content-Type: application/json
+
+{
+  "interestId":1,
+  "itemId" : 3
+}

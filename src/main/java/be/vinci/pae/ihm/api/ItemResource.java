@@ -203,13 +203,13 @@ public class ItemResource {
   }
 
   /**
-   * set that the one assigned to the offer had come
+   * set that the one assigned to the offer had come (false -> true)
    *
    * @param json the json
    * @return true if ok, false if ko.
    */
   @POST
-  @Path("came")
+  @Path("/came")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public boolean came(JsonNode json) throws IOException {
