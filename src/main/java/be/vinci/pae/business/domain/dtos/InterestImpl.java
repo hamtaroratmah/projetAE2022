@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class InterestImpl implements InterestDTO {
 
   @JsonView(Views.Public.class)
-  private Integer id_interest;
+  private Integer interestId;
   @JsonView(Views.Public.class)
   private ItemImpl item;
   @JsonView(Views.Public.class)
@@ -15,7 +15,7 @@ public class InterestImpl implements InterestDTO {
   @JsonView(Views.Public.class)
   private boolean isRecipient;
   @JsonView(Views.Public.class)
-  private String date_delivery;
+  private String dateDelivery;
   @JsonView(Views.Public.class)
   private boolean came;
 
@@ -27,8 +27,8 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public Integer getId_interest() {
-    return id_interest;
+  public Integer getInterestId() {
+    return interestId;
   }
 
   @Override
@@ -47,8 +47,8 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public String getDate_delivery() {
-    return date_delivery;
+  public String getDateDelivery() {
+    return dateDelivery;
   }
 
   @Override
@@ -57,8 +57,8 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public void setId_interest(Integer id_interest) {
-    this.id_interest = id_interest;
+  public void setInterestId(Integer interestId) {
+    this.interestId = interestId;
   }
 
   @Override
@@ -77,8 +77,8 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public void setDate_delivery(String date_delivery) {
-    this.date_delivery = date_delivery;
+  public void setDateDelivery(String dateDelivery) {
+    this.dateDelivery = dateDelivery;
   }
 
   @Override

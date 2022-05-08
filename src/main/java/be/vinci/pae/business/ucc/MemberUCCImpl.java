@@ -225,7 +225,8 @@ public class MemberUCCImpl implements MemberUCC {
     }
   }
 
-  public MemberDTO getTheAssigned(int interestId){
+  @Override
+  public MemberDTO getTheAssigned(int interestId) {
     try {
       dalServices.startTransaction();
       MemberDTO member = memberDao.getTheAssigned(interestId);

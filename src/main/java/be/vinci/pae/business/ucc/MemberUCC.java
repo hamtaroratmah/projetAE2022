@@ -41,5 +41,5 @@ public interface MemberUCC {
 
   boolean unpreclude(int idMember);
 
-   MemberDTO getTheAssigned(int interestId);
+  MemberDTO getTheAssigned(int interestId);
 }
