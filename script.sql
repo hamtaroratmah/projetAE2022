@@ -381,3 +381,6 @@ WHERE id_item = 5
 --                        id_offering_member)
 -- VALUES (4, '', '', '', '', 4)
 -- RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+
+SELECT * FROM pae.interests;
+

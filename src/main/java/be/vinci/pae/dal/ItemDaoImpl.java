@@ -11,9 +11,11 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,12 +91,15 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int likeAnItem(int itemId, int idMember) {
+    String now = LocalDate.now().toString();
+    Date date = Date.valueOf(now);
     String query =
-        "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)" + " RETURNING id_interest";
+        "INSERT INTO pae.interests (id_item, id_member,date_delivery) VALUES (?,?,?)" + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
       ps.setInt(2, idMember);
+      ps.setDate(3,date);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           return rs.getInt(1);
@@ -153,7 +158,7 @@ public class ItemDaoImpl implements ItemDao {
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    query = "UPDATE pae.items SET item_condition='assigned'  WHERE id_item= ?";
     try (PreparedStatement pss = services.getPreparedStatement(query)) {
       pss.setInt(1, idItem);
       pss.executeQuery();
@@ -170,7 +175,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
-
     ItemDTO item = null;
     //language=PostgreSQL
     String query = "INSERT  INTO pae.items "
