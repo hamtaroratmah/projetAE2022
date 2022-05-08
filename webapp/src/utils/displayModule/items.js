@@ -58,6 +58,7 @@ async function displayItems(items) {
         </div>
         <div  class="modalItemInfo receptionItems" id="modifyOffer${i}">
           <button>Modifier l'offre</button>
+          </div>
         <div  class="modalItemInfo receptionItems" id="rateOffer${i}">
           <button>Evaluer l'offre</button>
         </div>
@@ -131,7 +132,7 @@ async function openItemModal(item, j) {
       </div>
     `;
   const ratingDiv = document.querySelector("#ratingDiv");
-  const rateButton = document.querySelector("#rateItem" + j);
+  const rateButton = document.querySelector("#rateOffer" + j);
   if (!getToken()) {
     ratingDiv.className += " displayNone";
   }
