@@ -253,7 +253,8 @@ public class ItemDaoImpl implements ItemDao {
     } else {
       //language=PostgreSQL
       query =
-          "UPDATE  pae.items SET  id_type=?, description= ?,availabilities= ?, photo=? WHERE id_item=?"
+          "UPDATE  pae.items SET  id_type=?, description= ?,availabilities= ?, photo=?"
+              + " WHERE id_item=?"
               + "RETURNING id_item,id_type,photo,description,availabilities,"
               + "item_condition,id_offering_member";
     }
