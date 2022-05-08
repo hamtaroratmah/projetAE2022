@@ -19,8 +19,6 @@ public class OfferUCCImpl implements OfferUCC {
   private OfferDao offerDao;
   @Inject
   private ItemDao itemDao;
-
-
   @Inject
   private DalServices dalServices;
 

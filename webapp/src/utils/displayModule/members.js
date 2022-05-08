@@ -5,6 +5,7 @@ import {
   unpreclude
 } from "../api/memberApi";
 import {giveItem} from "../api/itemsApi";
+import {Redirect} from "../../Router";
 
 function displayInscriptions(inscriptions) {
   const listInscriptionsPage = document.querySelector("#listInscriptionsPage");
@@ -118,7 +119,7 @@ function displayMembers(members) {
             <div class="receptionValidGrandChild">
                 <input id ="preclude${i}" type="submit" value="Empecher le membre">
                 <input id ="unpreclude${i}" type="submit" value="Ne plus empecher le membre">
-                
+                <input id="seeItems${i}" type="submit" value="Voir objets offerts par le membre">
             </div>
           </form>
           </div>
@@ -144,6 +145,13 @@ function displayMembers(members) {
     buttonPreclude.addEventListener("click", async function () {
       await preclude(members[i].idMember)
       window.location.reload();
+    });
+
+    const listOffers = document.querySelector("#seeItems" + i);
+    listOffers.addEventListener("click", function (e) {
+      e.preventDefault()
+      window.sessionStorage.setItem("idOffer", members[i].idMember)
+      Redirect("/listOffers");
     });
 
   }

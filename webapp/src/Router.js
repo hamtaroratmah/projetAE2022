@@ -8,6 +8,7 @@ import register from "./Pages/register";
 import ProfilePage from "./Pages/ProfilePage";
 import ModifyOffer from "./Pages/ModifyOffer";
 import ListMember from "./Pages/ListMember";
+import ListOffersPage from "./Pages/ListOffersPage";
 
 // Configure your routes here
 let routes;
@@ -22,6 +23,7 @@ routes = {
   "/profile": ProfilePage,
   "/modifyOffer": ModifyOffer,
   "/listMembers": ListMember,
+  "/listOffers": ListOffersPage,
 };
 
 const unloggedRoutes = {

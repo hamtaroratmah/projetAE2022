@@ -294,7 +294,11 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public List<ItemDTO> getOfferingMemberItems(int idMember) {
-    String query = "SELECT it.* FROM pae.items it, pae.members me WHERE it.id_offering_member = me.id_member AND me.id_member = ?";
+    String query =
+        "SELECT it.*, ty.type, of.id_offer "
+            + "FROM pae.items it, pae.members me, pae.types ty, pae.offers of "
+            + "WHERE ty.id_type= it.id_type AND it.id_offering_member = me.id_member "
+            + "AND of.id_item=it.id_item AND me.id_member = ?";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idMember);
       return getItemFromDataBase(ps);
@@ -320,7 +324,6 @@ public class ItemDaoImpl implements ItemDao {
       item.setRating(resultSet.getInt("rating"));
       MemberDTO member = memberDao.getMember(resultSet.getInt("id_offering_member"));
       OfferDTO offer = offerDao.getOffer(resultSet.getInt("id_offer"));
-      member.setPassword(null);
       item.setOfferingMember(member);
       item.setOffer(offer);
       items.add(item);

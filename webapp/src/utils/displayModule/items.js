@@ -11,9 +11,8 @@ import {getMember} from "../api/memberApi";
 
 async function displayItems(items) {
   let item, offer;
-  let receptionPage = document.querySelector("#receptionPage");
+  let receptionPage = document.querySelector("#listItems");
   let page = document.querySelector("#page");
-  receptionPage = document.querySelector("#receptionPage");
   if (items.length === 0) {
     receptionPage.innerHTML = `
       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
