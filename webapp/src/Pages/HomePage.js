@@ -24,7 +24,7 @@ const receptionDiv = `
     </select>
   </div>
     
-  <div id="receptionPage">
+  <div id="listItems">
    
   </div>
 `

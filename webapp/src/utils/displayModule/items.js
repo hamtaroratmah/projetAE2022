@@ -11,9 +11,8 @@ import {getMember} from "../api/memberApi";
 
 async function displayItems(items) {
   let item, offer;
-  let receptionPage = document.querySelector("#receptionPage");
+  let receptionPage = document.querySelector("#listItems");
   let page = document.querySelector("#page");
-  receptionPage = document.querySelector("#receptionPage");
   if (items.length === 0) {
     receptionPage.innerHTML = `
       <p>Aucun objet à afficher, change tes critères de recherche &#x1F9D0;</p>
@@ -85,12 +84,6 @@ async function displayItems(items) {
       console.log(idOffer);
       modifyOffer(idOffer);
     });
-    // const photoSrc = document.querySelector("#receptionImage" + j);
-    // if (!items[j]["photo"]) {
-    //   photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-    // } else {
-    //   photoSrc.src = items[j]["photo"];
-    // }
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
       console.log(member.idMember);
@@ -115,9 +108,13 @@ async function openItemModal(item, j) {
 `;
 
   const modal = document.querySelector("#modal");
+  if (!item.photo) {
+    item.photo = "mario.png";
+  }
+
   modal.innerHTML = `
       <div>
-        <img src="" alt="" class="receptionImage" id="modalReceptionImage${j}">
+        <img src="/api/images/${item.photo}" alt="${item.photo}" class="receptionImage" id="modalReceptionImage${j}">
           <p class="receptionDescription">${item.description}</p>
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
@@ -133,7 +130,6 @@ async function openItemModal(item, j) {
 
       </div>
     `;
-  const photoSrc = document.querySelector("#receptionImage" + j);
   const ratingDiv = document.querySelector("#ratingDiv");
   const rateButton = document.querySelector("#rateItem" + j);
   if (!getToken()) {
@@ -149,12 +145,6 @@ async function openItemModal(item, j) {
     await rateItem(idItem, memberId, stars, comment);
 
   });
-  if (!item["photo"]) {
-    photoSrc.src = "https://vignette2.wikia.nocookie.net/mariokart/images/4/4a/Blue_Fake_Item_Box.png/revision/latest?cb=20170103200344";
-  } else {
-    console.log("photo")
-    photoSrc.src = item["photo"];
-  }
   displayInterests(interests);
 }
 

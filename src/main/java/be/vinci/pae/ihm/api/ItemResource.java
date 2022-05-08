@@ -23,7 +23,6 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @Path("/items")
@@ -105,14 +104,14 @@ public class ItemResource {
   @Path("/createItem")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ItemDTO createItem(JsonNode json) throws SQLException {
+  public ItemDTO createItem(JsonNode json) {
 
     if (!json.hasNonNull("type")
-            || !json.hasNonNull("description")
-            || !json.hasNonNull(
-            "availabilities")
-            || !json.hasNonNull("itemCondition")
-            || !json.hasNonNull("idOfferingMember")) {
+        || !json.hasNonNull("description")
+        || !json.hasNonNull(
+        "availabilities")
+        || !json.hasNonNull("itemCondition")
+        || !json.hasNonNull("idOfferingMember")) {
       throw new WebApplicationException("Lack of informations", Response.Status.BAD_REQUEST);
     }
     if (json.get("idOfferingMember").asInt() < 1) {
@@ -191,15 +190,23 @@ public class ItemResource {
   @Path("rate")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public RatingDTO rateAnItem(JsonNode json) throws IOException {
+  public RatingDTO rateAnItem(JsonNode json) {
     int itemId = json.get("itemId").asInt();
     int memberId = json.get("memberId").asInt();
     int stars = json.get("stars").asInt();
     String comment = json.get("comment").asText();
-
     return ratingUcc.rateAnItem(itemId, memberId, stars, comment);
   }
 
+  /**
+   * get all items offered by a member.
+   */
+  @GET
+  @Path("getOfferingMemberItem/{idMember}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ItemDTO> getOfferingMemberItems(@PathParam("idMember") int idMember) {
+    return itemUcc.getOfferingMemberItems(idMember);
+  }
 
 }
 

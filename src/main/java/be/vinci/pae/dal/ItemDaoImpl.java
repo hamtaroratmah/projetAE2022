@@ -34,7 +34,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
-    List<ItemDTO> list = null;
     boolean isCondition = false;
     if (sortingParam.equals("type") || sortingParam.equals("item_condition")) {
       sortingParam = "it." + sortingParam;
@@ -62,11 +61,10 @@ public class ItemDaoImpl implements ItemDao {
       if (isCondition) {
         query.setString(1, order);
       }
-      list = getItemFromDataBase(query);
+      return getItemFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
-    return list;
   }
 
   @Override
@@ -80,7 +78,7 @@ public class ItemDaoImpl implements ItemDao {
       query.setInt(1, idItem);
       item = getItemFromDataBase(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     if (item.size() > 0) {
       return item.get(0);
@@ -103,7 +101,7 @@ public class ItemDaoImpl implements ItemDao {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return -1;
 
@@ -119,9 +117,8 @@ public class ItemDaoImpl implements ItemDao {
         //todo
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
-    return 0;
   }
 
 
@@ -143,6 +140,7 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public boolean offer(int idItem, int idOffer) {
+    //language=PostgreSQL
     String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=?"
         + " RETURNING id_member ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
@@ -151,45 +149,18 @@ public class ItemDaoImpl implements ItemDao {
       ps.executeQuery();
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
     try (PreparedStatement pss = services.getPreparedStatement(query)) {
       pss.setInt(1, idItem);
       pss.executeQuery();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
 
     return true;
 
-  }
-
-  private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
-    List<ItemDTO> items = new ArrayList<>();
-    ResultSet resultSet = query.executeQuery();
-    while (resultSet.next()) {
-      ItemDTO item = domainFactory.getItem();
-      TypeDTO type = domainFactory.getType();
-      type.setIdType(resultSet.getInt("id_type"));
-      type.setType(resultSet.getString("type"));
-      item.setIdItem(resultSet.getInt("id_item"));
-      item.setType(type);
-      item.setDescription(resultSet.getString("description"));
-      item.setAvailabilities(resultSet.getString("availabilities"));
-      item.setItemCondition(resultSet.getString("item_condition"));
-      item.setPhoto(resultSet.getString("photo"));
-      item.setRating(resultSet.getInt("rating"));
-      MemberDTO member = memberDao.getMember(resultSet.getInt("id_offering_member"));
-      OfferDTO offer = offerDao.getOffer(resultSet.getInt("id_offer"));
-      member.setPassword(null);
-      item.setOfferingMember(member);
-      item.setOffer(offer);
-      items.add(item);
-
-    }
-    resultSet.close();
-    return items;
   }
 
   //daoImpl
@@ -199,6 +170,7 @@ public class ItemDaoImpl implements ItemDao {
   public ItemDTO createItem(ItemDTO newItem) {
 
     ItemDTO item = null;
+    //language=PostgreSQL
     String query = "INSERT  INTO pae.items "
         + "(id_type,photo, description, availabilities, item_condition,id_offering_member) "
         + " VALUES(?,?,?,?,?,?) " + "RETURNING id_item,id_type,photo,description,availabilities,"
@@ -218,7 +190,7 @@ public class ItemDaoImpl implements ItemDao {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
 
     return item;
@@ -228,6 +200,7 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int typeExisting(String type) {
+    //language=PostgreSQL
     String query = "SELECT id_type FROM pae.types WHERE type=? ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, type);
@@ -238,7 +211,7 @@ public class ItemDaoImpl implements ItemDao {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return -1;
 
@@ -247,6 +220,7 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int createType(String type) {
+    //language=PostgreSQL
     String query = "INSERT INTO pae.types (type) VALUES (?) RETURNING id_type  ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setString(1, type);
@@ -256,7 +230,7 @@ public class ItemDaoImpl implements ItemDao {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return -1;
 
@@ -268,6 +242,7 @@ public class ItemDaoImpl implements ItemDao {
 
     ItemDTO item = null;
 
+    //language=PostgreSQL
     String query =
         "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
             + "RETURNING id_item,id_type,photo,description,availabilities,"
@@ -287,11 +262,75 @@ public class ItemDaoImpl implements ItemDao {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new FatalException(e.getMessage());
     }
     return item;
   }
 
+  /**
+   * Update the photo of the item, put the uuid file name.
+   *
+   * @param fileName name of the file (uuid + extension)
+   * @param idItem   id of the item
+   */
+  @Override
+  public void insertPhoto(String fileName, int idItem) {
+    System.out.print("Passer par là : ItemDao");
+    //language=PostgreSQL
+    String query =
+        "UPDATE  pae.items SET photo=? WHERE id_item=?"
+            + "RETURNING id_item";
+
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setString(1, fileName);
+      ps.setInt(2, idItem);
+      ps.executeQuery();
+    } catch (SQLException e) {
+      throw new FatalException(e.getMessage());
+    }
+  }
+
+
+  @Override
+  public List<ItemDTO> getOfferingMemberItems(int idMember) {
+    String query =
+        "SELECT it.*, ty.type, of.id_offer "
+            + "FROM pae.items it, pae.members me, pae.types ty, pae.offers of "
+            + "WHERE ty.id_type= it.id_type AND it.id_offering_member = me.id_member "
+            + "AND of.id_item=it.id_item AND me.id_member = ?";
+    try (PreparedStatement ps = services.getPreparedStatement(query)) {
+      ps.setInt(1, idMember);
+      return getItemFromDataBase(ps);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private List<ItemDTO> getItemFromDataBase(PreparedStatement query) throws SQLException {
+    List<ItemDTO> items = new ArrayList<>();
+    ResultSet resultSet = query.executeQuery();
+    while (resultSet.next()) {
+      ItemDTO item = domainFactory.getItem();
+      TypeDTO type = domainFactory.getType();
+      type.setIdType(resultSet.getInt("id_type"));
+      type.setType(resultSet.getString("type"));
+      item.setIdItem(resultSet.getInt("id_item"));
+      item.setType(type);
+      item.setDescription(resultSet.getString("description"));
+      item.setAvailabilities(resultSet.getString("availabilities"));
+      item.setItemCondition(resultSet.getString("item_condition"));
+      item.setPhoto(resultSet.getString("photo"));
+      item.setRating(resultSet.getInt("rating"));
+      MemberDTO member = memberDao.getMember(resultSet.getInt("id_offering_member"));
+      OfferDTO offer = offerDao.getOffer(resultSet.getInt("id_offer"));
+      item.setOfferingMember(member);
+      item.setOffer(offer);
+      items.add(item);
+
+    }
+    resultSet.close();
+    return items;
+  }
 
   private ItemDTO createItemInstance(ResultSet rs) throws SQLException {
     ItemDTO item = domainFactory.getItem();
@@ -306,28 +345,6 @@ public class ItemDaoImpl implements ItemDao {
     item.setOfferingMember(memberDao.getMember(8));
     rs.close();
     return item;
-  }
-
-  /**
-   * Update the photo of the item, put the uuid file name.
-   *
-   * @param fileName name of the file (uuid + extension)
-   * @param idItem   id of the item
-   */
-  @Override
-  public void insertPhoto(String fileName, int idItem) {
-    System.out.print("Passer par là : ItemDao");
-    String query =
-        "UPDATE  pae.items SET photo=? WHERE id_item=?"
-            + "RETURNING id_item";
-
-    try (PreparedStatement ps = services.getPreparedStatement(query)) {
-      ps.setString(1, fileName);
-      ps.setInt(2, idItem);
-      ps.executeQuery();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
   }
 }
 
