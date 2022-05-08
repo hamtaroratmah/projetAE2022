@@ -28,4 +28,5 @@ public interface ItemDao {
 
   void insertPhoto(String fileName, int idItem);
 
+  boolean came(int interestId, int itemId);
 }
