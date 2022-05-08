@@ -2,6 +2,7 @@ package be.vinci.pae.ihm.api;
 
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
@@ -171,7 +172,7 @@ public class OfferRessource {
   @Path("/offer")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public boolean offer(JsonNode json) {
+  public InterestDTO offer(JsonNode json) {
     int idOffer = json.get("idOffer").asInt();
     int idMember = json.get("idMember").asInt();
 

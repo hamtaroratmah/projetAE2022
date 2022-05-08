@@ -14,11 +14,10 @@ import java.util.ArrayList;
 public class MemberUCCImpl implements MemberUCC {
 
   @Inject
-  private MemberDao memberDao;
+   MemberDao memberDao;
   @Inject
   private DomainFactory domainFactory;
-
-  @Inject
+   @Inject
   private DalServices dalServices;
 
 

@@ -1,5 +1,6 @@
 package be.vinci.pae.dal.interfaces;
 
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface ItemDao {
 
   int likeAnItem(int itemId, int memberId);
 
-  boolean offer(int idOffer, int idItem);
+  InterestDTO offer(int idOffer, int idItem);
 
   void insertPhoto(String fileName, int idItem);
 

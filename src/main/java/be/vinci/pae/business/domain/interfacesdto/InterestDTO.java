@@ -1,15 +1,12 @@
 package be.vinci.pae.business.domain.interfacesdto;
 
-import be.vinci.pae.business.domain.dtos.ItemImpl;
-import be.vinci.pae.business.domain.dtos.MemberImpl;
-
 public interface InterestDTO {
 
   Integer getId_interest();
 
-  ItemImpl getItem();
+  ItemDTO getItem();
 
-  MemberImpl getMember();
+  MemberDTO getMember();
 
   boolean isRecipient();
 
@@ -19,9 +16,9 @@ public interface InterestDTO {
 
   void setId_interest(Integer id_interest);
 
-  void setItem(ItemImpl item);
+  void setItem(ItemDTO item);
 
-  void setMember(MemberImpl member);
+  void setMember(MemberDTO member);
 
   void setRecipient(boolean recipient);
 

@@ -1,11 +1,13 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.dal.interfaces.InterestDao;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
@@ -27,6 +29,8 @@ public class ItemDaoImpl implements ItemDao {
   MemberDao memberDao;
   @Inject
   OfferDao offerDao;
+  @Inject
+  InterestDao interestDao;
 
   public ItemDaoImpl() {
   }
@@ -142,13 +146,19 @@ public class ItemDaoImpl implements ItemDao {
   }
 
   @Override
-  public boolean offer(int idItem, int idOffer) {
+  public InterestDTO offer(int idItem, int idOffer) {
+    InterestDTO interest = null;
     String query = "UPDATE pae.interests SET isrecipient=true WHERE id_item = ? AND id_member=?"
         + " RETURNING id_member ";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
-      ps.executeQuery();
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          interest = interestDao.getInterest(rs.getInt(1));
+
+        }
+      }
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -161,7 +171,7 @@ public class ItemDaoImpl implements ItemDao {
       e.printStackTrace();
     }
 
-    return true;
+    return interest;
 
   }
 

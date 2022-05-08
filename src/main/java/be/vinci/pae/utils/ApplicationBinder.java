@@ -2,12 +2,16 @@ package be.vinci.pae.utils;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
 import be.vinci.pae.business.domain.dtos.InterestImpl;
+import be.vinci.pae.business.domain.dtos.ItemImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
 import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
+import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
+import be.vinci.pae.business.ucc.InterestUcc;
+import be.vinci.pae.business.ucc.InterestUccImpl;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.ItemUCCImpl;
 import be.vinci.pae.business.ucc.MemberUCC;
@@ -19,12 +23,14 @@ import be.vinci.pae.business.ucc.RatingUccImpl;
 import be.vinci.pae.dal.AddressDaoImpl;
 import be.vinci.pae.dal.DalBackendServices;
 import be.vinci.pae.dal.DalServicesImpl;
+import be.vinci.pae.dal.InterestDaoImpl;
 import be.vinci.pae.dal.ItemDaoImpl;
 import be.vinci.pae.dal.MemberDaoImpl;
 import be.vinci.pae.dal.OfferDaoImpl;
 import be.vinci.pae.dal.RatingDaoImpl;
 import be.vinci.pae.dal.interfaces.AddressDao;
 import be.vinci.pae.dal.interfaces.DalServices;
+import be.vinci.pae.dal.interfaces.InterestDao;
 import be.vinci.pae.dal.interfaces.ItemDao;
 import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
@@ -47,8 +53,10 @@ public class ApplicationBinder extends AbstractBinder {
     bind(OfferDaoImpl.class).to(OfferDao.class).in(Singleton.class);
     bind(OfferImpl.class).to(OfferDTO.class).in(Singleton.class);
 
+
     bind(ItemUCCImpl.class).to(ItemUCC.class).in(Singleton.class);
     bind(ItemDaoImpl.class).to(ItemDao.class).in(Singleton.class);
+    bind(ItemImpl.class).to(ItemDTO.class).in(Singleton.class);
 
     //Address
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
@@ -58,7 +66,10 @@ public class ApplicationBinder extends AbstractBinder {
     bind(RatingUccImpl.class).to(RatingUcc.class).in(Singleton.class);
 
     // Interest
-    bind(InterestImpl.class).to(InterestDTO.class).in(Singleton.class);
+   // bind(InterestDaoImpl.class).to(InterestDao.class).in(Singleton.class);
+    //bind(InterestUccImpl.class).to(InterestUcc.class).in(Singleton.class);
+    //bind(InterestImpl.class).to(InterestDTO.class).in(Singleton.class);
+
 
     // DAL and Factory
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);

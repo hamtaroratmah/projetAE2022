@@ -1,6 +1,8 @@
 package be.vinci.pae.business.domain.dtos;
 
 import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
+import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
+import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.utils.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -9,9 +11,9 @@ public class InterestImpl implements InterestDTO {
   @JsonView(Views.Public.class)
   private Integer id_interest;
   @JsonView(Views.Public.class)
-  private ItemImpl item;
+  private ItemDTO item;
   @JsonView(Views.Public.class)
-  private MemberImpl member;
+  private MemberDTO member;
   @JsonView(Views.Public.class)
   private boolean isRecipient;
   @JsonView(Views.Public.class)
@@ -32,12 +34,12 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public ItemImpl getItem() {
+  public ItemDTO getItem() {
     return item;
   }
 
   @Override
-  public MemberImpl getMember() {
+  public MemberDTO getMember() {
     return member;
   }
 
@@ -62,12 +64,12 @@ public class InterestImpl implements InterestDTO {
   }
 
   @Override
-  public void setItem(ItemImpl item) {
+  public void setItem(ItemDTO item) {
     this.item = item;
   }
 
   @Override
-  public void setMember(MemberImpl member) {
+  public void setMember(MemberDTO member) {
     this.member = member;
   }
 

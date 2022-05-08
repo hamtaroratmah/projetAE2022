@@ -1,5 +1,6 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
 import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
@@ -19,7 +20,7 @@ public interface OfferUCC {
 
   ItemDTO modify(int idOffer, int type, String photo, String description, String availabilities);
 
-  boolean offer(int idOffer, int idMember);
+  InterestDTO offer(int idOffer, int idMember);
 
 
 }
