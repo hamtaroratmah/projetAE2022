@@ -70,7 +70,7 @@ async function displayItems(items) {
   for (let j = 0; j < items.length; j++) {
     const itemDiv = document.querySelector("#receptionItem" + j);
     itemDiv.addEventListener("click", () => {
-      openItemModal(items[j], j);
+      openItemModal(items[j], j, member);
     });
     const cancelButton = document.querySelector("#cancelOffer" + j)
     cancelButton.addEventListener("click", () => {
@@ -86,15 +86,20 @@ async function displayItems(items) {
     });
     const likeButton = document.querySelector("#likeItem" + j);
     likeButton.addEventListener("click", () => {
-      console.log(member.idMember);
-
       likeItem(items[j].idItem, member.idMember);
     });
+    console.log(items[j])
+    if (member.idMember === items[j].offeringMember.idMember) {
+      likeButton.className += " displayNone";
+      (document.querySelector("#rateOffer" + j)).className += " displayNone";
+    } else {
+      modifyButton.className += " displayNone";
+      cancelButton.className += " displayNone";
+    }
   }
 }
 
-async function openItemModal(item, j) {
-  const member = await getMember(getToken());
+async function openItemModal(item, j, member) {
   const idItem = item.idItem;
   let interests = await getInterests(idItem);
   window.localStorage.setItem("item", item["offer"].idOffer);
@@ -131,20 +136,25 @@ async function openItemModal(item, j) {
       </div>
     `;
   const ratingDiv = document.querySelector("#ratingDiv");
-  const rateButton = document.querySelector("#rateItem" + j);
-  if (!getToken()) {
+  if (item.offeringMember.idMember === member.idMember) {
     ratingDiv.className += " displayNone";
+  } else {
+    const rateButton = document.querySelector("#rateItem" + j);
+    if (!getToken()) {
+      ratingDiv.className += " displayNone";
+    }
+    rateButton.addEventListener("click", async () => {
+      console.log(member);
+      const comment = document.querySelector("#ratingComment").value;
+      const stars = document.querySelector("#ratingStars").value;
+      const memberId = member.idMember;
+      console.log("hello");
+
+      await rateItem(idItem, memberId, stars, comment);
+
+    });
   }
-  rateButton.addEventListener("click", async () => {
-    console.log(member);
-    const comment = document.querySelector("#ratingComment").value;
-    const stars = document.querySelector("#ratingStars").value;
-    const memberId = member.idMember;
-    console.log("hello");
 
-    await rateItem(idItem, memberId, stars, comment);
-
-  });
   displayInterests(interests);
 }
 

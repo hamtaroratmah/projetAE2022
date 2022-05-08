@@ -327,7 +327,7 @@ public class MemberDaoImpl implements MemberDao {
       return null;
     }
     member.setIdMember(resultSetMember.getInt(1));
-    member.setPassword(resultSetMember.getString(2));
+//    member.setPassword(resultSetMember.getString(2));
     member.setUsername(resultSetMember.getString(3));
     member.setLastName(resultSetMember.getString(4));
     member.setFirstName(resultSetMember.getString(5));
