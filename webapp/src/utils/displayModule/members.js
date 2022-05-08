@@ -82,27 +82,21 @@ function displayInscriptions(inscriptions) {
     })
 
     // Deny inscription
-    //Try catch pour pouvoir boucler sur toute la liste de membre même s'ils sont déjà refusé
     try {
       buttonDeny.addEventListener("click", async (e) => {
         e.preventDefault();
         await denyInscription(inscriptions[i].username, reasonForRefusal.value);
-        console.log(reasonForRefusal.value)
         window.location.reload();
       })
     } catch (e) {
-
+      //Try catch pour pouvoir boucler sur toute la liste de membre même s'ils sont déjà refusé
     }
-
   }
-
 }
 
 function displayMembers(members) {
   const listMembersPage = document.querySelector("#listMembersPage");
   for (let i = 0; i < members.length; i++) {
-    console.log("is precluded ? ")
-    console.log(members[i].isPrecluded)
     if (members[i].isPrecluded) {
       members[i].state = "precluded";
     }
@@ -134,11 +128,8 @@ function displayMembers(members) {
   for (let i = 0; i < members.length; i++) {
 
     const buttonPreclude = document.getElementById("preclude" + i);
-    const buttonDeny = document.getElementById("deny" + i);
-    const reasonForRefusal = document.getElementById("reasonRefusal" + i);
     buttonPreclude.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log(members[i].idMember);
       await preclude(members[i].idMember);
     });
 
@@ -146,7 +137,6 @@ function displayMembers(members) {
 
     buttonUnpreclude.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log(members[i].idMember);
       await unpreclude(members[i].idMember);
       window.location.reload();
     });
@@ -162,7 +152,6 @@ function displayMembers(members) {
 function displayInterests(members) {
   const listInterestsPage = document.querySelector("#modal");
   let idOffer = window.localStorage.getItem("item");
-  console.log(idOffer);
   for (let i = 0; i < members.length; i++) {
 
     listInterestsPage.innerHTML += `
@@ -195,8 +184,6 @@ function displayInterests(members) {
 
     buttonGive.addEventListener("click", async (e) => {
       e.preventDefault();
-      console.log(members[i].idMember);
-      console.log(" give clicked");
       await giveItem(idOffer, members[i].idMember);
     });
 
