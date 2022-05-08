@@ -381,3 +381,4 @@ INSERT INTO pae.items (id_type, photo, description, availabilities, item_conditi
                        id_offering_member)
 VALUES (4, '', '', '', '', 4)
 RETURNING id_item,id_type,photo,description,availabilities,item_condition,id_offering_member;
+SELECT * FROM pae.interests;
