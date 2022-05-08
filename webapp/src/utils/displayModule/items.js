@@ -114,7 +114,6 @@ async function displayItems(items) {
         (document.querySelector("#precludedText" + j)).className = "";
       }
     }
-
   }
 }
 

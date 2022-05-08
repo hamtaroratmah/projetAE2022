@@ -11,9 +11,11 @@ import be.vinci.pae.dal.interfaces.MemberDao;
 import be.vinci.pae.dal.interfaces.OfferDao;
 import be.vinci.pae.exceptions.FatalException;
 import jakarta.inject.Inject;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,12 +91,15 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public int likeAnItem(int itemId, int idMember) {
+    String now = LocalDate.now().toString();
+    Date date = Date.valueOf(now);
     String query =
-        "INSERT INTO pae.interests (id_item, id_member) VALUES (?,?)" + " RETURNING id_interest";
+        "INSERT INTO pae.interests (id_item, id_member,date_delivery) VALUES (?,?,?)" + " RETURNING id_interest";
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
 
       ps.setInt(1, itemId);
       ps.setInt(2, idMember);
+      ps.setDate(3,date);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           return rs.getInt(1);
@@ -146,12 +151,14 @@ public class ItemDaoImpl implements ItemDao {
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, idItem);
       ps.setInt(2, idOffer);
-      ps.executeQuery();
-
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0;
+      }
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    query = "UPDATE pae.items SET item_condition='assigned'  WHERE id_item= ?";
     try (PreparedStatement pss = services.getPreparedStatement(query)) {
       pss.setInt(1, idItem);
       pss.executeQuery();
@@ -168,7 +175,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public ItemDTO createItem(ItemDTO newItem) {
-
     ItemDTO item = null;
     //language=PostgreSQL
     String query = "INSERT  INTO pae.items "
@@ -241,20 +247,32 @@ public class ItemDaoImpl implements ItemDao {
       String availabilities) {
 
     ItemDTO item = null;
-
-    //language=PostgreSQL
-    String query =
-        "UPDATE  pae.items SET  id_type=?, photo=?,description= ?,availabilities= ? WHERE id_item=?"
-            + "RETURNING id_item,id_type,photo,description,availabilities,"
-            + "item_condition,id_offering_member";
+    String query = "";
+    if (photo == null) {
+      //language=PostgreSQL
+      query =
+          "UPDATE  pae.items SET  id_type=?,description= ?,availabilities= ? WHERE id_item=?"
+              + "RETURNING id_item,id_type,photo,description,availabilities,"
+              + "item_condition,id_offering_member";
+    } else {
+      //language=PostgreSQL
+      query =
+          "UPDATE  pae.items SET  id_type=?, description= ?,availabilities= ?, photo=?"
+              + " WHERE id_item=?"
+              + "RETURNING id_item,id_type,photo,description,availabilities,"
+              + "item_condition,id_offering_member";
+    }
 
     try (PreparedStatement ps = services.getPreparedStatement(query)) {
       ps.setInt(1, type);
-      ps.setString(2, photo);
-      ps.setString(3, description);
-      ps.setString(4, availabilities);
-      ps.setInt(5, idItem);
-
+      ps.setString(2, description);
+      ps.setString(3, availabilities);
+      if (photo != null) {
+        ps.setString(4, photo);
+        ps.setInt(5, idItem);
+      } else {
+        ps.setInt(4, idItem);
+      }
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           item = createItemInstance(rs);

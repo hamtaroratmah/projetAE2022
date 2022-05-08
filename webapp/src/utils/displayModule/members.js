@@ -113,12 +113,12 @@ function displayMembers(members) {
               </p>
             </div>
             <div class="receptionValidGrandChild">
-                state : ${members[i].state}
+                state : ${members[i].state}<label class="displayNone" id="adminStar${i}">&#11088</label>
             </div>
              
             <div class="receptionValidGrandChild">
-                <input id ="preclude${i}" type="submit" value="Empecher le membre">
-                <input id ="unpreclude${i}" type="submit" value="Ne plus empecher le membre">
+                <input id ="preclude${i}" type="submit" value="Indiquer que le membre est empêché">
+                <input id ="unpreclude${i}" type="submit" value="Indiquer que le membre n'est plus empêché">
                 <input id="seeItems${i}" type="submit" value="Voir objets offerts par le membre">
             </div>
           </form>
@@ -127,14 +127,21 @@ function displayMembers(members) {
       `;
   }
   for (let i = 0; i < members.length; i++) {
-
+    console.log(members[i])
+    if (members[i].isAdmin) {
+      (document.querySelector("#adminStar" + i)).className = "";
+    }
+    const buttonUnpreclude = document.getElementById("unpreclude" + i);
     const buttonPreclude = document.getElementById("preclude" + i);
+    if (members[i].isPrecluded) {
+      buttonPreclude.className += " displayNone";
+    } else {
+      buttonUnpreclude.className += " displayNone";
+    }
     buttonPreclude.addEventListener("click", async (e) => {
       e.preventDefault();
       await preclude(members[i].idMember);
     });
-
-    const buttonUnpreclude = document.getElementById("unpreclude" + i);
 
     buttonUnpreclude.addEventListener("click", async (e) => {
       e.preventDefault();
