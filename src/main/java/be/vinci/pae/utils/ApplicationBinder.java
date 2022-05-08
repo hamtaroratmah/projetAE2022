@@ -1,32 +1,16 @@
 package be.vinci.pae.utils;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
+import be.vinci.pae.business.domain.dtos.InterestImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
-import be.vinci.pae.business.ucc.ItemUCC;
-import be.vinci.pae.business.ucc.ItemUCCImpl;
-import be.vinci.pae.business.ucc.MemberUCC;
-import be.vinci.pae.business.ucc.MemberUCCImpl;
-import be.vinci.pae.business.ucc.OfferUCC;
-import be.vinci.pae.business.ucc.OfferUCCImpl;
-import be.vinci.pae.business.ucc.RatingUcc;
-import be.vinci.pae.business.ucc.RatingUccImpl;
-import be.vinci.pae.dal.AddressDaoImpl;
-import be.vinci.pae.dal.DalBackendServices;
-import be.vinci.pae.dal.DalServicesImpl;
-import be.vinci.pae.dal.ItemDaoImpl;
-import be.vinci.pae.dal.MemberDaoImpl;
-import be.vinci.pae.dal.OfferDaoImpl;
-import be.vinci.pae.dal.RatingDaoImpl;
-import be.vinci.pae.dal.interfaces.AddressDao;
-import be.vinci.pae.dal.interfaces.DalServices;
-import be.vinci.pae.dal.interfaces.ItemDao;
-import be.vinci.pae.dal.interfaces.MemberDao;
-import be.vinci.pae.dal.interfaces.OfferDao;
-import be.vinci.pae.dal.interfaces.RatingDao;
+import be.vinci.pae.business.ucc.*;
+import be.vinci.pae.dal.*;
+import be.vinci.pae.dal.interfaces.*;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -50,6 +34,11 @@ public class ApplicationBinder extends AbstractBinder {
 
     //Address
     bind(AddressDaoImpl.class).to(AddressDao.class).in(Singleton.class);
+
+    //Interests
+    bind(InterestUCCImpl.class).to(InterestUCC.class).in(Singleton.class);
+    bind(InterestDaoImpl.class).to(InterestDao.class).in(Singleton.class);
+    bind(InterestImpl.class).to(InterestDTO.class).in(Singleton.class);
 
     //Rating
     bind(RatingDaoImpl.class).to(RatingDao.class).in(Singleton.class);

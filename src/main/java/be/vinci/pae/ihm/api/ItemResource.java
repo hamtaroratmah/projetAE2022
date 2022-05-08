@@ -200,6 +200,20 @@ public class ItemResource {
     return ratingUcc.rateAnItem(itemId, memberId, stars, comment);
   }
 
-
+  /**
+   * set that the one assigned to the offer had come (false -> true)
+   *
+   * @param json the json
+   * @return true if ok, false if ko.
+   */
+  @POST
+  @Path("/came")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public boolean came(JsonNode json) throws IOException {
+    int interestId = json.get("interestId").asInt();
+    int itemId = json.get("itemId").asInt();
+    return itemUcc.came(interestId,itemId);
+  }
 }
 

@@ -14,4 +14,6 @@ public interface DomainFactory {
 
   RatingDTO getRating();
 
+  InterestDTO getInterest();
+
 }

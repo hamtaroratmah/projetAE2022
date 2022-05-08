@@ -1,12 +1,6 @@
 package be.vinci.pae.business.domain.dtos;
 
-import be.vinci.pae.business.domain.interfacesdto.AddressDTO;
-import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
-import be.vinci.pae.business.domain.interfacesdto.ItemDTO;
-import be.vinci.pae.business.domain.interfacesdto.MemberDTO;
-import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
-import be.vinci.pae.business.domain.interfacesdto.RatingDTO;
-import be.vinci.pae.business.domain.interfacesdto.TypeDTO;
+import be.vinci.pae.business.domain.interfacesdto.*;
 
 public class DomainFactoryImpl implements DomainFactory {
 
@@ -37,6 +31,10 @@ public class DomainFactoryImpl implements DomainFactory {
 
   public RatingDTO getRating() {
     return new RatingImpl();
+  }
+
+  public InterestDTO getInterest() {
+    return new InterestImpl();
 
   }
 }

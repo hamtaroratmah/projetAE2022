@@ -170,4 +170,23 @@ public class ItemUCCImpl implements ItemUCC {
       throw new FatalException(e.getMessage());
     }
   }
+
+  /**
+   * set came's attribut in true
+   *
+   * @param interestId id interest
+   * @param itemId id of the item
+   * @return true if ok else false if ko
+   */
+  public boolean came(int interestId, int itemId) {
+    try {
+      dalServices.startTransaction();
+      boolean came = itemDao.came(interestId,itemId);
+      dalServices.commitTransaction();
+      return came;
+    } catch (Exception e) {
+      dalServices.rollbackTransaction();
+      throw new FatalException(e.getMessage());
+    }
+  }
 }
