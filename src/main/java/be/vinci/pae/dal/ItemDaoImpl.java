@@ -156,7 +156,7 @@ public class ItemDaoImpl implements ItemDao {
     } catch (SQLException e) {
       throw new FatalException(e.getMessage());
     }
-    query = "UPDATE pae.items SET item_condition='given'  WHERE id_item= ?";
+    query = "UPDATE pae.items SET item_condition='assigned'  WHERE id_item= ?";
     try (PreparedStatement pss = services.getPreparedStatement(query)) {
       pss.setInt(1, idItem);
       pss.executeQuery();
