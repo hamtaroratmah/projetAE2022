@@ -1,10 +1,12 @@
 package be.vinci.pae.utils;
 
 import be.vinci.pae.business.domain.dtos.DomainFactoryImpl;
+import be.vinci.pae.business.domain.dtos.InterestImpl;
 import be.vinci.pae.business.domain.dtos.MemberImpl;
 import be.vinci.pae.business.domain.dtos.OfferImpl;
 import be.vinci.pae.business.domain.interfacesbusiness.Member;
 import be.vinci.pae.business.domain.interfacesdto.DomainFactory;
+import be.vinci.pae.business.domain.interfacesdto.InterestDTO;
 import be.vinci.pae.business.domain.interfacesdto.OfferDTO;
 import be.vinci.pae.business.ucc.ItemUCC;
 import be.vinci.pae.business.ucc.ItemUCCImpl;
@@ -54,6 +56,10 @@ public class ApplicationBinder extends AbstractBinder {
     //Rating
     bind(RatingDaoImpl.class).to(RatingDao.class).in(Singleton.class);
     bind(RatingUccImpl.class).to(RatingUcc.class).in(Singleton.class);
+
+    // Interest
+    bind(InterestImpl.class).to(InterestDTO.class).in(Singleton.class);
+
     // DAL and Factory
     bind(DomainFactoryImpl.class).to(DomainFactory.class).in(Singleton.class);
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)

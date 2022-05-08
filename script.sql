@@ -350,7 +350,7 @@ WHERE id_item = 1
 
 SELECT *
 FROM pae.interests
-WHERE id_item = 1;
+WHERE id_item = 10;
 
 SELECT *
 FROM pae.members

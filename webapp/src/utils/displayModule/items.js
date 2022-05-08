@@ -117,7 +117,7 @@ async function openItemModal(item, j) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = `
       <div>
-        <img src="" alt="" class="receptionImage" id="modalReceptionImage${j}">
+        <img src="/api/images/${item.photo}" alt="" class="receptionImage" id="modalReceptionImage${j}">
           <p class="receptionDescription">${item.description}</p>
           <p class="receptionOfferingMember">${item["offeringMember"].username}</p>
           <p class="receptionType">${item["type"].type}</p>
