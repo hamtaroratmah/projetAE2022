@@ -199,7 +199,7 @@ public class ItemResource {
   }
 
   /**
-   * get all items offered by a member
+   * get all items offered by a member.
    */
   @GET
   @Path("getOfferingMemberItem/{idMember}")

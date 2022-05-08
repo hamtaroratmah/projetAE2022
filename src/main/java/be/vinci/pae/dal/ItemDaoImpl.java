@@ -34,7 +34,6 @@ public class ItemDaoImpl implements ItemDao {
 
   @Override
   public List<ItemDTO> getItemSortedBy(String sortingParam, String order) {
-    List<ItemDTO> list = null;
     boolean isCondition = false;
     if (sortingParam.equals("type") || sortingParam.equals("item_condition")) {
       sortingParam = "it." + sortingParam;
